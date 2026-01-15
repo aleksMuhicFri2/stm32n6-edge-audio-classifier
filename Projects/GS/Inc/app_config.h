@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    app_config.h
   * @author  GPM/AIS Application Team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   * @brief   APP configuration
   ******************************************************************************
   * @attention
@@ -69,7 +69,10 @@
 
 #define SEPARATION_LINE "------------------------------------------------------------\n\r"
 
-#define USE_NPU_CACHE 1
+#ifndef USE_NPU_CACHE
+  #define USE_NPU_CACHE 1
+#endif
+
 /*
 #define LOAD_GEN_NB_RUN     (100)
 #define LOAD_GEN_TIME_SLICE (100)

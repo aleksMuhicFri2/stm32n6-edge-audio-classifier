@@ -38,6 +38,9 @@ flash_bm: $(BUILD_DIR_BM)/$(TARGET)_sign.bin
 $(BUILD_DIR_BM)/$(TARGET)_sign.bin: $(BUILD_DIR_BM)/$(TARGET).bin
 	$(SIGNER) -s -bin $< -nk -t ssbl -hv 2.3 -o $(BUILD_DIR_BM)/$(TARGET)_sign.bin
 
+$(BUILD_DIR_BM)/$(TARGET)_sign.hex: $(BUILD_DIR_BM)/$(TARGET)_sign.bin
+	$(CP) -I binary $< --change-addresses 0x70100000 -O ihex $@
+
 clean_bm:
 	@echo "clean bm"
 	@rm -fR $(BUILD_DIR_BM)

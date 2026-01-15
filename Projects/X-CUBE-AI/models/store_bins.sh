@@ -14,7 +14,7 @@ bin_BM="../../GS/STM32CubeIDE/BM/GS_Audio_N6.bin"
 bin_BM_LP="../../GS/STM32CubeIDE/BM_LP/GS_Audio_N6.bin"
 bin_FREERTOS="../../GS/STM32CubeIDE/FREERTOS/GS_Audio_N6.bin"
 bin_FREERTOS_LP="../../GS/STM32CubeIDE/FREERTOS_LP/GS_Audio_N6.bin"
-bin_dir="../../../Binaries"
+bin_dir="../../../Binary"
 
 echo "======================="
 echo "signing" $bin_BM
@@ -26,7 +26,7 @@ echo "======================="
 echo "signing" $bin_FREERTOS
 $sign -s -bin $bin_FREERTOS -nk -t ssbl -hv 2.3 -o $bin_dir/$1_tx.bin
 echo "======================="
-echo "signing" $bin_FREERTOS-LP
+echo "signing" $bin_FREERTOS_LP
 $sign -s -bin $bin_FREERTOS_LP -nk -t ssbl -hv 2.3 -o $bin_dir/$1_tx_lp.bin
 echo "======================="
 echo "copy weights"

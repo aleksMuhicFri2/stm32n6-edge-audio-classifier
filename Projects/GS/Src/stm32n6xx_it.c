@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32n6xx_it.c 
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and 
   *          peripherals interrupt service routine.

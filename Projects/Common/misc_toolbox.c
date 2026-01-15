@@ -22,7 +22,6 @@
 #include "app_config.h"
 #include "npu_cache.h"  // Used in NPU_config
 #include "stm32n6xx_ll_usart.h" // Used for configuring UART
-#include "ai_wrapper_ATON.h"    // Used to get NPU cache enable / counters info
 
 UART_HandleTypeDef UartHandle;
 
@@ -229,18 +228,19 @@ void UART_Config(void)
 
 void NPU_Config(void)
 {
+  static int npu_configured = 0;
+
   __HAL_RCC_NPU_CLK_ENABLE();
+  if (npu_configured == 0)
+  {
   __HAL_RCC_NPU_FORCE_RESET();
   __HAL_RCC_NPU_RELEASE_RESET();
-  // __HAL_RCC_NPU_CLK_SLEEP_DISABLE();
-
-  // __HAL_RCC_RAMCFG_CLK_SLEEP_DISABLE();
+    npu_configured = 1;
+  }
 
   __HAL_RCC_CACHEAXI_CLK_ENABLE();
   __HAL_RCC_CACHEAXI_FORCE_RESET();
   __HAL_RCC_CACHEAXI_RELEASE_RESET();
-//  __HAL_RCC_CACHEAXI_CLK_SLEEP_DISABLE();
-  npu_cache_init();
 
 #ifdef USE_NPU_CACHE
    npu_cache_enable(); // Useless: already enabled by init

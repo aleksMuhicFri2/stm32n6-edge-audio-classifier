@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    preproc_dpu.c
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   * @brief   This file is implementing pre-processing functions that are making
   *          use of Audio pre-processing libraries
   ******************************************************************************
@@ -69,8 +69,8 @@ int PreProc_DPUInit(AudioPreProcCtx_t *pCtx)
   pCtx->S_LogMelSpectr.Ref                = 1.0f;
   pCtx->S_LogMelSpectr.TopdB              = HUGE_VALF;
   printf("MEL spectrogram %d mel x %d col\n\r",CTRL_X_CUBE_AI_SPECTROGRAM_NMEL,CTRL_X_CUBE_AI_SPECTROGRAM_COL);
-  printf("- sampling freq : %u Hz\n\r",(uint32_t)CTRL_X_CUBE_AI_SENSOR_ODR);
-  printf("- acq period    : %u ms\n\r",(uint32_t)CTRL_X_CUBE_AI_ACQ_LENGTH_MS);
+  printf("- sampling freq : %lu Hz\n\r",(uint32_t)CTRL_X_CUBE_AI_SENSOR_ODR);
+  printf("- acq period    : %lu ms\n\r",(uint32_t)CTRL_X_CUBE_AI_ACQ_LENGTH_MS);
   printf("- window length : %u samples\n\r",CTRL_X_CUBE_AI_SPECTROGRAM_WINDOW_LENGTH);
   printf("- hop length    : %u samples\n\r",CTRL_X_CUBE_AI_SPECTROGRAM_HOP_LENGTH);
 

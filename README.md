@@ -9,26 +9,35 @@ extraction, the machine learning inference itself, and a post processing step
 before exposing the results to the user in real time. The project implements
 both RTOS and bare metal versions. A low power version is also provided.
 
-## Keywords
-
-Getting Start, Model Zoo, Sensing, Audio, X-CUBE-AI, STM32N6
-
 ## Table of Contents
 
-- [Hardware and Software environment](#hardware-and-software-environment)
-  - [Hardware support](#hardware-support)
-  - [Boot modes](#boot-modes)
-  - [Serial port configuration](#serial-port-configuration)
-  - [Toolchains support](#toolchains-support)
-- [Quickstart using prebuilt binaries](#quickstart-using-prebuilt-binaries)
-- [Deployment](#deployment)
-  - [Model zoo deployment](#model-zoo-deployment)
-  - [Manual deployment](#manual-deployment)
-- [Configuration](#configuration)
-  - [Application](#application)
-  - [AED example](#aed-example)
-  - [SE example](#se-example)
-- [History](#history)
+- [Audio Getting Started Package](#audio-getting-started-package)
+  - [Table of Contents](#table-of-contents)
+  - [Hardware and Software environment](#hardware-and-software-environment)
+    - [Hardware support](#hardware-support)
+    - [Boot modes](#boot-modes)
+    - [Serial port configuration](#serial-port-configuration)
+    - [Toolchains support](#toolchains-support)
+  - [Quickstart using prebuilt binaries](#quickstart-using-prebuilt-binaries)
+  - [Quickstart using Source Code - AED](#quickstart-using-source-code---aed)
+    - [Application Build and Run - Dev Mode](#application-build-and-run---dev-mode)
+      - [STM32CubeIDE](#stm32cubeide)
+      - [Makefile](#makefile)
+    - [Application Build and Run - Boot from Flash](#application-build-and-run---boot-from-flash)
+      - [Build the Application](#build-the-application)
+        - [STM32CubeIDE](#stm32cubeide-1)
+        - [Makefile](#makefile-1)
+      - [Program the Firmware in the External Flash](#program-the-firmware-in-the-external-flash)
+  - [Typical Output on uart console](#typical-output-on-uart-console)
+  - [Model Deployment](#model-deployment)
+    - [Model zoo deployment](#model-zoo-deployment)
+    - [Manual deployment](#manual-deployment)
+  - [Configuration](#configuration)
+    - [Application](#application)
+    - [AED example](#aed-example)
+    - [SE example](#se-example)
+  - [How to update my project with a new version of ST Edge AI](#how-to-update-my-project-with-a-new-version-of-st-edge-ai)
+  - [Know issues and Limitations](#know-issues-and-limitations)
 
 ## Hardware and Software environment
 
@@ -44,13 +53,19 @@ Getting Start, Model Zoo, Sensing, Audio, X-CUBE-AI, STM32N6
 
 ### Boot modes
 
-The STM32N6 does not have any internal flash. To retain your firmware after a
-reboot, you must program it in the external flash. Alternatively, you can load
-your firmware directly from SRAM (dev mode). However, in dev mode if you turn
-off the board, your program will be lost.
+The STM32N6 series does not have internal flash memory. To retain firmware after a reboot, program it into the external flash. Alternatively, you can load firmware directly into SRAM (development mode), but note that the program will be lost if the board is powered off in this mode.
 
-- Dev mode: load firmware from debug session in RAM (boot switch to the right)
-- Boot from flash: Program firmware in external flash (boot switch to the left)
+Development Mode: used for loading firmware into RAM during a debug session or for programming firmware into external flash.
+
+Boot from Flash: used to boot firmware from external flash.
+
+|                  | STM32N6570-DK                                                                |
+| -------------    | -------------                                                                |
+| Boot from flash  | ![STM32N6570-DK Boot from flash](_htmresc/STM32N6570-DK_Boot_from_flash.png) |
+| Development mode | ![STM32N6570-DK Development mode](_htmresc/STM32N6570-DK_Dev_mode.png)       |
+
+
+More details about it in [Boot-Overview.md](Doc/Boot-Overview.md) doc.
 
 ### Serial port configuration
 
@@ -66,8 +81,9 @@ the serial link is:
 
 ### Toolchains support
 
-- [STM32CubeIDE](https://www.st.com/content/st_com/en/products/development-tools/software-development-tools/stm32-software-development-tools/stm32-ides/stm32cubeide.html) (**STM32CubeIDE 1.17.0**)
-- [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) (**v2.2.0**)
+- [STM32CubeIDE](https://www.st.com/content/st_com/en/products/development-tools/software-development-tools/stm32-software-development-tools/stm32-ides/stm32cubeide.html) (__v1.17.0__)
+- [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) (__v2.18.0__)
+- [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) (__v3.0.0__)
 
 ## Quickstart using prebuilt binaries
 
@@ -76,33 +92,23 @@ Two use cases are provided as examples:
   1. Audio Event Detection (aed): Automatically recognizing events like a baby crying or a clock tick.
   2. Speech Enhancement (se): Improve quality and intelligibility of speech signals, especially in noisy environments.
 
-For each use case, a pre-trained model is used, and its weigths are provided in
-binary format:
+For each use case one binary is provided for the given combination of bare metal (bm), freertos (freertos), bare metal low power (bm_lp) and freertos low power (freertos_lp):
 
-- `Binaries/aed_weights.bin`
-- `Binaries/se_weights.bin`
+- `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_aed_bm.hex`
+- `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_aed_bm_lp.hex`
+- `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_aed_freertos.hex`
+- `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_aed_freertos_lp.hex`
+- `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_se_bm.hex`
+- `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_se_bm_lp.hex`
+- `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_se_freertos.hex`
+- `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_se_freertos_lp.hex`
 
-for each use case 4 application builds combining bare metal (bm) or freertos (freertos)
-and low power (lp) are provided:
+To program the wanted binary in the external flash of the board you must follow the given procedure:
 
-- `Binaries/aed_bm.bin`
-- `Binaries/aed_bm_lp.bin`
-- `Binaries/aed_freertos.bin`
-- `Binaries/aed_freertos_lp.bin`
-- `Binaries/se_bm.bin`
-- `Binaries/se_bm_lp.bin`
-- `Binaries/se_freertos.bin`
-- `Binaries/se_freertos_lp.bin`
-
-Three binaries must be programmed in the board external flash using the
-following procedure:
-
-  1. Switch BOOT1 switch to right position
-  2. Program `Binaries/fsbl_fw_lrun_v1.2.0.bin` (First stage boot loader @0x70000000 )
-  3. Program `Binaries/[aed,se]_weights.bin` (params of the networks @0x70180000; To be changed only when the network is changed)
-  4. Program `Binaries/[aed,se]_[bm,freertos]_[lp].bin` (signed firmware application @0x70100000)
-  5. Switch BOOT1 switch to Left position
-  6. Power cycle the board
+  1. Switch both switches to the right position
+  2. Program `Binary/STM32N6_GettingStarted_Audio_[aed,se]_[bm,freertos]_[,lp].hex`
+  3. Switch both switches to the left position
+  4. Power cycle the board
 
 After added your own `STM32_Programmer_CLI` in your PATH.
 (`STM32_Programmer_CLI` can be found in STM32CubeIDE install at `<Installed Folder>/stm32cubeide_1.17.0/plugins/com.st.stm32cube.ide.mcu.externaltools.cubeprogrammer.<xxx version>/tools/bin/STM32_Programmer_CLI`)
@@ -115,8 +121,97 @@ Execute `flash-bin.sh` with two arguments:
 For example:
 `flash-bin.sh aed bm_lp`
 
-After setting in [Boot from flash](#boot-modes) and power cycle, here is the
-typical output seen on the uart console (baud rate = 14400):
+After setting in [Boot from flash](#boot-modes) and power cycle you should get the results in the uart console.
+
+
+
+## Quickstart using Source Code - AED
+
+The default model provided is an Audio Event Detection model.
+Before building and running the application, you must program `Projects/X-CUBE-AI/models/aed_weights.hex` (model weights and biases). This only needs to be done once unless you change the AI model. See [Quickstart using prebuilt binaries](#quickstart-using-prebuilt-binaries) for details.
+
+For more information about boot modes, see [Boot Overview](Doc/Boot-Overview.md).
+
+### Application Build and Run - Dev Mode
+
+Set your board to [development mode](#boot-modes).
+
+#### STM32CubeIDE
+
+Double-click `Projects/GS/STM32CubeIDE/.project` to open the project in STM32CubeIDE. Build and run the project of the desired configuration (bm, freertos, bm_lp, freertos_lp).
+
+#### Makefile
+
+Navigate to `Projects/GS` and run the following commands (ensure required tools are in your PATH):
+
+1. Build the project:
+    ```bash
+    make <bm/bm_lp/freertos/freertos_lp> -j8
+    ```
+2. Start a GDB server connected to the STM32 target:
+    ```bash
+    ST-LINK_gdbserver -p 61234 -l 1 -d -s -cp <path-to-stm32cubeprogramer-bin-dir> -m 1 -g
+    ```
+3. In a separate terminal, launch a GDB session to load the firmware:
+    ```bash
+    $ arm-none-eabi-gdb BuildGCC/<BM/BM_LP/FREERTIS/FREERTOS_LP>/GS_Audio_N6.elf
+    (gdb) target remote :61234
+    (gdb) monitor reset
+    (gdb) load
+    (gdb) continue
+    ```
+
+### Application Build and Run - Boot from Flash
+
+Set your board to [development mode](#boot-modes).
+
+#### Build the Application
+
+##### STM32CubeIDE
+
+Double-click `Projects/GS/STM32CubeIDE/.project` to open the project in STM32CubeIDE. Build and run the project.
+
+##### Makefile
+
+Ensure all required tools are in your PATH, then build the project with a given configuration:
+
+- bare metal (bm)
+- freertos (freertos)
+- bare metal low power (bm_lp)
+- freertos low power (freertos_lp)
+
+```bash
+make <bm/bm_lp/freertos/freertos_lp> -j8
+```
+
+#### Program the Firmware in the External Flash
+
+After building the application, you must sign the binary file:
+
+```bash
+STM32_SigningTool_CLI -bin Projects/GS/BuildGCC/<BM/BM_LP/FREERTIS/FREERTOS_LP>/GS_Audio_N6.bin -nk -t ssbl -hv 2.3 -o Projects/GS/BuildGCC/<BM/BM_LP/FREERTIS/FREERTOS_LP>/GS_Audio_N6_sign.bin
+```
+
+Program the signed binary at address `0x70100000`, as well as the FSBL and network parameters.
+
+On STM32N6570-DK:
+
+```bash
+export DKEL="<STM32CubeProgrammer_N6 Install Folder>/bin/ExternalLoader/MX66UW1G45G_STM32N6570-DK.stldr"
+
+# First Stage Boot Loader
+STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w FSBL/ai_fsbl.hex
+
+# Adjust build path as needed
+STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w Projects/GS/BuildGCC/<BM/BM_LP/FREERTIS/FREERTOS_LP>/GS_Audio_N6_sign.bin 0x70100000
+
+# Network parameters
+STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -el $DKEL -hardRst -w Projects/X-CUBE-AI/models/aed_weights.hex
+```
+
+## Typical Output on uart console
+
+Typical output seen on the uart console (baud rate = 14400):
 
 ```text
 ------------------------------------------------------------
@@ -205,7 +300,7 @@ Note that:
   2. Bypass results audio in red LED toggling
   3. Green LED toggles at each audio patch acquisition
 
-## Deployment
+## Model Deployment
 
 This Getting Started includes all the application code and libraries with aed as default config.
 
@@ -361,15 +456,15 @@ in `<getting-start-install-dir>/Projects/DPU/ai_model_config.h`, first describe
 the number and the nature of the model output and its type:
 
 ```C
-#define CTRL_X_CUBE_AI_MODE_NB_OUTPUT          (1U) /* or (2U)*/
-#define CTRL_X_CUBE_AI_MODE_OUTPUT_1           (CTRL_AI_CLASS_DISTRIBUTION)
+#define CTRL_X_CUBE_AI_MODEL_NB_OUTPUT          (1U) /* or (2U)*/
+#define CTRL_X_CUBE_AI_MODEL_OUTPUT_1           (CTRL_AI_CLASS_DISTRIBUTION)
 ```
 
 Then you describe the class indexes and their labels in this way:
 
 ```C
-#define CTRL_X_CUBE_AI_MODE_CLASS_NUMBER       (10U)
-#define CTRL_X_CUBE_AI_MODE_CLASS_LIST         {"chainsaw","clock_tick",\
+#define CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER       (10U)
+#define CTRL_X_CUBE_AI_MODEL_CLASS_LIST         {"chainsaw","clock_tick",\
                 "crackling_fire","crying_baby","dog","helicopter","rain",\
                                          "rooster","sea_waves","sneezing"}
 ```
@@ -449,8 +544,8 @@ in `<getting-start-install-dir>/Projects/DPU/ai_model_config.h`, first describe
 the number and the nature of the model output and its type:
 
 ```C
-#define CTRL_X_CUBE_AI_MODE_NB_OUTPUT            (1U)
-#define CTRL_X_CUBE_AI_MODE_OUTPUT_1             (CTRL_AI_SPECTROGRAM)
+#define CTRL_X_CUBE_AI_MODEL_NB_OUTPUT            (1U)
+#define CTRL_X_CUBE_AI_MODEL_OUTPUT_1             (CTRL_AI_SPECTROGRAM)
 ```
 
 Then specify pre-processing as Short Term Fourier Transform and post processing
@@ -506,3 +601,16 @@ processing chain:
 #define CTRL_X_CUBE_AI_SENSOR_ODR             (16000.0F)
 #define CTRL_X_CUBE_AI_SENSOR_FS              (112.5F)
 ```
+
+## How to update my project with a new version of ST Edge AI
+
+The neural network model files (`network.c/h`, `stai_network.c/h`, etc.) included in this project were generated using [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) version 3.0.0.
+
+Using a different version of STEdgeAI to generate these model files may result in the following compile-time error:
+`Possible mismatch in ll_aton library used`.
+
+If you encounter this error, please follow the STEdgeAI instructions on [How to update my project with a new version of ST Edge AI Core](https://stedgeai-dc.st.com/assets/embedded-docs/stneuralart_faqs_update_version.html) to update your project.
+
+## Know issues and Limitations
+
+- In boot-from-flash mode, the board must be power-cycled each time we want to restart the application (reset button doesn't work)

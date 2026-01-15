@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    main.c
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   * @brief
   ******************************************************************************
   * @attention
@@ -36,6 +36,19 @@ int main(void)
 #else
   main_freertos();
 #endif
+}
+
+/**
+* @brief  This function is executed in case of error occurrence.
+* @param  None
+* @retval None
+*/
+void Error_Handler(void)
+{
+  __disable_irq();
+  while (1)
+  {
+  }
 }
 
 #ifdef  USE_FULL_ASSERT

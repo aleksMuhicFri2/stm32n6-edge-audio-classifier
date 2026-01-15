@@ -70,6 +70,9 @@ flash_freertos: $(BUILD_DIR_FREERTOS)/$(TARGET)_sign.bin
 $(BUILD_DIR_FREERTOS)/$(TARGET)_sign.bin: $(BUILD_DIR_FREERTOS)/$(TARGET).bin
 	$(SIGNER) -s -bin $< -nk -t ssbl -hv 2.3 -o $(BUILD_DIR_FREERTOS)/$(TARGET)_sign.bin
 
+$(BUILD_DIR_FREERTOS)/$(TARGET)_sign.hex: $(BUILD_DIR_FREERTOS)/$(TARGET)_sign.bin
+	$(CP) -I binary $< --change-addresses 0x70100000 -O ihex $@
+
 clean_freertos:
 	@echo "clean freertos"
 	@rm -fR $(BUILD_DIR_FREERTOS)

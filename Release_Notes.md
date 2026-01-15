@@ -25,22 +25,27 @@ before exposing the results to the user in real time.
 
 ## Software components
 
-| Name                                | Version    | Release notes
-|-----                                | -------    | -------------
-| STEdge AI runtime                   |  v10.2.0   |
-| STM32 AI AudioPreprocessing Library |  v1.2.0    | [release notes](Middlewares/ST/STM32_AI_AudioPreprocessing_Library/Release_Notes.html)
-| FreeRTOS kernel                     |  v10.6.2   | [release notes](Middlewares/ST/FreeRTOS/Source/History.txt)
-| CMSIS                               |  v5.9.0    | [release notes](Drivers/CMSIS/Documentation/index.html)
-| STM32N6xx CMSIS Device              |  v1.1.0    | [release notes](Drivers/CMSIS/Device/ST/STM32N6xx/Release_Notes.html)
-| STM32N6xx HAL/LL Drivers            |  v1.1.0    | [release notes](Drivers/STM32N6xx_HAL_Driver/Release_Notes.html)
-| STM32N6570-DK BSP Drivers           |  v1.1.0    | [release notes](Drivers/BSP/STM32N6570-DK/Release_Notes.html)
-| BSP Component aps256xx              |  v1.0.6    | [release notes](Drivers/BSP/Components/aps256xx/Release_Notes.html)
-| BSP Component cs42l51               |  v2.0.6    | [release notes](Drivers/BSP/Components/cs42l51/Release_Notes.html)
-| BSP Component mx66uw1g45g           |  v1.1.0    | [release notes](Drivers/BSP/Components/mx66uw1g45g/Release_Notes.html)
-| BSP Component wm8904                |  v1.1.0    | [release notes](Drivers/BSP/Components/wm8904/Release_Notes.html)
-| BSP Component Common                |  v7.3.0    | [release notes](Drivers/BSP/Components/Common/Release_Notes.html)
+| Name                                | Version                                | Release notes
+|-----                                | -------                                | -------------
+| STEdge AI runtime                   |  v3.0.0                                |
+| STM32 AI AudioPreprocessing Library |  v1.2.1                                | [release notes](Middlewares/ST/STM32_AI_AudioPreprocessing_Library/Release_Notes.html)
+| FreeRTOS kernel                     |  v10.6.2                               | [release notes](Middlewares/ST/FreeRTOS/Source/History.txt)
+| CMSIS                               |  v5.9.0_fix_620_dsp_v1.10.0_nn_v3.1.0  | [release notes](Drivers/CMSIS/st_readme.txt)
+| STM32N6xx CMSIS Device              |  v1.1.0                                | [release notes](Drivers/CMSIS/Device/ST/STM32N6xx/Release_Notes.html)
+| STM32N6xx HAL/LL Drivers            |  v1.1.0                                | [release notes](Drivers/STM32N6xx_HAL_Driver/Release_Notes.html)
+| STM32N6570-DK BSP Drivers           |  v1.1.0                                | [release notes](Drivers/BSP/STM32N6570-DK/Release_Notes.html)
+| BSP Component aps256xx              |  v1.0.6                                | [release notes](Drivers/BSP/Components/aps256xx/Release_Notes.html)
+| BSP Component cs42l51               |  v2.0.6                                | [release notes](Drivers/BSP/Components/cs42l51/Release_Notes.html)
+| BSP Component mx66uw1g45g           |  v1.1.0                                | [release notes](Drivers/BSP/Components/mx66uw1g45g/Release_Notes.html)
+| BSP Component wm8904                |  v1.1.0                                | [release notes](Drivers/BSP/Components/wm8904/Release_Notes.html)
+| BSP Component Common                |  v7.3.0                                | [release notes](Drivers/BSP/Components/Common/Release_Notes.html)
 
 ## Update history
+
+### V2.2.0
+
+- Upgrade to STEdgeAI 3.0.0:
+  - Migrate to new APIs
 
 ### V2.1.0
 

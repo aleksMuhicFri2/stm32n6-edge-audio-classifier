@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    postproc_dpu.h
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   * @brief   Header for postproc_dpu.c module
   ******************************************************************************
   * @attention

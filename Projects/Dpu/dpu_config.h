@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    dpu_config.h
   * @author  STMicroelectronics - AIS - MCD Team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   * @brief   Configure the getting started functionality
   *
   * Each logic module of the application should define a DEBUG control byte
@@ -39,8 +39,12 @@ extern "C" {
 #define CTRL_AI_MEL_SPECTROGRAM                  (6U)
 #define CTRL_AI_ISTFT                            (7U)
 #define CTRL_AI_BYPASS                           (8U)
-#define COM_TYPE_HEADSET                         (9U)
-  
+
+#define COM_TYPE_NONE                 (0U)
+#define COM_TYPE_ACC                  (1U)
+#define COM_TYPE_MIC                  (2U)
+#define COM_TYPE_HEADSET              (3U)
+
 #include "ai_model_config.h"
 
 #ifndef CTRL_AI_HW_SELECT
@@ -50,7 +54,7 @@ extern "C" {
 #ifndef CTRL_SEQUENCE
 #define CTRL_SEQUENCE                            {CTRL_CMD_PARAM_AI,0}
 #endif
-
+// @TODO change CTRL_X_CUBE_AI_MODE to CTRL_X_CUBE_AI_MODEL everywhere in the code
 #ifndef CTRL_X_CUBE_AI_MODE_NAME
 #define CTRL_X_CUBE_AI_MODE_NAME                 "X-CUBE-AI HAR"
 #endif
@@ -58,17 +62,17 @@ extern "C" {
 #define CTRL_X_CUBE_AI_MODE_NETWORK_MODEL_NAME   "network"
 #endif
 
-#ifndef CTRL_X_CUBE_AI_MODE_NB_OUTPUT
-#define CTRL_X_CUBE_AI_MODE_NB_OUTPUT            (1U)
+#ifndef CTRL_X_CUBE_AI_MODEL_NB_OUTPUT
+#define CTRL_X_CUBE_AI_MODEL_NB_OUTPUT            (1U)
 #endif
-#ifndef CTRL_X_CUBE_AI_MODE_OUTPUT_1
-#define CTRL_X_CUBE_AI_MODE_OUTPUT_1             (CTRL_AI_CLASS_DISTRIBUTION)
+#ifndef CTRL_X_CUBE_AI_MODEL_OUTPUT_1
+#define CTRL_X_CUBE_AI_MODEL_OUTPUT_1             (CTRL_AI_CLASS_DISTRIBUTION)
 #endif
-#ifndef CTRL_X_CUBE_AI_MODE_CLASS_NUMBER
-#define CTRL_X_CUBE_AI_MODE_CLASS_NUMBER         (4U)
+#ifndef CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER
+#define CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER         (4U)
 #endif
-#ifndef CTRL_X_CUBE_AI_MODE_CLASS_LIST
-#define CTRL_X_CUBE_AI_MODE_CLASS_LIST           {"Stationary","Walking","Jogging","Biking"}
+#ifndef CTRL_X_CUBE_AI_MODEL_CLASS_LIST
+#define CTRL_X_CUBE_AI_MODEL_CLASS_LIST           {"Stationary","Walking","Jogging","Biking"}
 #endif
 #ifndef CTRL_X_CUBE_AI_SENSOR_NAME
 #define CTRL_X_CUBE_AI_SENSOR_NAME               "ism330dhcx"
@@ -167,6 +171,11 @@ extern "C" {
 #define CTRL_X_CUBE_AI_ACQ_LENGTH (CTRL_X_CUBE_AI_SPECTROGRAM_COL_NO_OVL*CTRL_X_CUBE_AI_SPECTROGRAM_HOP_LENGTH)
 #define CTRL_X_CUBE_AI_ACQ_LENGTH_MS (uint32_t)(1000.0F * (float) CTRL_X_CUBE_AI_ACQ_LENGTH / (float) CTRL_X_CUBE_AI_SENSOR_ODR )
 
+typedef enum
+{
+  DPU_OK       = 0x00,
+  DPU_ERROR    = 0x01,
+} DPU_StatusTypeDef;
 #ifdef __cplusplus
 }
 #endif

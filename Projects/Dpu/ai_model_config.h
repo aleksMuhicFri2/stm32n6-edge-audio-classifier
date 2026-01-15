@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    ai_model_config.h
   * @author  STMicroelectronics - AIS - MCD Team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   * @brief   Configure the getting started functionality
   ******************************************************************************
   * @attention
@@ -29,10 +29,10 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 #define CTRL_AI_HW_SELECT                        STM32N6570-DK
 #define CTRL_X_CUBE_AI_MODEL_NAME                "X-CUBE-AI AED YAMNET"
-#define CTRL_X_CUBE_AI_MODE_NB_OUTPUT            (1U)
-#define CTRL_X_CUBE_AI_MODE_OUTPUT_1             (CTRL_AI_CLASS_DISTRIBUTION)
-#define CTRL_X_CUBE_AI_MODE_CLASS_NUMBER         (10U)
-#define CTRL_X_CUBE_AI_MODE_CLASS_LIST           {"chainsaw","clock_tick","crackling_fire","crying_baby","dog",\
+#define CTRL_X_CUBE_AI_MODEL_NB_OUTPUT            (1U)
+#define CTRL_X_CUBE_AI_MODEL_OUTPUT_1             (CTRL_AI_CLASS_DISTRIBUTION)
+#define CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER         (10U)
+#define CTRL_X_CUBE_AI_MODEL_CLASS_LIST           {"chainsaw","clock_tick","crackling_fire","crying_baby","dog",\
                                                   "helicopter","rain","rooster","sea_waves","sneezing"}
 #define CTRL_X_CUBE_AI_SENSOR_TYPE               COM_TYPE_MIC
 #define CTRL_X_CUBE_AI_SENSOR_NAME               "imp34dt05"

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    HAL/Inc/hal_generic_valid_it.h 
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   * @brief   This file contains the headers of the interrupt handlers.
   ******************************************************************************
   * @attention

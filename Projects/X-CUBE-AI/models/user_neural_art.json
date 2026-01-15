@@ -3,8 +3,7 @@
 		"default":
         {
     	    "memory_pool": "./stm32n6.mpool",
-            "machine_desc": "./stm32n6.mdesc",
-            "options": "--Ocache-opt -O3 --Os --native-float  --mvei --Omax-ca-pipe 4 --cache-maintenance --csv-file network --all-buffers-info"
+            "options": "--Ocache-opt -O3 --Os --native-float --Omax-ca-pipe 4 --cache-maintenance --csv-file network --all-buffers-info"
         }
    }
 }

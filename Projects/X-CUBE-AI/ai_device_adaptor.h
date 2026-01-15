@@ -319,7 +319,17 @@ __STATIC_INLINE bool port_io_get(uint8_t *c, uint32_t timeout)
   return (status == HAL_OK);
 }
 
-__STATIC_INLINE bool port_io_write(uint8_t *buff, int count)
+
+#if defined(HAS_DEDICATED_PRINT_PORT) && HAS_DEDICATED_PRINT_PORT == 1
+
+__STATIC_INLINE void port_io_dedicated_putc(unsigned char ch)
+{
+
+  HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+
+}
+
+__STATIC_INLINE bool port_io_dedicated_write(uint8_t *buff, int count)
 {
   HAL_StatusTypeDef status;
 
@@ -327,15 +337,116 @@ __STATIC_INLINE bool port_io_write(uint8_t *buff, int count)
 
   return (status == HAL_OK);
 }
+#endif
+
+__STATIC_INLINE bool port_io_write(uint8_t *buff, int count)
+{
+  HAL_StatusTypeDef status;
+  
+  status = HAL_UART_Transmit(&UartHandle, buff, count, HAL_MAX_DELAY);
+  
+  return (status == HAL_OK);
+}
 
 __STATIC_INLINE bool port_io_read(uint8_t *buff, int count)
 {
   HAL_StatusTypeDef status;
-
+  
   status = HAL_UART_Receive(&UartHandle, buff, count, HAL_MAX_DELAY);
+  
+  return (status == HAL_OK);
+}
+
+#elif defined(STM32H7P5xx) || defined(STM32H7P)
+
+#define DEVICE_FAMILY "STM32"
+
+/* --------------------------------------------
+ * STM32H7Px line (Cube 2 drivers)
+ * --------------------------------------------
+ */
+
+#include <bsp_ai.h>  /* generated STM32 platform file to import the HAL and the UART definition */
+#define port_hal_get_hal_version()        HAL_GetVersion()
+#define port_hal_get_dev_id()             0x47B
+#define port_hal_get_rev_id()             0
+
+#define port_hal_get_cpu_freq()           HAL_RCC_GetSYSCLKFreq()       // Can be different if CPRE is !=1 (but hal does not provide this service for now)
+#define port_hal_get_sys_freq()           HAL_RCC_GetHCLKFreq()         // This is the AXI frequency returned to host. (on H7P HCLK = ACLK = SYSCLK/BMPRE)
+#define port_hal_get_frequency()          port_hal_get_cpu_freq()
+
+#define port_hal_delay(delay_)            HAL_Delay(delay_)
+#define port_hal_get_tick()               HAL_GetTick()
+
+#define port_get_reload_value()           SysTick->LOAD
+#define port_get_time_value()             SysTick->VAL
+
+#define HAS_EXTRA_CONF                    4
+
+#define HAS_DWT_CTRL                      1
+#define HAS_PMU_CTRL                      0
+#define HAS_SYS_TICK                      1
+
+#define port_dwt_init()                   port_dwt_init_imp()
+#define port_dwt_reset()                  (DWT->CYCCNT = 0)
+#define port_dwt_get_cycles()             (DWT->CYCCNT)
+
+extern hal_uart_handle_t uart_vcp;
+
+__STATIC_INLINE bool port_io_get(uint8_t *c, uint32_t timeout)
+{
+  hal_status_t status;
+
+  if (!c)
+    return false;
+
+  status = HAL_UART_Transmit(&uart_vcp, (uint8_t *)c, 1, timeout);
+
+  if (status == HAL_TIMEOUT)
+    return false;
 
   return (status == HAL_OK);
 }
+
+
+#if defined(HAS_DEDICATED_PRINT_PORT) && HAS_DEDICATED_PRINT_PORT == 1
+
+__STATIC_INLINE void port_io_dedicated_putc(unsigned char ch)
+{
+
+  HAL_UART_Transmit(&uart_vcp, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+
+}
+
+__STATIC_INLINE bool port_io_dedicated_write(uint8_t *buff, int count)
+{
+  hal_status_t status;
+
+  status = HAL_UART_Transmit(&uart_vcp, buff, count, HAL_MAX_DELAY);
+
+  return (status == HAL_OK);
+}
+#endif
+
+__STATIC_INLINE bool port_io_write(uint8_t *buff, int count)
+{
+  hal_status_t status;
+  
+  status = HAL_UART_Transmit(&uart_vcp, buff, count, HAL_MAX_DELAY);
+  
+  return (status == HAL_OK);
+}
+
+__STATIC_INLINE bool port_io_read(uint8_t *buff, int count)
+{
+  hal_status_t status;
+  
+  status = HAL_UART_Receive(&uart_vcp, buff, count, HAL_MAX_DELAY);
+  
+  return (status == HAL_OK);
+}
+
+
 
 #elif defined(SR5E1)
 
@@ -570,7 +681,8 @@ __STATIC_INLINE bool port_io_read(uint8_t *buff, int count)
 
 void port_dwt_init_imp(void);
 void port_hal_set_extra_conf(uint32_t *extra);
-
+void port_dwt_reset_imp();
+uint32_t port_dwt_get_ticks_imp();
 
 /* -----------------------------------------------------------------------------
  * Set LC_PRINT(.) definition
@@ -579,7 +691,7 @@ void port_hal_set_extra_conf(uint32_t *extra);
 
 #if !defined(USE_PRINTF_FROM_TOOL) || USE_PRINTF_FROM_TOOL != 1
 
-//#include "lc_print.h"
+#include "lc_print.h"
 #include <stddef.h>
 #include <stdarg.h>
 

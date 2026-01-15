@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    audio_bm.c
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   * @brief
   ******************************************************************************
   * @attention
@@ -53,7 +53,6 @@ static void MPU_Config(void);
 static void Ext_Mem_Config(void);
 static void Int_Mem_Config(void);
 static void SleepClks_init(void);
-static void Error_Handler(void);
 static void Record_Init(void);
 static void NPU_SettingsLog(void);
 
@@ -78,6 +77,9 @@ static AudioBM_proc_t audio_proc_ctx;
 #if (CTRL_X_CUBE_AI_AUDIO_OUT==COM_TYPE_HEADSET)
 int16_t  playback_buf[PLAYBACK_BUFFER_SIZE] __NON_CACHEABLE;
 #endif
+
+static const char *sAiAudioClassLabels[CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER] = \
+                                                 CTRL_X_CUBE_AI_MODEL_CLASS_LIST;
 
 /**
   * @brief  Initializes the system according to the application
@@ -113,6 +115,7 @@ void init_bm(void)
   IAC_Config();
   SCB_EnableICache();
   SCB_EnableDCache();
+  port_dwt_init_imp();
   SleepClks_init(); /* configures for sleep */
 
   /* BSP inits */
@@ -178,14 +181,14 @@ void exec_bm(void)
  */
 void initAudioProc(AudioBM_proc_t * ctx_ptr)
 {
-  struct npu_model_info *pxInfo;
   /* init test facilities */
   test_init();
   /* get the AI model */
-  AiDPULoadModel( &ctx_ptr->aiCtx, CTRL_X_CUBE_AI_MODEL_NAME );
-  pxInfo     = &ctx_ptr->aiCtx.net_exec_ctx->info;
-  ctx_ptr->ai_in_ptr = (int8_t *) LL_Buffer_addr_start(pxInfo->in_bufs[0]);
-  ctx_ptr->ai_out_ptr = pxInfo->out_bufs[0] ;
+  AiDPULoadModel( &ctx_ptr->aiCtx);
+  ctx_ptr->aiCtx.classes = sAiAudioClassLabels;
+  ctx_ptr->ai_in_ptr = (int8_t *) ctx_ptr->aiCtx.p_stai_inputs[0];
+  ctx_ptr->ai_out_ptr = (LL_Buffer_InfoTypeDef *) ctx_ptr->aiCtx.p_stai_outputs[0];
+
   /* clear input samples array ( get silence on first overlayed patch */
   memset(ctx_ptr->proc_buff,0,PATCH_LENGTH*sizeof(int16_t));
   /* Audio Preprocessing init */
@@ -213,7 +216,7 @@ void initAudioProc(AudioBM_proc_t * ctx_ptr)
 bool audio_process(AudioBM_acq_t * acq_ctx_ptr,AudioBM_proc_t * proc_ctx_ptr)
 {
 
-#if (CTRL_X_CUBE_AI_MODE_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
+#if (CTRL_X_CUBE_AI_MODEL_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
   bool isNotSilence, isPlayback;
 #endif
 
@@ -238,7 +241,7 @@ bool audio_process(AudioBM_acq_t * acq_ctx_ptr,AudioBM_proc_t * proc_ctx_ptr)
   /* Audio pre processing */
   PreProc_DPU(&proc_ctx_ptr->audioPreCtx, proc_buf, proc_ctx_ptr->ai_in_ptr );
 
-#if (CTRL_X_CUBE_AI_MODE_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
+#if (CTRL_X_CUBE_AI_MODEL_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
   isNotSilence = (proc_ctx_ptr->audioPreCtx.S_Spectr.spectro_sum > CTRL_X_CUBE_AI_SPECTROGRAM_SILENCE_THR);
   isPlayback = test_probe_in(&proc_ctx_ptr->aiCtx,&proc_ctx_ptr->audioPreCtx);
 #endif
@@ -249,14 +252,14 @@ bool audio_process(AudioBM_acq_t * acq_ctx_ptr,AudioBM_proc_t * proc_ctx_ptr)
   /* AI processing */
   AiDPUProcess(&proc_ctx_ptr->aiCtx);
 
-#if (CTRL_X_CUBE_AI_MODE_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
-  if (isNotSilence || isPlayback) printInferenceResults(proc_ctx_ptr->ai_out_ptr);
+#if (CTRL_X_CUBE_AI_MODEL_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
+  if (isNotSilence || isPlayback) printInferenceResults(&proc_ctx_ptr->aiCtx);
 #endif
 
 #if (CTRL_X_CUBE_AI_POSTPROC==CTRL_AI_ISTFT)
   PostProc_DPU(&proc_ctx_ptr->audioPostCtx,
       proc_ctx_ptr->audioPreCtx.pCplxSpectrum,
-      (float32_t *) LL_Buffer_addr_start(proc_ctx_ptr->ai_out_ptr),
+      (float32_t *) proc_ctx_ptr->ai_in_ptr,
       proc_ctx_ptr->audio_out);
 #endif
 
@@ -453,26 +456,24 @@ void printCpuStats(void)
 }
 #endif
 
-#if (CTRL_X_CUBE_AI_MODE_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
+#if (CTRL_X_CUBE_AI_MODEL_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
 /**
 * @brief  Displays Inference processing outputs
 * @param  None
 * @retval None
 */
-void printInferenceResults(const LL_Buffer_InfoTypeDef* pBuffRes)
+void printInferenceResults(const AIProcCtx_t* AIProcCtx)
 {
   /**
   * Specifies the labels for the classes of the demo.
   */
 
-  const char* sAiClassLabels[CTRL_X_CUBE_AI_MODE_CLASS_NUMBER] \
-  = CTRL_X_CUBE_AI_MODE_CLASS_LIST;
-  float *nn_out =  (float *) LL_Buffer_addr_start(pBuffRes);
+  const char* sAiClassLabels[CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER]  = CTRL_X_CUBE_AI_MODEL_CLASS_LIST;
+  float *nn_out =  (float *) AIProcCtx->p_stai_outputs[0];
 
-  uint32_t nn_out_len = get_ll_buffer_size(pBuffRes)/sizeof(float);
   float max_out = nn_out[0];
   uint32_t max_idx = 0;
-  for(uint32_t i = 1; i < nn_out_len; i++)
+  for(uint32_t i = 1; i < CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER; i++)
   {
     if(nn_out[i] > max_out)
     {
@@ -909,15 +910,3 @@ static void SleepClks_init(void)
   LL_MISC_EnableClockLowPower(~0);
 }
 
-/**
-* @brief  This function is executed in case of error occurrence.
-* @param  None
-* @retval None
-*/
-static void Error_Handler(void)
-{
-  __disable_irq();
-  while (1)
-  {
-  }
-}

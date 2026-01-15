@@ -75,7 +75,7 @@
 #include <string.h>
 #include <stdarg.h>
 
-#define USE_PRINTF_FROM_TOOL 1
+// #define USE_PRINTF_FROM_TOOL 1
 
 #include "aiTestUtility.h"
 

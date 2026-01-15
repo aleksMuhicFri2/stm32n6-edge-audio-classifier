@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    tasks_def.h
   * @author  STMicroelectronics AIS application team
-  * @version V2.0.0
-  * @date    02-May-2025
+  * @version V2.2.0
+  * @date    12-Jan-2025
   *
   * @brief
   *

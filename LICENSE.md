@@ -8,5 +8,5 @@
 | BSP Components               | STMicroelectronics                 | BSD-3-Clause
 | AI Runtime                   | STMicroelectronics                 | SLA0044
 | Audio Preprocessing Library  | STMicroelectronics                 | BSD-3-Clause
-| Binaries                     | STMicroelectronics                 | SLA0044
+| Binary                     | STMicroelectronics                 | SLA0044
 | Projects                     | STMicroelectronics                 | SLA0044

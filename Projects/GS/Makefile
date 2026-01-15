@@ -22,6 +22,7 @@ C_SOURCES += \
 ../../Projects/Common/logging.c\
 ../../Projects/Common/misc_toolbox.c\
 ../../Projects/Common/pm_dvfs.c\
+../../Projects/Common/lc_print.c\
 ../../Projects/Common/cpu_stats.c\
 ../../Projects/Common/system_clock_config.c\
 
@@ -44,8 +45,10 @@ C_SOURCES += \
 ../../Projects/X-CUBE-AI/aiTestUtility.c\
 ../../Projects/X-CUBE-AI/ai_device_adaptor.c\
 ../../Projects/X-CUBE-AI/atonn/ai_io_buffers.c\
-../../Projects/X-CUBE-AI/atonn/ai_wrapper_ATON.c\
+../../Projects/X-CUBE-AI/atonn/aiTestHelper_ST_AI.c\
+../../Projects/X-CUBE-AI/atonn/ai_wrapper_ATON_ST_AI.c\
 ../../Projects/X-CUBE-AI/models/network.c\
+../../Projects/X-CUBE-AI/models/stai_network.c\
 
 C_SOURCES += \
 ../../Drivers/BSP/Components/aps256xx/aps256xx.c\
@@ -111,8 +114,6 @@ C_SOURCES += \
 ../../Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_tim.c\
 
 C_SOURCES += \
-../../Middlewares/ST/AI/Npu/Devices/STM32N6XX/mcu_cache.c\
-../../Middlewares/ST/AI/Npu/Devices/STM32N6XX/npu_cache.c\
 ../../Middlewares/ST/AI/Npu/ll_aton/ecloader.c\
 ../../Middlewares/ST/AI/Npu/ll_aton/ll_aton.c\
 ../../Middlewares/ST/AI/Npu/ll_aton/ll_aton_cipher.c\
@@ -124,9 +125,12 @@ C_SOURCES += \
 ../../Middlewares/ST/AI/Npu/ll_aton/ll_aton_profiler.c\
 ../../Middlewares/ST/AI/Npu/ll_aton/ll_aton_rt_main.c\
 ../../Middlewares/ST/AI/Npu/ll_aton/ll_aton_runtime.c\
+../../Middlewares/ST/AI/Npu/ll_aton/ll_aton_stai_internal.c\
 ../../Middlewares/ST/AI/Npu/ll_aton/ll_aton_util.c\
 ../../Middlewares/ST/AI/Npu/ll_aton/ll_sw_float.c\
 ../../Middlewares/ST/AI/Npu/ll_aton/ll_sw_integer.c\
+../../Middlewares/ST/AI/Npu/Devices/STM32N6xx/mcu_cache.c\
+../../Middlewares/ST/AI/Npu/Devices/STM32N6xx/npu_cache.c\
 
 C_SOURCES += \
 ../../Middlewares/ST/STM32_AI_AudioPreprocessing_Library/Src/audio_din.c\
@@ -189,10 +193,12 @@ C_DEFS =\
 -DUSE_FULL_ASSERT\
 -DUSE_FULL_LL_DRIVER\
 -DVECT_TAB_SRAM\
+-DLL_ATON_DBG_BUFFER_INFO_EXCLUDED=1\
+-DLL_ATON_DUMP_DEBUG_API\
 -DLL_ATON_PLATFORM=LL_ATON_PLAT_STM32N6\
 -DLL_ATON_RT_MODE=LL_ATON_RT_ASYNC\
--DLL_ATON_SW_FALLBACK -DLL_ATON_EB_DBG_INFO -DLL_ATON_DUMP_DEBUG_API\
--DLL_ATON_DBG_BUFFER_INFO_EXCLUDED=1\
+-DLL_ATON_SW_FALLBACK\
+-DLL_ATON_EB_DBG_INFO\
 -DFEAT_FREERTOS\
 
 C_INCLUDES = \
@@ -201,6 +207,7 @@ C_INCLUDES = \
 -I../Common\
 -I../X-CUBE-AI/atonn\
 -I../X-CUBE-AI\
+-I../X-CUBE-AI/models\
 -I../../Drivers/CMSIS/Core/Include \
 -I../../Drivers/CMSIS/DSP/Include\
 -I../../Drivers/CMSIS/DSP/PrivateInclude \
@@ -208,7 +215,7 @@ C_INCLUDES = \
 -I../../Drivers/CMSIS/Device/ST/STM32N6xx/Include/Templates\
 -I../../Drivers/STM32N6xx_HAL_Driver/Inc\
 -I../../Middlewares/ST/AI/Inc\
--I../../Middlewares/ST/AI/Npu/Devices/STM32N6XX\
+-I../../Middlewares/ST/AI/Npu/Devices/STM32N6xx\
 -I../../Middlewares/ST/AI/Npu/ll_aton\
 -I../../Middlewares/ST/STM32_AI_AudioPreprocessing_Library/Inc\
 -I../../Drivers/BSP/Components/mx66uw1g45g\
@@ -240,7 +247,7 @@ AS_FLAGS += --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb
 LDSCRIPT = STM32CubeIDE/STM32N657XX_LRUN.ld
 
 # libraries
-LIBS = -lc -lm -lnosys -l:NetworkRuntime1020_CM55_GCC.a
+LIBS = -lc -lm -lnosys -l:NetworkRuntime1100_CM55_GCC.a
 LIBDIR = -L../../Middlewares/ST/AI/Lib/GCC/ARMCortexM55
 LD_FLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS)
 LD_FLAGS += -Wl,--cref -Wl,--gc-sections
@@ -284,12 +291,11 @@ env:
 clean_all : clean_bm clean_bm_lp clean_freertos clean_freertos_lp
 	@echo "all cleaned"
 
-Binaries:  $(BUILD_DIR_BM)/$(TARGET)_sign.bin \
-$(BUILD_DIR_BM_LP)/$(TARGET)_sign.bin\
-$(BUILD_DIR_FREERTOS)/$(TARGET)_sign.bin\
-$(BUILD_DIR_FREERTOS_LP)/$(TARGET)_sign.bin\
-$(BUILD_DIR_FREERTOS)/$(TARGET)_sign.bin
-
+Binaries:  $(BUILD_DIR_BM)/$(TARGET)_sign.hex \
+$(BUILD_DIR_BM_LP)/$(TARGET)_sign.hex\
+$(BUILD_DIR_FREERTOS)/$(TARGET)_sign.hex\
+$(BUILD_DIR_FREERTOS_LP)/$(TARGET)_sign.hex\
+$(BUILD_DIR_FREERTOS)/$(TARGET)_sign.hex
 #######################################
 # dependencies
 #######################################

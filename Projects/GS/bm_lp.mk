@@ -40,6 +40,9 @@ flash_bm_lp: $(BUILD_DIR_BM_LP)/$(TARGET)_sign.bin
 $(BUILD_DIR_BM_LP)/$(TARGET)_sign.bin: $(BUILD_DIR_BM_LP)/$(TARGET).bin
 	$(SIGNER) -s -bin $< -nk -t ssbl -hv 2.3 -o $(BUILD_DIR_BM_LP)/$(TARGET)_sign.bin
 
+$(BUILD_DIR_BM_LP)/$(TARGET)_sign.hex: $(BUILD_DIR_BM_LP)/$(TARGET)_sign.bin
+	$(CP) -I binary $< --change-addresses 0x70100000 -O ihex $@
+
 clean_bm_lp:
 	@echo "clean bm lp"
 	@rm -fR $(BUILD_DIR_BM_LP)

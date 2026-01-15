@@ -96,8 +96,8 @@ def gen_h_user_file(config):
         f.write("#define CTRL_AI_HW_SELECT                        STM32N6570-DK\n")
         if config.model.model_type == "STFTTCNN" :
             f.write('#define CTRL_X_CUBE_AI_MODEL_NAME                "X-CUBE-AI STFT TCN"\n')
-            f.write('#define CTRL_X_CUBE_AI_MODE_NB_OUTPUT            (1U)\n')
-            f.write('#define CTRL_X_CUBE_AI_MODE_OUTPUT_1             (CTRL_AI_SPECTROGRAM)\n')
+            f.write('#define CTRL_X_CUBE_AI_MODEL_NB_OUTPUT            (1U)\n')
+            f.write('#define CTRL_X_CUBE_AI_MODEL_OUTPUT_1             (CTRL_AI_SPECTROGRAM)\n')
             f.write('#define CTRL_X_CUBE_AI_SENSOR_TYPE               (COM_TYPE_MIC)\n')
             f.write('#define CTRL_X_CUBE_AI_AUDIO_OUT                 (COM_TYPE_HEADSET)\n')
             f.write('#define CTRL_X_CUBE_AI_SENSOR_NAME               "imp34dt05"\n')
@@ -114,10 +114,10 @@ def gen_h_user_file(config):
         else :
             f.write('\n')
             f.write('#define CTRL_X_CUBE_AI_MODEL_NAME                 "X-CUBE-AI AED"\n')
-            f.write('#define CTRL_X_CUBE_AI_MODE_NB_OUTPUT            (1U)\n')
-            f.write('#define CTRL_X_CUBE_AI_MODE_OUTPUT_1             (CTRL_AI_CLASS_DISTRIBUTION)\n')
-            f.write('#define CTRL_X_CUBE_AI_MODE_CLASS_NUMBER         ({}U)\n'.format(n_classes))
-            f.write('#define CTRL_X_CUBE_AI_MODE_CLASS_LIST           {}\n'.format(classes))
+            f.write('#define CTRL_X_CUBE_AI_MODEL_NB_OUTPUT            (1U)\n')
+            f.write('#define CTRL_X_CUBE_AI_MODEL_OUTPUT_1             (CTRL_AI_CLASS_DISTRIBUTION)\n')
+            f.write('#define CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER         ({}U)\n'.format(n_classes))
+            f.write('#define CTRL_X_CUBE_AI_MODEL_CLASS_LIST           {}\n'.format(classes))
             f.write('#define CTRL_X_CUBE_AI_SENSOR_TYPE               COM_TYPE_MIC\n')
             f.write('#define CTRL_X_CUBE_AI_SENSOR_NAME               "imp34dt05"\n')
             # NOTE : Letting user choose mic ODR.
