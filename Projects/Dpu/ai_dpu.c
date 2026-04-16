@@ -151,7 +151,7 @@ DPU_StatusTypeDef AiDPULoadModel(AIProcCtx_t * pxCtx)
     Error_Handler();
   }
 
-    /* Set IO ----------------------------------------------------------------- */
+  /* Set IO ----------------------------------------------------------------- */
   stai_err = stai_network_get_inputs(pxCtx->p_network, pxCtx->p_stai_inputs, &_dummy);
   if (STAI_SUCCESS != stai_err )
   {
@@ -179,11 +179,7 @@ DPU_StatusTypeDef AiDPULoadModel(AIProcCtx_t * pxCtx)
   pxCtx->in_height  = pxCtx->info.inputs[0].shape.data[AI_DPU_HEIGHT];
   pxCtx->out_height = pxCtx->info.outputs[0].shape.data[AI_DPU_HEIGHT];
 
-  if ( COM_TYPE_ACC == pxCtx->sensor_type && 3 != pxCtx->in_width )
-  {
-    LogError("AiDPULoadModel: Accelero needs a width of 3 \n\r");
-    return DPU_ERROR;
-  }
+  LogInfo("\n\r");
 
   stai_log_network_infos(pxCtx->p_network);
 

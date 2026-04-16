@@ -259,7 +259,7 @@ bool audio_process(AudioBM_acq_t * acq_ctx_ptr,AudioBM_proc_t * proc_ctx_ptr)
 #if (CTRL_X_CUBE_AI_POSTPROC==CTRL_AI_ISTFT)
   PostProc_DPU(&proc_ctx_ptr->audioPostCtx,
       proc_ctx_ptr->audioPreCtx.pCplxSpectrum,
-      (float32_t *) proc_ctx_ptr->ai_in_ptr,
+      (float32_t *) proc_ctx_ptr->ai_out_ptr,
       proc_ctx_ptr->audio_out);
 #endif
 

@@ -42,13 +42,9 @@ C_SOURCES += \
 ../../Projects/GS/Src/test.c\
 
 C_SOURCES += \
-../../Projects/X-CUBE-AI/aiTestUtility.c\
-../../Projects/X-CUBE-AI/ai_device_adaptor.c\
-../../Projects/X-CUBE-AI/atonn/ai_io_buffers.c\
-../../Projects/X-CUBE-AI/atonn/aiTestHelper_ST_AI.c\
-../../Projects/X-CUBE-AI/atonn/ai_wrapper_ATON_ST_AI.c\
+../../Projects/X-CUBE-AI/aiTestHelper_ST_AI.c\
 ../../Projects/X-CUBE-AI/models/network.c\
-../../Projects/X-CUBE-AI/models/stai_network.c\
+../../Projects/X-CUBE-AI/models/stai_network.c
 
 C_SOURCES += \
 ../../Drivers/BSP/Components/aps256xx/aps256xx.c\
@@ -131,6 +127,8 @@ C_SOURCES += \
 ../../Middlewares/ST/AI/Npu/ll_aton/ll_sw_integer.c\
 ../../Middlewares/ST/AI/Npu/Devices/STM32N6xx/mcu_cache.c\
 ../../Middlewares/ST/AI/Npu/Devices/STM32N6xx/npu_cache.c\
+../../Middlewares/ST/AI/Misc/Src/aiTestUtility.c\
+../../Middlewares/ST/AI/Misc/Src/ai_device_adaptor.c\
 
 C_SOURCES += \
 ../../Middlewares/ST/STM32_AI_AudioPreprocessing_Library/Src/audio_din.c\
@@ -205,7 +203,6 @@ C_INCLUDES = \
 -IInc\
 -I../Dpu\
 -I../Common\
--I../X-CUBE-AI/atonn\
 -I../X-CUBE-AI\
 -I../X-CUBE-AI/models\
 -I../../Drivers/CMSIS/Core/Include \
@@ -215,6 +212,7 @@ C_INCLUDES = \
 -I../../Drivers/CMSIS/Device/ST/STM32N6xx/Include/Templates\
 -I../../Drivers/STM32N6xx_HAL_Driver/Inc\
 -I../../Middlewares/ST/AI/Inc\
+-I../../Middlewares/ST/AI/Misc/Inc\
 -I../../Middlewares/ST/AI/Npu/Devices/STM32N6xx\
 -I../../Middlewares/ST/AI/Npu/ll_aton\
 -I../../Middlewares/ST/STM32_AI_AudioPreprocessing_Library/Inc\
@@ -247,7 +245,7 @@ AS_FLAGS += --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb
 LDSCRIPT = STM32CubeIDE/STM32N657XX_LRUN.ld
 
 # libraries
-LIBS = -lc -lm -lnosys -l:NetworkRuntime1100_CM55_GCC.a
+LIBS = -lc -lm -lnosys -l:NetworkRuntime1200_CM55_GCC.a
 LIBDIR = -L../../Middlewares/ST/AI/Lib/GCC/ARMCortexM55
 LD_FLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS)
 LD_FLAGS += -Wl,--cref -Wl,--gc-sections

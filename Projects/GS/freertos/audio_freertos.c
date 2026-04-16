@@ -33,7 +33,7 @@
 
 static StaticTask_t main_thread;
 static StackType_t main_thread_stack[configMINIMAL_STACK_SIZE];
-
+extern void vPortSetupTimerInterrupt(void);
 
 #define ALIGN_VALUE(_v_,_a_) (((_v_) + (_a_) - 1) & ~((_a_) - 1))
 

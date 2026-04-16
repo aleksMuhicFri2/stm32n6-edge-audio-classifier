@@ -401,7 +401,7 @@ STAI_API_DECLARE_END
   }
 #define STAI_NETWORK_WEIGHTS_NAMES \
   { \
-    "Conv2D_3_weights", "Conv2D_10_weights", "Conv2D_17_weights", "Conv2D_24_weights", "Conv2D_31_weights", "Conv2D_35_weights", "Conv2D_38_weights", "Conv2D_45_weights", "Conv2D_49_weights", "Conv2D_52_weights", "Conv2D_56_weights", "Conv2D_59_weights", "Conv2D_63_weights", "Conv2D_66_weights", "Conv2D_70_weights", "Conv2D_73_weights", "Conv2D_77_weights", "Conv2D_80_weights", "Conv2D_87_weights", "Conv2D_91_weights", "Conv2D_94_weights", "Gemm_99_weights_transposed_3", "Conv2D_3_off_bias_14", "Conv2D_7_zero_off_17", "Conv2D_7_off_bias_23", "Conv2D_10_zero_off_26", "Conv2D_10_off_bias_32", "Conv2D_14_zero_off_35", "Conv2D_14_off_bias_41", "Conv2D_17_zero_off_44", "Conv2D_17_off_bias_50", "Conv2D_21_zero_off_53", "Conv2D_21_off_bias_59", "Conv2D_24_zero_off_62", "Conv2D_24_off_bias_68", "Conv2D_28_zero_off_71", "Conv2D_28_off_bias_77", "Conv2D_31_zero_off_80", "Conv2D_31_off_bias_86", "Conv2D_35_zero_off_89", "Conv2D_35_off_bias_95", "Conv2D_38_zero_off_98", "Conv2D_38_off_bias_104", "Conv2D_42_zero_off_107", "Conv2D_42_off_bias_113", "Conv2D_45_zero_off_116", "Conv2D_45_off_bias_122", "Conv2D_49_zero_off_125", "Conv2D_49_off_bias_131", "Conv2D_52_zero_off_134", "Conv2D_52_off_bias_140", "Conv2D_56_zero_off_143", "Conv2D_56_off_bias_149", "Conv2D_59_zero_off_152", "Conv2D_59_off_bias_158", "Conv2D_63_zero_off_161", "Conv2D_63_off_bias_167", "Conv2D_66_zero_off_170", "Conv2D_66_off_bias_176", "Conv2D_70_zero_off_179", "Conv2D_70_off_bias_185", "Conv2D_73_zero_off_188", "Conv2D_73_off_bias_194", "Conv2D_77_zero_off_197", "Conv2D_77_off_bias_203", "Conv2D_80_zero_off_206", "Conv2D_80_off_bias_212", "Conv2D_84_zero_off_215", "Conv2D_84_off_bias_221", "Conv2D_87_zero_off_224", "Conv2D_87_mul_scale_225", "Conv2D_87_off_bias_230", "Conv2D_91_zero_off_233", "Conv2D_91_mul_scale_234", "Conv2D_91_off_bias_239", "Conv2D_94_zero_off_242", "Conv2D_94_mul_scale_243", "Conv2D_94_off_bias_248", "Gemm_99_conv_4_zero_off_251", "Gemm_99_conv_4_off_bias_257", "Conv2D_7_weights_inflated_260", "Conv2D_14_weights_inflated_262", "Conv2D_21_weights_inflated_264", "Conv2D_28_weights_inflated_266", "Conv2D_42_weights_inflated_269", "Conv2D_84_weights_inflated_276", "RequantizeLinear_inserted_id249_250_requantize_zero", "Conv2D_3_off_bias_12_A_16_252", "Conv2D_7_off_bias_21_A_16_253", "Conv2D_10_off_bias_30_A_16_254", "Conv2D_14_off_bias_39_A_16_255", "Conv2D_17_off_bias_48_A_16_256", "Conv2D_21_off_bias_57_A_16_257", "Conv2D_24_off_bias_66_A_16_258", "Conv2D_28_off_bias_75_A_16_259", "Conv2D_31_off_bias_84_A_16_260", "Conv2D_35_off_bias_93_A_16_261", "Conv2D_38_off_bias_102_A_16_262", "Conv2D_42_off_bias_111_A_16_263", "Conv2D_45_off_bias_120_A_16_264", "Conv2D_49_off_bias_129_A_16_265", "Conv2D_52_off_bias_138_A_16_266", "Conv2D_56_off_bias_147_A_16_267", "Conv2D_59_off_bias_156_A_16_268", "Conv2D_63_off_bias_165_A_16_269", "Conv2D_66_off_bias_174_A_16_270", "Conv2D_70_off_bias_183_A_16_271", "Conv2D_73_off_bias_192_A_16_272", "Conv2D_77_off_bias_201_A_16_273", "Conv2D_80_off_bias_210_A_16_274", "Conv2D_84_off_bias_219_A_16_275", "Gemm_99_conv_4_off_bias_255_A_16_276", "Gemm_99_squeeze_y_5_277_atonn_internal_scale", "Gemm_99_squeeze_y_5_277_atonn_internal_offset" \
+    "Conv2D_3_weights", "Conv2D_10_weights", "Conv2D_17_weights", "Conv2D_24_weights", "Conv2D_31_weights", "Conv2D_35_weights", "Conv2D_38_weights", "Conv2D_45_weights", "Conv2D_49_weights", "Conv2D_52_weights", "Conv2D_56_weights", "Conv2D_59_weights", "Conv2D_63_weights", "Conv2D_66_weights", "Conv2D_70_weights", "Conv2D_73_weights", "Conv2D_77_weights", "Conv2D_80_weights", "Conv2D_87_weights", "Conv2D_91_weights", "Conv2D_94_weights", "Gemm_99_weights_transposed_3", "Conv2D_3_off_bias_14", "Conv2D_7_zero_off_17", "Conv2D_7_off_bias_23", "Conv2D_10_zero_off_26", "Conv2D_10_off_bias_32", "Conv2D_14_zero_off_35", "Conv2D_14_off_bias_41", "Conv2D_17_zero_off_44", "Conv2D_17_off_bias_50", "Conv2D_21_zero_off_53", "Conv2D_21_off_bias_59", "Conv2D_24_zero_off_62", "Conv2D_24_off_bias_68", "Conv2D_28_zero_off_71", "Conv2D_28_off_bias_77", "Conv2D_31_zero_off_80", "Conv2D_31_off_bias_86", "Conv2D_35_zero_off_89", "Conv2D_35_off_bias_95", "Conv2D_38_zero_off_98", "Conv2D_38_off_bias_104", "Conv2D_42_zero_off_107", "Conv2D_42_off_bias_113", "Conv2D_45_zero_off_116", "Conv2D_45_off_bias_122", "Conv2D_49_zero_off_125", "Conv2D_49_off_bias_131", "Conv2D_52_zero_off_134", "Conv2D_52_off_bias_140", "Conv2D_56_zero_off_143", "Conv2D_56_off_bias_149", "Conv2D_59_zero_off_152", "Conv2D_59_off_bias_158", "Conv2D_63_zero_off_161", "Conv2D_63_off_bias_167", "Conv2D_66_zero_off_170", "Conv2D_66_off_bias_176", "Conv2D_70_zero_off_179", "Conv2D_70_off_bias_185", "Conv2D_73_zero_off_188", "Conv2D_73_off_bias_194", "Conv2D_77_zero_off_197", "Conv2D_77_off_bias_203", "Conv2D_80_zero_off_206", "Conv2D_80_off_bias_212", "Conv2D_84_zero_off_215", "Conv2D_84_off_bias_221", "Conv2D_87_zero_off_224", "Conv2D_87_mul_scale_225", "Conv2D_87_off_bias_230", "Conv2D_91_zero_off_233", "Conv2D_91_mul_scale_234", "Conv2D_91_off_bias_239", "Conv2D_94_zero_off_242", "Conv2D_94_mul_scale_243", "Conv2D_94_off_bias_248", "Gemm_99_conv_4_zero_off_251", "Gemm_99_conv_4_off_bias_257", "Conv2D_7_weights_inflated_260", "Conv2D_14_weights_inflated_262", "Conv2D_21_weights_inflated_264", "Conv2D_28_weights_inflated_266", "Conv2D_42_weights_inflated_269", "Conv2D_84_weights_inflated_276", "RequantizeLinear_inserted_id498_500_requantize_zero", "Conv2D_3_off_bias_12_A_16_504", "Conv2D_7_off_bias_21_A_16_506", "Conv2D_10_off_bias_30_A_16_508", "Conv2D_14_off_bias_39_A_16_510", "Conv2D_17_off_bias_48_A_16_512", "Conv2D_21_off_bias_57_A_16_514", "Conv2D_24_off_bias_66_A_16_516", "Conv2D_28_off_bias_75_A_16_518", "Conv2D_31_off_bias_84_A_16_520", "Conv2D_35_off_bias_93_A_16_522", "Conv2D_38_off_bias_102_A_16_524", "Conv2D_42_off_bias_111_A_16_526", "Conv2D_45_off_bias_120_A_16_528", "Conv2D_49_off_bias_129_A_16_530", "Conv2D_52_off_bias_138_A_16_532", "Conv2D_56_off_bias_147_A_16_534", "Conv2D_59_off_bias_156_A_16_536", "Conv2D_63_off_bias_165_A_16_538", "Conv2D_66_off_bias_174_A_16_540", "Conv2D_70_off_bias_183_A_16_542", "Conv2D_73_off_bias_192_A_16_544", "Conv2D_77_off_bias_201_A_16_546", "Conv2D_80_off_bias_210_A_16_548", "Conv2D_84_off_bias_219_A_16_550", "Gemm_99_conv_4_off_bias_255_A_16_552", "Gemm_99_squeeze_y_5_554_atonn_internal_scale", "Gemm_99_squeeze_y_5_554_atonn_internal_offset" \
   }
 #define STAI_NETWORK_WEIGHTS_FORMATS \
   { \
@@ -2478,7 +2478,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_87_ALIGNMENT (16)
-#define STAI_NETWORK_WEIGHTS_87_NAME "RequantizeLinear_inserted_id249_250_requantize_zero"
+#define STAI_NETWORK_WEIGHTS_87_NAME "RequantizeLinear_inserted_id498_500_requantize_zero"
 #define STAI_NETWORK_WEIGHTS_87_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_87_FORMAT (STAI_FORMAT_Q7)
 #define STAI_NETWORK_WEIGHTS_87_SIZE (1)
@@ -2501,7 +2501,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_88_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_88_NAME "Conv2D_3_off_bias_12_A_16_252"
+#define STAI_NETWORK_WEIGHTS_88_NAME "Conv2D_3_off_bias_12_A_16_504"
 #define STAI_NETWORK_WEIGHTS_88_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_88_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_88_SIZE (32)
@@ -2524,7 +2524,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_89_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_89_NAME "Conv2D_7_off_bias_21_A_16_253"
+#define STAI_NETWORK_WEIGHTS_89_NAME "Conv2D_7_off_bias_21_A_16_506"
 #define STAI_NETWORK_WEIGHTS_89_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_89_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_89_SIZE (32)
@@ -2547,7 +2547,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_90_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_90_NAME "Conv2D_10_off_bias_30_A_16_254"
+#define STAI_NETWORK_WEIGHTS_90_NAME "Conv2D_10_off_bias_30_A_16_508"
 #define STAI_NETWORK_WEIGHTS_90_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_90_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_90_SIZE (64)
@@ -2570,7 +2570,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_91_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_91_NAME "Conv2D_14_off_bias_39_A_16_255"
+#define STAI_NETWORK_WEIGHTS_91_NAME "Conv2D_14_off_bias_39_A_16_510"
 #define STAI_NETWORK_WEIGHTS_91_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_91_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_91_SIZE (64)
@@ -2593,7 +2593,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_92_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_92_NAME "Conv2D_17_off_bias_48_A_16_256"
+#define STAI_NETWORK_WEIGHTS_92_NAME "Conv2D_17_off_bias_48_A_16_512"
 #define STAI_NETWORK_WEIGHTS_92_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_92_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_92_SIZE (128)
@@ -2616,7 +2616,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_93_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_93_NAME "Conv2D_21_off_bias_57_A_16_257"
+#define STAI_NETWORK_WEIGHTS_93_NAME "Conv2D_21_off_bias_57_A_16_514"
 #define STAI_NETWORK_WEIGHTS_93_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_93_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_93_SIZE (128)
@@ -2639,7 +2639,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_94_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_94_NAME "Conv2D_24_off_bias_66_A_16_258"
+#define STAI_NETWORK_WEIGHTS_94_NAME "Conv2D_24_off_bias_66_A_16_516"
 #define STAI_NETWORK_WEIGHTS_94_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_94_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_94_SIZE (128)
@@ -2662,7 +2662,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_95_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_95_NAME "Conv2D_28_off_bias_75_A_16_259"
+#define STAI_NETWORK_WEIGHTS_95_NAME "Conv2D_28_off_bias_75_A_16_518"
 #define STAI_NETWORK_WEIGHTS_95_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_95_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_95_SIZE (128)
@@ -2685,7 +2685,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_96_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_96_NAME "Conv2D_31_off_bias_84_A_16_260"
+#define STAI_NETWORK_WEIGHTS_96_NAME "Conv2D_31_off_bias_84_A_16_520"
 #define STAI_NETWORK_WEIGHTS_96_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_96_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_96_SIZE (256)
@@ -2708,7 +2708,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_97_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_97_NAME "Conv2D_35_off_bias_93_A_16_261"
+#define STAI_NETWORK_WEIGHTS_97_NAME "Conv2D_35_off_bias_93_A_16_522"
 #define STAI_NETWORK_WEIGHTS_97_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_97_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_97_SIZE (256)
@@ -2731,7 +2731,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_98_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_98_NAME "Conv2D_38_off_bias_102_A_16_262"
+#define STAI_NETWORK_WEIGHTS_98_NAME "Conv2D_38_off_bias_102_A_16_524"
 #define STAI_NETWORK_WEIGHTS_98_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_98_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_98_SIZE (256)
@@ -2754,7 +2754,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_99_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_99_NAME "Conv2D_42_off_bias_111_A_16_263"
+#define STAI_NETWORK_WEIGHTS_99_NAME "Conv2D_42_off_bias_111_A_16_526"
 #define STAI_NETWORK_WEIGHTS_99_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_99_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_99_SIZE (256)
@@ -2777,7 +2777,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_100_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_100_NAME "Conv2D_45_off_bias_120_A_16_264"
+#define STAI_NETWORK_WEIGHTS_100_NAME "Conv2D_45_off_bias_120_A_16_528"
 #define STAI_NETWORK_WEIGHTS_100_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_100_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_100_SIZE (512)
@@ -2800,7 +2800,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_101_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_101_NAME "Conv2D_49_off_bias_129_A_16_265"
+#define STAI_NETWORK_WEIGHTS_101_NAME "Conv2D_49_off_bias_129_A_16_530"
 #define STAI_NETWORK_WEIGHTS_101_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_101_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_101_SIZE (512)
@@ -2823,7 +2823,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_102_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_102_NAME "Conv2D_52_off_bias_138_A_16_266"
+#define STAI_NETWORK_WEIGHTS_102_NAME "Conv2D_52_off_bias_138_A_16_532"
 #define STAI_NETWORK_WEIGHTS_102_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_102_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_102_SIZE (512)
@@ -2846,7 +2846,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_103_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_103_NAME "Conv2D_56_off_bias_147_A_16_267"
+#define STAI_NETWORK_WEIGHTS_103_NAME "Conv2D_56_off_bias_147_A_16_534"
 #define STAI_NETWORK_WEIGHTS_103_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_103_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_103_SIZE (512)
@@ -2869,7 +2869,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_104_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_104_NAME "Conv2D_59_off_bias_156_A_16_268"
+#define STAI_NETWORK_WEIGHTS_104_NAME "Conv2D_59_off_bias_156_A_16_536"
 #define STAI_NETWORK_WEIGHTS_104_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_104_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_104_SIZE (512)
@@ -2892,7 +2892,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_105_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_105_NAME "Conv2D_63_off_bias_165_A_16_269"
+#define STAI_NETWORK_WEIGHTS_105_NAME "Conv2D_63_off_bias_165_A_16_538"
 #define STAI_NETWORK_WEIGHTS_105_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_105_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_105_SIZE (512)
@@ -2915,7 +2915,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_106_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_106_NAME "Conv2D_66_off_bias_174_A_16_270"
+#define STAI_NETWORK_WEIGHTS_106_NAME "Conv2D_66_off_bias_174_A_16_540"
 #define STAI_NETWORK_WEIGHTS_106_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_106_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_106_SIZE (512)
@@ -2938,7 +2938,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_107_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_107_NAME "Conv2D_70_off_bias_183_A_16_271"
+#define STAI_NETWORK_WEIGHTS_107_NAME "Conv2D_70_off_bias_183_A_16_542"
 #define STAI_NETWORK_WEIGHTS_107_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_107_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_107_SIZE (512)
@@ -2961,7 +2961,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_108_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_108_NAME "Conv2D_73_off_bias_192_A_16_272"
+#define STAI_NETWORK_WEIGHTS_108_NAME "Conv2D_73_off_bias_192_A_16_544"
 #define STAI_NETWORK_WEIGHTS_108_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_108_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_108_SIZE (512)
@@ -2984,7 +2984,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_109_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_109_NAME "Conv2D_77_off_bias_201_A_16_273"
+#define STAI_NETWORK_WEIGHTS_109_NAME "Conv2D_77_off_bias_201_A_16_546"
 #define STAI_NETWORK_WEIGHTS_109_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_109_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_109_SIZE (512)
@@ -3007,7 +3007,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_110_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_110_NAME "Conv2D_80_off_bias_210_A_16_274"
+#define STAI_NETWORK_WEIGHTS_110_NAME "Conv2D_80_off_bias_210_A_16_548"
 #define STAI_NETWORK_WEIGHTS_110_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_110_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_110_SIZE (512)
@@ -3030,7 +3030,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_111_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_111_NAME "Conv2D_84_off_bias_219_A_16_275"
+#define STAI_NETWORK_WEIGHTS_111_NAME "Conv2D_84_off_bias_219_A_16_550"
 #define STAI_NETWORK_WEIGHTS_111_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_111_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_111_SIZE (512)
@@ -3053,7 +3053,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_112_ALIGNMENT (16)
-#define STAI_NETWORK_WEIGHTS_112_NAME "Gemm_99_conv_4_off_bias_255_A_16_276"
+#define STAI_NETWORK_WEIGHTS_112_NAME "Gemm_99_conv_4_off_bias_255_A_16_552"
 #define STAI_NETWORK_WEIGHTS_112_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST)
 #define STAI_NETWORK_WEIGHTS_112_FORMAT (STAI_FORMAT_Q15)
 #define STAI_NETWORK_WEIGHTS_112_SIZE (10)
@@ -3076,7 +3076,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_113_ALIGNMENT (16)
-#define STAI_NETWORK_WEIGHTS_113_NAME "Gemm_99_squeeze_y_5_277_atonn_internal_scale"
+#define STAI_NETWORK_WEIGHTS_113_NAME "Gemm_99_squeeze_y_5_554_atonn_internal_scale"
 #define STAI_NETWORK_WEIGHTS_113_FLAGS (STAI_FLAG_PREALLOCATED)
 #define STAI_NETWORK_WEIGHTS_113_FORMAT (STAI_FORMAT_FLOAT32)
 #define STAI_NETWORK_WEIGHTS_113_SIZE (1)
@@ -3098,7 +3098,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_WEIGHTS_114_ALIGNMENT (32)
-#define STAI_NETWORK_WEIGHTS_114_NAME "Gemm_99_squeeze_y_5_277_atonn_internal_offset"
+#define STAI_NETWORK_WEIGHTS_114_NAME "Gemm_99_squeeze_y_5_554_atonn_internal_offset"
 #define STAI_NETWORK_WEIGHTS_114_FLAGS (STAI_FLAG_PREALLOCATED)
 #define STAI_NETWORK_WEIGHTS_114_FORMAT (STAI_FORMAT_Q7)
 #define STAI_NETWORK_WEIGHTS_114_SIZE (1)
@@ -3145,7 +3145,7 @@ STAI_API_DECLARE_END
   }
 #define STAI_NETWORK_ACTIVATIONS_NAMES \
   { \
-    "Transpose_1_out_0", "Conv2D_10_zero_off_out_25", "Conv2D_14_zero_off_out_34", "Conv2D_17_zero_off_out_43", "Conv2D_21_zero_off_out_52", "Conv2D_24_zero_off_out_61", "Conv2D_28_zero_off_out_70", "Conv2D_31_zero_off_out_79", "Conv2D_35_zero_off_out_88", "Conv2D_38_zero_off_out_97", "Conv2D_42_zero_off_out_106", "Conv2D_45_zero_off_out_115", "Conv2D_49_zero_off_out_124", "Conv2D_52_zero_off_out_133", "Conv2D_52_out_0_cp_in_6", "Conv2D_56_zero_off_out_142", "Conv2D_59_zero_off_out_151", "Conv2D_59_out_0_cp_in_7", "Conv2D_63_zero_off_out_160", "Conv2D_66_zero_off_out_169", "Conv2D_66_out_0_cp_in_8", "Conv2D_70_zero_off_out_178", "Conv2D_73_zero_off_out_187", "Conv2D_73_out_0_cp_in_9", "Conv2D_77_zero_off_out_196", "Conv2D_80_zero_off_out_205", "Conv2D_80_out_0_cp_in_10", "Conv2D_84_zero_off_out_214", "Conv2D_87_zero_off_out_223", "Conv2D_87_out_0", "Conv2D_91_zero_off_out_232", "Conv2D_94_zero_off_out_241", "Conv2D_94_out_0", "Conv2D_94_off_bias_out_247", "Gemm_99_conv_4_zero_off_out_250", "Gemm_99_conv_4_off_bias_out_256", "Gemm_99_out_0", "Gemm_99_out_0_inserted_out251", "SCRATCH_Softmax_102_PORT_OUT" \
+    "Transpose_1_out_0", "Conv2D_10_zero_off_out_25", "Conv2D_14_zero_off_out_34", "Conv2D_17_zero_off_out_43", "Conv2D_21_zero_off_out_52", "Conv2D_24_zero_off_out_61", "Conv2D_28_zero_off_out_70", "Conv2D_31_zero_off_out_79", "Conv2D_35_zero_off_out_88", "Conv2D_38_zero_off_out_97", "Conv2D_42_zero_off_out_106", "Conv2D_45_zero_off_out_115", "Conv2D_49_zero_off_out_124", "Conv2D_52_zero_off_out_133", "Conv2D_52_out_0_cp_in_6", "Conv2D_56_zero_off_out_142", "Conv2D_59_zero_off_out_151", "Conv2D_59_out_0_cp_in_7", "Conv2D_63_zero_off_out_160", "Conv2D_66_zero_off_out_169", "Conv2D_66_out_0_cp_in_8", "Conv2D_70_zero_off_out_178", "Conv2D_73_zero_off_out_187", "Conv2D_73_out_0_cp_in_9", "Conv2D_77_zero_off_out_196", "Conv2D_80_zero_off_out_205", "Conv2D_80_out_0_cp_in_10", "Conv2D_84_zero_off_out_214", "Conv2D_87_zero_off_out_223", "Conv2D_87_out_0", "Conv2D_91_zero_off_out_232", "Conv2D_94_zero_off_out_241", "Conv2D_94_out_0", "Conv2D_94_off_bias_out_247", "Gemm_99_conv_4_zero_off_out_250", "Gemm_99_conv_4_off_bias_out_256", "Gemm_99_out_0", "Gemm_99_out_0_inserted_out502", "SCRATCH_Softmax_102_PORT_OUT" \
   }
 #define STAI_NETWORK_ACTIVATIONS_FORMATS \
   { \
@@ -4071,7 +4071,7 @@ STAI_API_DECLARE_END
   }
 
 #define STAI_NETWORK_ACTIVATIONS_38_ALIGNMENT (32)
-#define STAI_NETWORK_ACTIVATIONS_38_NAME "Gemm_99_out_0_inserted_out251"
+#define STAI_NETWORK_ACTIVATIONS_38_NAME "Gemm_99_out_0_inserted_out502"
 #define STAI_NETWORK_ACTIVATIONS_38_FLAGS (STAI_FLAG_PREALLOCATED|STAI_FLAG_OVERRIDE)
 #define STAI_NETWORK_ACTIVATIONS_38_FORMAT (STAI_FORMAT_FLOAT32)
 #define STAI_NETWORK_ACTIVATIONS_38_SIZE (10)

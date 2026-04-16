@@ -18,25 +18,25 @@
   */
 
 /*
- * GIT_SHA         "80369096c1c1b7ea4d6b2cc985d9e001f59b7c27"
- * GIT_BRANCH      "STAI-3.0"
- * GIT_DESCRIPTION "atonn-v1.1.3-8-g80369096"
+ * GIT_SHA         "7cc654104236b2ac726c804c5d7f201e2afd1c79"
+ * GIT_BRANCH      "HEAD"
+ * GIT_DESCRIPTION "STAI-3.0.0-254-g7cc654104"
  *
  * Command Line options:
- * --load-mdesc-file = "/opt/ST/stedge3.0.0-RC6/Utilities/configs/stm32n6"
- * --load-cdesc-file = "/opt/ST/stedge3.0.0-RC6/Utilities/configs/cortex-m55"
- * --load-mpool-file = "STM32N6_GettingStarted_Audio/Projects/X-CUBE-AI/models/stm32n6"
+ * --load-mdesc-file = "C:/ST/STEdgeAI/4.0/Utilities/configs/stm32n6"
+ * --load-cdesc-file = "C:/ST/STEdgeAI/4.0/Utilities/configs/cortex-m55"
+ * --load-mpool-file = "C:/ST/CurrentDev/N6/STM32N6_GettingStarted_Audio/Projects/X-CUBE-AI/models/stm32n6"
  * --cache-maintenance = true
  * --native-float = true
- * --json-quant-file = "STM32N6_GettingStarted_Audio/Projects/X-CUBE-AI/models/st_ai_output/yamnet_1024_64x96_tl_qdq_int8_OE_3_3_1_Q.json"
+ * --json-quant-file = "C:/ST/CurrentDev/N6/STM32N6_GettingStarted_Audio/Projects/X-CUBE-AI/models/st_ai_output/yamnet_1024_64x96_tl_qdq_int8_OE_3_3_1_Q.json"
  * --optimization = 3
  * --Os = true
  * --Omax-ca-pipe = 4
  * --Ocache-opt = true
  * --csv-file = "network"
  * --output-info-file = "c_info"
- * --onnx-input = "STM32N6_GettingStarted_Audio/Projects/X-CUBE-AI/models/st_ai_output/yamnet_1024_64x96_tl_qdq_int8_OE_3_3_1.onnx"
- * --out-dir-prefix = "STM32N6_GettingStarted_Audio/Projects/X-CUBE-AI/models/st_ai_ws/neural_art__network/"
+ * --onnx-input = "C:/ST/CurrentDev/N6/STM32N6_GettingStarted_Audio/Projects/X-CUBE-AI/models/st_ai_output/yamnet_1024_64x96_tl_qdq_int8_OE_3_3_1.onnx"
+ * --out-dir-prefix = "C:/ST/CurrentDev/N6/STM32N6_GettingStarted_Audio/Projects/X-CUBE-AI/models/st_ai_ws/neural_art__network/"
  * --network-name = "network"
  * --all-buffers-info = true
  * --generate-stai = true
@@ -49,7 +49,7 @@
 #include "ll_sw.h"
 #include "ll_aton_cipher.h"
 
-#if LL_ATON_VERSION_MAJOR != 1 || LL_ATON_VERSION_MINOR != 1 || LL_ATON_VERSION_MICRO != 3 || LL_ATON_VERSION_DEV != 8
+#if LL_ATON_VERSION_MAJOR != 1 || LL_ATON_VERSION_MINOR != 1 || LL_ATON_VERSION_MICRO != 3 || LL_ATON_VERSION_DEV != 262
 #  error "Possible mismatch in ll_aton library used"
 #endif
 
@@ -91,6 +91,10 @@ const LL_Streng_EncryptionTypedef *LL_ATON_BlobEncryption_Info_network()
 
 LL_ATON_User_IO_Result_t LL_ATON_Set_User_Input_Buffer_network(uint32_t num, void* buffer, uint32_t size)
 {
+  LL_ATON_LIB_UNUSED(num);
+  LL_ATON_LIB_UNUSED(buffer);
+  LL_ATON_LIB_UNUSED(size);
+
   { 
     return LL_ATON_User_IO_WRONG_INDEX;
   }
@@ -98,6 +102,8 @@ LL_ATON_User_IO_Result_t LL_ATON_Set_User_Input_Buffer_network(uint32_t num, voi
 
 void *LL_ATON_Get_User_Input_Buffer_network(uint32_t num)
 {
+  LL_ATON_LIB_UNUSED(num);
+
   { 
     return NULL;
   }
@@ -105,6 +111,10 @@ void *LL_ATON_Get_User_Input_Buffer_network(uint32_t num)
 
 LL_ATON_User_IO_Result_t LL_ATON_Set_User_Output_Buffer_network(uint32_t num, void* buffer, uint32_t size)
 {
+  LL_ATON_LIB_UNUSED(num);
+  LL_ATON_LIB_UNUSED(buffer);
+  LL_ATON_LIB_UNUSED(size);
+
   { 
     return LL_ATON_User_IO_WRONG_INDEX;
   }
@@ -112,6 +122,8 @@ LL_ATON_User_IO_Result_t LL_ATON_Set_User_Output_Buffer_network(uint32_t num, vo
 
 void *LL_ATON_Get_User_Output_Buffer_network(uint32_t num)
 {
+  LL_ATON_LIB_UNUSED(num);
+
   { 
     return NULL;
   }
@@ -133,18 +145,16 @@ bool LL_ATON_EC_Inference_Init_network(void)
 /* scheduling epoch=1    nodes=1   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_End_EpochBlock_1(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_1(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* *** MCU cache invalidate (only) operation (SW, whole range) *** */
   /*     memory pool: 0 */
   /*     start: ((uintptr_t)(ATON_LIB_PHYSICAL_TO_VIRTUAL_ADDR(0x34350000UL + 6144))) */
   /*     end:   ((uintptr_t)(ATON_LIB_PHYSICAL_TO_VIRTUAL_ADDR(0x34350000UL + 12288))) */
   LL_ATON_Cache_MCU_Invalidate_Range(((uintptr_t)(ATON_LIB_PHYSICAL_TO_VIRTUAL_ADDR(0x34350000UL + 6144))) /* Equivalent hex address = 0x34351800UL */, 6144);
-
-  /* Reset the stream switch */
-  LL_Switch_Init(NULL, 0);
 
 /* Unit= 27 [PROCESSOR 0] */
 /* kind=Transpose node=Transpose_1 */
@@ -188,7 +198,7 @@ static void LL_ATON_End_EpochBlock_1(const void *epoch_block)
 
   static const uint8_t Transpose_1_perm_to_use_array_in_1[] = { 0, 2, 1, 3 };
   static const uint8_t Transpose_1_target_pos_array_in_1[] = { 0, 2, 1, 3 };
-  LL_ATON_LIB_DMA_Transpose(&Transpose_1_tensor_shape_in_1[0], Transpose_1_tensor_axes_offsets_in_1[0], &Transpose_1_tensor_shape_out_1[0], Transpose_1_tensor_axes_offsets_out_1[0], Transpose_1_target_pos_array_in_1, Transpose_1_perm_to_use_array_in_1, 0, 1);
+  LL_ATON_LIB_DMA_Transpose(&Transpose_1_tensor_shape_in_1[0], Transpose_1_tensor_axes_offsets_in_1[0], &Transpose_1_tensor_shape_out_1[0], Transpose_1_tensor_axes_offsets_out_1[0], Transpose_1_target_pos_array_in_1, Transpose_1_perm_to_use_array_in_1, 0, 1, nn_instance);
 
   /* *** MCU cache clean (only) operation (SW, whole range) *** */
   /*     memory pool: 0 */
@@ -202,9 +212,10 @@ static void LL_ATON_End_EpochBlock_1(const void *epoch_block)
 /* scheduling epoch=2    nodes=6   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_2(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_2(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 10 [CONV_ACC_V2 0] */
   /* kind=Conv node=Conv2D_3 */
@@ -637,7 +648,7 @@ static void LL_ATON_Start_EpochBlock_2(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 49152 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_2[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_2[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_3 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_3 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 3 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_3_off_bias_12 IN: in unit=ARITH_ACC_V2 0 in port=0 out unit=CONV_ACC_V2 0 out port=0 */
@@ -651,7 +662,7 @@ static void LL_ATON_Start_EpochBlock_2(const void *epoch_block)
 
 
   /* epoch=2 */
-  LL_Switch_Init(switch_init_in_2, 9);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_2, 9);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_2_all_units[] = {
     { {STRENG, 1} }, /* STREAM_ENG_V2 */
@@ -672,11 +683,12 @@ static void LL_ATON_Start_EpochBlock_2(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_2(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_2(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_2[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_2[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_3 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_3 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 3 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_3_off_bias_12 IN: in unit=ARITH_ACC_V2 0 in port=0 out unit=CONV_ACC_V2 0 out port=0 */
@@ -690,7 +702,7 @@ static void LL_ATON_End_EpochBlock_2(const void *epoch_block)
 
 
   /* epoch=2 */
-  LL_Switch_Deinit(switch_deinit_in_2, 9);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_2, 9);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_2_all_units[] = {
     { {STRENG, 1} }, /* STREAM_ENG_V2 */
@@ -714,9 +726,10 @@ static void LL_ATON_End_EpochBlock_2(const void *epoch_block)
 /* scheduling epoch=3    nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_3(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_3(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 12 [CONV_ACC_V2 2] */
   /* kind=Conv node=Conv2D_10 */
@@ -970,7 +983,7 @@ static void LL_ATON_Start_EpochBlock_3(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 98304 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_3[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_3[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_10 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_10 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_10_off_bias_30 IN: in unit=ARITH_ACC_V2 0 in port=0 out unit=CONV_ACC_V2 2 out port=0 */
@@ -980,7 +993,7 @@ static void LL_ATON_Start_EpochBlock_3(const void *epoch_block)
 
 
   /* epoch=3 */
-  LL_Switch_Init(switch_init_in_3, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_3, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_3_all_units[] = {
     { {STRENG, 4} }, /* STREAM_ENG_V2 */
@@ -997,11 +1010,12 @@ static void LL_ATON_Start_EpochBlock_3(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_3(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_3(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_3[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_3[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_10 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_10 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_10_off_bias_30 IN: in unit=ARITH_ACC_V2 0 in port=0 out unit=CONV_ACC_V2 2 out port=0 */
@@ -1011,7 +1025,7 @@ static void LL_ATON_End_EpochBlock_3(const void *epoch_block)
 
 
   /* epoch=3 */
-  LL_Switch_Deinit(switch_deinit_in_3, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_3, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_3_all_units[] = {
     { {STRENG, 4} }, /* STREAM_ENG_V2 */
@@ -1031,9 +1045,10 @@ static void LL_ATON_End_EpochBlock_3(const void *epoch_block)
 /* scheduling epoch=4    nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_4(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_4(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 13 [CONV_ACC_V2 3] */
   /* kind=Conv node=Conv2D_14 */
@@ -1284,7 +1299,7 @@ static void LL_ATON_Start_EpochBlock_4(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 24576 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_4[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_4[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_14 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 9, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_14 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 9 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_14_off_bias_39 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -1294,7 +1309,7 @@ static void LL_ATON_Start_EpochBlock_4(const void *epoch_block)
 
 
   /* epoch=4 */
-  LL_Switch_Init(switch_init_in_4, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_4, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_4_all_units[] = {
     { {STRENG, 6} }, /* STREAM_ENG_V2 */
@@ -1311,11 +1326,12 @@ static void LL_ATON_Start_EpochBlock_4(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_4(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_4(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_4[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_4[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_14 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 9, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_14 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 9 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_14_off_bias_39 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -1325,7 +1341,7 @@ static void LL_ATON_End_EpochBlock_4(const void *epoch_block)
 
 
   /* epoch=4 */
-  LL_Switch_Deinit(switch_deinit_in_4, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_4, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_4_all_units[] = {
     { {STRENG, 6} }, /* STREAM_ENG_V2 */
@@ -1345,9 +1361,10 @@ static void LL_ATON_End_EpochBlock_4(const void *epoch_block)
 /* scheduling epoch=5    nodes=6   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_5(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_5(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 10 [CONV_ACC_V2 0] */
   /* kind=Conv node=Conv2D_17 */
@@ -1840,7 +1857,7 @@ static void LL_ATON_Start_EpochBlock_5(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 49152 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_5[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_5[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_17 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_17 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_17_ca_pipe_1 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 2 out port=0 */
@@ -1859,7 +1876,7 @@ static void LL_ATON_Start_EpochBlock_5(const void *epoch_block)
 
 
   /* epoch=5 */
-  LL_Switch_Init(switch_init_in_5, 14);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_5, 14);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_5_all_units[] = {
     { {STRENG, 7} }, /* STREAM_ENG_V2 */
@@ -1882,11 +1899,12 @@ static void LL_ATON_Start_EpochBlock_5(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_5(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_5(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_5[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_5[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_17 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_17 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_17_ca_pipe_1 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 2 out port=0 */
@@ -1905,7 +1923,7 @@ static void LL_ATON_End_EpochBlock_5(const void *epoch_block)
 
 
   /* epoch=5 */
-  LL_Switch_Deinit(switch_deinit_in_5, 14);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_5, 14);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_5_all_units[] = {
     { {STRENG, 7} }, /* STREAM_ENG_V2 */
@@ -1931,9 +1949,10 @@ static void LL_ATON_End_EpochBlock_5(const void *epoch_block)
 /* scheduling epoch=6    nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_6(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_6(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 10 [CONV_ACC_V2 0] */
   /* kind=Conv node=Conv2D_21 */
@@ -2183,7 +2202,7 @@ static void LL_ATON_Start_EpochBlock_6(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 49152 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_6[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_6[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_21 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_21 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_21_off_bias_57 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 0 out port=0 */
@@ -2193,7 +2212,7 @@ static void LL_ATON_Start_EpochBlock_6(const void *epoch_block)
 
 
   /* epoch=6 */
-  LL_Switch_Init(switch_init_in_6, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_6, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_6_all_units[] = {
     { {STRENG, 2} }, /* STREAM_ENG_V2 */
@@ -2210,11 +2229,12 @@ static void LL_ATON_Start_EpochBlock_6(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_6(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_6(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_6[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_6[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_21 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_21 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_21_off_bias_57 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 0 out port=0 */
@@ -2224,7 +2244,7 @@ static void LL_ATON_End_EpochBlock_6(const void *epoch_block)
 
 
   /* epoch=6 */
-  LL_Switch_Deinit(switch_deinit_in_6, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_6, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_6_all_units[] = {
     { {STRENG, 2} }, /* STREAM_ENG_V2 */
@@ -2244,9 +2264,10 @@ static void LL_ATON_End_EpochBlock_6(const void *epoch_block)
 /* scheduling epoch=7    nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_7(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_7(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 11 [CONV_ACC_V2 1] */
   /* kind=Conv node=Conv2D_24 */
@@ -2500,7 +2521,7 @@ static void LL_ATON_Start_EpochBlock_7(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 49152 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_7[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_7[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_24 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_24 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_24_off_bias_66 IN: in unit=ARITH_ACC_V2 0 in port=0 out unit=CONV_ACC_V2 1 out port=0 */
@@ -2510,7 +2531,7 @@ static void LL_ATON_Start_EpochBlock_7(const void *epoch_block)
 
 
   /* epoch=7 */
-  LL_Switch_Init(switch_init_in_7, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_7, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_7_all_units[] = {
     { {STRENG, 3} }, /* STREAM_ENG_V2 */
@@ -2527,11 +2548,12 @@ static void LL_ATON_Start_EpochBlock_7(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_7(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_7(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_7[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_7[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_24 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_24 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_24_off_bias_66 IN: in unit=ARITH_ACC_V2 0 in port=0 out unit=CONV_ACC_V2 1 out port=0 */
@@ -2541,7 +2563,7 @@ static void LL_ATON_End_EpochBlock_7(const void *epoch_block)
 
 
   /* epoch=7 */
-  LL_Switch_Deinit(switch_deinit_in_7, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_7, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_7_all_units[] = {
     { {STRENG, 3} }, /* STREAM_ENG_V2 */
@@ -2561,9 +2583,10 @@ static void LL_ATON_End_EpochBlock_7(const void *epoch_block)
 /* scheduling epoch=8    nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_8(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_8(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 12 [CONV_ACC_V2 2] */
   /* kind=Conv node=Conv2D_28 */
@@ -2814,7 +2837,7 @@ static void LL_ATON_Start_EpochBlock_8(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 12288 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_8[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_8[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 4, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_28 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 4 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_28 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_28_off_bias_75 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 2 out port=0 */
@@ -2824,7 +2847,7 @@ static void LL_ATON_Start_EpochBlock_8(const void *epoch_block)
 
 
   /* epoch=8 */
-  LL_Switch_Init(switch_init_in_8, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_8, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_8_all_units[] = {
     { {STRENG, 6} }, /* STREAM_ENG_V2 */
@@ -2841,11 +2864,12 @@ static void LL_ATON_Start_EpochBlock_8(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_8(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_8(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_8[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_8[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 4, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_28 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 4 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_28 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_28_off_bias_75 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 2 out port=0 */
@@ -2855,7 +2879,7 @@ static void LL_ATON_End_EpochBlock_8(const void *epoch_block)
 
 
   /* epoch=8 */
-  LL_Switch_Deinit(switch_deinit_in_8, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_8, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_8_all_units[] = {
     { {STRENG, 6} }, /* STREAM_ENG_V2 */
@@ -2875,9 +2899,10 @@ static void LL_ATON_End_EpochBlock_8(const void *epoch_block)
 /* scheduling epoch=9    nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_9(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_9(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 13 [CONV_ACC_V2 3] */
   /* kind=Conv node=Conv2D_31 */
@@ -3131,7 +3156,7 @@ static void LL_ATON_Start_EpochBlock_9(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 24576 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_9[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_9[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_31 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_31 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_31_off_bias_84 IN: in unit=ARITH_ACC_V2 0 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -3141,7 +3166,7 @@ static void LL_ATON_Start_EpochBlock_9(const void *epoch_block)
 
 
   /* epoch=9 */
-  LL_Switch_Init(switch_init_in_9, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_9, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_9_all_units[] = {
     { {STRENG, 1} }, /* STREAM_ENG_V2 */
@@ -3158,11 +3183,12 @@ static void LL_ATON_Start_EpochBlock_9(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_9(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_9(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_9[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_9[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_31 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_31 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_31_off_bias_84 IN: in unit=ARITH_ACC_V2 0 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -3172,7 +3198,7 @@ static void LL_ATON_End_EpochBlock_9(const void *epoch_block)
 
 
   /* epoch=9 */
-  LL_Switch_Deinit(switch_deinit_in_9, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_9, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_9_all_units[] = {
     { {STRENG, 1} }, /* STREAM_ENG_V2 */
@@ -3192,9 +3218,10 @@ static void LL_ATON_End_EpochBlock_9(const void *epoch_block)
 /* scheduling epoch=10   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_10(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_10(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 10 [CONV_ACC_V2 0] */
   /* kind=Conv node=Conv2D_35 */
@@ -3444,7 +3471,7 @@ static void LL_ATON_Start_EpochBlock_10(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 24576 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_10[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_10[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_35 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_35 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 6 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_35_off_bias_93 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 0 out port=0 */
@@ -3454,7 +3481,7 @@ static void LL_ATON_Start_EpochBlock_10(const void *epoch_block)
 
 
   /* epoch=10 */
-  LL_Switch_Init(switch_init_in_10, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_10, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_10_all_units[] = {
     { {STRENG, 7} }, /* STREAM_ENG_V2 */
@@ -3471,11 +3498,12 @@ static void LL_ATON_Start_EpochBlock_10(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_10(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_10(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_10[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_10[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_35 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_35 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 6 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_35_off_bias_93 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 0 out port=0 */
@@ -3485,7 +3513,7 @@ static void LL_ATON_End_EpochBlock_10(const void *epoch_block)
 
 
   /* epoch=10 */
-  LL_Switch_Deinit(switch_deinit_in_10, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_10, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_10_all_units[] = {
     { {STRENG, 7} }, /* STREAM_ENG_V2 */
@@ -3505,9 +3533,10 @@ static void LL_ATON_End_EpochBlock_10(const void *epoch_block)
 /* scheduling epoch=11   nodes=4   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_11(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_11(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 11 [CONV_ACC_V2 1] */
   /* kind=Conv node=Conv2D_38 */
@@ -3842,7 +3871,7 @@ static void LL_ATON_Start_EpochBlock_11(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 24576 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_11[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_11[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_38 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 3 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_38 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_38_ca_pipe_1 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 6 out port=0 */
@@ -3855,7 +3884,7 @@ static void LL_ATON_Start_EpochBlock_11(const void *epoch_block)
 
 
   /* epoch=11 */
-  LL_Switch_Init(switch_init_in_11, 8);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_11, 8);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_11_all_units[] = {
     { {STRENG, 8} }, /* STREAM_ENG_V2 */
@@ -3874,11 +3903,12 @@ static void LL_ATON_Start_EpochBlock_11(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_11(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_11(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_11[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_11[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_38 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 3 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_38 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_38_ca_pipe_1 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 6 out port=0 */
@@ -3891,7 +3921,7 @@ static void LL_ATON_End_EpochBlock_11(const void *epoch_block)
 
 
   /* epoch=11 */
-  LL_Switch_Deinit(switch_deinit_in_11, 8);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_11, 8);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_11_all_units[] = {
     { {STRENG, 8} }, /* STREAM_ENG_V2 */
@@ -3913,9 +3943,10 @@ static void LL_ATON_End_EpochBlock_11(const void *epoch_block)
 /* scheduling epoch=12   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_12(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_12(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 13 [CONV_ACC_V2 3] */
   /* kind=Conv node=Conv2D_42 */
@@ -4166,7 +4197,7 @@ static void LL_ATON_Start_EpochBlock_12(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 6144 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_12[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_12[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_42 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_42 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 6 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_42_off_bias_111 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -4176,7 +4207,7 @@ static void LL_ATON_Start_EpochBlock_12(const void *epoch_block)
 
 
   /* epoch=12 */
-  LL_Switch_Init(switch_init_in_12, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_12, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_12_all_units[] = {
     { {STRENG, 9} }, /* STREAM_ENG_V2 */
@@ -4193,11 +4224,12 @@ static void LL_ATON_Start_EpochBlock_12(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_12(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_12(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_12[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_12[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_42 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_42 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 6 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_42_off_bias_111 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -4207,7 +4239,7 @@ static void LL_ATON_End_EpochBlock_12(const void *epoch_block)
 
 
   /* epoch=12 */
-  LL_Switch_Deinit(switch_deinit_in_12, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_12, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_12_all_units[] = {
     { {STRENG, 9} }, /* STREAM_ENG_V2 */
@@ -4227,9 +4259,10 @@ static void LL_ATON_End_EpochBlock_12(const void *epoch_block)
 /* scheduling epoch=13   nodes=4   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_13(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_13(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 10 [CONV_ACC_V2 0] */
   /* kind=Conv node=Conv2D_45 */
@@ -4564,7 +4597,7 @@ static void LL_ATON_Start_EpochBlock_13(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 12288 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_13[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_13[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_45 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_45 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_45_ca_pipe_1 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
@@ -4577,7 +4610,7 @@ static void LL_ATON_Start_EpochBlock_13(const void *epoch_block)
 
 
   /* epoch=13 */
-  LL_Switch_Init(switch_init_in_13, 8);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_13, 8);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_13_all_units[] = {
     { {STRENG, 9} }, /* STREAM_ENG_V2 */
@@ -4596,11 +4629,12 @@ static void LL_ATON_Start_EpochBlock_13(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_13(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_13(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_13[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_13[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_45 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_45 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_45_ca_pipe_1 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
@@ -4613,7 +4647,7 @@ static void LL_ATON_End_EpochBlock_13(const void *epoch_block)
 
 
   /* epoch=13 */
-  LL_Switch_Deinit(switch_deinit_in_13, 8);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_13, 8);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_13_all_units[] = {
     { {STRENG, 9} }, /* STREAM_ENG_V2 */
@@ -4635,9 +4669,10 @@ static void LL_ATON_End_EpochBlock_13(const void *epoch_block)
 /* scheduling epoch=14   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_14(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_14(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 12 [CONV_ACC_V2 2] */
   /* kind=Conv node=Conv2D_49 */
@@ -4887,7 +4922,7 @@ static void LL_ATON_Start_EpochBlock_14(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 12288 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_14[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_14[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_49 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_49 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_49_off_bias_129 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 2 out port=0 */
@@ -4897,7 +4932,7 @@ static void LL_ATON_Start_EpochBlock_14(const void *epoch_block)
 
 
   /* epoch=14 */
-  LL_Switch_Init(switch_init_in_14, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_14, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_14_all_units[] = {
     { {STRENG, 6} }, /* STREAM_ENG_V2 */
@@ -4914,11 +4949,12 @@ static void LL_ATON_Start_EpochBlock_14(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_14(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_14(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_14[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_14[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_49 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_49 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_49_off_bias_129 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 2 out port=0 */
@@ -4928,7 +4964,7 @@ static void LL_ATON_End_EpochBlock_14(const void *epoch_block)
 
 
   /* epoch=14 */
-  LL_Switch_Deinit(switch_deinit_in_14, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_14, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_14_all_units[] = {
     { {STRENG, 6} }, /* STREAM_ENG_V2 */
@@ -4948,9 +4984,10 @@ static void LL_ATON_End_EpochBlock_14(const void *epoch_block)
 /* scheduling epoch=15   nodes=4   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_15(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_15(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 13 [CONV_ACC_V2 3] */
   /* kind=Conv node=Conv2D_52 */
@@ -5353,7 +5390,7 @@ static void LL_ATON_Start_EpochBlock_15(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 73728 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_15[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_15[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 4, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_52 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 4 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_52 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_52 IN: in unit=CONV_ACC_V2 3 in port=2 out unit=STREAM_ENG_V2 0 out port=0 */
@@ -5368,7 +5405,7 @@ static void LL_ATON_Start_EpochBlock_15(const void *epoch_block)
 
 
   /* epoch=15 */
-  LL_Switch_Init(switch_init_in_15, 10);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_15, 10);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_15_all_units[] = {
     { {STRENG, 1} }, /* STREAM_ENG_V2 */
@@ -5389,11 +5426,12 @@ static void LL_ATON_Start_EpochBlock_15(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_15(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_15(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_15[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_15[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 4, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_52 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 4 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_52 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_52 IN: in unit=CONV_ACC_V2 3 in port=2 out unit=STREAM_ENG_V2 0 out port=0 */
@@ -5408,7 +5446,7 @@ static void LL_ATON_End_EpochBlock_15(const void *epoch_block)
 
 
   /* epoch=15 */
-  LL_Switch_Deinit(switch_deinit_in_15, 10);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_15, 10);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_15_all_units[] = {
     { {STRENG, 1} }, /* STREAM_ENG_V2 */
@@ -5432,9 +5470,10 @@ static void LL_ATON_End_EpochBlock_15(const void *epoch_block)
 /* scheduling epoch=16   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_16(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_16(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 11 [CONV_ACC_V2 1] */
   /* kind=Conv node=Conv2D_56 */
@@ -5684,7 +5723,7 @@ static void LL_ATON_Start_EpochBlock_16(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 12288 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_16[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_16[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_56 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_56 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_56_off_bias_147 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 1 out port=0 */
@@ -5694,7 +5733,7 @@ static void LL_ATON_Start_EpochBlock_16(const void *epoch_block)
 
 
   /* epoch=16 */
-  LL_Switch_Init(switch_init_in_16, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_16, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_16_all_units[] = {
     { {STRENG, 0} }, /* STREAM_ENG_V2 */
@@ -5711,11 +5750,12 @@ static void LL_ATON_Start_EpochBlock_16(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_16(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_16(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_16[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_16[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_56 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_56 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_56_off_bias_147 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 1 out port=0 */
@@ -5725,7 +5765,7 @@ static void LL_ATON_End_EpochBlock_16(const void *epoch_block)
 
 
   /* epoch=16 */
-  LL_Switch_Deinit(switch_deinit_in_16, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_16, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_16_all_units[] = {
     { {STRENG, 0} }, /* STREAM_ENG_V2 */
@@ -5745,9 +5785,10 @@ static void LL_ATON_End_EpochBlock_16(const void *epoch_block)
 /* scheduling epoch=17   nodes=4   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_17(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_17(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 12 [CONV_ACC_V2 2] */
   /* kind=Conv node=Conv2D_59 */
@@ -6150,7 +6191,7 @@ static void LL_ATON_Start_EpochBlock_17(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 73728 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_17[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_17[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 9, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_59 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 9 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_59 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_59 IN: in unit=CONV_ACC_V2 2 in port=2 out unit=STREAM_ENG_V2 7 out port=0 */
@@ -6165,7 +6206,7 @@ static void LL_ATON_Start_EpochBlock_17(const void *epoch_block)
 
 
   /* epoch=17 */
-  LL_Switch_Init(switch_init_in_17, 10);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_17, 10);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_17_all_units[] = {
     { {STRENG, 6} }, /* STREAM_ENG_V2 */
@@ -6186,11 +6227,12 @@ static void LL_ATON_Start_EpochBlock_17(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_17(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_17(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_17[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_17[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 9, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_59 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 9 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_59 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_59 IN: in unit=CONV_ACC_V2 2 in port=2 out unit=STREAM_ENG_V2 7 out port=0 */
@@ -6205,7 +6247,7 @@ static void LL_ATON_End_EpochBlock_17(const void *epoch_block)
 
 
   /* epoch=17 */
-  LL_Switch_Deinit(switch_deinit_in_17, 10);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_17, 10);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_17_all_units[] = {
     { {STRENG, 6} }, /* STREAM_ENG_V2 */
@@ -6229,9 +6271,10 @@ static void LL_ATON_End_EpochBlock_17(const void *epoch_block)
 /* scheduling epoch=18   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_18(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_18(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 13 [CONV_ACC_V2 3] */
   /* kind=Conv node=Conv2D_63 */
@@ -6481,7 +6524,7 @@ static void LL_ATON_Start_EpochBlock_18(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 12288 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_18[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_18[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_63 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_63 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 3 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_63_off_bias_165 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -6491,7 +6534,7 @@ static void LL_ATON_Start_EpochBlock_18(const void *epoch_block)
 
 
   /* epoch=18 */
-  LL_Switch_Init(switch_init_in_18, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_18, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_18_all_units[] = {
     { {STRENG, 2} }, /* STREAM_ENG_V2 */
@@ -6508,11 +6551,12 @@ static void LL_ATON_Start_EpochBlock_18(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_18(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_18(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_18[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_18[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_63 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_63 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 3 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_63_off_bias_165 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -6522,7 +6566,7 @@ static void LL_ATON_End_EpochBlock_18(const void *epoch_block)
 
 
   /* epoch=18 */
-  LL_Switch_Deinit(switch_deinit_in_18, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_18, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_18_all_units[] = {
     { {STRENG, 2} }, /* STREAM_ENG_V2 */
@@ -6542,9 +6586,10 @@ static void LL_ATON_End_EpochBlock_18(const void *epoch_block)
 /* scheduling epoch=19   nodes=4   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_19(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_19(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 11 [CONV_ACC_V2 1] */
   /* kind=Conv node=Conv2D_66 */
@@ -6947,7 +6992,7 @@ static void LL_ATON_Start_EpochBlock_19(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 73728 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_19[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_19[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_66 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_66 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_66 IN: in unit=CONV_ACC_V2 1 in port=2 out unit=STREAM_ENG_V2 6 out port=0 */
@@ -6962,7 +7007,7 @@ static void LL_ATON_Start_EpochBlock_19(const void *epoch_block)
 
 
   /* epoch=19 */
-  LL_Switch_Init(switch_init_in_19, 10);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_19, 10);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_19_all_units[] = {
     { {STRENG, 8} }, /* STREAM_ENG_V2 */
@@ -6983,11 +7028,12 @@ static void LL_ATON_Start_EpochBlock_19(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_19(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_19(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_19[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_19[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_66 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_66 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_66 IN: in unit=CONV_ACC_V2 1 in port=2 out unit=STREAM_ENG_V2 6 out port=0 */
@@ -7002,7 +7048,7 @@ static void LL_ATON_End_EpochBlock_19(const void *epoch_block)
 
 
   /* epoch=19 */
-  LL_Switch_Deinit(switch_deinit_in_19, 10);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_19, 10);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_19_all_units[] = {
     { {STRENG, 8} }, /* STREAM_ENG_V2 */
@@ -7026,9 +7072,10 @@ static void LL_ATON_End_EpochBlock_19(const void *epoch_block)
 /* scheduling epoch=20   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_20(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_20(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 12 [CONV_ACC_V2 2] */
   /* kind=Conv node=Conv2D_70 */
@@ -7278,7 +7325,7 @@ static void LL_ATON_Start_EpochBlock_20(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 12288 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_20[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_20[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_70 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_70 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_70_off_bias_183 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 2 out port=0 */
@@ -7288,7 +7335,7 @@ static void LL_ATON_Start_EpochBlock_20(const void *epoch_block)
 
 
   /* epoch=20 */
-  LL_Switch_Init(switch_init_in_20, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_20, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_20_all_units[] = {
     { {STRENG, 4} }, /* STREAM_ENG_V2 */
@@ -7305,11 +7352,12 @@ static void LL_ATON_Start_EpochBlock_20(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_20(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_20(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_20[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_20[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_70 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_70 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_70_off_bias_183 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 2 out port=0 */
@@ -7319,7 +7367,7 @@ static void LL_ATON_End_EpochBlock_20(const void *epoch_block)
 
 
   /* epoch=20 */
-  LL_Switch_Deinit(switch_deinit_in_20, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_20, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_20_all_units[] = {
     { {STRENG, 4} }, /* STREAM_ENG_V2 */
@@ -7339,9 +7387,10 @@ static void LL_ATON_End_EpochBlock_20(const void *epoch_block)
 /* scheduling epoch=21   nodes=4   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_21(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_21(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 13 [CONV_ACC_V2 3] */
   /* kind=Conv node=Conv2D_73 */
@@ -7744,7 +7793,7 @@ static void LL_ATON_Start_EpochBlock_21(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 73728 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_21[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_21[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_73 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_73 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_73 IN: in unit=CONV_ACC_V2 3 in port=2 out unit=STREAM_ENG_V2 8 out port=0 */
@@ -7759,7 +7808,7 @@ static void LL_ATON_Start_EpochBlock_21(const void *epoch_block)
 
 
   /* epoch=21 */
-  LL_Switch_Init(switch_init_in_21, 10);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_21, 10);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_21_all_units[] = {
     { {STRENG, 5} }, /* STREAM_ENG_V2 */
@@ -7780,11 +7829,12 @@ static void LL_ATON_Start_EpochBlock_21(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_21(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_21(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_21[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_21[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_73 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 2, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_73 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 2 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_73 IN: in unit=CONV_ACC_V2 3 in port=2 out unit=STREAM_ENG_V2 8 out port=0 */
@@ -7799,7 +7849,7 @@ static void LL_ATON_End_EpochBlock_21(const void *epoch_block)
 
 
   /* epoch=21 */
-  LL_Switch_Deinit(switch_deinit_in_21, 10);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_21, 10);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_21_all_units[] = {
     { {STRENG, 5} }, /* STREAM_ENG_V2 */
@@ -7823,9 +7873,10 @@ static void LL_ATON_End_EpochBlock_21(const void *epoch_block)
 /* scheduling epoch=22   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_22(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_22(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 11 [CONV_ACC_V2 1] */
   /* kind=Conv node=Conv2D_77 */
@@ -8075,7 +8126,7 @@ static void LL_ATON_Start_EpochBlock_22(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 12288 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_22[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_22[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_77 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 4, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_77 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 4 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_77_off_bias_201 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 1 out port=0 */
@@ -8085,7 +8136,7 @@ static void LL_ATON_Start_EpochBlock_22(const void *epoch_block)
 
 
   /* epoch=22 */
-  LL_Switch_Init(switch_init_in_22, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_22, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_22_all_units[] = {
     { {STRENG, 0} }, /* STREAM_ENG_V2 */
@@ -8102,11 +8153,12 @@ static void LL_ATON_Start_EpochBlock_22(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_22(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_22(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_22[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_22[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_77 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 4, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_77 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 4 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_77_off_bias_201 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 1 out port=0 */
@@ -8116,7 +8168,7 @@ static void LL_ATON_End_EpochBlock_22(const void *epoch_block)
 
 
   /* epoch=22 */
-  LL_Switch_Deinit(switch_deinit_in_22, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_22, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_22_all_units[] = {
     { {STRENG, 0} }, /* STREAM_ENG_V2 */
@@ -8136,9 +8188,10 @@ static void LL_ATON_End_EpochBlock_22(const void *epoch_block)
 /* scheduling epoch=23   nodes=4   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_23(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_23(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 12 [CONV_ACC_V2 2] */
   /* kind=Conv node=Conv2D_80 */
@@ -8541,7 +8594,7 @@ static void LL_ATON_Start_EpochBlock_23(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 73728 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_23[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_23[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_80 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_80 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_80 IN: in unit=CONV_ACC_V2 2 in port=2 out unit=STREAM_ENG_V2 5 out port=0 */
@@ -8556,7 +8609,7 @@ static void LL_ATON_Start_EpochBlock_23(const void *epoch_block)
 
 
   /* epoch=23 */
-  LL_Switch_Init(switch_init_in_23, 10);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_23, 10);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_23_all_units[] = {
     { {STRENG, 8} }, /* STREAM_ENG_V2 */
@@ -8577,11 +8630,12 @@ static void LL_ATON_Start_EpochBlock_23(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_23(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_23(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_23[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_23[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_80 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_80 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_80 IN: in unit=CONV_ACC_V2 2 in port=2 out unit=STREAM_ENG_V2 5 out port=0 */
@@ -8596,7 +8650,7 @@ static void LL_ATON_End_EpochBlock_23(const void *epoch_block)
 
 
   /* epoch=23 */
-  LL_Switch_Deinit(switch_deinit_in_23, 10);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_23, 10);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_23_all_units[] = {
     { {STRENG, 8} }, /* STREAM_ENG_V2 */
@@ -8620,9 +8674,10 @@ static void LL_ATON_End_EpochBlock_23(const void *epoch_block)
 /* scheduling epoch=24   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_24(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_24(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 13 [CONV_ACC_V2 3] */
   /* kind=Conv node=Conv2D_84 */
@@ -8873,7 +8928,7 @@ static void LL_ATON_Start_EpochBlock_24(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 3072 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_24[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_24[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_84 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 6 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 4, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_84 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 4 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_84_off_bias_219 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -8883,7 +8938,7 @@ static void LL_ATON_Start_EpochBlock_24(const void *epoch_block)
 
 
   /* epoch=24 */
-  LL_Switch_Init(switch_init_in_24, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_24, 5);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_24_all_units[] = {
     { {STRENG, 0} }, /* STREAM_ENG_V2 */
@@ -8900,11 +8955,12 @@ static void LL_ATON_Start_EpochBlock_24(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_24(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_24(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_24[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_24[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 6, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_84 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 6 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 4, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_84 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 4 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_84_off_bias_219 IN: in unit=ARITH_ACC_V2 2 in port=0 out unit=CONV_ACC_V2 3 out port=0 */
@@ -8914,7 +8970,7 @@ static void LL_ATON_End_EpochBlock_24(const void *epoch_block)
 
 
   /* epoch=24 */
-  LL_Switch_Deinit(switch_deinit_in_24, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_24, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_24_all_units[] = {
     { {STRENG, 0} }, /* STREAM_ENG_V2 */
@@ -8934,9 +8990,10 @@ static void LL_ATON_End_EpochBlock_24(const void *epoch_block)
 /* scheduling epoch=25   nodes=4   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_25(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_25(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 11 [CONV_ACC_V2 1] */
   /* kind=Conv node=Conv2D_87 */
@@ -9375,7 +9432,7 @@ spanning across 4096 bytes */
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 61440 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_25[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_25[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_87 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_87 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 9, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_87 IN: in unit=CONV_ACC_V2 1 in port=2 out unit=STREAM_ENG_V2 9 out port=0 */
@@ -9390,7 +9447,7 @@ spanning across 4096 bytes */
 
 
   /* epoch=25 */
-  LL_Switch_Init(switch_init_in_25, 10);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_25, 10);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_25_all_units[] = {
     { {STRENG, 2} }, /* STREAM_ENG_V2 */
@@ -9412,11 +9469,12 @@ spanning across 4096 bytes */
 
 }
 
-static void LL_ATON_End_EpochBlock_25(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_25(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_25[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_25[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_87 IN: in unit=CONV_ACC_V2 1 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_87 IN: in unit=CONV_ACC_V2 1 in port=1 out unit=STREAM_ENG_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 1, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 9, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_87 IN: in unit=CONV_ACC_V2 1 in port=2 out unit=STREAM_ENG_V2 9 out port=0 */
@@ -9431,7 +9489,7 @@ static void LL_ATON_End_EpochBlock_25(const void *epoch_block)
 
 
   /* epoch=25 */
-  LL_Switch_Deinit(switch_deinit_in_25, 10);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_25, 10);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_25_all_units[] = {
     { {STRENG, 2} }, /* STREAM_ENG_V2 */
@@ -9456,9 +9514,10 @@ static void LL_ATON_End_EpochBlock_25(const void *epoch_block)
 /* scheduling epoch=26   nodes=4   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_26(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_26(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 10 [CONV_ACC_V2 0] */
   /* kind=Conv node=Conv2D_91 */
@@ -9828,7 +9887,7 @@ spanning across 4096 bytes */
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 6144 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_26[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_26[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_91 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_91 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_91_mul_scale_235 IN: in unit=ARITH_ACC_V2 3 in port=0 out unit=CONV_ACC_V2 0 out port=0 */
@@ -9841,7 +9900,7 @@ spanning across 4096 bytes */
 
 
   /* epoch=26 */
-  LL_Switch_Init(switch_init_in_26, 8);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_26, 8);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_26_all_units[] = {
     { {STRENG, 5} }, /* STREAM_ENG_V2 */
@@ -9861,11 +9920,12 @@ spanning across 4096 bytes */
 
 }
 
-static void LL_ATON_End_EpochBlock_26(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_26(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_26[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_26[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_91 IN: in unit=CONV_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 0, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_91 IN: in unit=CONV_ACC_V2 0 in port=1 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_91_mul_scale_235 IN: in unit=ARITH_ACC_V2 3 in port=0 out unit=CONV_ACC_V2 0 out port=0 */
@@ -9878,7 +9938,7 @@ static void LL_ATON_End_EpochBlock_26(const void *epoch_block)
 
 
   /* epoch=26 */
-  LL_Switch_Deinit(switch_deinit_in_26, 8);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_26, 8);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_26_all_units[] = {
     { {STRENG, 5} }, /* STREAM_ENG_V2 */
@@ -9901,9 +9961,10 @@ static void LL_ATON_End_EpochBlock_26(const void *epoch_block)
 /* scheduling epoch=27   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_27(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_27(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 12 [CONV_ACC_V2 2] */
   /* kind=Conv node=Conv2D_94 */
@@ -10293,7 +10354,7 @@ spanning across 4096 bytes */
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 110592 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_27[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_27[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_94 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_94 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_94 IN: in unit=CONV_ACC_V2 2 in port=2 out unit=STREAM_ENG_V2 3 out port=0 */
@@ -10307,7 +10368,7 @@ spanning across 4096 bytes */
 
 
   /* epoch=27 */
-  LL_Switch_Init(switch_init_in_27, 9);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_27, 9);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_27_all_units[] = {
     { {STRENG, 0} }, /* STREAM_ENG_V2 */
@@ -10328,11 +10389,12 @@ spanning across 4096 bytes */
 
 }
 
-static void LL_ATON_End_EpochBlock_27(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_27(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_27[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_27[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_94 IN: in unit=CONV_ACC_V2 2 in port=0 out unit=STREAM_ENG_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 7, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_94 IN: in unit=CONV_ACC_V2 2 in port=1 out unit=STREAM_ENG_V2 7 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 2, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Conv2D_94 IN: in unit=CONV_ACC_V2 2 in port=2 out unit=STREAM_ENG_V2 3 out port=0 */
@@ -10346,7 +10408,7 @@ static void LL_ATON_End_EpochBlock_27(const void *epoch_block)
 
 
   /* epoch=27 */
-  LL_Switch_Deinit(switch_deinit_in_27, 9);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_27, 9);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_27_all_units[] = {
     { {STRENG, 0} }, /* STREAM_ENG_V2 */
@@ -10370,9 +10432,10 @@ static void LL_ATON_End_EpochBlock_27(const void *epoch_block)
 /* scheduling epoch=28   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_28(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_28(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 22 [POOL_ACC_V2 0] */
   /* kind=AveragePool node=AveragePool_97 */
@@ -10419,8 +10482,8 @@ static void LL_ATON_Start_EpochBlock_28(const void *epoch_block)
 
 
   /* Unit= 19 [ARITH_ACC_V2 1] */
-  /* kind=Add node=RequantizeLinear_inserted_id249 */
-  static const LL_Arithacc_InitTypeDef RequantizeLinear_inserted_id249_init28 = {
+  /* kind=Add node=RequantizeLinear_inserted_id498 */
+  static const LL_Arithacc_InitTypeDef RequantizeLinear_inserted_id498_init28 = {
     .rounding_x = 0,
     .saturation_x = 0,
     .round_mode_x = 0,
@@ -10464,7 +10527,7 @@ static void LL_ATON_Start_EpochBlock_28(const void *epoch_block)
   };
 
   /* Unit=ARITH_ACC_V2 */
-  LL_Arithacc_Init(1, &RequantizeLinear_inserted_id249_init28);
+  LL_Arithacc_Init(1, &RequantizeLinear_inserted_id498_init28);
 
 
   /* Unit= 21 [ARITH_ACC_V2 3] */
@@ -10586,16 +10649,16 @@ static void LL_ATON_Start_EpochBlock_28(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 1024 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_28[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_28[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, POOL, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* AveragePool_97 IN: in unit=POOL_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
-    { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, POOL, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* RequantizeLinear_inserted_id249 IN: in unit=ARITH_ACC_V2 1 in port=0 out unit=POOL_ACC_V2 0 out port=0 */
+    { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, POOL, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* RequantizeLinear_inserted_id498 IN: in unit=ARITH_ACC_V2 1 in port=0 out unit=POOL_ACC_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, ARITH, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4_suboff_249 IN: in unit=ARITH_ACC_V2 3 in port=0 out unit=ARITH_ACC_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, ARITH, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4_suboff_249 OUT: in unit=STREAM_ENG_V2 3 in port=0 out unit=ARITH_ACC_V2 3 out port=0 */
   };
 
 
   /* epoch=28 */
-  LL_Switch_Init(switch_init_in_28, 4);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_28, 4);
 
   static const LL_ATON_EnableUnits_InitTypeDef Enable_epoch_28_all_units[] = {
     { {STRENG, 3} }, /* STREAM_ENG_V2 */
@@ -10611,20 +10674,21 @@ static void LL_ATON_Start_EpochBlock_28(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_28(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_28(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_28[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_28[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, POOL, 0, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 5, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* AveragePool_97 IN: in unit=POOL_ACC_V2 0 in port=0 out unit=STREAM_ENG_V2 5 out port=0 */
-    { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, POOL, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* RequantizeLinear_inserted_id249 IN: in unit=ARITH_ACC_V2 1 in port=0 out unit=POOL_ACC_V2 0 out port=0 */
+    { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 1, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, POOL, 0, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* RequantizeLinear_inserted_id498 IN: in unit=ARITH_ACC_V2 1 in port=0 out unit=POOL_ACC_V2 0 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ARITH, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, ARITH, 1, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4_suboff_249 IN: in unit=ARITH_ACC_V2 3 in port=0 out unit=ARITH_ACC_V2 1 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, ARITH, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4_suboff_249 OUT: in unit=STREAM_ENG_V2 3 in port=0 out unit=ARITH_ACC_V2 3 out port=0 */
   };
 
 
   /* epoch=28 */
-  LL_Switch_Deinit(switch_deinit_in_28, 4);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_28, 4);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_28_all_units[] = {
     { {STRENG, 3} }, /* STREAM_ENG_V2 */
@@ -10643,9 +10707,10 @@ static void LL_ATON_End_EpochBlock_28(const void *epoch_block)
 /* scheduling epoch=29   nodes=3   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_Start_EpochBlock_29(const void *epoch_block)
+static void LL_ATON_Start_EpochBlock_29(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* Unit= 13 [CONV_ACC_V2 3] */
   /* kind=Conv node=Gemm_99_conv_4 */
@@ -10855,7 +10920,7 @@ static void LL_ATON_Start_EpochBlock_29(const void *epoch_block)
   /* Dma output bandwidth to memory pools: */
   /* npuRAM6 <- 10 */
 
-  static const LL_Switch_InitTypeDef switch_init_in_29[] = {
+  static const LL_Switch_InitTypeDef STREAM_SWITCH_0_init_in_29[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 3 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4 IN: in unit=CONV_ACC_V2 3 in port=2 out unit=CONV_ACC_V2 3 out port=0 */
@@ -10865,7 +10930,7 @@ static void LL_ATON_Start_EpochBlock_29(const void *epoch_block)
 
 
   /* epoch=29 */
-  LL_Switch_Init(switch_init_in_29, 5);
+  LL_Switch_Init(STREAM_SWITCH_0_init_in_29, 5);
 
   /* *** MCU cache invalidate (only) operation (HW, whole range) *** */
   /*     memory pool: 0 */
@@ -10887,11 +10952,12 @@ static void LL_ATON_Start_EpochBlock_29(const void *epoch_block)
 
 }
 
-static void LL_ATON_End_EpochBlock_29(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_29(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
-  static const LL_Switch_DeinitTypeDef switch_deinit_in_29[] = {
+  static const LL_Switch_DeinitTypeDef STREAM_SWITCH_0_deinit_in_29[] = {
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 8, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4 IN: in unit=CONV_ACC_V2 3 in port=0 out unit=STREAM_ENG_V2 8 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 1), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, STRENG, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4 IN: in unit=CONV_ACC_V2 3 in port=1 out unit=STREAM_ENG_V2 3 out port=0 */
     { LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, CONVACC, 3, 2), LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0, CONVACC, 3, 0), LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0) = 0, }, /* Gemm_99_conv_4 IN: in unit=CONV_ACC_V2 3 in port=2 out unit=CONV_ACC_V2 3 out port=0 */
@@ -10901,7 +10967,7 @@ static void LL_ATON_End_EpochBlock_29(const void *epoch_block)
 
 
   /* epoch=29 */
-  LL_Switch_Deinit(switch_deinit_in_29, 5);
+  LL_Switch_Deinit(STREAM_SWITCH_0_deinit_in_29, 5);
 
   static const LL_ATON_DisableUnits_InitTypeDef Disable_epoch_29_all_units[] = {
     { {STRENG, 0} }, /* STREAM_ENG_V2 */
@@ -10920,9 +10986,10 @@ static void LL_ATON_End_EpochBlock_29(const void *epoch_block)
 /* scheduling epoch=30   nodes=1   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_End_EpochBlock_30(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_30(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* *** MCU cache invalidate (only) operation for unaligned buffer start or end address (only line) *** */
   /*     memory pool: 0 */
@@ -10932,7 +10999,7 @@ static void LL_ATON_End_EpochBlock_30(const void *epoch_block)
 
 
 /* Unit= 27 [PROCESSOR 0] */
-/* kind=DequantizeLinear node=DequantizeLinear_inserted_id251 */
+/* kind=DequantizeLinear node=DequantizeLinear_inserted_id502 */
   Dequantizelinear_sw_info dequantizelinear1_sw_info = {
     /* "general.input" tensor-related info: */
     .general.input.dim.tensor_b = 1,
@@ -10970,7 +11037,7 @@ static void LL_ATON_End_EpochBlock_30(const void *epoch_block)
   };
 
   /* Low Level SW Layer function invocation. This will exploit EmbedNets libs) */
-  /* Node DequantizeLinear_inserted_id251 mapped on EmbedNets (INTEGER) as DequantizeLinear | Category: Format-Converter */
+  /* Node DequantizeLinear_inserted_id502 mapped on EmbedNets (INTEGER) as DequantizeLinear | Category: Format-Converter */
   ll_sw_forward_dequantizelinear(&dequantizelinear1_sw_info);
   /* *** MCU cache clean (only) operation (SW, whole range) *** */
   /*     memory pool: 0 */
@@ -10984,9 +11051,10 @@ static void LL_ATON_End_EpochBlock_30(const void *epoch_block)
 /* scheduling epoch=31   nodes=1   ------------------------------------------------------------------- */
 
 
-static void LL_ATON_End_EpochBlock_31(const void *epoch_block)
+static void LL_ATON_End_EpochBlock_31(const LL_ATON_RT_EpochBlockItem_t *epoch_block, const NN_Instance_TypeDef *nn_instance)
 {
   LL_ATON_LIB_UNUSED(epoch_block);
+  LL_ATON_LIB_UNUSED(nn_instance);
 
   /* *** MCU cache invalidate (only) operation for unaligned buffer end address (last line) *** */
   /*     memory pool: 0 */
@@ -11055,9 +11123,9 @@ static void LL_ATON_End_EpochBlock_31(const void *epoch_block)
 
 /* scheduling DONE                 ------------------------------------------------------------------- */
 
-const EpochBlock_ItemTypeDef *LL_ATON_EpochBlockItems_network(void) {
+const LL_ATON_RT_EpochBlockItem_t *LL_ATON_EpochBlockItems_network(void) {
 
-  static const EpochBlock_ItemTypeDef ll_atonn_rt_epoch_block_array[] = {
+  static const LL_ATON_RT_EpochBlockItem_t ll_atonn_rt_epoch_block_array[] = {
     {
       .start_epoch_block = NULL,
       .end_epoch_block = LL_ATON_End_EpochBlock_1,
@@ -13686,7 +13754,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .offset = buff_info_Conv2D_84_weights_inflated_276_quant_offset,
     },
     {
-      .name = "RequantizeLinear_inserted_id249_250_requantize_zero",
+      .name = "RequantizeLinear_inserted_id498_500_requantize_zero",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3282768,
       .offset_end = 3282769,
@@ -13707,7 +13775,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_1_1_1_1,
     },
     {
-      .name = "Conv2D_3_off_bias_12_A_16_252",
+      .name = "Conv2D_3_off_bias_12_A_16_504",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3282112,
       .offset_end = 3282176,
@@ -13728,7 +13796,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_32_1_1,
     },
     {
-      .name = "Conv2D_7_off_bias_21_A_16_253",
+      .name = "Conv2D_7_off_bias_21_A_16_506",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3282176,
       .offset_end = 3282240,
@@ -13749,7 +13817,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_32_1_1,
     },
     {
-      .name = "Conv2D_10_off_bias_30_A_16_254",
+      .name = "Conv2D_10_off_bias_30_A_16_508",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3281856,
       .offset_end = 3281984,
@@ -13770,7 +13838,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_64_1_1,
     },
     {
-      .name = "Conv2D_14_off_bias_39_A_16_255",
+      .name = "Conv2D_14_off_bias_39_A_16_510",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3281984,
       .offset_end = 3282112,
@@ -13791,7 +13859,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_64_1_1,
     },
     {
-      .name = "Conv2D_17_off_bias_48_A_16_256",
+      .name = "Conv2D_17_off_bias_48_A_16_512",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3280576,
       .offset_end = 3280832,
@@ -13812,7 +13880,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_128_1_1,
     },
     {
-      .name = "Conv2D_21_off_bias_57_A_16_257",
+      .name = "Conv2D_21_off_bias_57_A_16_514",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3280832,
       .offset_end = 3281088,
@@ -13833,7 +13901,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_128_1_1,
     },
     {
-      .name = "Conv2D_24_off_bias_66_A_16_258",
+      .name = "Conv2D_24_off_bias_66_A_16_516",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3281088,
       .offset_end = 3281344,
@@ -13854,7 +13922,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_128_1_1,
     },
     {
-      .name = "Conv2D_28_off_bias_75_A_16_259",
+      .name = "Conv2D_28_off_bias_75_A_16_518",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3281344,
       .offset_end = 3281600,
@@ -13875,7 +13943,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_128_1_1,
     },
     {
-      .name = "Conv2D_31_off_bias_84_A_16_260",
+      .name = "Conv2D_31_off_bias_84_A_16_520",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3277728,
       .offset_end = 3278240,
@@ -13896,7 +13964,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_256_1_1,
     },
     {
-      .name = "Conv2D_35_off_bias_93_A_16_261",
+      .name = "Conv2D_35_off_bias_93_A_16_522",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3278240,
       .offset_end = 3278752,
@@ -13917,7 +13985,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_256_1_1,
     },
     {
-      .name = "Conv2D_38_off_bias_102_A_16_262",
+      .name = "Conv2D_38_off_bias_102_A_16_524",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3278752,
       .offset_end = 3279264,
@@ -13938,7 +14006,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_256_1_1,
     },
     {
-      .name = "Conv2D_42_off_bias_111_A_16_263",
+      .name = "Conv2D_42_off_bias_111_A_16_526",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3279264,
       .offset_end = 3279776,
@@ -13959,7 +14027,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_256_1_1,
     },
     {
-      .name = "Conv2D_45_off_bias_120_A_16_264",
+      .name = "Conv2D_45_off_bias_120_A_16_528",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3263392,
       .offset_end = 3264416,
@@ -13980,7 +14048,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_49_off_bias_129_A_16_265",
+      .name = "Conv2D_49_off_bias_129_A_16_530",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3264416,
       .offset_end = 3265440,
@@ -14001,7 +14069,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_52_off_bias_138_A_16_266",
+      .name = "Conv2D_52_off_bias_138_A_16_532",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3265440,
       .offset_end = 3266464,
@@ -14022,7 +14090,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_56_off_bias_147_A_16_267",
+      .name = "Conv2D_56_off_bias_147_A_16_534",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3266464,
       .offset_end = 3267488,
@@ -14043,7 +14111,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_59_off_bias_156_A_16_268",
+      .name = "Conv2D_59_off_bias_156_A_16_536",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3267488,
       .offset_end = 3268512,
@@ -14064,7 +14132,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_63_off_bias_165_A_16_269",
+      .name = "Conv2D_63_off_bias_165_A_16_538",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3268512,
       .offset_end = 3269536,
@@ -14085,7 +14153,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_66_off_bias_174_A_16_270",
+      .name = "Conv2D_66_off_bias_174_A_16_540",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3269536,
       .offset_end = 3270560,
@@ -14106,7 +14174,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_70_off_bias_183_A_16_271",
+      .name = "Conv2D_70_off_bias_183_A_16_542",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3270560,
       .offset_end = 3271584,
@@ -14127,7 +14195,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_73_off_bias_192_A_16_272",
+      .name = "Conv2D_73_off_bias_192_A_16_544",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3271584,
       .offset_end = 3272608,
@@ -14148,7 +14216,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_77_off_bias_201_A_16_273",
+      .name = "Conv2D_77_off_bias_201_A_16_546",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3272608,
       .offset_end = 3273632,
@@ -14169,7 +14237,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_80_off_bias_210_A_16_274",
+      .name = "Conv2D_80_off_bias_210_A_16_548",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3273632,
       .offset_end = 3274656,
@@ -14190,7 +14258,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Conv2D_84_off_bias_219_A_16_275",
+      .name = "Conv2D_84_off_bias_219_A_16_550",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3274656,
       .offset_end = 3275680,
@@ -14211,7 +14279,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_512_1_1,
     },
     {
-      .name = "Gemm_99_conv_4_off_bias_255_A_16_276",
+      .name = "Gemm_99_conv_4_off_bias_255_A_16_552",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3282288,
       .offset_end = 3282308,
@@ -14232,7 +14300,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_10_1_1,
     },
     {
-      .name = "Gemm_99_squeeze_y_5_277_atonn_internal_scale",
+      .name = "Gemm_99_squeeze_y_5_554_atonn_internal_scale",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3282320,
       .offset_end = 3282324,
@@ -14253,7 +14321,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
       .shape = buff_info__shape_1,
     },
     {
-      .name = "Gemm_99_squeeze_y_5_277_atonn_internal_offset",
+      .name = "Gemm_99_squeeze_y_5_554_atonn_internal_offset",
       .addr_base = {(unsigned char *)(0x70180000UL) /* Equivalent hex address = 0x70180000UL */},
       .offset_start = 3282784,
       .offset_end = 3282785,
@@ -15279,7 +15347,7 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Internal_Buffers_Info_network(void)
       .offset = buff_info_Gemm_99_out_0_quant_offset,
     },
     {
-      .name = "Gemm_99_out_0_inserted_out251",
+      .name = "Gemm_99_out_0_inserted_out502",
       .addr_base = {(unsigned char *)(0x34350000UL) /* Equivalent hex address = 0x34350000UL */},
       .offset_start = 1088,
       .offset_end = 1128,

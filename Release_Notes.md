@@ -27,7 +27,7 @@ before exposing the results to the user in real time.
 
 | Name                                | Version                                | Release notes
 |-----                                | -------                                | -------------
-| STEdge AI runtime                   |  v3.0.0                                |
+| STEdge AI runtime                   |  v4.0.0                                |
 | STM32 AI AudioPreprocessing Library |  v1.2.1                                | [release notes](Middlewares/ST/STM32_AI_AudioPreprocessing_Library/Release_Notes.html)
 | FreeRTOS kernel                     |  v10.6.2                               | [release notes](Middlewares/ST/FreeRTOS/Source/History.txt)
 | CMSIS                               |  v5.9.0_fix_620_dsp_v1.10.0_nn_v3.1.0  | [release notes](Drivers/CMSIS/st_readme.txt)
@@ -42,12 +42,17 @@ before exposing the results to the user in real time.
 
 ## Update history
 
-### V2.2.0
+### V2.3.0 / March 2026 
+
+- Upgrade to STEdgeAI 4.0.0
+- Upgrade to STM32CUBEIDE V 2.1.0
+
+### V2.2.0 / January 2026
 
 - Upgrade to STEdgeAI 3.0.0:
   - Migrate to new APIs
 
-### V2.1.0
+### V2.1.0 / July 2025
 
 - Migrate ThreadX project to freertos project
 - Upgrade to STEdgeAI 2.2.0

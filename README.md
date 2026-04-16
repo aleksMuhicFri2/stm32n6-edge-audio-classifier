@@ -53,9 +53,13 @@ both RTOS and bare metal versions. A low power version is also provided.
 
 ### Boot modes
 
-The STM32N6 series does not have internal flash memory. To retain firmware after a reboot, program it into the external flash. Alternatively, you can load firmware directly into SRAM (development mode), but note that the program will be lost if the board is powered off in this mode.
+The STM32N6 series does not have internal flash memory. To retain firmware after
+a reboot, program it into the external flash. Alternatively, you can load
+firmware directly into SRAM (development mode), but note that the program will
+be lost if the board is powered off in this mode.
 
-Development Mode: used for loading firmware into RAM during a debug session or for programming firmware into external flash.
+Development Mode: used for loading firmware into RAM during a debug session or
+for programming firmware into external flash.
 
 Boot from Flash: used to boot firmware from external flash.
 
@@ -81,18 +85,22 @@ the serial link is:
 
 ### Toolchains support
 
-- [STM32CubeIDE](https://www.st.com/content/st_com/en/products/development-tools/software-development-tools/stm32-software-development-tools/stm32-ides/stm32cubeide.html) (__v1.17.0__)
-- [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) (__v2.18.0__)
-- [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) (__v3.0.0__)
+- [STM32CubeIDE](https://www.st.com/content/st_com/en/products/development-tools/software-development-tools/stm32-software-development-tools/stm32-ides/stm32cubeide.html) (__v2.10.0__)
+- [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) (__v2.22.0__)
+- [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) (__v4.0.0__)
 
 ## Quickstart using prebuilt binaries
 
 Two use cases are provided as examples:
 
-  1. Audio Event Detection (aed): Automatically recognizing events like a baby crying or a clock tick.
-  2. Speech Enhancement (se): Improve quality and intelligibility of speech signals, especially in noisy environments.
+  1. Audio Event Detection (aed): Automatically recognizing events like a baby
+   crying or a clock tick.
+  2. Speech Enhancement (se): Improve quality and intelligibility of speech
+   signals, especially in noisy environments.
 
-For each use case one binary is provided for the given combination of bare metal (bm), freertos (freertos), bare metal low power (bm_lp) and freertos low power (freertos_lp):
+For each use case one binary is provided for the given combination of
+bare metal (bm), freertos (freertos), bare metal low power (bm_lp) and freertos
+low power (freertos_lp):
 
 - `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_aed_bm.hex`
 - `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_aed_bm_lp.hex`
@@ -103,7 +111,8 @@ For each use case one binary is provided for the given combination of bare metal
 - `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_se_freertos.hex`
 - `Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_se_freertos_lp.hex`
 
-To program the wanted binary in the external flash of the board you must follow the given procedure:
+To program the wanted binary in the external flash of the board you must follow
+the given procedure:
 
   1. Switch both switches to the right position
   2. Program `Binary/STM32N6_GettingStarted_Audio_[aed,se]_[bm,freertos]_[,lp].hex`
@@ -121,14 +130,26 @@ Execute `flash-bin.sh` with two arguments:
 For example:
 `flash-bin.sh aed bm_lp`
 
-After setting in [Boot from flash](#boot-modes) and power cycle you should get the results in the uart console.
+After setting in [Boot from flash](#boot-modes) and power cycle you should get
+the results in the uart console.
 
+If AED example is run, when the signal level is above a certain threshold,
+different types of audio events can be detected ('crying_baby', 'clock_tick',
+'sneezing', ...). You can play sound samples corresponding to these events to
+test the system.
 
+If SE example is run, you can hear the enhanced audio signal on the headset jack.
+You can also compare it with the raw audio signal by bypassing the audio
+processing pressing USER1 Button.
 
 ## Quickstart using Source Code - AED
 
 The default model provided is an Audio Event Detection model.
-Before building and running the application, you must program `Projects/X-CUBE-AI/models/aed_weights.hex` (model weights and biases). This only needs to be done once unless you change the AI model. See [Quickstart using prebuilt binaries](#quickstart-using-prebuilt-binaries) for details.
+Before building and running the application, you must program 
+`Projects/X-CUBE-AI/models/aed_weights.hex` (model weights and biases).
+This only needs to be done once unless you change the AI model. 
+See [Quickstart using prebuilt binaries](#quickstart-using-prebuilt-binaries)
+for details.
 
 For more information about boot modes, see [Boot Overview](Doc/Boot-Overview.md).
 
@@ -138,22 +159,30 @@ Set your board to [development mode](#boot-modes).
 
 #### STM32CubeIDE
 
-Double-click `Projects/GS/STM32CubeIDE/.project` to open the project in STM32CubeIDE. Build and run the project of the desired configuration (bm, freertos, bm_lp, freertos_lp).
+Double-click `Projects/GS/STM32CubeIDE/.project` to open the project in
+STM32CubeIDE. Build and run the project of the desired configuration (bm,
+freertos, bm_lp, freertos_lp).
 
 #### Makefile
 
-Navigate to `Projects/GS` and run the following commands (ensure required tools are in your PATH):
+Navigate to `Projects/GS` and run the following commands (ensure required tools
+are in your PATH):
 
 1. Build the project:
-    ```bash
-    make <bm/bm_lp/freertos/freertos_lp> -j8
-    ```
+
+  ```bash
+  make <bm/bm_lp/freertos/freertos_lp> -j8
+  ```
+
 2. Start a GDB server connected to the STM32 target:
-    ```bash
-    ST-LINK_gdbserver -p 61234 -l 1 -d -s -cp <path-to-stm32cubeprogramer-bin-dir> -m 1 -g
-    ```
+
+  ```bash
+  ST-LINK_gdbserver -p 61234 -l 1 -d -s -cp <path-to-stm32cubeprogramer-bin-dir> -m 1 -g
+  ```
+
 3. In a separate terminal, launch a GDB session to load the firmware:
-    ```bash
+
+  ```bash
     $ arm-none-eabi-gdb BuildGCC/<BM/BM_LP/FREERTIS/FREERTOS_LP>/GS_Audio_N6.elf
     (gdb) target remote :61234
     (gdb) monitor reset
@@ -344,7 +373,7 @@ tools:
     optimization: balanced
     on_cloud: False
     path_to_stedgeai: C:/Users/<XXXXX>/STM32Cube/Repository/Packs/STMicroelectronics/X-CUBE-AI/<*.*.*>/Utilities/windows/stedgeai.exe
-  path_to_cubeIDE: C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/stm32cubeide.exe
+  path_to_cubeIDE: C:/ST/STM32CubeIDE_2.10.0/STM32CubeIDE/stm32cubeide.exe
 ```
 
 gives the details of your local tool environement.
@@ -604,13 +633,18 @@ processing chain:
 
 ## How to update my project with a new version of ST Edge AI
 
-The neural network model files (`network.c/h`, `stai_network.c/h`, etc.) included in this project were generated using [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) version 3.0.0.
+The neural network model files (`network.c/h`, `stai_network.c/h`, etc.) 
+included in this project were generated using
+[STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) version 4.0.0.
 
-Using a different version of STEdgeAI to generate these model files may result in the following compile-time error:
-`Possible mismatch in ll_aton library used`.
+Using a different version of STEdgeAI to generate these model files may result
+in the following compile-time error: `Possible mismatch in ll_aton library used`.
 
-If you encounter this error, please follow the STEdgeAI instructions on [How to update my project with a new version of ST Edge AI Core](https://stedgeai-dc.st.com/assets/embedded-docs/stneuralart_faqs_update_version.html) to update your project.
+If you encounter this error, please follow the STEdgeAI instructions on 
+[How to update my project with a new version of ST Edge AI Core](https://stedgeai-dc.st.com/assets/embedded-docs/stneuralart_faqs_update_version.html)
+to update your project.
 
 ## Know issues and Limitations
 
-- In boot-from-flash mode, the board must be power-cycled each time we want to restart the application (reset button doesn't work)
+- In boot-from-flash mode, the board must be power-cycled each time we want to 
+restart the application (reset button doesn't work)
