@@ -1,0 +1,17 @@
+run_id,timestamp_offset_s,frame_id,expected_class,test_type,predicted_class,is_correct,cpu_load_percent,preprocess_ms,inference_ms,postprocess_ms,record_completeness
+RUN-PRELIM-CLAP-001,,140,out_of_distribution,ood,dog,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-CLAP-001,,224,out_of_distribution,ood,clock_tick,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,228,dog,positive,sneezing,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,229,dog,positive,clock_tick,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,230,dog,positive,unknown,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,246,dog,positive,unknown,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,247,dog,positive,dog,true,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,248,dog,positive,clock_tick,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,249,dog,positive,chainsaw,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,250,dog,positive,crying_baby,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,251,dog,positive,sneezing,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,252,dog,positive,unknown,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,253,dog,positive,chainsaw,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,254,dog,positive,dog,true,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,255,dog,positive,clock_tick,false,2.11,0.91,1.19,0.00,reconstructed_detection_only
+RUN-PRELIM-DOG-001,,257,dog,positive,unknown,false,2.11,0.91,1.19,0.00,reconstructed_detection_only

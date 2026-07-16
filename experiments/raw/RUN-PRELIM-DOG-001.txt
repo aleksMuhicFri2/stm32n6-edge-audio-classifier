@@ -1,0 +1,20 @@
+Reconstructed preliminary UART evidence; this is not a complete direct raw capture.
+Capture date: 2026-07-16
+Stimulus: dog barking playback from an unspecified speaker
+Expected class: dog
+Observed detection events:
+frame 228: sneezing
+frame 229: clock_tick
+frame 230: unknown
+frame 246: unknown
+frame 247: dog
+frame 248: clock_tick
+frame 249: chainsaw
+frame 250: crying_baby
+frame 251: sneezing
+frame 252: unknown
+frame 253: chainsaw
+frame 254: dog
+frame 255: clock_tick
+frame 257: unknown
+Each visible frame reported: CPU 2.11%, preprocessing 0.91 ms, AI 1.19 ms, postprocessing 0.00 ms.

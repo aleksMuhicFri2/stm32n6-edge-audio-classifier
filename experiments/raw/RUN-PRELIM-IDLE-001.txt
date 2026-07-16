@@ -1,0 +1,6 @@
+Reconstructed preliminary UART evidence; this is not a complete direct raw capture.
+Capture date: 2026-07-16
+Stimulus: ambient room / idle
+Observed frames: 33-41
+Each observed frame reported: CPU 2.11%, preprocessing 0.91 ms, AI 1.19 ms, postprocessing 0.00 ms.
+No class output was observed.

@@ -1,0 +1,8 @@
+Reconstructed preliminary UART evidence; this is not a complete direct raw capture.
+Capture date: 2026-07-16
+Stimulus: live hand clapping near the onboard microphone
+Expected behavior: unknown or no output because clap is not an ESC-10 model class
+Observed detection events:
+frame 140: dog
+frame 224: clock_tick
+Each visible frame reported: CPU 2.11%, preprocessing 0.91 ms, AI 1.19 ms, postprocessing 0.00 ms.

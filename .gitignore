@@ -9,3 +9,7 @@ Projects/GS/STM32CubeIDE/TX_LP/
 
 # Eclipse workspace metadata if the repository is used as a workspace
 .metadata/
+
+# Local spreadsheet runtime and generated thesis reports
+tools/node_modules/
+outputs/
