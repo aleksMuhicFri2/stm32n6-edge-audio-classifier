@@ -55,9 +55,10 @@ extern "C" {
 #define AUDIO_FREQUENCY                    AUDIO_FREQUENCY_16K
 #define CAPTURE_BUFFER_SIZE                (AUDIO_FREQUENCY*20U/1000U) /* 20 ms */  
 
-/* LCD framebuffers: external 32-Mbyte PSRAM, kept away from executable SRAM1. */
-#define LCD_LAYER_0_ADDRESS                 0x90000000U
-#define LCD_LAYER_1_ADDRESS                 0x900C0000U
+/* Single RGB565 framebuffer across AXI SRAM3 and SRAM4. These banks are
+ * enabled by Int_Mem_Config and are not used by the generated AED network. */
+#define LCD_LAYER_0_ADDRESS                 0x34200000U
+#define LCD_LAYER_1_ADDRESS                 0x34200000U
 
 
 /* Audio codec defines */

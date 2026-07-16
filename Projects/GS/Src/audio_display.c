@@ -3,7 +3,7 @@
   * @file    audio_display.c
   * @brief   Lightweight detected-sound display for the STM32N6570-DK.
   *
-  * The framebuffer is RGB565 in external PSRAM. The implementation uses the
+  * The framebuffer is RGB565 across AXI SRAM3/SRAM4. The implementation uses the
   * board panel timing and GPIO mapping from ST's STM32N6570-DK BSP, while
   * keeping the audio demo independent from TouchGFX during this first UI step.
   ******************************************************************************
@@ -183,7 +183,27 @@ static void clean_framebuffer(void)
 static bool configure_panel(void)
 {
   GPIO_InitTypeDef gpio = {0};
+  RCC_OscInitTypeDef oscillator = {0};
   RCC_PeriphCLKInitTypeDef peripheral_clock = {0};
+
+  /* The audio application leaves PLL4 disabled.  The DK display pixel clock
+   * is IC16 = PLL4 / 2, so enable the same 50 MHz PLL4 configuration used by
+   * ST's STM32N6570-DK image-classification example before releasing LTDC. */
+  oscillator.OscillatorType = RCC_OSCILLATORTYPE_NONE;
+  oscillator.PLL1.PLLState = RCC_PLL_NONE;
+  oscillator.PLL2.PLLState = RCC_PLL_NONE;
+  oscillator.PLL3.PLLState = RCC_PLL_NONE;
+  oscillator.PLL4.PLLState = RCC_PLL_ON;
+  oscillator.PLL4.PLLSource = RCC_PLLSOURCE_HSI;
+  oscillator.PLL4.PLLM = 8U;
+  oscillator.PLL4.PLLFractional = 0U;
+  oscillator.PLL4.PLLN = 225U;
+  oscillator.PLL4.PLLP1 = 6U;
+  oscillator.PLL4.PLLP2 = 6U;
+  if (HAL_RCC_OscConfig(&oscillator) != HAL_OK)
+  {
+    return false;
+  }
 
   peripheral_clock.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
   peripheral_clock.LtdcClockSelection = RCC_LTDCCLKSOURCE_IC16;
@@ -262,6 +282,26 @@ static bool configure_panel(void)
   HAL_GPIO_WritePin(GPIOQ, GPIO_PIN_3 | GPIO_PIN_6, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
   return true;
+}
+
+void AudioDisplay_SecurityConfig(void)
+{
+  RIMC_MasterConfig_t master = {0};
+
+  /* The audio example does not normally use LTDC, so its RIF resources are
+   * not opened by the base application. This must run before IAC_Config(),
+   * matching the ordering in ST's STM32N6570-DK display examples. */
+  __HAL_RCC_RIFSC_CLK_ENABLE();
+  master.MasterCID = RIF_CID_1;
+  master.SecPriv = RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV;
+  (void)HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_LTDC1, &master);
+  (void)HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_LTDC2, &master);
+  (void)HAL_RIF_RISC_SetSlaveSecureAttributes(
+      RIF_RISC_PERIPH_INDEX_LTDC, RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  (void)HAL_RIF_RISC_SetSlaveSecureAttributes(
+      RIF_RISC_PERIPH_INDEX_LTDCL1, RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  (void)HAL_RIF_RISC_SetSlaveSecureAttributes(
+      RIF_RISC_PERIPH_INDEX_LTDCL2, RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
 }
 
 bool AudioDisplay_Init(void)

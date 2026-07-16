@@ -18,16 +18,16 @@ bin_dir="../../../Binary"
 
 echo "======================="
 echo "signing" $bin_BM
-$sign -s -bin $bin_BM -nk -t ssbl -hv 2.3 -o $bin_dir/$1_bm.bin
+$sign -s -bin $bin_BM -nk -t ssbl -hv 2.3 -align -o $bin_dir/$1_bm.bin
 echo "======================="
 echo "signing" $bin_BM_LP
-$sign -s -bin $bin_BM_LP -nk -t ssbl -hv 2.3 -o $bin_dir/$1_bm_lp.bin
+$sign -s -bin $bin_BM_LP -nk -t ssbl -hv 2.3 -align -o $bin_dir/$1_bm_lp.bin
 echo "======================="
 echo "signing" $bin_FREERTOS
-$sign -s -bin $bin_FREERTOS -nk -t ssbl -hv 2.3 -o $bin_dir/$1_tx.bin
+$sign -s -bin $bin_FREERTOS -nk -t ssbl -hv 2.3 -align -o $bin_dir/$1_tx.bin
 echo "======================="
 echo "signing" $bin_FREERTOS_LP
-$sign -s -bin $bin_FREERTOS_LP -nk -t ssbl -hv 2.3 -o $bin_dir/$1_tx_lp.bin
+$sign -s -bin $bin_FREERTOS_LP -nk -t ssbl -hv 2.3 -align -o $bin_dir/$1_tx_lp.bin
 echo "======================="
 echo "copy weights"
 cp network_data.bin $bin_dir/$1"_weights.bin"

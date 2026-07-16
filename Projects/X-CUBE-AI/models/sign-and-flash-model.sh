@@ -11,7 +11,7 @@ bin="../../GS/STM32CubeIDE/"$1"/GS_Audio_N6.bin"
 fsbl="../../../FSBL/ai_fsbl.hex"
 weight="network_data.bin"
 
-$sign -s -bin $bin -nk -t ssbl -hv 2.3 -o aed_bm.bin
+$sign -s -bin $bin -nk -t ssbl -hv 2.3 -align -o aed_bm.bin
 $prog -c port=swd mode=HOTPLUG ap=1 --extload $el -w $fsbl
 $prog -c port=swd mode=HOTPLUG ap=1 --extload $el -w aed_bm.bin 0x70100000
 $prog -c port=swd mode=HOTPLUG ap=1 --extload $el -w $weight 0x70180000

@@ -10,6 +10,7 @@
 
 #include <stdbool.h>
 
+void AudioDisplay_SecurityConfig(void);
 bool AudioDisplay_Init(void);
 void AudioDisplay_Update(const char *class_name, float confidence);
 

@@ -218,8 +218,12 @@ make <bm/bm_lp/freertos/freertos_lp> -j8
 After building the application, you must sign the binary file:
 
 ```bash
-STM32_SigningTool_CLI -bin Projects/GS/BuildGCC/<BM/BM_LP/FREERTIS/FREERTOS_LP>/GS_Audio_N6.bin -nk -t ssbl -hv 2.3 -o Projects/GS/BuildGCC/<BM/BM_LP/FREERTIS/FREERTOS_LP>/GS_Audio_N6_sign.bin
+STM32_SigningTool_CLI -bin Projects/GS/BuildGCC/<BM/BM_LP/FREERTIS/FREERTOS_LP>/GS_Audio_N6.bin -nk -t ssbl -hv 2.3 -align -o Projects/GS/BuildGCC/<BM/BM_LP/FREERTIS/FREERTOS_LP>/GS_Audio_N6_sign.bin
 ```
+
+The `-align` option is required with current STM32 Signing Tool releases so the
+application payload and vector table begin at offset `0x400`, as expected by
+the STM32N6 FSBL.
 
 Program the signed binary at address `0x70100000`, as well as the FSBL and network parameters.
 

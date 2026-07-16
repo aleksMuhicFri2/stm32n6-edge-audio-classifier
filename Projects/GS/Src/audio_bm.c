@@ -70,9 +70,6 @@ static float vumeter(int16_t * pAudioSmp,int nb_sample);
 
 /* Private variables ---------------------------------------------------------*/
 static bool AudioProcIsOn;
-#ifdef USE_EXT_SRAM
-static bool ExtRamReady;
-#endif
 
 #ifdef APP_BARE_METAL
 static AudioBM_acq_t  audio_acq_ctx;
@@ -116,6 +113,7 @@ void init_bm(void)
   Int_Mem_Config();
   Ext_Mem_Config();
   NPU_Config();
+  AudioDisplay_SecurityConfig();
   IAC_Config();
   SCB_EnableICache();
   SCB_EnableDCache();
@@ -129,11 +127,7 @@ void init_bm(void)
   BSP_LED_Init(LED_GREEN);
   BSP_LED_Init(LED_RED);
 
-  if (
-#ifdef USE_EXT_SRAM
-      (!ExtRamReady) ||
-#endif
-      (!AudioDisplay_Init()))
+  if (!AudioDisplay_Init())
   {
     my_printf("WARNING: LCD initialization failed; audio processing will continue.\r\n");
   }
@@ -859,20 +853,6 @@ static void Ext_Mem_Config(void)
   BSP_XSPI_NOR_EnableMemoryMappedMode(0);
   MODIFY_REG(XSPI2->CR, XSPI_CR_NOPREF, HAL_XSPI_AUTOMATIC_PREFETCH_DISABLE); /* Hotfix for xspi: no prefetch */
 
-#ifdef USE_EXT_SRAM
-  ExtRamReady = false;
-  if (BSP_XSPI_RAM_Init(0) != BSP_ERROR_NONE)
-  {
-    return;
-  }
-  if (BSP_XSPI_RAM_EnableMemoryMappedMode(0) != BSP_ERROR_NONE)
-  {
-    return;
-  }
-  MODIFY_REG(XSPI1->CR, XSPI_CR_NOPREF, HAL_XSPI_AUTOMATIC_PREFETCH_DISABLE); /* Hotfix for xspi: no prefetch */
-  ExtRamReady = true;
-#endif
-  
 }
 static void IAC_Config(void)
 {
