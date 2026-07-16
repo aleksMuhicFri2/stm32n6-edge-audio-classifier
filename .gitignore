@@ -1,0 +1,11 @@
+# STM32CubeIDE local metadata and generated configuration output
+Projects/GS/STM32CubeIDE/.settings/
+Projects/GS/STM32CubeIDE/BM/
+Projects/GS/STM32CubeIDE/BM_LP/
+Projects/GS/STM32CubeIDE/FREERTOS/
+Projects/GS/STM32CubeIDE/FREERTOS_LP/
+Projects/GS/STM32CubeIDE/TX/
+Projects/GS/STM32CubeIDE/TX_LP/
+
+# Eclipse workspace metadata if the repository is used as a workspace
+.metadata/

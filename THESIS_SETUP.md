@@ -1,0 +1,94 @@
+# STM32N6 Edge Audio Classifier
+
+This repository is the firmware base for a diploma project on real-time environmental sound classification using the STM32N6570-DK and its Neural-ART accelerator.
+
+## Current baseline
+
+- Board: STM32N6570-DK
+- Microphone: onboard IMP34DT05 digital MEMS microphone
+- Execution model: bare metal (`BM` configuration)
+- Audio rate: 16 kHz mono
+- Feature input: 64 mel bands by 96 time frames
+- STFT window: 400 samples (25 ms)
+- STFT hop: 160 samples (10 ms)
+- FFT size: 512
+- Frequency range: 125 Hz to 7.5 kHz
+- Neural-network format: quantized int8 ONNX compiled for Neural-ART
+- Baseline output: 10 ESC-10 classes
+- User output: UART at 14400 baud, 8 data bits, no parity, one stop bit
+
+The unchanged `BM` configuration was built successfully with STM32CubeIDE 2.2.0 on 2026-07-16. The build completed with 0 errors and produced `GS_Audio_N6.elf`, `.bin`, and `.hex`. Reported application sections were 219,300 bytes of text, 10,224 bytes of initialized data, and 361,360 bytes of zero-initialized data.
+
+## Why this project replaces the empty test project
+
+The original `N6_Test` project only contains a secure startup skeleton. It has no clock tree, cache configuration, PDM/SAI acquisition, DMA, external-flash boot flow, audio preprocessing, or Neural-ART runtime integration.
+
+This ST reference already contains those board-specific foundations. The diploma work will modify and measure a working reference instead of reconstructing every STM32N6 subsystem before audio classification can be tested.
+
+## Mapping from the Raspberry Pi Python program
+
+| Python implementation | STM32N6 implementation |
+|---|---|
+| `sounddevice.InputStream` | Onboard PDM microphone through SAI and DMA |
+| `queue.Queue` | DMA buffers and the acquisition/processing state machine |
+| NumPy sliding waveform buffer | Fixed-size statically allocated audio patch buffer |
+| TFLite waveform input | C/C++ 64x96 log-mel preprocessing followed by an int8 tensor |
+| `interpreter.invoke()` | ST Neural-ART runtime invocation |
+| CSV class map | Compile-time class-name table |
+| Terminal printing | UART first; TouchGFX radar later |
+
+The desktop script's 15,600-sample comment is valid for the TensorFlow waveform-input YAMNet wrapper. The embedded classifier instead receives one 64x96 spectrogram patch representing 960 ms of audio. Feature extraction is intentionally performed outside the neural network by optimized C code.
+
+## Included model and first test
+
+The first hardware test uses the included prebuilt bare-metal binary:
+
+`Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_aed_bm.hex`
+
+Its model source is:
+
+`Projects/X-CUBE-AI/models/yamnet_1024_64x96_tl_qdq_int8.onnx`
+
+The model recognizes these ten classes: chainsaw, clock tick, crackling fire, crying baby, dog, helicopter, rain, rooster, sea waves, and sneezing.
+
+## Hardware safety before the first flash
+
+Do not flash automatically without reviewing this step. ST states that the example enables the `VDDIO2_HSLV` and `VDDIO3_HSLV` OTP options if they are not already enabled. OTP settings are permanent and cannot be reset.
+
+Before flashing:
+
+1. Connect the computer to the board connector labeled `STLINK` (CN6), not only to a power or USB host connector.
+2. Confirm that STM32CubeProgrammer lists an ST-LINK probe.
+3. Put the board into development mode using the boot switches exactly as shown in ST's project documentation.
+4. Review and explicitly accept the two permanent high-speed OTP settings.
+5. Flash the prebuilt AED bare-metal HEX.
+6. Return the switches to boot-from-flash mode and power-cycle the board.
+7. Open the ST-LINK virtual COM port at 14400 baud, 8-N-1.
+
+## Path from 10 to approximately 100 classes
+
+Filtering 100 labels from a 521-output YAMNet does not significantly reduce the MobileNet backbone. Conversely, changing only the current class-name table cannot add classes because the included network has a ten-output head.
+
+The staged approach is:
+
+1. Validate the supplied ten-class model on the board.
+2. Validate microphone capture and compare the embedded mel features against a Python reference.
+3. Compile a 521-output int8 YAMNet-compatible classifier with the 64x96 spectrogram frontend kept in C.
+4. Select approximately 100 useful AudioSet outputs in postprocessing while preserving the full pretrained head initially.
+5. Measure accuracy, confusion, latency, model weights, activation memory, and energy use.
+6. Only then evaluate whether fine-tuning a smaller 100-output head improves the engineering trade-off enough to justify collecting or curating a training dataset.
+
+The initial class subset should favor acoustically distinct events and safety-relevant sounds. It should avoid labels that mainly describe context, music genre, speaker demographics, or fine-grained subclasses that are difficult to distinguish using a single short microphone patch.
+
+## Development milestones
+
+1. **Baseline:** build and flash the unmodified bare-metal example; observe UART detections.
+2. **Audio validation:** inspect DMA/PDM capture and export test audio or features for comparison with Python.
+3. **Model validation:** obtain/convert the desired YAMNet graph, quantize it, benchmark it, and compile it with STEdgeAI.
+4. **Class policy:** define the selected class IDs, hazard groups, thresholds, smoothing, and unknown behavior.
+5. **Radar application:** create a clean C/C++ application interface between acquisition, DSP, inference, event tracking, and TouchGFX.
+6. **Evaluation:** compare STM32N6 and Raspberry Pi latency, memory, accuracy, power, and failure cases using the same audio test set.
+
+## Git workflow
+
+Development takes place on the `thesis-development` branch. The current `origin` remote is STMicroelectronics' read-only upstream repository. Before publishing changes, create a personal GitHub repository or fork and add it as a separate remote (for example, `thesis-origin`) so the ST upstream remains available for updates and comparison.
