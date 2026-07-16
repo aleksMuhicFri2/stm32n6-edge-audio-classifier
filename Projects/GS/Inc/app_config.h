@@ -53,6 +53,9 @@
 
 #define my_printf LogInfo
 
+/* The LCD framebuffer is stored in the STM32N6570-DK external PSRAM. */
+#define USE_EXT_SRAM
+
 /* UART usage/configuration */
 #ifdef APP_DVFS
   #define USE_UART_BAUDRATE               (14400) /* 14400 is max value in DVFS mode */

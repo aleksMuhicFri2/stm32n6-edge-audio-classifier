@@ -55,17 +55,9 @@ extern "C" {
 #define AUDIO_FREQUENCY                    AUDIO_FREQUENCY_16K
 #define CAPTURE_BUFFER_SIZE                (AUDIO_FREQUENCY*20U/1000U) /* 20 ms */  
 
-/* LCD defines */
-/* The values provided as example below point at SRAM1 area and allow
-   to fit two layers in 800x480 RGB-565 format.
-
-   To use SRAM3, SRAM4, SRAM5 or SRAM6, it is required
-   1/ to clock them
-       e.g. LL_MEM_EnableClock(LL_MEM_AXISRAMi);
-   2/ to clear the shutdown bit SRAMSD of RAMCFG_AXISRAMxCR register
-*/
-#define LCD_LAYER_0_ADDRESS                 0x34000000 /* SRAM1 */
-#define LCD_LAYER_1_ADDRESS                 0x340C0000 /* SRAM1 */
+/* LCD framebuffers: external 32-Mbyte PSRAM, kept away from executable SRAM1. */
+#define LCD_LAYER_0_ADDRESS                 0x90000000U
+#define LCD_LAYER_1_ADDRESS                 0x900C0000U
 
 
 /* Audio codec defines */

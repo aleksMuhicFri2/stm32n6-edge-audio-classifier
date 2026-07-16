@@ -15,7 +15,7 @@ This repository is the firmware base for a diploma project on real-time environm
 - Frequency range: 125 Hz to 7.5 kHz
 - Neural-network format: quantized int8 ONNX compiled for Neural-ART
 - Baseline output: 10 ESC-10 classes
-- User output: UART at 14400 baud, 8 data bits, no parity, one stop bit
+- User output: UART at 14400 baud plus an 800x480 on-board LCD status screen
 
 The unchanged `BM` configuration was built successfully with STM32CubeIDE 2.2.0 on 2026-07-16. The build completed with 0 errors and produced `GS_Audio_N6.elf`, `.bin`, and `.hex`. Reported application sections were 219,300 bytes of text, 10,224 bytes of initialized data, and 361,360 bytes of zero-initialized data.
 
@@ -48,7 +48,7 @@ This ST reference already contains those board-specific foundations. The diploma
 | TFLite waveform input | C/C++ 64x96 log-mel preprocessing followed by an int8 tensor |
 | `interpreter.invoke()` | ST Neural-ART runtime invocation |
 | CSV class map | Compile-time class-name table |
-| Terminal printing | UART first; TouchGFX radar later |
+| Terminal printing | UART plus a lightweight LTDC screen; TouchGFX radar later |
 
 The desktop script's 15,600-sample comment is valid for the TensorFlow waveform-input YAMNet wrapper. The embedded classifier instead receives one 64x96 spectrogram patch representing 960 ms of audio. Feature extraction is intentionally performed outside the neural network by optimized C code.
 
@@ -63,6 +63,14 @@ Its model source is:
 `Projects/X-CUBE-AI/models/yamnet_1024_64x96_tl_qdq_int8.onnx`
 
 The model recognizes these ten classes: chainsaw, clock tick, crackling fire, crying baby, dog, helicopter, rain, rooster, sea waves, and sneezing.
+
+## First on-board display implementation
+
+The first detected-sound LCD interface was implemented and built on 2026-07-16. It uses the STM32N6570-DK's 800x480 RK050HR18 panel through LTDC and displays the current class plus its top-class confidence. This deliberately lightweight C implementation validates the display hardware and the inference-to-UI data path before the final TouchGFX radar interface is developed.
+
+The RGB565 framebuffer occupies 768,000 bytes in external PSRAM starting at `0x90000000`. Keeping it outside internal SRAM1 is essential because the application executable is loaded into the first 1 MB of SRAM1; ST's generic BSP framebuffer example address `0x34000000` would overlap the running program in this memory layout.
+
+The modified `BM` build completed with 0 errors. Its sections are 225,788 bytes of text, 10,224 bytes of initialized data, and 361,504 bytes of zero-initialized data. Compared with the unchanged baseline, the first UI adds 6,488 bytes of text and 144 bytes of BSS, excluding the external framebuffer. These values provide the first memory-overhead data point for the thesis UI comparison.
 
 ## Hardware safety before the first flash
 

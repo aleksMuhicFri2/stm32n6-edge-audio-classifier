@@ -37,6 +37,7 @@
 #include "ai_dpu.h"                                /* AI includes             */
 #include "test.h"
 #include "audio_bm.h"
+#include "audio_display.h"
 
 /* Private define ------------------------------------------------------------*/
 #define AUDIO_ACQ_LEN     (CTRL_X_CUBE_AI_ACQ_LENGTH)
@@ -69,6 +70,9 @@ static float vumeter(int16_t * pAudioSmp,int nb_sample);
 
 /* Private variables ---------------------------------------------------------*/
 static bool AudioProcIsOn;
+#ifdef USE_EXT_SRAM
+static bool ExtRamReady;
+#endif
 
 #ifdef APP_BARE_METAL
 static AudioBM_acq_t  audio_acq_ctx;
@@ -124,6 +128,15 @@ void init_bm(void)
   BSP_PB_Init(BUTTON_TAMP, BUTTON_MODE_EXTI);
   BSP_LED_Init(LED_GREEN);
   BSP_LED_Init(LED_RED);
+
+  if (
+#ifdef USE_EXT_SRAM
+      (!ExtRamReady) ||
+#endif
+      (!AudioDisplay_Init()))
+  {
+    my_printf("WARNING: LCD initialization failed; audio processing will continue.\r\n");
+  }
 
   /* configuration information on console */
   displaySystemSetting();
@@ -488,10 +501,12 @@ void printInferenceResults(const AIProcCtx_t* AIProcCtx)
   if (max_out > CTRL_X_CUBE_AI_OOD_THR )
   {
     my_printf("{\"class\":\"%s\"}",sAiClassLabels[max_idx]);
+    AudioDisplay_Update(sAiClassLabels[max_idx], max_out);
   }
   else
   {
     my_printf("{\"class\":\"%s\"}","unknown");
+    AudioDisplay_Update("unknown", max_out);
   }
   my_printf("\r\n");
 
@@ -845,9 +860,17 @@ static void Ext_Mem_Config(void)
   MODIFY_REG(XSPI2->CR, XSPI_CR_NOPREF, HAL_XSPI_AUTOMATIC_PREFETCH_DISABLE); /* Hotfix for xspi: no prefetch */
 
 #ifdef USE_EXT_SRAM
-  BSP_XSPI_RAM_Init(0);
-  BSP_XSPI_RAM_EnableMemoryMappedMode(0);
+  ExtRamReady = false;
+  if (BSP_XSPI_RAM_Init(0) != BSP_ERROR_NONE)
+  {
+    return;
+  }
+  if (BSP_XSPI_RAM_EnableMemoryMappedMode(0) != BSP_ERROR_NONE)
+  {
+    return;
+  }
   MODIFY_REG(XSPI1->CR, XSPI_CR_NOPREF, HAL_XSPI_AUTOMATIC_PREFETCH_DISABLE); /* Hotfix for xspi: no prefetch */
+  ExtRamReady = true;
 #endif
   
 }
