@@ -19,6 +19,19 @@ This repository is the firmware base for a diploma project on real-time environm
 
 The unchanged `BM` configuration was built successfully with STM32CubeIDE 2.2.0 on 2026-07-16. The build completed with 0 errors and produced `GS_Audio_N6.elf`, `.bin`, and `.hex`. Reported application sections were 219,300 bytes of text, 10,224 bytes of initialized data, and 361,360 bytes of zero-initialized data.
 
+## First hardware validation
+
+The official prebuilt bare-metal AED image was programmed and booted successfully on 2026-07-16. The target was detected as an STM32N657 Rev B with a 3.27 V board supply, and the ST-LINK virtual serial port was exposed as `COM3`.
+
+Continuous UART frame output confirmed that audio acquisition, log-mel preprocessing, and Neural-ART inference were running. Observed steady-state figures from frames 33 through 41 were:
+
+- reported CPU load: 2.11%
+- preprocessing time: 0.91 ms per audio patch
+- Neural-ART inference time: 1.19 ms per audio patch
+- postprocessing time: 0.00 ms as displayed by the reference application
+
+These values validate the initial hardware/software pipeline but are not yet final thesis benchmarks. Final measurements must use a defined test protocol, repeated runs, and identical audio inputs for the STM32N6 and Raspberry Pi systems.
+
 ## Why this project replaces the empty test project
 
 The original `N6_Test` project only contains a secure startup skeleton. It has no clock tree, cache configuration, PDM/SAI acquisition, DMA, external-flash boot flow, audio preprocessing, or Neural-ART runtime integration.
