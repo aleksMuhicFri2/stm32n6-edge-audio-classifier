@@ -88,6 +88,45 @@ The first local build of this milestone completed with zero compiler errors. It 
 
 The signed 234.47 KB image was programmed at application address `0x70100000` without changing the FSBL, model partition, or OTP configuration. In boot-from-flash mode the LCD entered `WAITING` during silence and changed when active audio was presented. UART frames 88 through 95 independently confirmed `audio_active=0`, `decision=waiting`, zero confidence, and continuous processing at 1.89% CPU load with 0.72 ms preprocessing and 1.17 ms Neural-ART inference. A subsequent physical sound test confirmed that the display leaves `WAITING` and updates the decision and top-three presentation.
 
+## Useful-10 custom model and offline evaluation
+
+The first diploma-specific model deliberately remains limited to ten outputs so
+that every class can be tested repeatedly and summarized with an interpretable
+correct/wrong ratio. The selected classes are chainsaw, clapping, coughing,
+crackling fire, crying baby, dog, wooden-door knock, footsteps, glass breaking,
+and siren. The set represents machinery, deliberate interaction, human and
+animal alerts, entry/presence events, breakage, fire, and emergency alarms.
+
+The experiment uses ESC-50's source-separated folds rather than a random
+clip-level split. Folds 1–3 provide 240 training clips, fold 4 provides 80
+validation clips, and fold 5 remains an untouched test set containing 80 clips
+(eight per class). This prevents recordings from the same original source from
+appearing on both sides of the final evaluation.
+
+ST's Audio Event Detection model-zoo pipeline initialized a YAMNet-256 backbone
+from AudioSet-pretrained weights and trained a new ten-output head for 50
+epochs. Only 2,570 head parameters were trainable; the complete model contains
+137,674 parameters. The final training accuracy was 87.94% and validation
+accuracy was 83.17%.
+
+On held-out fold 5, the float model achieved 79.49% patch accuracy and 87.5%
+clip accuracy. The int8-input/float-output TFLite model achieved 78.48% patch
+accuracy and the same 87.5% clip accuracy: 70 correct clips and 10 incorrect
+clips. Its size is 185,416 bytes and its SHA-256 is
+`979fd950929c50af84e18bafbd99683a3f27da89d4cfb6b9acae2e9f656f70f8`.
+Siren was perfect on the held-out set; clapping was the weakest class with six
+of eight correct. The complete per-clip predictions, confusion matrix,
+per-class precision/recall/F1, training history, dataset hashes, and workbook
+graphs are stored under `experiments/results/useful10_yamnet256` and `outputs`.
+
+This result is an offline model test, not yet an on-device accuracy result. The
+next controlled experiment must compile the TFLite model with STEdgeAI,
+program the generated Neural-ART code and weights, and replay the held-out clips
+through a loudspeaker at documented volume and distance. A tooling audit found
+STM32CubeIDE and STM32CubeProgrammer installed, but no local `stedgeai.exe`.
+STEdgeAI Core 4.0 with its STM32 MCU and ST Neural-ART components is therefore
+the remaining compilation prerequisite.
+
 ## Hardware safety before the first flash
 
 Do not flash automatically without reviewing this step. ST states that the example enables the `VDDIO2_HSLV` and `VDDIO3_HSLV` OTP options if they are not already enabled. OTP settings are permanent and cannot be reset.
@@ -106,14 +145,18 @@ Before flashing:
 
 Filtering 100 labels from a 521-output YAMNet does not significantly reduce the MobileNet backbone. Conversely, changing only the current class-name table cannot add classes because the included network has a ten-output head.
 
-The staged approach is:
+The revised staged approach is:
 
-1. Validate the supplied ten-class model on the board.
-2. Validate microphone capture and compare the embedded mel features against a Python reference.
-3. Compile a 521-output int8 YAMNet-compatible classifier with the 64x96 spectrogram frontend kept in C.
-4. Select approximately 100 useful AudioSet outputs in postprocessing while preserving the full pretrained head initially.
-5. Measure accuracy, confusion, latency, model weights, activation memory, and energy use.
-6. Only then evaluate whether fine-tuning a smaller 100-output head improves the engineering trade-off enough to justify collecting or curating a training dataset.
+1. Use the ten-class custom model to establish a defensible offline and
+   on-device evaluation protocol.
+2. Validate microphone capture and compare the embedded mel features against a
+   Python reference.
+3. Measure confusion, latency, model weights, activation memory, and repeatable
+   loudspeaker-to-microphone accuracy for the useful-ten model.
+4. Add classes only when the ten-class results expose a concrete application
+   requirement and suitable labeled data exists.
+5. Compare a larger YAMNet backbone or broader output head against the
+   YAMNet-256 baseline using the identical folds and hardware protocol.
 
 The initial class subset should favor acoustically distinct events and safety-relevant sounds. It should avoid labels that mainly describe context, music genre, speaker demographics, or fine-grained subclasses that are difficult to distinguish using a single short microphone patch.
 

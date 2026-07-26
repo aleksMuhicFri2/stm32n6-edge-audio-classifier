@@ -28,6 +28,14 @@ append normalized run and frame evidence under `experiments/`. The CSV record
 contains audio activity, the stable decision, confidence, top-three results,
 timings, and a decision-change flag.
 
+The first custom classifier candidate is now also recorded under `ml/`. It is a
+YAMNet-256 transfer-learning model for chainsaw, clapping, coughing, crackling
+fire, crying baby, dog, wooden-door knock, footsteps, glass breaking, and siren.
+On the source-separated ESC-50 fold-5 test set it classified 70 of 80 clips
+correctly (87.5%). Post-training int8 quantization preserved the same clip-level
+accuracy and produced a 185,416-byte TFLite model. This is an offline result;
+the custom model has not yet replaced the stock on-board ESC-10 model.
+
 ## Table of Contents
 
 - [Audio Getting Started Package](#audio-getting-started-package)

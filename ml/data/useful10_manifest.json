@@ -1,0 +1,77 @@
+{
+  "dataset": "ESC-50",
+  "source_metadata_sha256": "8f8cb574a57e381872129b77425ab31a3c69b93a7a82101ede48e0abbb9990ca",
+  "class_order": [
+    "chainsaw",
+    "clapping",
+    "coughing",
+    "crackling_fire",
+    "crying_baby",
+    "dog",
+    "door_wood_knock",
+    "footsteps",
+    "glass_breaking",
+    "siren"
+  ],
+  "splits": {
+    "train": {
+      "folds": [
+        "1",
+        "2",
+        "3"
+      ],
+      "clips": 240,
+      "clips_per_class": {
+        "chainsaw": 24,
+        "clapping": 24,
+        "coughing": 24,
+        "crackling_fire": 24,
+        "crying_baby": 24,
+        "dog": 24,
+        "door_wood_knock": 24,
+        "footsteps": 24,
+        "glass_breaking": 24,
+        "siren": 24
+      },
+      "sha256": "b45ed8e10a788cd492b43d75b59c79d1a8c787fc3ca9dc77076713b395aefc16"
+    },
+    "validation": {
+      "folds": [
+        "4"
+      ],
+      "clips": 80,
+      "clips_per_class": {
+        "chainsaw": 8,
+        "clapping": 8,
+        "coughing": 8,
+        "crackling_fire": 8,
+        "crying_baby": 8,
+        "dog": 8,
+        "door_wood_knock": 8,
+        "footsteps": 8,
+        "glass_breaking": 8,
+        "siren": 8
+      },
+      "sha256": "37835c2ae3505d7d4e6f867c096bcb787b4fffb6586c06d62f80f42570fb6d9c"
+    },
+    "test": {
+      "folds": [
+        "5"
+      ],
+      "clips": 80,
+      "clips_per_class": {
+        "chainsaw": 8,
+        "clapping": 8,
+        "coughing": 8,
+        "crackling_fire": 8,
+        "crying_baby": 8,
+        "dog": 8,
+        "door_wood_knock": 8,
+        "footsteps": 8,
+        "glass_breaking": 8,
+        "siren": 8
+      },
+      "sha256": "7d2d8e57c2e3870015fee4d54c554445357dd8bde678b0bd4d9df6d889e1c48a"
+    }
+  }
+}

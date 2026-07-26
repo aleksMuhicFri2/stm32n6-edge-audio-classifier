@@ -1,0 +1,46 @@
+{
+  "experiment_id": "USEFUL10-YAMNET256-FOLD5-001",
+  "model_architecture": "YAMNet-256 transfer learning",
+  "classes": [
+    "chainsaw",
+    "clapping",
+    "coughing",
+    "crackling_fire",
+    "crying_baby",
+    "dog",
+    "door_wood_knock",
+    "footsteps",
+    "glass_breaking",
+    "siren"
+  ],
+  "test_protocol": "ESC-50 fold 5; 8 clips per class; 80 clips total",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 80,
+  "correct_clips": 70,
+  "incorrect_clips": 10,
+  "clip_accuracy": 0.875,
+  "patches": 395,
+  "correct_patches": 310,
+  "patch_accuracy": 0.7848101265822784,
+  "macro_precision": 0.8923809523809524,
+  "macro_recall": 0.875,
+  "macro_f1": 0.8777404295051354,
+  "model_bytes": 185416,
+  "model_sha256": "979fd950929c50af84e18bafbd99683a3f27da89d4cfb6b9acae2e9f656f70f8",
+  "test_csv_sha256": "7d2d8e57c2e3870015fee4d54c554445357dd8bde678b0bd4d9df6d889e1c48a",
+  "input_shape": [
+    -1,
+    64,
+    96,
+    1
+  ],
+  "input_dtype": "int8",
+  "input_scale": 0.0748816505074501,
+  "input_zero_point": 56,
+  "output_shape": [
+    -1,
+    10
+  ],
+  "output_dtype": "float32",
+  "tensorflow_version": "2.18.0"
+}
