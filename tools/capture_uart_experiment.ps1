@@ -86,63 +86,70 @@ $header = @(
     "distance_cm=$DistanceCm",
     "volume_percent=$VolumePercent",
     "firmware_git_commit=$gitCommit",
+    "decision_filter=EMA alpha 0.65; enter 0.55; release 0.40; switch margin 0.08",
     "notes=$Notes",
     "--- UART ---"
 ) -join [Environment]::NewLine
 [System.IO.File]::WriteAllText($rawPath, $header + [Environment]::NewLine + $cleanText)
 
 $framePattern = "\|\s*(\d+)\s*\|\s*([\d.]+)%\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|"
-$classPattern = '\{"class":"([^"]+)"\}'
-$frames = [System.Collections.Generic.List[object]]::new()
-$current = $null
-$lineTimeIndex = 0
+$aedPattern = "AED_CSV,(\d+),([01]),([^,\r\n]+),([\d.]+),([^,\r\n]+),([\d.]+),([^,\r\n]+),([\d.]+),([^,\r\n]+),([\d.]+),([01])"
+$statsByFrame = @{}
 
-function Add-CurrentFrame {
-    param($Frame)
-    if ($null -eq $Frame) { return }
-    if (-not $Frame.predicted_class) { $Frame.predicted_class = "no_output" }
+foreach ($match in [regex]::Matches($cleanText, $framePattern)) {
+    $statsByFrame[[int]$match.Groups[1].Value] = [pscustomobject]@{
+        cpu_load_percent = [double]$match.Groups[2].Value
+        preprocess_ms = [double]$match.Groups[3].Value
+        inference_ms = [double]$match.Groups[4].Value
+        postprocess_ms = [double]$match.Groups[5].Value
+    }
+}
+
+$aedMatches = [regex]::Matches($cleanText, $aedPattern)
+if ($aedMatches.Count -eq 0) {
+    throw "No AED_CSV records were parsed. Flash the temporal-filter firmware first. Raw UART was saved to $rawPath."
+}
+
+$frames = [System.Collections.Generic.List[object]]::new()
+for ($index = 0; $index -lt $aedMatches.Count; $index++) {
+    $match = $aedMatches[$index]
+    $frameId = [int]$match.Groups[1].Value
+    $predictedClass = $match.Groups[3].Value
+    $stats = $statsByFrame[$frameId]
     if ($TestType -in @("ood", "idle")) {
-        $Frame.is_correct = $Frame.predicted_class -in @("unknown", "no_output")
+        $isCorrect = $predictedClass -in @("unknown", "waiting")
     }
     else {
-        $Frame.is_correct = $Frame.predicted_class -eq $ExpectedClass
+        $isCorrect = $predictedClass -eq $ExpectedClass
     }
-    $frames.Add([pscustomobject]$Frame)
-}
 
-foreach ($line in ($cleanText -split "`r?`n")) {
-    $frameMatch = [regex]::Match($line, $framePattern)
-    if ($frameMatch.Success) {
-        Add-CurrentFrame $current
-        $current = [ordered]@{
-            run_id = $runId
-            timestamp_offset_s = [math]::Round(($lineTimeIndex / [math]::Max(1, ($cleanText -split "`r?`n").Count)) * $DurationSeconds, 3)
-            frame_id = [int]$frameMatch.Groups[1].Value
-            expected_class = $ExpectedClass
-            test_type = $TestType
-            predicted_class = ""
-            is_correct = $false
-            cpu_load_percent = [double]$frameMatch.Groups[2].Value
-            preprocess_ms = [double]$frameMatch.Groups[3].Value
-            inference_ms = [double]$frameMatch.Groups[4].Value
-            postprocess_ms = [double]$frameMatch.Groups[5].Value
-            record_completeness = "direct_complete_estimated_offset"
-        }
-    }
-    $classMatch = [regex]::Match($line, $classPattern)
-    if ($classMatch.Success -and $null -ne $current) {
-        $current.predicted_class = $classMatch.Groups[1].Value
-    }
-    $lineTimeIndex++
-}
-Add-CurrentFrame $current
-
-if ($frames.Count -eq 0) {
-    throw "No frame records were parsed. Raw UART was saved to $rawPath."
+    $frames.Add([pscustomobject][ordered]@{
+        run_id = $runId
+        timestamp_offset_s = [math]::Round(($index / [math]::Max(1, $aedMatches.Count - 1)) * $DurationSeconds, 3)
+        frame_id = $frameId
+        expected_class = $ExpectedClass
+        test_type = $TestType
+        predicted_class = $predictedClass
+        is_correct = $isCorrect
+        cpu_load_percent = if ($null -ne $stats) { $stats.cpu_load_percent } else { $null }
+        preprocess_ms = if ($null -ne $stats) { $stats.preprocess_ms } else { $null }
+        inference_ms = if ($null -ne $stats) { $stats.inference_ms } else { $null }
+        postprocess_ms = if ($null -ne $stats) { $stats.postprocess_ms } else { $null }
+        record_completeness = if ($null -ne $stats) { "direct_complete_estimated_offset" } else { "decision_complete_no_timing" }
+        audio_active = [bool]([int]$match.Groups[2].Value)
+        decision_confidence = [double]$match.Groups[4].Value
+        top1_class = $match.Groups[5].Value
+        top1_confidence = [double]$match.Groups[6].Value
+        top2_class = $match.Groups[7].Value
+        top2_confidence = [double]$match.Groups[8].Value
+        top3_class = $match.Groups[9].Value
+        top3_confidence = [double]$match.Groups[10].Value
+        decision_changed = [bool]([int]$match.Groups[11].Value)
+    })
 }
 
 $frames | Export-Csv -LiteralPath $framesPath -NoTypeInformation -Append -Encoding utf8
-$detections = @($frames | Where-Object { $_.predicted_class -ne "no_output" })
+$detections = @($frames | Where-Object { $_.predicted_class -notin @("no_output", "unknown", "waiting") })
 $correct = @($frames | Where-Object { $_.is_correct }).Count
 $unknown = @($frames | Where-Object { $_.predicted_class -eq "unknown" }).Count
 $result = if ($TestType -eq "positive") {
@@ -161,7 +168,7 @@ $run = [pscustomobject][ordered]@{
     board = "STM32N6570-DK"
     board_revision = "Rev B"
     firmware_commit = $gitCommit
-    configuration = "BM"
+    configuration = "BM EMA-0.65 hysteresis"
     model_name = "YAMNet 1024 ESC-10 int8"
     model_classes = 10
     stimulus = $Stimulus

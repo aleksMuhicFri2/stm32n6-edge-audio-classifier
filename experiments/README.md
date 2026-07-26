@@ -6,7 +6,7 @@ This directory is the auditable source of truth for the diploma thesis measureme
 
 - `project_log.csv`: chronological engineering decisions, changes, failures, and milestones.
 - `runs.csv`: one row per experimental run and its aggregate conditions/results.
-- `frames.csv`: one row per processed audio frame when a complete UART capture is available. Preliminary reconstructed observations are explicitly flagged.
+- `frames.csv`: one row per processed audio frame when a complete UART capture is available. New firmware records audio activity, stable decision confidence, top-three class probabilities, and decision changes. Preliminary reconstructed observations are explicitly flagged and retain blank values for fields that were not historically captured.
 - `raw/`: immutable UART text captured for each run.
 - `protocol.md`: measurement rules that must be followed for controlled thesis experiments.
 
@@ -37,4 +37,6 @@ powershell -ExecutionPolicy Bypass -File .\tools\capture_uart_experiment.ps1 `
   -StimulusHash "SHA256 hash of the fixed audio file"
 ```
 
-The tool saves the raw UART text and appends the run/frame tables. Rebuild the Excel dashboard afterward with `tools/build_thesis_workbook.mjs`.
+The tool saves the raw UART text and appends the run/frame tables. It parses the
+firmware's `AED_CSV` rows and joins them to the matching CPU timing frame. Rebuild
+the Excel dashboard afterward with `tools/build_thesis_workbook.mjs`.

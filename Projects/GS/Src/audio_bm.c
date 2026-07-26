@@ -38,6 +38,7 @@
 #include "test.h"
 #include "audio_bm.h"
 #include "audio_display.h"
+#include "audio_event_filter.h"
 
 /* Private define ------------------------------------------------------------*/
 #define AUDIO_ACQ_LEN     (CTRL_X_CUBE_AI_ACQ_LENGTH)
@@ -202,6 +203,7 @@ void initAudioProc(AudioBM_proc_t * ctx_ptr)
   PreProc_DPUInit(&ctx_ptr->audioPreCtx);
   /* Audio Postprocessing init */
   PostProc_DPUInit(&ctx_ptr->audioPostCtx);
+  AudioEventFilter_Init();
   /* transfer quantization parametres included in AI model to the Audio DPU   */
   ctx_ptr->audioPreCtx.output_Q_offset    = ctx_ptr->aiCtx.input_Q_offset;
   ctx_ptr->audioPreCtx.output_Q_inv_scale =
@@ -260,7 +262,7 @@ bool audio_process(AudioBM_acq_t * acq_ctx_ptr,AudioBM_proc_t * proc_ctx_ptr)
   AiDPUProcess(&proc_ctx_ptr->aiCtx);
 
 #if (CTRL_X_CUBE_AI_MODEL_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
-  if (isNotSilence || isPlayback) printInferenceResults(&proc_ctx_ptr->aiCtx);
+  printInferenceResults(&proc_ctx_ptr->aiCtx, isNotSilence || isPlayback);
 #endif
 
 #if (CTRL_X_CUBE_AI_POSTPROC==CTRL_AI_ISTFT)
@@ -446,6 +448,8 @@ void printHeader(void)
 	my_printf("| Frame   |  Cpu  |  Pre |  AI  | Post |");
 #endif
 	my_printf("\r\n");
+	printf("AED_CSV_HEADER,frame,audio_active,decision,decision_confidence,"
+	       "top1,top1_confidence,top2,top2_confidence,top3,top3_confidence,changed\r\n");
 }
 
 #ifdef CPU_STATS
@@ -469,7 +473,7 @@ void printCpuStats(void)
 * @param  None
 * @retval None
 */
-void printInferenceResults(const AIProcCtx_t* AIProcCtx)
+void printInferenceResults(const AIProcCtx_t* AIProcCtx, bool audio_active)
 {
   /**
   * Specifies the labels for the classes of the demo.
@@ -477,32 +481,53 @@ void printInferenceResults(const AIProcCtx_t* AIProcCtx)
 
   const char* sAiClassLabels[CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER]  = CTRL_X_CUBE_AI_MODEL_CLASS_LIST;
   float *nn_out =  (float *) AIProcCtx->p_stai_outputs[0];
+  AudioEventResult_t result;
+  const char *top_labels[AUDIO_EVENT_TOP_COUNT];
+  const char *decision_label;
 
-  float max_out = nn_out[0];
-  uint32_t max_idx = 0;
-  for(uint32_t i = 1; i < CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER; i++)
+  AudioEventFilter_Update(nn_out, CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER,
+                          audio_active, &result);
+
+  for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
   {
-    if(nn_out[i] > max_out)
-    {
-      max_idx = i;
-      max_out = nn_out[i];
-    }
+    top_labels[rank] = (result.top_indices[rank] == AUDIO_EVENT_NO_CLASS) ?
+                       "unknown" : sAiClassLabels[result.top_indices[rank]];
+  }
+
+  if (result.state == AUDIO_EVENT_CLASS)
+  {
+    decision_label = sAiClassLabels[result.decision_index];
+  }
+  else if (result.state == AUDIO_EVENT_UNKNOWN)
+  {
+    decision_label = "unknown";
+  }
+  else
+  {
+    decision_label = "waiting";
   }
 #ifdef CPU_STATS
    my_printf("\r\n");
 #endif
 
-  if (max_out > CTRL_X_CUBE_AI_OOD_THR )
+  if (result.decision_changed)
   {
-    my_printf("{\"class\":\"%s\"}",sAiClassLabels[max_idx]);
-    AudioDisplay_Update(sAiClassLabels[max_idx], max_out);
+    my_printf("{\"class\":\"%s\"}\r\n", decision_label);
   }
-  else
-  {
-    my_printf("{\"class\":\"%s\"}","unknown");
-    AudioDisplay_Update("unknown", max_out);
-  }
-  my_printf("\r\n");
+
+  printf("AED_CSV,%lu,%u,%s,%.4f,%s,%.4f,%s,%.4f,%s,%.4f,%u\r\n",
+         (unsigned long)result.frame_index,
+         result.audio_active ? 1U : 0U,
+         decision_label,
+         (double)result.decision_confidence,
+         top_labels[0], (double)result.top_scores[0],
+         top_labels[1], (double)result.top_scores[1],
+         top_labels[2], (double)result.top_scores[2],
+         result.decision_changed ? 1U : 0U);
+
+  AudioDisplay_Update(decision_label, result.decision_confidence,
+                      top_labels, result.top_scores,
+                      result.state != AUDIO_EVENT_WAITING);
 
 }
 

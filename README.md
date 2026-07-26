@@ -9,6 +9,25 @@ extraction, the machine learning inference itself, and a post processing step
 before exposing the results to the user in real time. The project implements
 both RTOS and bare metal versions. A low power version is also provided.
 
+## Diploma-project extensions
+
+The `thesis-development` branch extends ST's ten-class bare-metal AED example
+with an STM32N6570-DK LCD interface and a reproducible experiment pipeline.
+The current application adds:
+
+- an 800x480 RGB565 status interface in internal AXI SRAM;
+- top-three class probabilities and the stable decision confidence;
+- a 65% exponential moving average with enter, release, and class-switch
+  hysteresis to reduce one-window label jumps;
+- separate `WAITING` (silence), `UNKNOWN` (audible but uncertain), and detected
+  class states; and
+- one machine-readable `AED_CSV` UART row for every 960 ms model window.
+
+Use `tools/capture_uart_experiment.ps1` to preserve the raw UART stream and
+append normalized run and frame evidence under `experiments/`. The CSV record
+contains audio activity, the stable decision, confidence, top-three results,
+timings, and a decision-change flag.
+
 ## Table of Contents
 
 - [Audio Getting Started Package](#audio-getting-started-package)

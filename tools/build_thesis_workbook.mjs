@@ -154,9 +154,19 @@ frames.getRange("D:F").format.columnWidth = 22;
 frames.getRange("G:G").format.columnWidth = 12;
 frames.getRange("H:K").format.columnWidth = 16;
 frames.getRange("L:L").format.columnWidth = 28;
+frames.getRange("M:N").format.columnWidth = 18;
+frames.getRange("O:O").format.columnWidth = 22;
+frames.getRange("P:P").format.columnWidth = 18;
+frames.getRange("Q:Q").format.columnWidth = 22;
+frames.getRange("R:R").format.columnWidth = 18;
+frames.getRange("S:S").format.columnWidth = 22;
+frames.getRange("T:U").format.columnWidth = 18;
 frames.getRange("B2:B5000").format.numberFormat = "0.000";
 frames.getRange("H2:H5000").format.numberFormat = "0.00";
 frames.getRange("I2:K5000").format.numberFormat = "0.000";
+for (const range of ["N2:N5000", "P2:P5000", "R2:R5000", "T2:T5000"]) {
+  frames.getRange(range).format.numberFormat = "0.0%";
+}
 frames.getRange("G2:G5000").conditionalFormats.addCustom("=G2=TRUE", {
   fill: "#DCFCE7",
   font: { color: "#166534", bold: true },
@@ -261,7 +271,7 @@ const timingChart = dashboard.charts.add("bar", dashboard.getRange("D5:E9"));
 timingChart.title = "Mean embedded compute time by stage (ms)";
 timingChart.hasLegend = false;
 timingChart.yAxis = { numberFormatCode: "0.000" };
-timingChart.setPosition("G5", "N16");
+timingChart.setPosition("G5", "N13");
 
 const classes = [
   "dog",
@@ -275,6 +285,7 @@ const classes = [
   "sea_waves",
   "sneezing",
   "unknown",
+  "waiting",
   "no_output",
 ];
 dashboard.getRange("A14:B14").values = [["Predicted class", "Recorded events"]];
@@ -401,7 +412,7 @@ const drawings = await workbook.inspect({
 for (const [key, sheetName, range] of [
   ["dashboard", "Dashboard", "A1:N35"],
   ["runs", "Runs", `A1:AD${runsLastRow}`],
-  ["frames", "Frames", `A1:L${framesLastRow}`],
+  ["frames", "Frames", `A1:U${framesLastRow}`],
   ["projectLog", "Project Log", `A1:H${projectLogLastRow}`],
   ["protocol", "Protocol", "A1:F18"],
 ]) {

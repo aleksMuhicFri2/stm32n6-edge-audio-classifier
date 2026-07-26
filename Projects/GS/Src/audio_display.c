@@ -30,6 +30,7 @@
 #define COLOR_MUTED               0xBDF7U
 #define COLOR_GREEN               0x07E0U
 #define COLOR_ORANGE              0xFD20U
+#define COLOR_BAR_BACKGROUND      0x2945U
 
 typedef struct
 {
@@ -87,6 +88,16 @@ static volatile uint16_t *const s_framebuffer =
 static bool s_display_ready;
 static char s_last_class[32];
 static uint32_t s_last_percent = 101U;
+static char s_last_top_labels[AUDIO_EVENT_TOP_COUNT][32];
+static uint32_t s_last_top_percent[AUDIO_EVENT_TOP_COUNT] = {101U, 101U, 101U};
+static bool s_last_show_predictions;
+
+static uint32_t confidence_percent(float confidence)
+{
+  return (confidence <= 0.0F) ? 0U :
+         ((confidence >= 1.0F) ? 100U :
+          (uint32_t)(confidence * 100.0F + 0.5F));
+}
 
 static const uint8_t *glyph_rows(char character)
 {
@@ -309,6 +320,12 @@ bool AudioDisplay_Init(void)
   s_display_ready = false;
   s_last_class[0] = '\0';
   s_last_percent = 101U;
+  s_last_show_predictions = false;
+  for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
+  {
+    s_last_top_labels[rank][0] = '\0';
+    s_last_top_percent[rank] = 101U;
+  }
 
   fill_rect(0U, 0U, DISPLAY_WIDTH, DISPLAY_HEIGHT, COLOR_BACKGROUND);
   fill_rect(0U, 0U, DISPLAY_WIDTH, 82U, COLOR_HEADER);
@@ -327,32 +344,80 @@ bool AudioDisplay_Init(void)
   return s_display_ready;
 }
 
-void AudioDisplay_Update(const char *class_name, float confidence)
+void AudioDisplay_Update(const char *decision_label,
+                         float decision_confidence,
+                         const char *const top_labels[AUDIO_EVENT_TOP_COUNT],
+                         const float top_scores[AUDIO_EVENT_TOP_COUNT],
+                         bool show_predictions)
 {
   char label[32];
   char confidence_text[32];
+  char top_text[64];
   uint32_t percent;
+  uint32_t top_percent[AUDIO_EVENT_TOP_COUNT];
+  bool unchanged;
 
-  if ((!s_display_ready) || (class_name == NULL))
+  if ((!s_display_ready) || (decision_label == NULL) ||
+      (top_labels == NULL) || (top_scores == NULL))
   {
     return;
   }
 
-  percent = (confidence <= 0.0F) ? 0U :
-            ((confidence >= 1.0F) ? 100U : (uint32_t)(confidence * 100.0F + 0.5F));
-  (void)snprintf(label, sizeof(label), "%s", class_name);
-  if ((strcmp(label, s_last_class) == 0) && (percent == s_last_percent))
+  percent = confidence_percent(decision_confidence);
+  (void)snprintf(label, sizeof(label), "%s", decision_label);
+  unchanged = (strcmp(label, s_last_class) == 0) &&
+              (percent == s_last_percent) &&
+              (show_predictions == s_last_show_predictions);
+
+  for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
+  {
+    top_percent[rank] = confidence_percent(top_scores[rank]);
+    unchanged = unchanged &&
+                (strcmp(top_labels[rank], s_last_top_labels[rank]) == 0) &&
+                (top_percent[rank] == s_last_top_percent[rank]);
+  }
+
+  if (unchanged)
   {
     return;
   }
 
   (void)snprintf(s_last_class, sizeof(s_last_class), "%s", label);
   s_last_percent = percent;
+  s_last_show_predictions = show_predictions;
+  for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
+  {
+    (void)snprintf(s_last_top_labels[rank], sizeof(s_last_top_labels[rank]),
+                   "%s", top_labels[rank]);
+    s_last_top_percent[rank] = top_percent[rank];
+  }
 
-  fill_rect(45U, 220U, 710U, 150U, COLOR_CARD);
-  draw_text_centered(244U, label, 7U, COLOR_WHITE);
-  (void)snprintf(confidence_text, sizeof(confidence_text), "CONFIDENCE: %lu%%",
-                 (unsigned long)percent);
-  draw_text_centered(340U, confidence_text, 3U, COLOR_ORANGE);
+  fill_rect(45U, 174U, 710U, 235U, COLOR_CARD);
+  draw_text_centered(182U, "DETECTED SOUND", 3U, COLOR_MUTED);
+
+  if (show_predictions)
+  {
+    draw_text_centered(220U, label, 5U, COLOR_WHITE);
+    (void)snprintf(confidence_text, sizeof(confidence_text), "CONFIDENCE: %lu%%",
+                   (unsigned long)percent);
+    draw_text_centered(266U, confidence_text, 3U, COLOR_ORANGE);
+    fill_rect(100U, 298U, 600U, 10U, COLOR_BAR_BACKGROUND);
+    fill_rect(100U, 298U, 6U * percent, 10U, COLOR_ORANGE);
+    draw_text_centered(318U, "TOP PREDICTIONS", 2U, COLOR_MUTED);
+
+    for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
+    {
+      (void)snprintf(top_text, sizeof(top_text), "%lu  %s  %lu%%",
+                     (unsigned long)(rank + 1U), top_labels[rank],
+                     (unsigned long)top_percent[rank]);
+      draw_text_centered(342U + 23U * rank, top_text, 2U,
+                         (rank == 0U) ? COLOR_WHITE : COLOR_MUTED);
+    }
+  }
+  else
+  {
+    draw_text_centered(236U, "WAITING", 6U, COLOR_WHITE);
+    draw_text_centered(320U, "NO ACTIVE AUDIO WINDOW", 2U, COLOR_MUTED);
+  }
   clean_framebuffer();
 }

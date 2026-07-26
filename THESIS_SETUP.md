@@ -78,6 +78,16 @@ Instruction-level debugging found the final LCD startup failure at the first rea
 
 The corrected signed build was then validated from external flash with both boot switches at `L`. The LCD progressed through `UNKNOWN` and `WAITING` and updated to `CRACKLING` in response to live microphone input. A simultaneous raw COM3 capture confirmed continuous frames 57 through 135 at 1.89% reported CPU load, 0.72 ms preprocessing, 1.17 ms Neural-ART inference, and 0.00 ms displayed postprocessing. Event output included `rooster` and `crying_baby`. This validates the complete FSBL-to-application path and the inference-to-LCD integration; the detections in an uncontrolled room are functional observations rather than accuracy measurements.
 
+## Temporal decision filter and top-three evidence
+
+The original reference emitted the maximum class independently for every non-silent 960 ms window. That behavior made the visible label vulnerable to a single anomalous prediction. Requiring three consecutive results was rejected because it would add up to 2.88 seconds of fixed confirmation delay. The new application instead applies an exponential moving average with 65% weight on the newest window. A class enters at 0.55 confidence, remains active down to 0.40, and a competing class must exceed it by 0.08 before an immediate switch. Two consecutive silent windows reset the filter to `WAITING`; audible input below the enter threshold is `UNKNOWN`.
+
+The LCD now shows the stable decision, its confidence bar, and the three highest smoothed class probabilities. Every processed window also emits an `AED_CSV` UART record containing the frame index, audio-activity flag, stable decision and confidence, top-three classes and confidences, and a decision-change flag. The host capture tool joins this record with the corresponding CPU-stage timings and preserves both normalized CSV data and the immutable raw UART stream. Historical frame rows are retained with blank values for measurements that the earlier firmware did not expose.
+
+The first local build of this milestone completed with zero compiler errors. It contains 228,820 bytes of text, 10,248 bytes of initialized data, and 361,552 bytes of BSS. Relative to the previously validated LCD build, temporal filtering, top-three rendering, and structured logging add 4,120 bytes of text, 24 bytes of initialized data, and 152 bytes of BSS.
+
+The signed 234.47 KB image was programmed at application address `0x70100000` without changing the FSBL, model partition, or OTP configuration. In boot-from-flash mode the LCD entered `WAITING` during silence and changed when active audio was presented. UART frames 88 through 95 independently confirmed `audio_active=0`, `decision=waiting`, zero confidence, and continuous processing at 1.89% CPU load with 0.72 ms preprocessing and 1.17 ms Neural-ART inference. A subsequent physical sound test confirmed that the display leaves `WAITING` and updates the decision and top-three presentation.
+
 ## Hardware safety before the first flash
 
 Do not flash automatically without reviewing this step. ST states that the example enables the `VDDIO2_HSLV` and `VDDIO3_HSLV` OTP options if they are not already enabled. OTP settings are permanent and cannot be reset.

@@ -72,7 +72,7 @@ extern void stopAudioCapture(void);
 extern void initAudioProc(AudioBM_proc_t * ctx_ptr);
 extern void AudioCapture_half_buf_cb(AudioCapture_ring_buff_t *pHdle,\
                                       int16_t *pData, uint8_t half_buf);
-extern void printInferenceResults(const AIProcCtx_t* AIProcCtx);
+extern void printInferenceResults(const AIProcCtx_t* AIProcCtx, bool audio_active);
 extern void toggle_audio_proc(void);
 extern void printHeader(void);
 #if (CTRL_X_CUBE_AI_AUDIO_OUT==COM_TYPE_HEADSET)
