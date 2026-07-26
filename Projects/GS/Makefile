@@ -245,7 +245,7 @@ AS_FLAGS += --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb
 LDSCRIPT = STM32CubeIDE/STM32N657XX_LRUN.ld
 
 # libraries
-LIBS = -lc -lm -lnosys -l:NetworkRuntime1200_CM55_GCC.a
+LIBS = -lc -lm -lnosys -l:NetworkRuntime1201_CM55_GCC.a
 LIBDIR = -L../../Middlewares/ST/AI/Lib/GCC/ARMCortexM55
 LD_FLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS)
 LD_FLAGS += -Wl,--cref -Wl,--gc-sections

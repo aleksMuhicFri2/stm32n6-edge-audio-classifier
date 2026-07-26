@@ -1,7 +1,16 @@
 #!/bin/bash
-generateCmd="<path_to_stedge>/stedgeai.exe" 
+set -e
 
-$generateCmd generate -m $1 --target stm32n6 --st-neural-art default@user_neural_art.json
+generateCmd="${STEDGEAI_EXE:-C:/ST/STEdgeAI/4.0/Utilities/windows/stedgeai.exe}"
+
+if [ ! -f "$generateCmd" ]; then
+  echo "STEdgeAI compiler not found: $generateCmd"
+  echo "Set STEDGEAI_EXE to the full path of stedgeai.exe."
+  return 1 2>/dev/null || exit 1
+fi
+
+"$generateCmd" generate -m "$1" --target stm32n6 \
+  --st-neural-art default@user_neural_art.json
 cp ./st_ai_output/network.c .
 cp ./st_ai_output/network.h .
 cp ./st_ai_output/stai_network.c .

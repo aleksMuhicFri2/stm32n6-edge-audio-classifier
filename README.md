@@ -114,7 +114,7 @@ the serial link is:
 
 - [STM32CubeIDE](https://www.st.com/content/st_com/en/products/development-tools/software-development-tools/stm32-software-development-tools/stm32-ides/stm32cubeide.html) (__v2.10.0__)
 - [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) (__v2.22.0__)
-- [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) (__v4.0.0__)
+- [STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) (__v4.0.1__)
 
 ## Quickstart using prebuilt binaries
 
@@ -664,9 +664,11 @@ processing chain:
 
 ## How to update my project with a new version of ST Edge AI
 
-The neural network model files (`network.c/h`, `stai_network.c/h`, etc.) 
-included in this project were generated using
-[STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) version 4.0.0.
+The active neural network model files (`network.c/h`, `stai_network.c/h`, etc.)
+and Neural-ART runtime were generated or updated using
+[STEdgeAI](https://www.st.com/en/development-tools/stedgeai-core.html) version 4.0.1.
+The `.aed` backup files retain the original ST demonstration model generated
+with version 4.0.0.
 
 Using a different version of STEdgeAI to generate these model files may result
 in the following compile-time error: `Possible mismatch in ll_aton library used`.
