@@ -11,5 +11,6 @@ Projects/GS/STM32CubeIDE/TX_LP/
 .metadata/
 
 # Local spreadsheet runtime and generated thesis reports
+node_modules/
 tools/node_modules/
 outputs/

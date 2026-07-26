@@ -1,0 +1,151 @@
+run_id=RUN-20260726-194205
+recorded_at=2026-07-26T19:42:05.1466782+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=30
+stimulus=live repeated hand claps
+stimulus_hash=
+expected_class=clapping
+test_type=positive
+source=live person
+distance_cm=
+volume_percent=
+firmware_git_commit=6d7d7df
+decision_filter=EMA alpha 0.65; enter 0.55; release 0.40; switch margin 0.08
+notes=First active-audio smoke test after flashing useful10_yamnet256; distance and sound level uncontrolled.
+--- UART ---
+
+AED_CSV,65,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 65      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,66,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 66      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,67,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 67      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,68,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 68      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,69,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 69      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,70,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 70      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,71,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 71      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,72,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 72      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,73,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 73      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,74,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 74      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,75,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 75      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,76,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 76      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,77,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 77      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,78,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 78      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,79,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 79      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,80,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 80      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,81,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 81      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,82,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 82      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,83,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 83      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,84,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 84      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,85,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 85      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,86,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 86      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,87,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 87      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,88,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 88      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,89,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 89      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,90,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 90      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,91,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 91      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,92,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 92      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,93,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 93      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,94,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 94      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,95,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 95      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,96,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 96      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,97,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 97      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,98,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 98      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,99,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 99      |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,100,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 100     |  0.8
+AED_CSV,128,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 128     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,129,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 129     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,130,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 130     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,131,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 131     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,132,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 132     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,133,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 133     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,134,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 134     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,135,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 135     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,136,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 136     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,137,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 137     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,138,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 138     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,139,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 139     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,140,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 140     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,141,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 141     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,142,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 142     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,143,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 143     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,144,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 144     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,145,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 145     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,146,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 146     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,147,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 147     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,148,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 148     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,149,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 149     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,150,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 150     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,151,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 151     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,152,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 152     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,153,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 153     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,154,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 154     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,155,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 155     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,156,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 156     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,157,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 157     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,158,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 158     |  0.85%|  0.69|  0.16|  0.00|

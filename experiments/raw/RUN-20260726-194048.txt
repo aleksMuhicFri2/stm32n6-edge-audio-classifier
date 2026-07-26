@@ -1,0 +1,49 @@
+run_id=RUN-20260726-194048
+recorded_at=2026-07-26T19:40:48.6542013+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=15
+stimulus=quiet room ambient after first useful-ten boot
+stimulus_hash=
+expected_class=waiting
+test_type=idle
+source=on-board microphone
+distance_cm=
+volume_percent=
+firmware_git_commit=6d7d7df
+decision_filter=EMA alpha 0.65; enter 0.55; release 0.40; switch margin 0.08
+notes=First live capture after flashing useful10_yamnet256; no deliberate stimulus.
+--- UART ---
+[0m
+[0mAED_CSV,49,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 49      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,50,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 50      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,51,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 51      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,52,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 52      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,53,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 53      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,54,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 54      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,55,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 55      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,56,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 56      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,57,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 57      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,58,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 58      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,59,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 59      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,60,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 60      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,61,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 61      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,62,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 62      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,63,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 63      |  0.85%|  0.69|  0.16|  0.00|[0m
+[0mAED_CSV,64,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+[0m                    [0m| 64      |  0.85%|  0.69|  0.16|  0.00|

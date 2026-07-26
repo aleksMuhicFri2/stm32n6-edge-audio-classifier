@@ -1,0 +1,139 @@
+run_id=RUN-20260726-194301
+recorded_at=2026-07-26T19:43:01.3344254+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=30
+stimulus=live repeated hand claps
+stimulus_hash=
+expected_class=clapping
+test_type=positive
+source=live person
+distance_cm=
+volume_percent=
+firmware_git_commit=6d7d7df
+decision_filter=EMA alpha 0.65; enter 0.55; release 0.40; switch margin 0.08
+notes=User-confirmed active clapping capture after useful10_yamnet256 flash; distance and sound level uncontrolled.
+--- UART ---
+
+AED_CSV,159,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 159     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,160,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 160     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,161,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 161     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,162,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 162     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"unknown"}
+AED_CSV,163,1,unknown,0.5234,door_wood_knock,0.5234,footsteps,0.1680,coughing,0.1367,1
+                    | 163     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,164,1,unknown,0.4117,door_wood_knock,0.4117,clapping,0.2207,coughing,0.1900,0
+                    | 164     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,165,1,unknown,0.2000,door_wood_knock,0.2000,coughing,0.1782,glass_breaking,0.1495,0
+                    | 165     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,166,0,unknown,0.2000,door_wood_knock,0.2000,coughing,0.1782,glass_breaking,0.1495,0
+                    | 166     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"waiting"}
+AED_CSV,167,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,1
+                    | 167     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,168,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 168     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,169,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 169     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,170,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 170     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,171,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 171     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,172,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 172     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,173,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 173     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,174,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 174     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,175,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 175     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,176,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 176     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,177,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 177     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,178,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 178     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,179,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 179     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,180,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 180     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,181,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 181     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,182,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 182     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,183,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 183     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,184,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 184     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"unknown"}
+AED_CSV,185,1,unknown,0.4180,door_wood_knock,0.4180,clapping,0.2578,coughing,0.1602,1
+                    | 185     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,186,1,unknown,0.4432,clapping,0.4432,door_wood_knock,0.3875,coughing,0.0814,0
+                    | 186     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,187,1,unknown,0.4682,door_wood_knock,0.4682,clapping,0.4293,coughing,0.0437,0
+                    | 187     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"clapping"}
+AED_CSV,188,1,clapping,0.6251,clapping,0.6251,door_wood_knock,0.3162,footsteps,0.0290,1
+                    | 188     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,189,1,clapping,0.6885,clapping,0.6885,door_wood_knock,0.2757,footsteps,0.0178,0
+                    | 189     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,190,1,clapping,0.6752,clapping,0.6752,door_wood_knock,0.2996,footsteps,0.0164,0
+                    | 190     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,191,1,clapping,0.7517,clapping,0.7517,door_wood_knock,0.2293,footsteps,0.0133,0
+                    | 191     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,192,1,clapping,0.8572,clapping,0.8572,door_wood_knock,0.1310,footsteps,0.0072,0
+                    | 192     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,193,1,clapping,0.8764,clapping,0.8764,door_wood_knock,0.1093,footsteps,0.0051,0
+                    | 193     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,194,1,clapping,0.7511,clapping,0.7511,door_wood_knock,0.2262,footsteps,0.0069,0
+                    | 194     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,195,1,clapping,0.7098,clapping,0.7098,door_wood_knock,0.2366,footsteps,0.0227,0
+                    | 195     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,196,1,clapping,0.8146,clapping,0.8146,door_wood_knock,0.1514,footsteps,0.0130,0
+                    | 196     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,197,1,clapping,0.7777,clapping,0.7777,door_wood_knock,0.1596,crackling_fire,0.0248,0
+                    | 197     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,198,1,clapping,0.8079,clapping,0.8079,door_wood_knock,0.1295,crackling_fire,0.0366,0
+                    | 198     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,199,1,clapping,0.7246,clapping,0.7246,door_wood_knock,0.1875,crackling_fire,0.0433,0
+                    | 199     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,200,1,clapping,0.5431,clapping,0.5431,door_wood_knock,0.3043,crackling_fire,0.0786,0
+                    | 200     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,201,1,clapping,0.5963,clapping,0.5963,door_wood_knock,0.2969,crackling_fire,0.0554,0
+                    | 201     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,202,1,clapping,0.6099,clapping,0.6099,door_wood_knock,0.2918,crackling_fire,0.0473,0
+                    | 202     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,203,1,clapping,0.5283,clapping,0.5283,door_wood_knock,0.3891,footsteps,0.0371,0
+                    | 203     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"door_wood_knock"}
+AED_CSV,204,1,door_wood_knock,0.5526,door_wood_knock,0.5526,clapping,0.3626,footsteps,0.0409,1
+                    | 204     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,205,1,door_wood_knock,0.5692,door_wood_knock,0.5692,clapping,0.3834,footsteps,0.0219,0
+                    | 205     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,206,1,door_wood_knock,0.5064,door_wood_knock,0.5064,clapping,0.4135,footsteps,0.0381,0
+                    | 206     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,207,1,door_wood_knock,0.4032,clapping,0.5433,door_wood_knock,0.4032,footsteps,0.0260,0
+                    | 207     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"clapping"}
+AED_CSV,208,1,clapping,0.7005,clapping,0.7005,door_wood_knock,0.2630,footsteps,0.0167,1
+                    | 208     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,209,1,clapping,0.5930,clapping,0.5930,door_wood_knock,0.2901,crackling_fire,0.0605,0
+                    | 209     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,210,0,clapping,0.5930,clapping,0.5930,door_wood_knock,0.2901,crackling_fire,0.0605,0
+                    | 210     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"waiting"}
+AED_CSV,211,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,1
+                    | 211     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,212,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 212     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,213,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 213     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,214,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 214     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,215,0,waiting,0.0000,chainsaw,0.0000,clapping,0.0000,coughing,0.0000,0
+                    | 215     |  0.85%|  0.69|  0.16|  0.00|
+AE

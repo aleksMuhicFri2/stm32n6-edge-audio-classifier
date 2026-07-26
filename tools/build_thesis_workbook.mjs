@@ -209,19 +209,19 @@ dashboard.getRange("A3:N3").format.rowHeight = 32;
 dashboard.getRange("A5:B5").values = [["KPI", "Value"]];
 dashboard.getRange("A6:A11").values = [
   ["Recorded runs"],
-  ["Controlled runs"],
-  ["Mean CPU load (%)"],
-  ["Mean preprocessing (ms)"],
-  ["Mean NPU inference (ms)"],
-  ["Observed dog detections"],
+  ["Useful-10 hardware runs"],
+  ["Useful-10 mean CPU load (%)"],
+  ["Useful-10 preprocessing (ms)"],
+  ["Useful-10 NPU inference (ms)"],
+  ["Active clap target rate"],
 ];
 dashboard.getRange("B6:B11").formulas = [
   ["=COUNTA('Runs'!$A$2:$A$1000)"],
-  ["=COUNTIF('Runs'!$C$2:$C$1000,\"controlled\")"],
-  ["=AVERAGE('Runs'!$W$2:$W$1000)"],
-  ["=AVERAGE('Runs'!$X$2:$X$1000)"],
-  ["=AVERAGE('Runs'!$Y$2:$Y$1000)"],
-  ["=COUNTIF('Frames'!$F$2:$F$5000,\"dog\")"],
+  ["=COUNTIF('Runs'!$I$2:$I$1000,\"YAMNet-256 Useful-10 int8\")"],
+  ["=AVERAGEIF('Runs'!$I$2:$I$1000,\"YAMNet-256 Useful-10 int8\",'Runs'!$W$2:$W$1000)"],
+  ["=AVERAGEIF('Runs'!$I$2:$I$1000,\"YAMNet-256 Useful-10 int8\",'Runs'!$X$2:$X$1000)"],
+  ["=AVERAGEIF('Runs'!$I$2:$I$1000,\"YAMNet-256 Useful-10 int8\",'Runs'!$Y$2:$Y$1000)"],
+  ["=COUNTIFS('Frames'!$D$2:$D$5000,\"clapping\",'Frames'!$M$2:$M$5000,1,'Frames'!$F$2:$F$5000,\"clapping\")/COUNTIFS('Frames'!$D$2:$D$5000,\"clapping\",'Frames'!$M$2:$M$5000,1)"],
 ];
 dashboard.getRange("A5:B5").format = {
   fill: colors.teal,
@@ -237,61 +237,61 @@ dashboard.getRange("B6:B11").format = {
   horizontalAlignment: "right",
 };
 dashboard.getRange("B8:B10").format.numberFormat = "0.000";
+dashboard.getRange("B11").format.numberFormat = "0.0%";
 dashboard.getRange("A5:B11").format.borders = {
   preset: "outside",
   style: "thin",
   color: colors.line,
 };
 
-dashboard.getRange("D5:E5").values = [["Pipeline stage", "Mean time (ms)"]];
+dashboard.getRange("D5:F5").values = [["Pipeline stage", "Original demo", "Useful-10"]];
 dashboard.getRange("D6:D9").values = [
   ["Preprocessing"],
   ["Neural-ART inference"],
   ["Postprocessing"],
   ["Measured compute total"],
 ];
-dashboard.getRange("E6:E9").formulas = [
-  ["=AVERAGE('Runs'!$X$2:$X$1000)"],
-  ["=AVERAGE('Runs'!$Y$2:$Y$1000)"],
-  ["=AVERAGE('Runs'!$Z$2:$Z$1000)"],
-  ["=SUM(E6:E8)"],
+dashboard.getRange("E6:F9").formulas = [
+  ["=AVERAGEIF('Runs'!$I$2:$I$1000,\"YAMNet 1024 ESC-10 int8\",'Runs'!$X$2:$X$1000)", "=AVERAGEIF('Runs'!$I$2:$I$1000,\"YAMNet-256 Useful-10 int8\",'Runs'!$X$2:$X$1000)"],
+  ["=AVERAGEIF('Runs'!$I$2:$I$1000,\"YAMNet 1024 ESC-10 int8\",'Runs'!$Y$2:$Y$1000)", "=AVERAGEIF('Runs'!$I$2:$I$1000,\"YAMNet-256 Useful-10 int8\",'Runs'!$Y$2:$Y$1000)"],
+  ["=AVERAGEIF('Runs'!$I$2:$I$1000,\"YAMNet 1024 ESC-10 int8\",'Runs'!$Z$2:$Z$1000)", "=AVERAGEIF('Runs'!$I$2:$I$1000,\"YAMNet-256 Useful-10 int8\",'Runs'!$Z$2:$Z$1000)"],
+  ["=SUM(E6:E8)", "=SUM(F6:F8)"],
 ];
-dashboard.getRange("D5:E5").format = {
+dashboard.getRange("D5:F5").format = {
   fill: colors.orange,
   font: { bold: true, color: colors.white },
 };
-dashboard.getRange("D6:E9").format.borders = {
+dashboard.getRange("D6:F9").format.borders = {
   preset: "inside",
   style: "thin",
   color: colors.line,
 };
-dashboard.getRange("E6:E9").format.numberFormat = "0.000";
+dashboard.getRange("E6:F9").format.numberFormat = "0.000";
 
-const timingChart = dashboard.charts.add("bar", dashboard.getRange("D5:E9"));
-timingChart.title = "Mean embedded compute time by stage (ms)";
-timingChart.hasLegend = false;
+const timingChart = dashboard.charts.add("bar", dashboard.getRange("D5:F9"));
+timingChart.title = "Original demo vs Useful-10 compute time (ms)";
+timingChart.hasLegend = true;
 timingChart.yAxis = { numberFormatCode: "0.000" };
 timingChart.setPosition("G5", "N13");
 
 const classes = [
-  "dog",
   "chainsaw",
-  "clock_tick",
+  "clapping",
+  "coughing",
   "crackling_fire",
   "crying_baby",
-  "helicopter",
-  "rain",
-  "rooster",
-  "sea_waves",
-  "sneezing",
+  "dog",
+  "door_wood_knock",
+  "footsteps",
+  "glass_breaking",
+  "siren",
   "unknown",
   "waiting",
-  "no_output",
 ];
-dashboard.getRange("A14:B14").values = [["Predicted class", "Recorded events"]];
+dashboard.getRange("A14:B14").values = [["Active-frame decision", "Clapping trial count"]];
 dashboard.getRange(`A15:A${14 + classes.length}`).values = classes.map((value) => [value]);
 dashboard.getRange(`B15:B${14 + classes.length}`).formulas = classes.map((_, index) => [
-  `=COUNTIF('Frames'!$F$2:$F$5000,A${15 + index})`,
+  `=COUNTIFS('Frames'!$D$2:$D$5000,"clapping",'Frames'!$M$2:$M$5000,1,'Frames'!$F$2:$F$5000,A${15 + index})`,
 ]);
 dashboard.getRange("A14:B14").format = {
   fill: colors.teal,
@@ -303,7 +303,7 @@ const detectionChart = dashboard.charts.add(
   "bar",
   dashboard.getRange(`A14:B${14 + classes.length}`),
 );
-detectionChart.title = "Prediction events currently recorded";
+detectionChart.title = "Active-frame decisions during clapping smoke test";
 detectionChart.hasLegend = false;
 detectionChart.yAxis = { numberFormatCode: "0" };
 detectionChart.setPosition("D14", "N31");
@@ -324,7 +324,7 @@ dashboard.getRange("B1:B35").format.columnWidth = 16;
 dashboard.getRange("C1:C35").format.columnWidth = 3;
 dashboard.getRange("D1:D35").format.columnWidth = 23;
 dashboard.getRange("E1:E35").format.columnWidth = 17;
-dashboard.getRange("F1:F35").format.columnWidth = 3;
+dashboard.getRange("F1:F35").format.columnWidth = 17;
 dashboard.getRange("G1:N35").format.columnWidth = 13;
 dashboard.freezePanes.freezeRows(3);
 

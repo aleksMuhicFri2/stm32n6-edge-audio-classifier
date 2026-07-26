@@ -70,7 +70,7 @@ finally {
 }
 
 $end = Get-Date
-$ansiPattern = "`e\[[0-9;?]*[ -/]*[@-~]"
+$ansiPattern = [char]27 + "\[[0-9;?]*[ -/]*[@-~]"
 $cleanText = [regex]::Replace($rawText, $ansiPattern, "")
 $header = @(
     "run_id=$runId",
@@ -154,7 +154,7 @@ $correct = @($frames | Where-Object { $_.is_correct }).Count
 $unknown = @($frames | Where-Object { $_.predicted_class -eq "unknown" }).Count
 $result = if ($TestType -eq "positive") {
     if (@($frames | Where-Object { $_.predicted_class -eq $ExpectedClass }).Count -gt 0) { "pass_with_detection" } else { "fail_no_target_detection" }
-} elseif (@($frames | Where-Object { $_.predicted_class -notin @("unknown", "no_output") }).Count -eq 0) {
+} elseif (@($frames | Where-Object { $_.predicted_class -notin @("unknown", "waiting", "no_output") }).Count -eq 0) {
     "pass_no_false_positive"
 } else {
     "fail_false_positive"
@@ -169,7 +169,7 @@ $run = [pscustomobject][ordered]@{
     board_revision = "Rev B"
     firmware_commit = $gitCommit
     configuration = "BM EMA-0.65 hysteresis"
-    model_name = "YAMNet 1024 ESC-10 int8"
+    model_name = "YAMNet-256 Useful-10 int8"
     model_classes = 10
     stimulus = $Stimulus
     expected_class = $ExpectedClass

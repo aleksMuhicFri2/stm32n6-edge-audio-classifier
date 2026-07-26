@@ -1,6 +1,6 @@
 # STM32N6 deployment record
 
-Status: generated, compiled, and signed; physical-board validation pending.
+Status: generated, compiled, signed, flashed, and validated on the physical board.
 
 ## Toolchain
 
@@ -51,3 +51,24 @@ the STM32N6 first-stage bootloader.
 Primary machine-generated evidence is retained in
 `Projects/X-CUBE-AI/models/network_generate_report.txt` and
 `Projects/X-CUBE-AI/models/network_c_info.json`.
+
+## Physical-board validation
+
+- Flash verification: custom weights and signed application both passed
+  STM32CubeProgrammer fast verification.
+- Idle run: 16 of 16 frames remained in `waiting` with no detection events.
+- Useful-ten mean timing: 0.69 ms preprocessing and 0.16 ms Neural-ART
+  inference at 0.85% reported CPU load.
+- Original demonstration hardware control: 0.72 ms preprocessing and 1.17 ms
+  inference at 1.89% reported CPU load.
+- Neural-ART inference reduction: 86.3%.
+- First uncontrolled live clapping smoke test: 28 active frames comprised 18
+  `clapping`, 4 `door_wood_knock`, and 6 `unknown` decisions. The raw top-one
+  class was `clapping` on 20 active frames.
+
+The 64.29% active-frame clapping decision rate is engineering evidence that the
+complete microphone, DSP, NPU, temporal-filter, UART, and LCD path works. It is
+not used as the final accuracy estimate because distance and sound level were
+not controlled. Raw evidence is stored in
+`experiments/raw/RUN-20260726-194048.txt` and
+`experiments/raw/RUN-20260726-194301.txt`.
