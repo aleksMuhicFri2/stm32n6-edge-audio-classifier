@@ -73,29 +73,81 @@ not controlled. Raw evidence is stored in
 `experiments/raw/RUN-20260726-194048.txt` and
 `experiments/raw/RUN-20260726-194301.txt`.
 
-## Product dashboard v1
+## Product dashboard
 
 On 2026-07-27 the proof-of-concept detected-sound screen was replaced by an
 800x480 acoustic safety dashboard. The classifier and Neural-ART weight blob
 were not changed. The dashboard adds:
 
-- live stable sound, severity, confidence, and top-three model outputs;
+- a responsive live top-one sound label with severity and confidence;
+- the current top-three model outputs;
 - informational, attention, and danger mappings for all ten target classes;
 - audio-session grouping so one physical sound produces one recorded event;
-- an eight-percentage-point margin before a stronger class may replace the
-  current session label;
+- a two-window challenger confirmation used only for history and alert
+  accounting;
 - three recent events with elapsed time and peak session confidence;
 - total-event and alert counters;
 - warning/danger alerts that remain latched until acknowledged;
 - system uptime and explicit NPU/monitoring state;
 - `USER1` pause/resume and `TAMP` alert acknowledgement.
 
-The BM build completed with 0 errors and the same pre-existing RWX linker
-warning. The dashboard build uses 226044 bytes of text, 8976 bytes of
-initialized data, and 361648 bytes of BSS. Relative to the first useful-ten
-firmware, the product layer adds 6040 bytes of text, 40 bytes of initialized
-data, and 168 bytes of BSS. The signed application is 236064 bytes with SHA-256
-`36b9d5f4828d49953b7c621e57c78bf7e0f51cd6b47ef653070ad5e44a89e85a`.
-It was programmed at `0x70100000` and passed full read-back verification. A
-cold boot and visual interaction check remain the final deployment-validation
-steps.
+### Display-tearing investigation
+
+Dashboard v1 redrew the framebuffer currently being scanned by LTDC. This
+produced visible partial-frame transitions even though inference continued
+correctly. Two intermediate approaches were evaluated:
+
+1. An L8 indexed-color double-buffer prototype fit both buffers in internal
+   SRAM but produced a gray display and no usable application output after
+   boot. It was rejected and rolled back.
+2. Reducing redraw frequency removed periodic updates but still tore on actual
+   state transitions and made the product feel unresponsive. It was also
+   rejected.
+
+The accepted design uses two full 800x480 RGB565 framebuffers in external
+HyperRAM:
+
+- framebuffer A: `0x90E80000` to `0x90F3B7FF`;
+- framebuffer B: `0x90F3B800` to `0x90FF6FFF`;
+- combined allocation: 1536000 bytes;
+- generated-network HyperRAM allocation: 0 bytes of the available 16 MiB.
+
+The CPU renders a complete dashboard into the inactive buffer and cleans its
+cache range. The LTDC framebuffer address is then reloaded only at vertical
+blank. This prevents a displayed scan from observing a partially drawn frame
+while retaining live updates.
+
+### Live-label responsiveness
+
+The first session implementation retained the highest confidence seen for the
+current event and required another class to exceed it by eight percentage
+points. A 95% result therefore required an impossible 103% challenger and could
+remain on screen indefinitely. A bounded two-window challenger was tested but
+still felt slower than the live top-three output.
+
+The final design separates two concerns:
+
+- the large live label and confidence mirror the current top-one model output
+  on every active inference window;
+- the two-window session filter is used only for event history and alert
+  accounting.
+
+This makes the primary display agree with the first row of the live model
+output while preventing single-window noise from inflating event statistics.
+
+### Final dashboard build and board validation
+
+The final BM build completed with 0 errors and the same pre-existing RWX linker
+warning:
+
+- text: 227740 bytes;
+- initialized data: 8984 bytes;
+- BSS: 361776 bytes;
+- signed application: 237760 bytes;
+- signed application SHA-256:
+  `7c355832dcc36e843ac6af11ee7bbb7e5afd6bdb4b90535fc52d5b30f2fda631`.
+
+The signed image was programmed at `0x70100000`. STM32CubeProgrammer completed
+full read-back verification successfully. After a boot-from-flash test on the
+physical STM32N6570-DK the user confirmed that the large label follows the live
+top-one prediction correctly and that display transitions are stable.

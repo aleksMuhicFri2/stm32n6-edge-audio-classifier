@@ -3,9 +3,10 @@
   * @file    audio_display.c
   * @brief   Product-style acoustic safety dashboard for the STM32N6570-DK.
   *
-  * The dashboard renders directly into the RGB565 LTDC framebuffer.  It groups
-  * inference windows into real-world audio sessions, retains one event per
-  * session, latches warning/danger alerts, and keeps a short event history.
+  * The dashboard renders into a hidden RGB565 framebuffer and presents it at
+  * LTDC vertical blank. It groups inference windows into real-world audio
+  * sessions, retains one event per session, latches warning/danger alerts, and
+  * keeps a short event history.
   ******************************************************************************
   */
 
@@ -23,7 +24,7 @@
 #define DISPLAY_BYTES_PER_PIXEL          2U
 #define DISPLAY_FB_BYTES                 (DISPLAY_WIDTH * DISPLAY_HEIGHT * DISPLAY_BYTES_PER_PIXEL)
 #define DASHBOARD_HISTORY_COUNT          3U
-#define DASHBOARD_CLASS_SWITCH_MARGIN_PERCENT  8U
+#define DASHBOARD_CLASS_SWITCH_CONFIRM_WINDOWS  2U
 
 /* RGB565 product palette. */
 #define COLOR_BACKGROUND                 0x0883U
@@ -129,8 +130,9 @@ static const SoundProfile_t s_sound_profiles[] =
   {"siren",            "SIREN",           HAZARD_DANGER}
 };
 
-static volatile uint16_t *const s_framebuffer =
+static volatile uint16_t *s_framebuffer =
     (volatile uint16_t *)LCD_LAYER_0_ADDRESS;
+static uint32_t s_active_framebuffer_address = LCD_LAYER_0_ADDRESS;
 static bool s_display_ready;
 static volatile bool s_acknowledge_requested;
 static volatile bool s_monitoring_enabled = true;
@@ -139,6 +141,8 @@ static bool s_session_recognized;
 static char s_session_label[24];
 static uint32_t s_session_percent;
 static HazardLevel_t s_session_hazard;
+static char s_challenger_label[24];
+static uint32_t s_challenger_count;
 static DashboardEvent_t s_history[DASHBOARD_HISTORY_COUNT];
 static uint32_t s_event_count;
 static uint32_t s_alert_count;
@@ -271,9 +275,29 @@ static void draw_level_bars(uint32_t x, uint32_t y, uint16_t color)
 
 static void clean_framebuffer(void)
 {
-  mcu_cache_clean_range(LCD_LAYER_0_ADDRESS,
-                        LCD_LAYER_0_ADDRESS + DISPLAY_FB_BYTES);
+  const uint32_t address = (uint32_t)s_framebuffer;
+  mcu_cache_clean_range(address, address + DISPLAY_FB_BYTES);
   __DSB();
+}
+
+static void select_inactive_framebuffer(void)
+{
+  const uint32_t inactive_address =
+      (s_active_framebuffer_address == LCD_LAYER_0_ADDRESS) ?
+      LCD_LAYER_1_ADDRESS : LCD_LAYER_0_ADDRESS;
+  s_framebuffer = (volatile uint16_t *)inactive_address;
+}
+
+static void present_framebuffer(void)
+{
+  const uint32_t address = (uint32_t)s_framebuffer;
+
+  /* VBR defers the address reload until vertical blank, so every visible LCD
+   * scan uses one complete frame.  Updates arrive much slower than one frame,
+   * therefore the next render cannot overtake this pending swap. */
+  LTDC_Layer1->CFBAR = address;
+  LTDC_Layer1->RCR = LTDC_LxRCR_VBR | LTDC_LxRCR_GRMSK;
+  s_active_framebuffer_address = address;
 }
 
 static const SoundProfile_t *find_profile(const char *model_label)
@@ -406,6 +430,8 @@ static void update_audio_session(const char *decision_label, uint32_t percent,
     s_session_label[0] = '\0';
     s_session_percent = 0U;
     s_session_hazard = HAZARD_INFO;
+    s_challenger_label[0] = '\0';
+    s_challenger_count = 0U;
     return;
   }
 
@@ -416,10 +442,14 @@ static void update_audio_session(const char *decision_label, uint32_t percent,
     s_session_label[0] = '\0';
     s_session_percent = 0U;
     s_session_hazard = HAZARD_INFO;
+    s_challenger_label[0] = '\0';
+    s_challenger_count = 0U;
   }
 
   if (unknown)
   {
+    s_challenger_label[0] = '\0';
+    s_challenger_count = 0U;
     return;
   }
 
@@ -432,32 +462,52 @@ static void update_audio_session(const char *decision_label, uint32_t percent,
     (void)snprintf(s_session_label, sizeof(s_session_label), "%s", display_label);
     s_session_percent = percent;
     s_session_hazard = hazard;
+    s_challenger_label[0] = '\0';
+    s_challenger_count = 0U;
     add_event(display_label, percent, hazard, now_seconds);
     latch_alert(display_label, hazard);
   }
   else if (strcmp(s_session_label, display_label) == 0)
   {
+    s_challenger_label[0] = '\0';
+    s_challenger_count = 0U;
     if (percent > s_session_percent)
     {
       s_session_percent = percent;
       s_history[0].confidence_percent = percent;
     }
   }
-  else if (percent >= (s_session_percent + DASHBOARD_CLASS_SWITCH_MARGIN_PERCENT))
+  else
   {
-    const bool revising_latched_alert =
-        s_alert_latched && (strcmp(s_alert_label, s_session_label) == 0);
-    (void)snprintf(s_session_label, sizeof(s_session_label), "%s", display_label);
-    s_session_percent = percent;
-    s_session_hazard = hazard;
-    revise_current_event(display_label, percent, hazard);
-    if (revising_latched_alert && (hazard == HAZARD_INFO))
+    if (strcmp(s_challenger_label, display_label) == 0)
     {
-      s_alert_latched = false;
-      s_alert_label[0] = '\0';
-      s_alert_hazard = HAZARD_INFO;
+      s_challenger_count++;
     }
-    latch_alert(display_label, hazard);
+    else
+    {
+      (void)snprintf(s_challenger_label, sizeof(s_challenger_label),
+                     "%s", display_label);
+      s_challenger_count = 1U;
+    }
+
+    if (s_challenger_count >= DASHBOARD_CLASS_SWITCH_CONFIRM_WINDOWS)
+    {
+      const bool revising_latched_alert =
+          s_alert_latched && (strcmp(s_alert_label, s_session_label) == 0);
+      (void)snprintf(s_session_label, sizeof(s_session_label), "%s", display_label);
+      s_session_percent = percent;
+      s_session_hazard = hazard;
+      s_challenger_label[0] = '\0';
+      s_challenger_count = 0U;
+      revise_current_event(display_label, percent, hazard);
+      if (revising_latched_alert && (hazard == HAZARD_INFO))
+      {
+        s_alert_latched = false;
+        s_alert_label[0] = '\0';
+        s_alert_hazard = HAZARD_INFO;
+      }
+      latch_alert(display_label, hazard);
+    }
   }
 }
 
@@ -539,23 +589,19 @@ static void draw_live_card(
     subtitle = "PRESS USER1 TO RESUME";
     accent = COLOR_ORANGE;
   }
-  else if (s_session_recognized)
+  else if (!waiting)
   {
-    accent = hazard_color(s_session_hazard);
+    const HazardLevel_t live_hazard = hazard_for_label(top_labels[0]);
+    const char *badge = unknown ? "LOW CONF" : hazard_text(live_hazard);
+
+    accent = unknown ? COLOR_ORANGE : hazard_color(live_hazard);
     fill_rect(386U, 96U, 121U, 23U, accent);
     draw_text_centered_in(386U, 121U, 101U,
-                          hazard_text(s_session_hazard), 1U, COLOR_BACKGROUND);
-    primary_label = s_session_label;
-    subtitle = "STABLE SESSION RESULT";
-    decision_percent = s_session_percent;
-  }
-  else if (unknown)
-  {
-    fill_rect(386U, 96U, 121U, 23U, COLOR_ORANGE);
-    draw_text_centered_in(386U, 121U, 101U, "ANALYZING", 1U, COLOR_BACKGROUND);
-    primary_label = "SOUND DETECTED";
-    subtitle = "NOT CONFIDENTLY RECOGNIZED";
-    accent = COLOR_ORANGE;
+                          badge, 1U, COLOR_BACKGROUND);
+    primary_label = friendly_label(top_labels[0]);
+    subtitle = unknown ? "CURRENT TOP MODEL PREDICTION" :
+                         "LIVE CLASSIFIER RESULT";
+    decision_percent = top_percent[0];
   }
   else
   {
@@ -809,11 +855,15 @@ bool AudioDisplay_Init(void)
   s_display_ready = false;
   s_acknowledge_requested = false;
   s_monitoring_enabled = true;
+  s_framebuffer = (volatile uint16_t *)LCD_LAYER_0_ADDRESS;
+  s_active_framebuffer_address = LCD_LAYER_0_ADDRESS;
   s_session_active = false;
   s_session_recognized = false;
   s_session_label[0] = '\0';
   s_session_percent = 0U;
   s_session_hazard = HAZARD_INFO;
+  s_challenger_label[0] = '\0';
+  s_challenger_count = 0U;
   memset(s_history, 0, sizeof(s_history));
   s_event_count = 0U;
   s_alert_count = 0U;
@@ -907,5 +957,7 @@ void AudioDisplay_Update(
     s_last_top_percent[rank] = top_percent[rank];
   }
 
+  select_inactive_framebuffer();
   render_dashboard(current_label, current_percent, top_labels, top_percent);
+  present_framebuffer();
 }

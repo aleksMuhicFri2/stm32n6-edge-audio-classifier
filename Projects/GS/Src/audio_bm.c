@@ -892,6 +892,16 @@ static void NPU_SettingsLog(void)
 static void Ext_Mem_Config(void)
 {
   BSP_XSPI_NOR_Init_t Flash;
+
+  if (BSP_XSPI_RAM_Init(0) != BSP_ERROR_NONE)
+  {
+    __BKPT(0);
+  }
+  if (BSP_XSPI_RAM_EnableMemoryMappedMode(0) != BSP_ERROR_NONE)
+  {
+    __BKPT(0);
+  }
+
   Flash.InterfaceMode = MX66UW1G45G_OPI_MODE;
   Flash.TransferRate = MX66UW1G45G_DTR_TRANSFER;
 

@@ -55,10 +55,12 @@ extern "C" {
 #define AUDIO_FREQUENCY                    AUDIO_FREQUENCY_16K
 #define CAPTURE_BUFFER_SIZE                (AUDIO_FREQUENCY*20U/1000U) /* 20 ms */  
 
-/* Single RGB565 framebuffer across AXI SRAM3 and SRAM4. These banks are
- * enabled by Int_Mem_Config and are not used by the generated AED network. */
-#define LCD_LAYER_0_ADDRESS                 0x34200000U
-#define LCD_LAYER_1_ADDRESS                 0x34200000U
+/* Two RGB565 framebuffers reserved at the top of the first 16 MiB of external
+ * HyperRAM.  The generated AED network report currently assigns 0 bytes to
+ * HyperRAM.  Rendering into the hidden buffer and swapping it at vertical
+ * blank prevents the LTDC from scanning a partially redrawn dashboard. */
+#define LCD_LAYER_0_ADDRESS                 0x90E80000U
+#define LCD_LAYER_1_ADDRESS                 0x90F3B800U
 
 
 /* Audio codec defines */
