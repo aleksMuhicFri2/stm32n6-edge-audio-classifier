@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    audio_display.h
-  * @brief   Minimal STM32N6570-DK LCD UI for audio-event detections.
+  * @brief   Acoustic safety dashboard for audio-event detections.
   ******************************************************************************
   */
 
@@ -14,6 +14,8 @@
 
 void AudioDisplay_SecurityConfig(void);
 bool AudioDisplay_Init(void);
+void AudioDisplay_RequestAcknowledge(void);
+void AudioDisplay_SetMonitoring(bool enabled);
 void AudioDisplay_Update(const char *decision_label,
                          float decision_confidence,
                          const char *const top_labels[AUDIO_EVENT_TOP_COUNT],

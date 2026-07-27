@@ -11,17 +11,26 @@ both RTOS and bare metal versions. A low power version is also provided.
 
 ## Diploma-project extensions
 
-The `thesis-development` branch extends ST's ten-class bare-metal AED example
-with an STM32N6570-DK LCD interface and a reproducible experiment pipeline.
+The `thesis-development` branch extends ST's bare-metal AED example with a
+custom ten-class YAMNet-256 classifier, a product-style STM32N6570-DK safety
+dashboard, and a reproducible experiment pipeline.
 The current application adds:
 
-- an 800x480 RGB565 status interface in internal AXI SRAM;
+- an 800x480 RGB565 acoustic-safety dashboard in internal AXI SRAM;
 - top-three class probabilities and the stable decision confidence;
 - a 65% exponential moving average with enter, release, and class-switch
   hysteresis to reduce one-window label jumps;
 - separate `WAITING` (silence), `UNKNOWN` (audible but uncertain), and detected
-  class states; and
+  class states;
+- session-level event grouping, three-item event history, severity levels,
+  counters, a latched alert banner, uptime, and pause/acknowledge controls; and
 - one machine-readable `AED_CSV` UART row for every 960 ms model window.
+
+The blue `USER1` button pauses or resumes monitoring. The `TAMP` button
+acknowledges the currently latched warning or danger alert. Informational
+events are clapping and dog barking; attention events are coughing, crying
+baby, door knock, and footsteps; danger events are chainsaw, crackling fire,
+glass breaking, and siren.
 
 Use `tools/capture_uart_experiment.ps1` to preserve the raw UART stream and
 append normalized run and frame evidence under `experiments/`. The CSV record
@@ -33,8 +42,9 @@ YAMNet-256 transfer-learning model for chainsaw, clapping, coughing, crackling
 fire, crying baby, dog, wooden-door knock, footsteps, glass breaking, and siren.
 On the source-separated ESC-50 fold-5 test set it classified 70 of 80 clips
 correctly (87.5%). Post-training int8 quantization preserved the same clip-level
-accuracy and produced a 185,416-byte TFLite model. This is an offline result;
-the custom model has not yet replaced the stock on-board ESC-10 model.
+accuracy and produced a 185,416-byte TFLite model. The generated Neural-ART
+weights and matching firmware are deployed and hardware-validated on the
+STM32N6570-DK.
 
 ## Table of Contents
 

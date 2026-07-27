@@ -35,6 +35,8 @@ C_SOURCES += \
 C_SOURCES += \
 ../../Projects/GS/Src/AudioCapture_ring_buff.c\
 ../../Projects/GS/Src/audio_bm.c\
+../../Projects/GS/Src/audio_display.c\
+../../Projects/GS/Src/audio_event_filter.c\
 ../../Projects/GS/Src/main.c\
 ../../Projects/GS/Src/stm32n6xx_it.c\
 ../../Projects/GS/Src/syscalls.c\

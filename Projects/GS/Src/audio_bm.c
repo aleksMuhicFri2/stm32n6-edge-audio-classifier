@@ -71,6 +71,7 @@ static float vumeter(int16_t * pAudioSmp,int nb_sample);
 
 /* Private variables ---------------------------------------------------------*/
 static bool AudioProcIsOn;
+static volatile bool AudioFilterResetRequested;
 
 #ifdef APP_BARE_METAL
 static AudioBM_acq_t  audio_acq_ctx;
@@ -138,6 +139,7 @@ void init_bm(void)
 
   /* by default processing is active */
   AudioProcIsOn = true;
+  AudioFilterResetRequested = false;
 }
 
 #ifdef APP_BARE_METAL
@@ -485,6 +487,22 @@ void printInferenceResults(const AIProcCtx_t* AIProcCtx, bool audio_active)
   const char *top_labels[AUDIO_EVENT_TOP_COUNT];
   const char *decision_label;
 
+  if (AudioFilterResetRequested)
+  {
+    AudioFilterResetRequested = false;
+    AudioEventFilter_Init();
+  }
+
+  if (!AudioProcIsOn)
+  {
+    static const char *paused_labels[AUDIO_EVENT_TOP_COUNT] =
+        {"unknown", "unknown", "unknown"};
+    static const float paused_scores[AUDIO_EVENT_TOP_COUNT] =
+        {0.0F, 0.0F, 0.0F};
+    AudioDisplay_Update("waiting", 0.0F, paused_labels, paused_scores, false);
+    return;
+  }
+
   AudioEventFilter_Update(nn_out, CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER,
                           audio_active, &result);
 
@@ -563,6 +581,8 @@ void toggle_audio_proc(void)
 {
   BSP_LED_Toggle(LED_RED);
   AudioProcIsOn = !AudioProcIsOn;
+  AudioFilterResetRequested = true;
+  AudioDisplay_SetMonitoring(AudioProcIsOn);
 }
 
 /**
@@ -641,6 +661,10 @@ void BSP_PB_Callback(Button_TypeDef Button)
   if (BUTTON_USER1 == Button)
   {
     toggle_audio_proc();
+  }
+  else if (BUTTON_TAMP == Button)
+  {
+    AudioDisplay_RequestAcknowledge();
   }
 }
 #endif

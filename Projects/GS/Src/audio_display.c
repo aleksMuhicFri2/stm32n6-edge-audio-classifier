@@ -1,11 +1,11 @@
 /**
   ******************************************************************************
   * @file    audio_display.c
-  * @brief   Lightweight detected-sound display for the STM32N6570-DK.
+  * @brief   Product-style acoustic safety dashboard for the STM32N6570-DK.
   *
-  * The framebuffer is RGB565 across AXI SRAM3/SRAM4. The implementation uses the
-  * board panel timing and GPIO mapping from ST's STM32N6570-DK BSP, while
-  * keeping the audio demo independent from TouchGFX during this first UI step.
+  * The dashboard renders directly into the RGB565 LTDC framebuffer.  It groups
+  * inference windows into real-world audio sessions, retains one event per
+  * session, latches warning/danger alerts, and keeps a short event history.
   ******************************************************************************
   */
 
@@ -18,25 +18,56 @@
 #include "stm32n6570_discovery_conf.h"
 #include "mcu_cache.h"
 
-#define DISPLAY_WIDTH             800U
-#define DISPLAY_HEIGHT            480U
-#define DISPLAY_BYTES_PER_PIXEL   2U
-#define DISPLAY_FB_BYTES          (DISPLAY_WIDTH * DISPLAY_HEIGHT * DISPLAY_BYTES_PER_PIXEL)
+#define DISPLAY_WIDTH                    800U
+#define DISPLAY_HEIGHT                   480U
+#define DISPLAY_BYTES_PER_PIXEL          2U
+#define DISPLAY_FB_BYTES                 (DISPLAY_WIDTH * DISPLAY_HEIGHT * DISPLAY_BYTES_PER_PIXEL)
+#define DASHBOARD_HISTORY_COUNT          3U
+#define DASHBOARD_CLASS_SWITCH_MARGIN_PERCENT  8U
 
-#define COLOR_BACKGROUND          0x0861U
-#define COLOR_HEADER              0x01EBU
-#define COLOR_CARD                0x10A2U
-#define COLOR_WHITE               0xFFFFU
-#define COLOR_MUTED               0xBDF7U
-#define COLOR_GREEN               0x07E0U
-#define COLOR_ORANGE              0xFD20U
-#define COLOR_BAR_BACKGROUND      0x2945U
+/* RGB565 product palette. */
+#define COLOR_BACKGROUND                 0x0883U
+#define COLOR_HEADER                     0x0927U
+#define COLOR_CARD                       0x1148U
+#define COLOR_CARD_ALT                   0x19AAU
+#define COLOR_DIVIDER                    0x2A6DU
+#define COLOR_WHITE                      0xFFFFU
+#define COLOR_MUTED                      0x9D34U
+#define COLOR_CYAN                       0x2E5BU
+#define COLOR_GREEN                      0x36D2U
+#define COLOR_ORANGE                     0xFD84U
+#define COLOR_RED                        0xFA6BU
+#define COLOR_BLUE                       0x5D5FU
+#define COLOR_BAR_BACKGROUND             0x324EU
 
 typedef struct
 {
   char character;
   uint8_t rows[7];
 } Glyph5x7_t;
+
+typedef enum
+{
+  HAZARD_INFO = 0,
+  HAZARD_WARNING,
+  HAZARD_DANGER
+} HazardLevel_t;
+
+typedef struct
+{
+  const char *model_label;
+  const char *display_label;
+  HazardLevel_t hazard;
+} SoundProfile_t;
+
+typedef struct
+{
+  char label[24];
+  uint32_t confidence_percent;
+  uint32_t timestamp_seconds;
+  HazardLevel_t hazard;
+  bool valid;
+} DashboardEvent_t;
 
 static const Glyph5x7_t s_glyphs[] =
 {
@@ -45,6 +76,7 @@ static const Glyph5x7_t s_glyphs[] =
   {'-', {0x00, 0x00, 0x00, 0x1F, 0x00, 0x00, 0x00}},
   {'.', {0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x0C}},
   {':', {0x00, 0x0C, 0x0C, 0x00, 0x0C, 0x0C, 0x00}},
+  {'/', {0x01, 0x02, 0x02, 0x04, 0x08, 0x08, 0x10}},
   {'0', {0x0E, 0x11, 0x13, 0x15, 0x19, 0x11, 0x0E}},
   {'1', {0x04, 0x0C, 0x14, 0x04, 0x04, 0x04, 0x1F}},
   {'2', {0x0E, 0x11, 0x01, 0x02, 0x04, 0x08, 0x1F}},
@@ -83,14 +115,42 @@ static const Glyph5x7_t s_glyphs[] =
   {'Z', {0x1F, 0x01, 0x02, 0x04, 0x08, 0x10, 0x1F}}
 };
 
+static const SoundProfile_t s_sound_profiles[] =
+{
+  {"chainsaw",         "CHAINSAW",        HAZARD_DANGER},
+  {"clapping",         "CLAPPING",        HAZARD_INFO},
+  {"coughing",         "COUGHING",        HAZARD_WARNING},
+  {"crackling_fire",   "CRACKLING FIRE",  HAZARD_DANGER},
+  {"crying_baby",      "CRYING BABY",     HAZARD_WARNING},
+  {"dog",              "DOG BARKING",     HAZARD_INFO},
+  {"door_wood_knock",  "DOOR KNOCK",      HAZARD_WARNING},
+  {"footsteps",        "FOOTSTEPS",       HAZARD_WARNING},
+  {"glass_breaking",   "GLASS BREAKING",  HAZARD_DANGER},
+  {"siren",            "SIREN",           HAZARD_DANGER}
+};
+
 static volatile uint16_t *const s_framebuffer =
     (volatile uint16_t *)LCD_LAYER_0_ADDRESS;
 static bool s_display_ready;
-static char s_last_class[32];
-static uint32_t s_last_percent = 101U;
-static char s_last_top_labels[AUDIO_EVENT_TOP_COUNT][32];
-static uint32_t s_last_top_percent[AUDIO_EVENT_TOP_COUNT] = {101U, 101U, 101U};
-static bool s_last_show_predictions;
+static volatile bool s_acknowledge_requested;
+static volatile bool s_monitoring_enabled = true;
+static bool s_session_active;
+static bool s_session_recognized;
+static char s_session_label[24];
+static uint32_t s_session_percent;
+static HazardLevel_t s_session_hazard;
+static DashboardEvent_t s_history[DASHBOARD_HISTORY_COUNT];
+static uint32_t s_event_count;
+static uint32_t s_alert_count;
+static bool s_alert_latched;
+static char s_alert_label[24];
+static HazardLevel_t s_alert_hazard;
+static uint32_t s_last_render_second = UINT32_MAX;
+static char s_last_decision[24];
+static uint32_t s_last_decision_percent = UINT32_MAX;
+static char s_last_top_labels[AUDIO_EVENT_TOP_COUNT][24];
+static uint32_t s_last_top_percent[AUDIO_EVENT_TOP_COUNT] =
+    {UINT32_MAX, UINT32_MAX, UINT32_MAX};
 
 static uint32_t confidence_percent(float confidence)
 {
@@ -124,7 +184,8 @@ static char display_character(char character)
   return character;
 }
 
-static void fill_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height, uint16_t color)
+static void fill_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height,
+                      uint16_t color)
 {
   if ((x >= DISPLAY_WIDTH) || (y >= DISPLAY_HEIGHT))
   {
@@ -149,7 +210,17 @@ static void fill_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height, u
   }
 }
 
-static void draw_character(uint32_t x, uint32_t y, char character, uint32_t scale, uint16_t color)
+static void outline_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height,
+                         uint32_t thickness, uint16_t color)
+{
+  fill_rect(x, y, width, thickness, color);
+  fill_rect(x, y + height - thickness, width, thickness, color);
+  fill_rect(x, y, thickness, height, color);
+  fill_rect(x + width - thickness, y, thickness, height, color);
+}
+
+static void draw_character(uint32_t x, uint32_t y, char character,
+                           uint32_t scale, uint16_t color)
 {
   const uint8_t *rows = glyph_rows(display_character(character));
   for (uint32_t row = 0U; row < 7U; row++)
@@ -164,7 +235,8 @@ static void draw_character(uint32_t x, uint32_t y, char character, uint32_t scal
   }
 }
 
-static void draw_text(uint32_t x, uint32_t y, const char *text, uint32_t scale, uint16_t color)
+static void draw_text(uint32_t x, uint32_t y, const char *text,
+                      uint32_t scale, uint16_t color)
 {
   while (*text != '\0')
   {
@@ -174,21 +246,439 @@ static void draw_text(uint32_t x, uint32_t y, const char *text, uint32_t scale, 
   }
 }
 
-static void draw_text_centered(uint32_t y, const char *text, uint32_t scale, uint16_t color)
+static uint32_t text_width(const char *text, uint32_t scale)
 {
-  uint32_t width = (uint32_t)strlen(text) * 6U * scale;
-  if (width >= scale)
-  {
-    width -= scale;
-  }
-  draw_text((width < DISPLAY_WIDTH) ? ((DISPLAY_WIDTH - width) / 2U) : 0U,
+  const uint32_t length = (uint32_t)strlen(text);
+  return (length == 0U) ? 0U : (length * 6U * scale - scale);
+}
+
+static void draw_text_centered_in(uint32_t x, uint32_t width, uint32_t y,
+                                  const char *text, uint32_t scale,
+                                  uint16_t color)
+{
+  const uint32_t rendered_width = text_width(text, scale);
+  draw_text(x + ((rendered_width < width) ? ((width - rendered_width) / 2U) : 0U),
             y, text, scale, color);
+}
+
+static void draw_level_bars(uint32_t x, uint32_t y, uint16_t color)
+{
+  fill_rect(x, y + 12U, 5U, 10U, color);
+  fill_rect(x + 10U, y + 6U, 5U, 16U, color);
+  fill_rect(x + 20U, y, 5U, 22U, color);
+  fill_rect(x + 30U, y + 8U, 5U, 14U, color);
 }
 
 static void clean_framebuffer(void)
 {
-  mcu_cache_clean_range(LCD_LAYER_0_ADDRESS, LCD_LAYER_0_ADDRESS + DISPLAY_FB_BYTES);
+  mcu_cache_clean_range(LCD_LAYER_0_ADDRESS,
+                        LCD_LAYER_0_ADDRESS + DISPLAY_FB_BYTES);
   __DSB();
+}
+
+static const SoundProfile_t *find_profile(const char *model_label)
+{
+  for (uint32_t index = 0U;
+       index < (sizeof(s_sound_profiles) / sizeof(s_sound_profiles[0]));
+       index++)
+  {
+    if (strcmp(model_label, s_sound_profiles[index].model_label) == 0)
+    {
+      return &s_sound_profiles[index];
+    }
+  }
+  return NULL;
+}
+
+static const char *friendly_label(const char *model_label)
+{
+  const SoundProfile_t *profile = find_profile(model_label);
+  return (profile == NULL) ? model_label : profile->display_label;
+}
+
+static HazardLevel_t hazard_for_label(const char *model_label)
+{
+  const SoundProfile_t *profile = find_profile(model_label);
+  return (profile == NULL) ? HAZARD_INFO : profile->hazard;
+}
+
+static const char *hazard_text(HazardLevel_t hazard)
+{
+  if (hazard == HAZARD_DANGER)
+  {
+    return "DANGER";
+  }
+  if (hazard == HAZARD_WARNING)
+  {
+    return "ATTENTION";
+  }
+  return "INFORMATION";
+}
+
+static uint16_t hazard_color(HazardLevel_t hazard)
+{
+  if (hazard == HAZARD_DANGER)
+  {
+    return COLOR_RED;
+  }
+  if (hazard == HAZARD_WARNING)
+  {
+    return COLOR_ORANGE;
+  }
+  return COLOR_BLUE;
+}
+
+static void format_elapsed(uint32_t seconds, char *text, size_t text_size)
+{
+  const uint32_t minutes = (seconds / 60U) % 100U;
+  const uint32_t remaining_seconds = seconds % 60U;
+  (void)snprintf(text, text_size, "%02lu:%02lu",
+                 (unsigned long)minutes,
+                 (unsigned long)remaining_seconds);
+}
+
+static void add_event(const char *label, uint32_t percent, HazardLevel_t hazard,
+                      uint32_t timestamp_seconds)
+{
+  for (uint32_t index = DASHBOARD_HISTORY_COUNT - 1U; index > 0U; index--)
+  {
+    s_history[index] = s_history[index - 1U];
+  }
+
+  (void)snprintf(s_history[0].label, sizeof(s_history[0].label), "%s", label);
+  s_history[0].confidence_percent = percent;
+  s_history[0].timestamp_seconds = timestamp_seconds;
+  s_history[0].hazard = hazard;
+  s_history[0].valid = true;
+  s_event_count++;
+  if (hazard != HAZARD_INFO)
+  {
+    s_alert_count++;
+  }
+}
+
+static void revise_current_event(const char *label, uint32_t percent,
+                                 HazardLevel_t hazard)
+{
+  if (!s_history[0].valid)
+  {
+    return;
+  }
+
+  if ((s_history[0].hazard == HAZARD_INFO) && (hazard != HAZARD_INFO))
+  {
+    s_alert_count++;
+  }
+  else if ((s_history[0].hazard != HAZARD_INFO) && (hazard == HAZARD_INFO) &&
+           (s_alert_count > 0U))
+  {
+    s_alert_count--;
+  }
+
+  (void)snprintf(s_history[0].label, sizeof(s_history[0].label), "%s", label);
+  s_history[0].confidence_percent = percent;
+  s_history[0].hazard = hazard;
+}
+
+static void latch_alert(const char *label, HazardLevel_t hazard)
+{
+  if ((hazard == HAZARD_INFO) ||
+      (s_alert_latched && (hazard < s_alert_hazard)))
+  {
+    return;
+  }
+
+  s_alert_latched = true;
+  s_alert_hazard = hazard;
+  (void)snprintf(s_alert_label, sizeof(s_alert_label), "%s", label);
+}
+
+static void update_audio_session(const char *decision_label, uint32_t percent,
+                                 uint32_t now_seconds)
+{
+  const bool waiting = (strcmp(decision_label, "waiting") == 0);
+  const bool unknown = (strcmp(decision_label, "unknown") == 0);
+
+  if (waiting)
+  {
+    s_session_active = false;
+    s_session_recognized = false;
+    s_session_label[0] = '\0';
+    s_session_percent = 0U;
+    s_session_hazard = HAZARD_INFO;
+    return;
+  }
+
+  if (!s_session_active)
+  {
+    s_session_active = true;
+    s_session_recognized = false;
+    s_session_label[0] = '\0';
+    s_session_percent = 0U;
+    s_session_hazard = HAZARD_INFO;
+  }
+
+  if (unknown)
+  {
+    return;
+  }
+
+  const char *display_label = friendly_label(decision_label);
+  const HazardLevel_t hazard = hazard_for_label(decision_label);
+
+  if (!s_session_recognized)
+  {
+    s_session_recognized = true;
+    (void)snprintf(s_session_label, sizeof(s_session_label), "%s", display_label);
+    s_session_percent = percent;
+    s_session_hazard = hazard;
+    add_event(display_label, percent, hazard, now_seconds);
+    latch_alert(display_label, hazard);
+  }
+  else if (strcmp(s_session_label, display_label) == 0)
+  {
+    if (percent > s_session_percent)
+    {
+      s_session_percent = percent;
+      s_history[0].confidence_percent = percent;
+    }
+  }
+  else if (percent >= (s_session_percent + DASHBOARD_CLASS_SWITCH_MARGIN_PERCENT))
+  {
+    const bool revising_latched_alert =
+        s_alert_latched && (strcmp(s_alert_label, s_session_label) == 0);
+    (void)snprintf(s_session_label, sizeof(s_session_label), "%s", display_label);
+    s_session_percent = percent;
+    s_session_hazard = hazard;
+    revise_current_event(display_label, percent, hazard);
+    if (revising_latched_alert && (hazard == HAZARD_INFO))
+    {
+      s_alert_latched = false;
+      s_alert_label[0] = '\0';
+      s_alert_hazard = HAZARD_INFO;
+    }
+    latch_alert(display_label, hazard);
+  }
+}
+
+static void draw_header(void)
+{
+  char uptime[20];
+  char status[32];
+  const uint32_t now_seconds = HAL_GetTick() / 1000U;
+
+  fill_rect(0U, 0U, DISPLAY_WIDTH, 64U, COLOR_HEADER);
+  fill_rect(0U, 62U, DISPLAY_WIDTH, 2U, COLOR_CYAN);
+  draw_level_bars(22U, 20U, COLOR_CYAN);
+  draw_text(70U, 16U, "ACOUSTIC SAFETY MONITOR", 3U, COLOR_WHITE);
+  draw_text(70U, 43U, "EDGE AI ENVIRONMENTAL AWARENESS", 1U, COLOR_MUTED);
+
+  format_elapsed(now_seconds, uptime, sizeof(uptime));
+  (void)snprintf(status, sizeof(status), "UP %s", uptime);
+  draw_text(645U, 12U, status, 1U, COLOR_MUTED);
+  fill_rect(645U, 31U, 131U, 22U, COLOR_CARD_ALT);
+  fill_rect(654U, 38U, 8U, 8U,
+            s_monitoring_enabled ? COLOR_GREEN : COLOR_ORANGE);
+  draw_text(671U, 36U,
+            s_monitoring_enabled ? "NPU ONLINE" : "PAUSED",
+            1U, s_monitoring_enabled ? COLOR_GREEN : COLOR_ORANGE);
+}
+
+static void draw_confidence(uint32_t percent, uint16_t color)
+{
+  char text[32];
+  const uint32_t bar_width = (percent > 100U) ? 400U : 4U * percent;
+
+  (void)snprintf(text, sizeof(text), "CONFIDENCE %lu%%",
+                 (unsigned long)percent);
+  draw_text(48U, 267U, text, 2U, COLOR_MUTED);
+  fill_rect(48U, 291U, 400U, 12U, COLOR_BAR_BACKGROUND);
+  fill_rect(48U, 291U, bar_width, 12U, color);
+}
+
+static void draw_top_predictions(
+    const char *const top_labels[AUDIO_EVENT_TOP_COUNT],
+    const uint32_t top_percent[AUDIO_EVENT_TOP_COUNT])
+{
+  char row_text[48];
+
+  draw_text(48U, 321U, "LIVE MODEL OUTPUT", 1U, COLOR_MUTED);
+  for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
+  {
+    (void)snprintf(row_text, sizeof(row_text), "%lu  %-16s %3lu%%",
+                   (unsigned long)(rank + 1U),
+                   friendly_label(top_labels[rank]),
+                   (unsigned long)top_percent[rank]);
+    draw_text(48U, 342U + rank * 20U, row_text, 1U,
+              (rank == 0U) ? COLOR_WHITE : COLOR_MUTED);
+  }
+}
+
+static void draw_live_card(
+    const char *decision_label,
+    uint32_t decision_percent,
+    const char *const top_labels[AUDIO_EVENT_TOP_COUNT],
+    const uint32_t top_percent[AUDIO_EVENT_TOP_COUNT])
+{
+  const bool waiting = (strcmp(decision_label, "waiting") == 0);
+  const bool unknown = (strcmp(decision_label, "unknown") == 0);
+  const char *primary_label = NULL;
+  const char *subtitle = NULL;
+  uint16_t accent = COLOR_GREEN;
+  uint32_t label_scale = 5U;
+
+  fill_rect(22U, 80U, 510U, 336U, COLOR_CARD);
+  outline_rect(22U, 80U, 510U, 336U, 1U, COLOR_DIVIDER);
+  draw_text(44U, 98U, "LIVE ANALYSIS", 2U, COLOR_MUTED);
+
+  if (!s_monitoring_enabled)
+  {
+    fill_rect(407U, 96U, 100U, 23U, COLOR_ORANGE);
+    draw_text_centered_in(407U, 100U, 101U, "PAUSED", 1U, COLOR_BACKGROUND);
+    primary_label = "MONITOR PAUSED";
+    subtitle = "PRESS USER1 TO RESUME";
+    accent = COLOR_ORANGE;
+  }
+  else if (s_session_recognized)
+  {
+    accent = hazard_color(s_session_hazard);
+    fill_rect(386U, 96U, 121U, 23U, accent);
+    draw_text_centered_in(386U, 121U, 101U,
+                          hazard_text(s_session_hazard), 1U, COLOR_BACKGROUND);
+    primary_label = s_session_label;
+    subtitle = "STABLE SESSION RESULT";
+    decision_percent = s_session_percent;
+  }
+  else if (unknown)
+  {
+    fill_rect(386U, 96U, 121U, 23U, COLOR_ORANGE);
+    draw_text_centered_in(386U, 121U, 101U, "ANALYZING", 1U, COLOR_BACKGROUND);
+    primary_label = "SOUND DETECTED";
+    subtitle = "NOT CONFIDENTLY RECOGNIZED";
+    accent = COLOR_ORANGE;
+  }
+  else
+  {
+    fill_rect(386U, 96U, 121U, 23U, COLOR_GREEN);
+    draw_text_centered_in(386U, 121U, 101U, "ALL CLEAR", 1U, COLOR_BACKGROUND);
+    primary_label = "MONITORING";
+    subtitle = "LISTENING FOR 10 SOUND EVENTS";
+    decision_percent = 0U;
+  }
+
+  if (text_width(primary_label, label_scale) > 450U)
+  {
+    label_scale = 4U;
+  }
+  draw_text_centered_in(44U, 466U, 155U, primary_label, label_scale, COLOR_WHITE);
+  draw_text_centered_in(44U, 466U, 207U, subtitle, 1U, COLOR_MUTED);
+
+  if (s_monitoring_enabled && (!waiting || s_session_recognized))
+  {
+    draw_confidence(decision_percent, accent);
+    draw_top_predictions(top_labels, top_percent);
+  }
+  else
+  {
+    draw_level_bars(238U, 266U, accent);
+    draw_text_centered_in(44U, 466U, 319U,
+                          s_monitoring_enabled ?
+                          "MICROPHONE ACTIVE" : "INFERENCE SUSPENDED",
+                          2U, accent);
+    draw_text_centered_in(44U, 466U, 354U,
+                          "YAMNET 256 / NEURAL ART NPU",
+                          1U, COLOR_MUTED);
+  }
+}
+
+static void draw_stat_box(uint32_t x, const char *title, uint32_t value,
+                          uint16_t color)
+{
+  char text[12];
+  fill_rect(x, 121U, 99U, 62U, COLOR_CARD_ALT);
+  draw_text_centered_in(x, 99U, 130U, title, 1U, COLOR_MUTED);
+  (void)snprintf(text, sizeof(text), "%lu", (unsigned long)value);
+  draw_text_centered_in(x, 99U, 150U, text, 3U, color);
+}
+
+static void draw_history(void)
+{
+  char time_text[12];
+  char confidence_text[12];
+
+  draw_text(566U, 205U, "RECENT EVENTS", 2U, COLOR_MUTED);
+  fill_rect(566U, 227U, 190U, 1U, COLOR_DIVIDER);
+
+  for (uint32_t index = 0U; index < DASHBOARD_HISTORY_COUNT; index++)
+  {
+    const uint32_t y = 240U + index * 51U;
+    if (s_history[index].valid)
+    {
+      format_elapsed(s_history[index].timestamp_seconds,
+                     time_text, sizeof(time_text));
+      (void)snprintf(confidence_text, sizeof(confidence_text), "%lu%%",
+                     (unsigned long)s_history[index].confidence_percent);
+      fill_rect(566U, y, 5U, 38U, hazard_color(s_history[index].hazard));
+      draw_text(580U, y, s_history[index].label, 1U, COLOR_WHITE);
+      draw_text(580U, y + 20U, time_text, 1U, COLOR_MUTED);
+      draw_text(714U, y + 20U, confidence_text, 1U,
+                hazard_color(s_history[index].hazard));
+    }
+    else
+    {
+      draw_text(580U, y + 10U, "NO EVENT", 1U, COLOR_MUTED);
+    }
+  }
+}
+
+static void draw_summary_card(void)
+{
+  fill_rect(548U, 80U, 230U, 336U, COLOR_CARD);
+  outline_rect(548U, 80U, 230U, 336U, 1U, COLOR_DIVIDER);
+  draw_text(566U, 98U, "SESSION SUMMARY", 2U, COLOR_MUTED);
+  draw_stat_box(566U, "EVENTS", s_event_count, COLOR_CYAN);
+  draw_stat_box(671U, "ALERTS", s_alert_count, COLOR_ORANGE);
+  draw_history();
+}
+
+static void draw_footer(void)
+{
+  char alert_text[48];
+
+  if (s_alert_latched)
+  {
+    const uint16_t color = hazard_color(s_alert_hazard);
+    fill_rect(22U, 426U, 756U, 31U, color);
+    (void)snprintf(alert_text, sizeof(alert_text), "%s ALERT: %s",
+                   hazard_text(s_alert_hazard), s_alert_label);
+    draw_text(38U, 434U, alert_text, 2U, COLOR_BACKGROUND);
+    draw_text(655U, 438U, "TAMP ACK", 1U, COLOR_BACKGROUND);
+  }
+  else
+  {
+    fill_rect(22U, 426U, 756U, 31U, COLOR_CARD_ALT);
+    fill_rect(36U, 437U, 9U, 9U, COLOR_GREEN);
+    draw_text(56U, 434U, "SYSTEM READY / NO UNACKNOWLEDGED ALERTS",
+              2U, COLOR_GREEN);
+  }
+
+  draw_text(22U, 466U, "USER1 PAUSE/RESUME", 1U, COLOR_MUTED);
+  draw_text(337U, 466U, "10 TARGET SOUNDS", 1U, COLOR_MUTED);
+  draw_text(642U, 466U, "TAMP ACKNOWLEDGE", 1U, COLOR_MUTED);
+}
+
+static void render_dashboard(
+    const char *decision_label,
+    uint32_t decision_percent,
+    const char *const top_labels[AUDIO_EVENT_TOP_COUNT],
+    const uint32_t top_percent[AUDIO_EVENT_TOP_COUNT])
+{
+  fill_rect(0U, 0U, DISPLAY_WIDTH, DISPLAY_HEIGHT, COLOR_BACKGROUND);
+  draw_header();
+  draw_live_card(decision_label, decision_percent, top_labels, top_percent);
+  draw_summary_card();
+  draw_footer();
+  clean_framebuffer();
 }
 
 static bool configure_panel(void)
@@ -197,9 +687,6 @@ static bool configure_panel(void)
   RCC_OscInitTypeDef oscillator = {0};
   RCC_PeriphCLKInitTypeDef peripheral_clock = {0};
 
-  /* The audio application leaves PLL4 disabled.  The DK display pixel clock
-   * is IC16 = PLL4 / 2, so enable the same 50 MHz PLL4 configuration used by
-   * ST's STM32N6570-DK image-classification example before releasing LTDC. */
   oscillator.OscillatorType = RCC_OSCILLATORTYPE_NONE;
   oscillator.PLL1.PLLState = RCC_PLL_NONE;
   oscillator.PLL2.PLLState = RCC_PLL_NONE;
@@ -240,17 +727,18 @@ static bool configure_panel(void)
   gpio.Pull = GPIO_NOPULL;
   gpio.Speed = GPIO_SPEED_FREQ_HIGH;
   gpio.Alternate = GPIO_AF14_LCD;
-
-  gpio.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_15;
+  gpio.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_7 |
+             GPIO_PIN_8 | GPIO_PIN_15;
   HAL_GPIO_Init(GPIOA, &gpio);
-  gpio.Pin = GPIO_PIN_2 | GPIO_PIN_4 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 |
-             GPIO_PIN_14 | GPIO_PIN_15;
+  gpio.Pin = GPIO_PIN_2 | GPIO_PIN_4 | GPIO_PIN_11 | GPIO_PIN_12 |
+             GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
   HAL_GPIO_Init(GPIOB, &gpio);
   gpio.Pin = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_15;
   HAL_GPIO_Init(GPIOD, &gpio);
   gpio.Pin = GPIO_PIN_11;
   HAL_GPIO_Init(GPIOE, &gpio);
-  gpio.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_6 | GPIO_PIN_8 | GPIO_PIN_11 | GPIO_PIN_12;
+  gpio.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_6 | GPIO_PIN_8 |
+             GPIO_PIN_11 | GPIO_PIN_12;
   HAL_GPIO_Init(GPIOG, &gpio);
   gpio.Pin = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_6;
   HAL_GPIO_Init(GPIOH, &gpio);
@@ -269,8 +757,8 @@ static bool configure_panel(void)
   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET);
   HAL_Delay(20U);
 
-  /* RK050HR18: sync, back porch, active area, total area. */
-  LTDC->GCR &= ~(LTDC_GCR_HSPOL | LTDC_GCR_VSPOL | LTDC_GCR_DEPOL | LTDC_GCR_PCPOL);
+  LTDC->GCR &= ~(LTDC_GCR_HSPOL | LTDC_GCR_VSPOL |
+                 LTDC_GCR_DEPOL | LTDC_GCR_PCPOL);
   LTDC->SSCR = (3U << 16U) | 3U;
   LTDC->BPCR = (7U << 16U) | 7U;
   LTDC->AWCR = (807U << 16U) | 487U;
@@ -279,7 +767,7 @@ static bool configure_panel(void)
 
   LTDC_Layer1->WHPCR = (807U << 16U) | 8U;
   LTDC_Layer1->WVPCR = (487U << 16U) | 8U;
-  LTDC_Layer1->PFCR = 4U; /* RGB565 */
+  LTDC_Layer1->PFCR = 4U;
   LTDC_Layer1->DCCR = 0U;
   LTDC_Layer1->CACR = 255U;
   LTDC_Layer1->BFCR = 0x0607U;
@@ -299,9 +787,6 @@ void AudioDisplay_SecurityConfig(void)
 {
   RIMC_MasterConfig_t master = {0};
 
-  /* The audio example does not normally use LTDC, so its RIF resources are
-   * not opened by the base application. This must run before IAC_Config(),
-   * matching the ordering in ST's STM32N6570-DK display examples. */
   __HAL_RCC_RIFSC_CLK_ENABLE();
   master.MasterCID = RIF_CID_1;
   master.SecPriv = RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV;
@@ -317,45 +802,64 @@ void AudioDisplay_SecurityConfig(void)
 
 bool AudioDisplay_Init(void)
 {
+  static const char *initial_top_labels[AUDIO_EVENT_TOP_COUNT] =
+      {"chainsaw", "clapping", "coughing"};
+  static const uint32_t initial_top_percent[AUDIO_EVENT_TOP_COUNT] = {0U, 0U, 0U};
+
   s_display_ready = false;
-  s_last_class[0] = '\0';
-  s_last_percent = 101U;
-  s_last_show_predictions = false;
+  s_acknowledge_requested = false;
+  s_monitoring_enabled = true;
+  s_session_active = false;
+  s_session_recognized = false;
+  s_session_label[0] = '\0';
+  s_session_percent = 0U;
+  s_session_hazard = HAZARD_INFO;
+  memset(s_history, 0, sizeof(s_history));
+  s_event_count = 0U;
+  s_alert_count = 0U;
+  s_alert_latched = false;
+  s_alert_label[0] = '\0';
+  s_alert_hazard = HAZARD_INFO;
+  s_last_render_second = UINT32_MAX;
+  s_last_decision[0] = '\0';
+  s_last_decision_percent = UINT32_MAX;
   for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
   {
     s_last_top_labels[rank][0] = '\0';
-    s_last_top_percent[rank] = 101U;
+    s_last_top_percent[rank] = UINT32_MAX;
   }
 
-  fill_rect(0U, 0U, DISPLAY_WIDTH, DISPLAY_HEIGHT, COLOR_BACKGROUND);
-  fill_rect(0U, 0U, DISPLAY_WIDTH, 82U, COLOR_HEADER);
-  draw_text_centered(14U, "EDGE AUDIO RADAR", 5U, COLOR_WHITE);
-  draw_text_centered(92U, "STM32N6  NEURAL ART", 2U, COLOR_MUTED);
-  fill_rect(28U, 125U, 744U, 294U, COLOR_CARD);
-  fill_rect(48U, 145U, 14U, 14U, COLOR_GREEN);
-  draw_text(76U, 143U, "LISTENING", 2U, COLOR_GREEN);
-  draw_text_centered(182U, "DETECTED SOUND", 3U, COLOR_MUTED);
-  draw_text_centered(244U, "WAITING", 7U, COLOR_WHITE);
-  draw_text_centered(340U, "CONFIDENCE: --", 3U, COLOR_ORANGE);
-  draw_text_centered(440U, "BARE METAL AUDIO EVENT DETECTION", 2U, COLOR_MUTED);
-  clean_framebuffer();
-
+  render_dashboard("waiting", 0U, initial_top_labels, initial_top_percent);
   s_display_ready = configure_panel();
   return s_display_ready;
 }
 
-void AudioDisplay_Update(const char *decision_label,
-                         float decision_confidence,
-                         const char *const top_labels[AUDIO_EVENT_TOP_COUNT],
-                         const float top_scores[AUDIO_EVENT_TOP_COUNT],
-                         bool show_predictions)
+void AudioDisplay_RequestAcknowledge(void)
 {
-  char label[32];
-  char confidence_text[32];
-  char top_text[64];
-  uint32_t percent;
+  s_acknowledge_requested = true;
+}
+
+void AudioDisplay_SetMonitoring(bool enabled)
+{
+  s_monitoring_enabled = enabled;
+  s_last_render_second = UINT32_MAX;
+}
+
+void AudioDisplay_Update(
+    const char *decision_label,
+    float decision_confidence,
+    const char *const top_labels[AUDIO_EVENT_TOP_COUNT],
+    const float top_scores[AUDIO_EVENT_TOP_COUNT],
+    bool show_predictions)
+{
+  char current_label[24];
+  uint32_t current_percent;
   uint32_t top_percent[AUDIO_EVENT_TOP_COUNT];
+  const uint32_t now_seconds = HAL_GetTick() / 1000U;
   bool unchanged;
+  bool force_render = false;
+
+  (void)show_predictions;
 
   if ((!s_display_ready) || (decision_label == NULL) ||
       (top_labels == NULL) || (top_scores == NULL))
@@ -363,12 +867,23 @@ void AudioDisplay_Update(const char *decision_label,
     return;
   }
 
-  percent = confidence_percent(decision_confidence);
-  (void)snprintf(label, sizeof(label), "%s", decision_label);
-  unchanged = (strcmp(label, s_last_class) == 0) &&
-              (percent == s_last_percent) &&
-              (show_predictions == s_last_show_predictions);
+  if (s_acknowledge_requested)
+  {
+    s_acknowledge_requested = false;
+    s_alert_latched = false;
+    s_alert_label[0] = '\0';
+    s_alert_hazard = HAZARD_INFO;
+    force_render = true;
+  }
 
+  current_percent = confidence_percent(decision_confidence);
+  (void)snprintf(current_label, sizeof(current_label), "%s", decision_label);
+  update_audio_session(current_label, current_percent, now_seconds);
+
+  unchanged = (!force_render) &&
+              (strcmp(current_label, s_last_decision) == 0) &&
+              (current_percent == s_last_decision_percent) &&
+              (now_seconds == s_last_render_second);
   for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
   {
     top_percent[rank] = confidence_percent(top_scores[rank]);
@@ -382,9 +897,9 @@ void AudioDisplay_Update(const char *decision_label,
     return;
   }
 
-  (void)snprintf(s_last_class, sizeof(s_last_class), "%s", label);
-  s_last_percent = percent;
-  s_last_show_predictions = show_predictions;
+  (void)snprintf(s_last_decision, sizeof(s_last_decision), "%s", current_label);
+  s_last_decision_percent = current_percent;
+  s_last_render_second = now_seconds;
   for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
   {
     (void)snprintf(s_last_top_labels[rank], sizeof(s_last_top_labels[rank]),
@@ -392,32 +907,5 @@ void AudioDisplay_Update(const char *decision_label,
     s_last_top_percent[rank] = top_percent[rank];
   }
 
-  fill_rect(45U, 174U, 710U, 235U, COLOR_CARD);
-  draw_text_centered(182U, "DETECTED SOUND", 3U, COLOR_MUTED);
-
-  if (show_predictions)
-  {
-    draw_text_centered(220U, label, 5U, COLOR_WHITE);
-    (void)snprintf(confidence_text, sizeof(confidence_text), "CONFIDENCE: %lu%%",
-                   (unsigned long)percent);
-    draw_text_centered(266U, confidence_text, 3U, COLOR_ORANGE);
-    fill_rect(100U, 298U, 600U, 10U, COLOR_BAR_BACKGROUND);
-    fill_rect(100U, 298U, 6U * percent, 10U, COLOR_ORANGE);
-    draw_text_centered(318U, "TOP PREDICTIONS", 2U, COLOR_MUTED);
-
-    for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
-    {
-      (void)snprintf(top_text, sizeof(top_text), "%lu  %s  %lu%%",
-                     (unsigned long)(rank + 1U), top_labels[rank],
-                     (unsigned long)top_percent[rank]);
-      draw_text_centered(342U + 23U * rank, top_text, 2U,
-                         (rank == 0U) ? COLOR_WHITE : COLOR_MUTED);
-    }
-  }
-  else
-  {
-    draw_text_centered(236U, "WAITING", 6U, COLOR_WHITE);
-    draw_text_centered(320U, "NO ACTIVE AUDIO WINDOW", 2U, COLOR_MUTED);
-  }
-  clean_framebuffer();
+  render_dashboard(current_label, current_percent, top_labels, top_percent);
 }

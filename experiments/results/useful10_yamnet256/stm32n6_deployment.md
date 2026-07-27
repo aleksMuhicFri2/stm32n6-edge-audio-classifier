@@ -72,3 +72,30 @@ not used as the final accuracy estimate because distance and sound level were
 not controlled. Raw evidence is stored in
 `experiments/raw/RUN-20260726-194048.txt` and
 `experiments/raw/RUN-20260726-194301.txt`.
+
+## Product dashboard v1
+
+On 2026-07-27 the proof-of-concept detected-sound screen was replaced by an
+800x480 acoustic safety dashboard. The classifier and Neural-ART weight blob
+were not changed. The dashboard adds:
+
+- live stable sound, severity, confidence, and top-three model outputs;
+- informational, attention, and danger mappings for all ten target classes;
+- audio-session grouping so one physical sound produces one recorded event;
+- an eight-percentage-point margin before a stronger class may replace the
+  current session label;
+- three recent events with elapsed time and peak session confidence;
+- total-event and alert counters;
+- warning/danger alerts that remain latched until acknowledged;
+- system uptime and explicit NPU/monitoring state;
+- `USER1` pause/resume and `TAMP` alert acknowledgement.
+
+The BM build completed with 0 errors and the same pre-existing RWX linker
+warning. The dashboard build uses 226044 bytes of text, 8976 bytes of
+initialized data, and 361648 bytes of BSS. Relative to the first useful-ten
+firmware, the product layer adds 6040 bytes of text, 40 bytes of initialized
+data, and 168 bytes of BSS. The signed application is 236064 bytes with SHA-256
+`36b9d5f4828d49953b7c621e57c78bf7e0f51cd6b47ef653070ad5e44a89e85a`.
+It was programmed at `0x70100000` and passed full read-back verification. A
+cold boot and visual interaction check remain the final deployment-validation
+steps.
