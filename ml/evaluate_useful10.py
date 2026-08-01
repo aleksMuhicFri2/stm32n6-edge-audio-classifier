@@ -150,6 +150,8 @@ def main() -> None:
         predicted_index = int(np.argmax(mean_scores))
         predicted_class = class_names[predicted_index]
         ranked = np.argsort(mean_scores)[::-1]
+        top2_index = int(ranked[1]) if len(ranked) > 1 else int(ranked[0])
+        top3_index = int(ranked[2]) if len(ranked) > 2 else top2_index
         correct = predicted_index == truth_index
         clip_truth.append(truth_index)
         clip_predictions.append(predicted_index)
@@ -162,10 +164,10 @@ def main() -> None:
                 int(correct),
                 len(indices),
                 float(mean_scores[predicted_index]),
-                class_names[int(ranked[1])],
-                float(mean_scores[int(ranked[1])]),
-                class_names[int(ranked[2])],
-                float(mean_scores[int(ranked[2])]),
+                class_names[top2_index],
+                float(mean_scores[top2_index]),
+                class_names[top3_index] if len(ranked) > 2 else "",
+                float(mean_scores[top3_index]) if len(ranked) > 2 else 0.0,
                 *[float(score) for score in mean_scores],
             ]
         )

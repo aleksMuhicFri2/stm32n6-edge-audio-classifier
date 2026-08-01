@@ -1,0 +1,50 @@
+{
+  "experiment_id": "HAZARD-GATE-YAMNET256-DEV-001",
+  "architecture_role": "Stage 1 binary gate for the Hazard-5 cascade",
+  "classes": [
+    "background_other",
+    "hazard_any"
+  ],
+  "source_experiment": "HAZARD5R-BG2X-YAMNET256-DEV-001",
+  "train_counts": {
+    "background_other": 384,
+    "hazard_any": 384
+  },
+  "validation_counts": {
+    "hazard_any": 182,
+    "background_other": 120
+  },
+  "hazard_train_counts_by_original_class": {
+    "chainsaw": 77,
+    "gunshot_gunfire": 77,
+    "screaming": 77,
+    "siren": 77,
+    "thunderstorm": 76
+  },
+  "validation_hazards_by_original_class": {
+    "siren": 20,
+    "chainsaw": 8,
+    "gunshot_gunfire": 54,
+    "screaming": 40,
+    "thunderstorm": 60
+  },
+  "reserved_test_clips_used": 0,
+  "development_test_is_validation_alias": true,
+  "link_modes_created_this_run": {
+    "hardlink": 1070
+  },
+  "audio_files_in_combined_directory": 1070,
+  "manifest_hashes": {
+    "hazard_gate_train.csv": "6706bd5835ca2d7eafd2e68d319a6c587fe0be2092b494be97d2781a5308f522",
+    "hazard_gate_validation.csv": "1e69fe7de5fa6e44701c90f7d24e6922641c09c3aecd9cfe79f3e83860673265",
+    "hazard_gate_development_test.csv": "1e69fe7de5fa6e44701c90f7d24e6922641c09c3aecd9cfe79f3e83860673265",
+    "hazard_gate_quantization.csv": "0adbd5144e3420c2bb0b1eae479a5b3ef92419e8117d133e1f86b3743ac32437"
+  },
+  "provenance_sha256": "62425a54c749a659789880ca1ce6a72214ed58c7c62026e154add736986b509a",
+  "notes": [
+    "The gate is balanced at 384 hazard and 384 background training rows.",
+    "All 182 hazard and 120 background development-validation clips are retained.",
+    "The second cascade stage remains the validated closed-set Hazard-5 classifier.",
+    "ESC-50 fold 5 and FSD50K evaluation remain reserved."
+  ]
+}

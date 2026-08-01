@@ -1,0 +1,68 @@
+{
+  "hazard_threshold": 0.5,
+  "hazard_detection_recall": 0.9505494505494505,
+  "hazard_detection_macro_recall": 0.9427777777777777,
+  "minimum_hazard_class_recall": 0.875,
+  "background_rejection_rate": 0.575,
+  "background_false_alert_rate": 0.425,
+  "speech_rejection_rate": 0.8333333333333334,
+  "cascade_hazard_exact_accuracy": 0.9175824175824175,
+  "cascade_hazard_exact_macro_recall": 0.914074074074074,
+  "cascade_overall_accuracy": 0.7814569536423841,
+  "per_hazard_detection_recall": {
+    "chainsaw": 0.875,
+    "gunshot_gunfire": 0.8888888888888888,
+    "screaming": 0.95,
+    "siren": 1.0,
+    "thunderstorm": 1.0
+  },
+  "per_hazard_exact_cascade_recall": {
+    "chainsaw": 0.875,
+    "gunshot_gunfire": 0.8703703703703703,
+    "screaming": 0.825,
+    "siren": 1.0,
+    "thunderstorm": 1.0
+  },
+  "experiment_id": "HAZARD-GATE-YAMNET256-DEV-001",
+  "status": "development_gate_failed",
+  "point_kind": "diagnostic_point_not_approved",
+  "constraints": {
+    "minimum_hazard_detection_recall": 0.95,
+    "minimum_hazard_class_recall": 0.85,
+    "minimum_speech_rejection": 0.95
+  },
+  "calibration_protocol": "Development validation only; external test partitions remain reserved",
+  "rule": "accept as hazard when score_hazard_any >= hazard_threshold",
+  "background_group_rejection": {
+    "esc50_diverse": {
+      "clips": 60,
+      "rejected": 29,
+      "rejection_rate": 0.48333333333333334
+    },
+    "fsd50k_general": {
+      "clips": 8,
+      "rejected": 5,
+      "rejection_rate": 0.625
+    },
+    "fsd50k_hard_negative": {
+      "clips": 8,
+      "rejected": 6,
+      "rejection_rate": 0.75
+    },
+    "fsd50k_human_non_speech": {
+      "clips": 8,
+      "rejected": 3,
+      "rejection_rate": 0.375
+    },
+    "fsd50k_music": {
+      "clips": 12,
+      "rejected": 6,
+      "rejection_rate": 0.5
+    },
+    "fsd50k_speech": {
+      "clips": 24,
+      "rejected": 20,
+      "rejection_rate": 0.8333333333333334
+    }
+  }
+}
