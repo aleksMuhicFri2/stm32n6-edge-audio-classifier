@@ -1,0 +1,21 @@
+operation_mode: chain_tqe
+[2026-08-02 00:43:52,414][absl][WARNING] - No training configuration found in the save file, so the model was *not* compiled. Compile it manually.
+Model name : yamnet_e512
+Using pretrained weights
+Dataset : custom
+The last epoch history :
+['epoch', 'accuracy', 'learning_rate', 'loss', 'val_accuracy', 'val_loss']
+['56', '0.9021164178848267', '0.0001250000059371814', '0.3680104911327362', '0.8257042169570923', '1.1817138195037842']
+Training runtime : 323 s
+Average time per epoch : 5.67 s
+Nb params of float model : 1628613
+Float model test_set:
+Patch-level accuracy of float model : 82.98 %
+Clip-level accuracy of float model : 89.37 %
+Loss of float model : 0.7272195816040039
+[2026-08-02 00:49:28,055][absl][INFO] - Function `function` contains input name(s) resource with unsupported characters which will be renamed to functional_74_1_new_head_1_biasadd_readvariableop_resource in the SavedModel.
+[2026-08-02 00:49:28,097][absl][INFO] - Function `function` contains input name(s) resource with unsupported characters which will be renamed to functional_74_1_new_head_1_biasadd_readvariableop_resource in the SavedModel.
+Quantized model test_set:
+Patch-level accuracy of quantized model : 29.05 %
+Clip-level accuracy of quantized model : 24.41 %
+operation finished: chain_tqe

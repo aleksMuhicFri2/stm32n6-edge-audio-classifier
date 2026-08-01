@@ -1,8 +1,18 @@
 param(
-    [switch]$SmokeTest
+    [switch]$SmokeTest,
+    [switch]$V2,
+    [switch]$V3,
+    [ValidateSet('256', '512', '1024')]
+    [string]$Embedding = '256'
 )
 
 $ErrorActionPreference = 'Stop'
+if ($V2 -and $V3) {
+    throw 'V2 and V3 are separate controlled taxonomies.'
+}
+if ((-not $V3) -and ($Embedding -ne '256')) {
+    throw 'Embedding-width comparison is currently defined only for V3.'
+}
 
 $longRepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $projectRoot = (Resolve-Path (Join-Path $longRepoRoot '..')).Path
@@ -19,14 +29,18 @@ try {
     $python = Join-Path $workspaceRoot '.venv\Scripts\python.exe'
     $configRoot = Join-Path $repoRoot 'ml\configs'
     $cacheRoot = Join-Path $workspaceRoot 'cache\matplotlib'
-    $runRoot = Join-Path $workspaceRoot 'training-runs\hazard5_yamnet256'
-    $mlflowRoot = Join-Path $workspaceRoot 'training-runs\mlruns-hazard5-short'
+    $datasetName = if ($V3) { 'hazard5v3' } elseif ($V2) { 'hazard5v2' } else { 'hazard5' }
+    $configName = if ($V3) { 'hazard5v3_yamnet256_tqe' } elseif ($V2) { 'hazard5v2_yamnet256_tqe' } else { 'hazard5_yamnet256_tqe' }
+    $runName = if ($V3) { "hazard5v3_yamnet$Embedding" } elseif ($V2) { 'hazard5v2_yamnet256' } else { 'hazard5_yamnet256' }
+    $mlflowName = if ($V3) { "mlruns-hazard5v3-$Embedding-short" } elseif ($V2) { 'mlruns-hazard5v2-short' } else { 'mlruns-hazard5-short' }
+    $runRoot = Join-Path $workspaceRoot "training-runs\$runName"
+    $mlflowRoot = Join-Path $workspaceRoot "training-runs\$mlflowName"
 
     foreach ($requiredPath in @(
         $python,
         (Join-Path $serviceRoot 'stm32ai_main.py'),
-        (Join-Path $workspaceRoot 'datasets\hazard5\audio'),
-        (Join-Path $workspaceRoot 'datasets\hazard5\meta\hazard5_train.csv')
+        (Join-Path $workspaceRoot "datasets\$datasetName\audio"),
+        (Join-Path $workspaceRoot "datasets\$datasetName\meta\hazard5_train.csv")
     )) {
         if (-not (Test-Path $requiredPath)) {
             throw "Missing training prerequisite: $requiredPath"
@@ -46,10 +60,14 @@ try {
     $arguments = @(
         'stm32ai_main.py',
         '--config-path', $configRoot,
-        '--config-name', 'hazard5_yamnet256_tqe',
+        '--config-name', $configName,
         "mlflow.uri=$mlflowUri",
         "hydra.run.dir=$hydraRunDir"
     )
+    if ($V3 -and ($Embedding -ne '256')) {
+        $arguments += "model.model_name=yamnet_e$Embedding"
+        $arguments += "general.project_name=stm32n6_hazard5v3_yamnet${Embedding}_development"
+    }
     if ($SmokeTest) {
         $arguments += 'training.epochs=1'
         $arguments += '+training.dryrun=1'

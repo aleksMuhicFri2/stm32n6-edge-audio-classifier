@@ -118,9 +118,9 @@ static const Glyph5x7_t s_glyphs[] =
 
 static const SoundProfile_t s_sound_profiles[] =
 {
-  {"chainsaw",         "CHAINSAW",         HAZARD_DANGER},
+  {"dog_bark",         "DOG BARK",         HAZARD_WARNING},
+  {"glass_breaking",   "GLASS BREAKING",   HAZARD_DANGER},
   {"gunshot_gunfire",  "GUNSHOT",          HAZARD_DANGER},
-  {"screaming",        "SCREAMING",         HAZARD_DANGER},
   {"siren",            "EMERGENCY SIREN",   HAZARD_DANGER},
   {"thunderstorm",     "THUNDERSTORM",      HAZARD_DANGER}
 };
@@ -844,7 +844,7 @@ void AudioDisplay_SecurityConfig(void)
 bool AudioDisplay_Init(void)
 {
   static const char *initial_top_labels[AUDIO_EVENT_TOP_COUNT] =
-      {"chainsaw", "gunshot_gunfire", "screaming"};
+      {"dog_bark", "glass_breaking", "gunshot_gunfire"};
   static const uint32_t initial_top_percent[AUDIO_EVENT_TOP_COUNT] = {0U, 0U, 0U};
 
   s_display_ready = false;

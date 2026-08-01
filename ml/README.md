@@ -128,10 +128,11 @@ flash, and validate the useful-ten baseline.
 
 ## Five-class hazard specialization
 
-The final demonstrator will use five danger sounds selected from an eight-class
-candidate pool using reproducible offline and physical-board evidence. The
-selection configuration is `configs/hazard_candidate_selection.yaml`, and the
-versioned source catalog is under `data/hazard_candidates`.
+The development demonstrator now uses dog bark, glass breaking,
+gunshot/gunfire, emergency siren, and thunderstorm. Screaming and chainsaw were
+removed after the live false-alert audit and a controlled replacement study.
+The selection configuration is `configs/hazard_candidate_selection.yaml`, and
+the versioned source catalog is under `data/hazard_candidates`.
 
 The workflow is:
 
@@ -146,18 +147,19 @@ The preliminary results, figures, workbook, acquisition instructions, and exact
 reproduction commands are documented in
 `../experiments/results/hazard_candidate_selection/README.md`.
 
-The provisional five-class development model has now completed steps 1-6. To
-recreate the balanced hard-linked dataset, train/quantize the model, and compile
-it for Neural-ART:
+To recreate the selected dog-and-glass dataset, train/quantize YAMNet-256, and
+compile it for Neural-ART:
 
 ```powershell
-python ml/prepare_hazard5_training.py --catalog ml/data/hazard_candidates/hazard_candidate_catalog.csv --esc50-root ..\ml-workspace\datasets\ESC-50 --fsd50k-dev-audio ..\ml-workspace\datasets\FSD50K\FSD50K.dev_audio --output-root ..\ml-workspace\datasets\hazard5
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ml\train_hazard5.ps1
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ml\generate_hazard5_neural_art.ps1
+python ml/prepare_hazard5_training.py --catalog ml/data/hazard_candidates/hazard_candidate_catalog.csv --esc50-root ..\ml-workspace\datasets\ESC-50 --fsd50k-dev-audio ..\ml-workspace\datasets\FSD50K\FSD50K.dev_audio --output-root ..\ml-workspace\datasets\hazard5v3 --tracked-output ml/data/hazard5v3 --classes dog_bark glass_breaking gunshot_gunfire siren thunderstorm --experiment-id HAZARD5V3-YAMNET256-DEV-001
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ml\train_hazard5.ps1 -V3
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ml\generate_hazard5_neural_art.ps1 -Model ml\models\hazard5v3_yamnet256_int8.tflite -RunName hazard5v3
 ```
 
 The exact deployment result is recorded under
-`../experiments/results/hazard5_yamnet256_development`. The five-class int8
-model reached 95.60% development-validation clip accuracy with no measured
-clip-level loss relative to the float model. Reserved external test data remains
-untouched pending the physical playback gate and taxonomy freeze.
+`../experiments/results/hazard5v3_yamnet256_development`. The int8 model reached
+88.58% development-validation clip accuracy and compiled to 148,417 bytes of
+Neural-ART weights. The rejected background, cascade, confidence, wider-model,
+and dedicated-speech experiments are retained for the thesis rather than
+discarded. Reserved external test data remains untouched pending live
+sensitivity calibration and the physical playback gate.

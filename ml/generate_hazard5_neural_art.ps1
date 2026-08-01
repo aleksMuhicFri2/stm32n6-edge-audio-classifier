@@ -1,15 +1,21 @@
 param(
-    [string]$STEdgeAI = 'C:\ST\STEdgeAI\4.0\Utilities\windows\stedgeai.exe'
+    [string]$STEdgeAI = 'C:\ST\STEdgeAI\4.0\Utilities\windows\stedgeai.exe',
+    [string]$Model = 'ml\models\hazard5_yamnet256_int8.tflite',
+    [string]$RunName = 'hazard5'
 )
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $projectRoot = (Resolve-Path (Join-Path $repoRoot '..')).Path
 $workspaceRoot = Join-Path $projectRoot 'ml-workspace'
-$model = Join-Path $repoRoot 'ml\models\hazard5_yamnet256_int8.tflite'
+$model = if ([System.IO.Path]::IsPathRooted($Model)) {
+    $Model
+} else {
+    Join-Path $repoRoot $Model
+}
 $configRoot = Join-Path $repoRoot 'ml\configs\stedgeai'
 $modelHash = (Get-FileHash $model -Algorithm SHA256).Hash.ToLowerInvariant()
-$runRoot = Join-Path $workspaceRoot ("stedgeai\hazard5\{0}" -f $modelHash.Substring(0, 12))
+$runRoot = Join-Path $workspaceRoot ("stedgeai\{0}\{1}" -f $RunName, $modelHash.Substring(0, 12))
 
 foreach ($required in @(
     $STEdgeAI,

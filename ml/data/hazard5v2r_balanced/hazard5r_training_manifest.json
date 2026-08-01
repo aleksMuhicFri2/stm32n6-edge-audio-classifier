@@ -1,0 +1,73 @@
+{
+  "experiment_id": "HAZARD5V2R-BAL-YAMNET256-DEV-002",
+  "purpose": "Reduce closed-set false alerts while retaining five user-facing hazards.",
+  "background_profile": "balanced",
+  "classes_in_expected_model_output_order": [
+    "background_other",
+    "crackling_fire",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "thunderstorm"
+  ],
+  "user_facing_hazard_count": 5,
+  "internal_rejection_class": "background_other",
+  "hazard_rows_reused_from": "HAZARD5V2-YAMNET256-DEV-001",
+  "class_counts": {
+    "train": {
+      "crackling_fire": 192,
+      "glass_breaking": 192,
+      "gunshot_gunfire": 192,
+      "siren": 192,
+      "thunderstorm": 192,
+      "background_other": 192
+    },
+    "validation": {
+      "crackling_fire": 36,
+      "glass_breaking": 60,
+      "gunshot_gunfire": 54,
+      "siren": 20,
+      "thunderstorm": 60,
+      "background_other": 120
+    }
+  },
+  "background_group_counts": {
+    "train": {
+      "esc50_diverse": 96,
+      "fsd50k_speech": 40,
+      "fsd50k_music": 16,
+      "fsd50k_human_non_speech": 16,
+      "fsd50k_hard_negative": 16,
+      "fsd50k_general": 8
+    },
+    "validation": {
+      "esc50_diverse": 60,
+      "fsd50k_speech": 24,
+      "fsd50k_music": 12,
+      "fsd50k_human_non_speech": 8,
+      "fsd50k_hard_negative": 8,
+      "fsd50k_general": 8
+    }
+  },
+  "reserved_test_clips_used": 0,
+  "esc50_reserved_fold": 5,
+  "fsd50k_evaluation_used": false,
+  "development_test_is_validation_alias": true,
+  "link_modes_created_this_run": {
+    "hardlink": 1502
+  },
+  "audio_files_in_combined_directory": 1502,
+  "manifest_hashes": {
+    "hazard5r_train.csv": "af4aab8e5d35cf4af730195085252acd18d68ae898f982206f0014e73eba4087",
+    "hazard5r_validation.csv": "686449cb4afab27b61b48c816ef31c8655c6a2b882e2b2d9571a335344e14d29",
+    "hazard5r_development_test.csv": "686449cb4afab27b61b48c816ef31c8655c6a2b882e2b2d9571a335344e14d29",
+    "hazard5r_quantization.csv": "79d8f9d60783a5d89c7ff3ba22af231cea8dd1cf7dcd6848b4c89189d610a5f3"
+  },
+  "provenance_sha256": "b55b44347b10843b672218e180cb7ec635970be46597baac48adecc2ee265b35",
+  "notes": [
+    "Hazard recordings and roles are identical to the closed-set baseline.",
+    "background_other includes speech because quiet voices caused qualitative false alerts on hardware.",
+    "The background class also includes diverse and confusable non-hazard events.",
+    "Formal physical accuracy testing remains deferred until rejection behavior is calibrated."
+  ]
+}

@@ -13,7 +13,7 @@ from collections import Counter
 from pathlib import Path
 
 
-HAZARD_CLASSES = [
+DEFAULT_HAZARD_CLASSES = [
     "chainsaw",
     "gunshot_gunfire",
     "screaming",
@@ -32,6 +32,12 @@ def parse_args() -> argparse.Namespace:
         "--tracked-output", type=Path, default=Path("ml/data/hazard_gate")
     )
     parser.add_argument("--hazard-train-total", type=int, default=384)
+    parser.add_argument(
+        "--hazard-classes",
+        nargs="+",
+        default=DEFAULT_HAZARD_CLASSES,
+        help="Hazard labels to collapse into the hazard_any gate output.",
+    )
     parser.add_argument(
         "--experiment-id", default="HAZARD-GATE-YAMNET256-DEV-001"
     )
@@ -85,21 +91,22 @@ def main() -> None:
         raise FileNotFoundError(args.source_audio)
 
     source_rows = read_rows(args.source_provenance)
+    hazard_classes = args.hazard_classes
+    if len(hazard_classes) != len(set(hazard_classes)):
+        raise ValueError("--hazard-classes contains duplicate labels")
     train_background = [
         row
         for row in source_rows
         if row["dataset_role"] == "train" and row["category"] == "background_other"
     ]
     validation_rows = [row for row in source_rows if row["dataset_role"] == "validation"]
-    if len(train_background) != 384:
-        raise ValueError(
-            f"Expected the BG2X source's 384 background rows; found {len(train_background)}"
-        )
+    if not train_background:
+        raise ValueError("The source dataset contains no background training rows")
 
-    base_per_class, remainder = divmod(args.hazard_train_total, len(HAZARD_CLASSES))
+    base_per_class, remainder = divmod(args.hazard_train_total, len(hazard_classes))
     selected_hazards: list[dict[str, str]] = []
     selected_counts: dict[str, int] = {}
-    for class_index, class_name in enumerate(HAZARD_CLASSES):
+    for class_index, class_name in enumerate(hazard_classes):
         target = base_per_class + (1 if class_index < remainder else 0)
         candidates = [
             row
@@ -171,7 +178,7 @@ def main() -> None:
         ]
         if class_name == "hazard_any":
             # Ten unique sources per hazard preserve all five acoustic modes.
-            for original_class in HAZARD_CLASSES:
+            for original_class in hazard_classes:
                 seen: set[tuple[str, str]] = set()
                 for row in candidates:
                     if row["original_category"] != original_class:
@@ -228,6 +235,7 @@ def main() -> None:
         "experiment_id": args.experiment_id,
         "architecture_role": "Stage 1 binary gate for the Hazard-5 cascade",
         "classes": GATE_CLASSES,
+        "collapsed_hazard_classes": hazard_classes,
         "source_experiment": args.source_experiment,
         "train_counts": dict(Counter(row["category"] for row in output_rows["train"])),
         "validation_counts": dict(
@@ -250,8 +258,8 @@ def main() -> None:
         },
         "provenance_sha256": sha256(provenance_path),
         "notes": [
-            "The gate is balanced at 384 hazard and 384 background training rows.",
-            "All 182 hazard and 120 background development-validation clips are retained.",
+            f"The gate uses {len(selected_hazards)} hazard and {len(train_background)} background training rows.",
+            f"All {len(validation_rows)} development-validation clips are retained.",
             "The second cascade stage remains the validated closed-set Hazard-5 classifier.",
             "ESC-50 fold 5 and FSD50K evaluation remain reserved.",
         ],

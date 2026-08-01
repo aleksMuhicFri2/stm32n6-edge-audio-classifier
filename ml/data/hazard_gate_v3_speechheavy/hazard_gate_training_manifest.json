@@ -1,0 +1,57 @@
+{
+  "experiment_id": "HAZARD-GATE-V3-SPEECHHEAVY-YAMNET256-DEV-002",
+  "architecture_role": "Stage 1 binary gate for the Hazard-5 cascade",
+  "classes": [
+    "background_other",
+    "hazard_any"
+  ],
+  "collapsed_hazard_classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "thunderstorm"
+  ],
+  "source_experiment": "HAZARD5V3R-SPEECHHEAVY-SOURCE-DEV-002",
+  "train_counts": {
+    "background_other": 384,
+    "hazard_any": 384
+  },
+  "validation_counts": {
+    "hazard_any": 254,
+    "background_other": 120
+  },
+  "hazard_train_counts_by_original_class": {
+    "dog_bark": 77,
+    "glass_breaking": 77,
+    "gunshot_gunfire": 77,
+    "siren": 77,
+    "thunderstorm": 76
+  },
+  "validation_hazards_by_original_class": {
+    "dog_bark": 60,
+    "glass_breaking": 60,
+    "gunshot_gunfire": 54,
+    "siren": 20,
+    "thunderstorm": 60
+  },
+  "reserved_test_clips_used": 0,
+  "development_test_is_validation_alias": true,
+  "link_modes_created_this_run": {
+    "hardlink": 1142
+  },
+  "audio_files_in_combined_directory": 1142,
+  "manifest_hashes": {
+    "hazard_gate_train.csv": "4880d4b271379df14e2d5ff48d49c2e3c9c1e58dcc96ab09278d1953c4a91939",
+    "hazard_gate_validation.csv": "012c0629eed85f2421882b34a221e636b9235347aeda79380c2f8af370724375",
+    "hazard_gate_development_test.csv": "012c0629eed85f2421882b34a221e636b9235347aeda79380c2f8af370724375",
+    "hazard_gate_quantization.csv": "6c423b736505808b7199db26edee80689250064e08350a11b15b4ad4a63e7198"
+  },
+  "provenance_sha256": "aa90fbb462918a9940ad64b4b9f64edc5491931f4ee29a5730c3ea073bd7743f",
+  "notes": [
+    "The gate uses 384 hazard and 384 background training rows.",
+    "All 374 development-validation clips are retained.",
+    "The second cascade stage remains the validated closed-set Hazard-5 classifier.",
+    "ESC-50 fold 5 and FSD50K evaluation remain reserved."
+  ]
+}

@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    network.h
   * @author  STEdgeAI
-  * @date    2026-08-01 22:29:50
+  * @date    2026-08-02 01:15:31
   * @brief   Minimal description of the generated c-implemention of the network
   ******************************************************************************
   * @attention
@@ -20,7 +20,7 @@
 
 /******************************************************************************/
 #define LL_ATON_NETWORK_C_MODEL_NAME        "network"
-#define LL_ATON_NETWORK_ORIGIN_MODEL_NAME   "hazard5_yamnet256_int8"
+#define LL_ATON_NETWORK_ORIGIN_MODEL_NAME   "hazard5v3_yamnet256_int8"
 
 /************************** USER ALLOCATED IOs ********************************/
 // No user allocated inputs

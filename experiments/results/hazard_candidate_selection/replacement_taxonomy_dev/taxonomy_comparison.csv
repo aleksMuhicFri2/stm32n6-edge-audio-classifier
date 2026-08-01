@@ -1,0 +1,4 @@
+option,classes,train_clips,validation_clips,validation_accuracy,macro_precision,macro_recall,macro_f1,minimum_class_recall,closest_centroid_class_1,closest_centroid_class_2,closest_centroid_cosine_similarity
+replace_voice_and_chainsaw,crackling_fire|glass_breaking|gunshot_gunfire|siren|thunderstorm,879,226,0.8893805309734514,0.8945085018976645,0.892483660130719,0.8905304871115464,0.7666666666666667,crackling_fire,thunderstorm,0.9734570980072021
+replace_with_glass_and_dog_bark,dog_bark|glass_breaking|gunshot_gunfire|siren|thunderstorm,879,252,0.8928571428571429,0.9117385565254418,0.8937037037037037,0.8985423783377747,0.7833333333333333,dog_bark,siren,0.9308823347091675
+replace_with_glass_and_vehicle_horn,glass_breaking|gunshot_gunfire|siren|thunderstorm|vehicle_horn,797,220,0.8909090909090909,0.89795526483475,0.881005291005291,0.8836159176021956,0.7142857142857143,siren,vehicle_horn,0.9363848567008972

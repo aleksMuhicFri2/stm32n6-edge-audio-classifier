@@ -1,0 +1,41 @@
+{
+  "experiment_id": "HAZARD5V3-YAMNET512-DEV-002",
+  "model_architecture": "YAMNet-512 transfer learning",
+  "classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "thunderstorm"
+  ],
+  "test_protocol": "YAMNet-512 width comparison on identical revised five-hazard development validation; reserved external test untouched",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 254,
+  "correct_clips": 64,
+  "incorrect_clips": 190,
+  "clip_accuracy": 0.25196850393700787,
+  "patches": 1704,
+  "correct_patches": 495,
+  "patch_accuracy": 0.2904929577464789,
+  "macro_precision": 0.819047619047619,
+  "macro_recall": 0.35333333333333333,
+  "macro_f1": 0.27043715725342654,
+  "model_bytes": 1846128,
+  "model_sha256": "0dad38b0d6e413147dbd6cdf90a03874413849efdc0e16a5d2122d00d4feee70",
+  "test_csv_sha256": "aca62206750d09e3668a6329c2bd15531d1114ad2dbf116a3ff8fcef81896320",
+  "input_shape": [
+    -1,
+    64,
+    96,
+    1
+  ],
+  "input_dtype": "int8",
+  "input_scale": 0.07531454414129257,
+  "input_zero_point": 55,
+  "output_shape": [
+    -1,
+    5
+  ],
+  "output_dtype": "float32",
+  "tensorflow_version": "2.18.0"
+}

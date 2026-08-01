@@ -264,7 +264,8 @@ bool audio_process(AudioBM_acq_t * acq_ctx_ptr,AudioBM_proc_t * proc_ctx_ptr)
   AiDPUProcess(&proc_ctx_ptr->aiCtx);
 
 #if (CTRL_X_CUBE_AI_MODEL_OUTPUT_1 == CTRL_AI_CLASS_DISTRIBUTION )
-  printInferenceResults(&proc_ctx_ptr->aiCtx, isNotSilence || isPlayback);
+  printInferenceResults(&proc_ctx_ptr->aiCtx, isNotSilence || isPlayback,
+                        proc_ctx_ptr->audioPreCtx.S_Spectr.spectro_sum);
 #endif
 
 #if (CTRL_X_CUBE_AI_POSTPROC==CTRL_AI_ISTFT)
@@ -450,7 +451,7 @@ void printHeader(void)
 	my_printf("| Frame   |  Cpu  |  Pre |  AI  | Post |");
 #endif
 	my_printf("\r\n");
-	printf("AED_CSV_HEADER,frame,audio_active,decision,decision_confidence,"
+	printf("AED_CSV_HEADER,frame,audio_active,spectrogram_sum,decision,decision_confidence,"
 	       "top1,top1_confidence,top2,top2_confidence,top3,top3_confidence,changed\r\n");
 }
 
@@ -475,7 +476,8 @@ void printCpuStats(void)
 * @param  None
 * @retval None
 */
-void printInferenceResults(const AIProcCtx_t* AIProcCtx, bool audio_active)
+void printInferenceResults(const AIProcCtx_t* AIProcCtx, bool audio_active,
+                           float spectrogram_sum)
 {
   /**
   * Specifies the labels for the classes of the demo.
@@ -533,9 +535,10 @@ void printInferenceResults(const AIProcCtx_t* AIProcCtx, bool audio_active)
     my_printf("{\"class\":\"%s\"}\r\n", decision_label);
   }
 
-  printf("AED_CSV,%lu,%u,%s,%.4f,%s,%.4f,%s,%.4f,%s,%.4f,%u\r\n",
+  printf("AED_CSV,%lu,%u,%.2f,%s,%.4f,%s,%.4f,%s,%.4f,%s,%.4f,%u\r\n",
          (unsigned long)result.frame_index,
          result.audio_active ? 1U : 0U,
+         (double)spectrogram_sum,
          decision_label,
          (double)result.decision_confidence,
          top_labels[0], (double)result.top_scores[0],

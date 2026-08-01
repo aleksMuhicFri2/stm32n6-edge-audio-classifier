@@ -1,0 +1,16 @@
+option,actual_class,predicted_crackling_fire,predicted_glass_breaking,predicted_gunshot_gunfire,predicted_siren,predicted_thunderstorm,predicted_dog_bark,predicted_vehicle_horn
+replace_voice_and_chainsaw,crackling_fire,28.0,2,2,0,2,,
+replace_voice_and_chainsaw,glass_breaking,8.0,46,5,0,1,,
+replace_voice_and_chainsaw,gunshot_gunfire,1.0,1,51,0,1,,
+replace_voice_and_chainsaw,siren,1.0,0,0,17,0,,
+replace_voice_and_chainsaw,thunderstorm,1.0,0,0,0,59,,
+replace_with_glass_and_dog_bark,dog_bark,,2,1,0,7,50.0,
+replace_with_glass_and_dog_bark,glass_breaking,,47,8,0,2,3.0,
+replace_with_glass_and_dog_bark,gunshot_gunfire,,1,52,0,1,0.0,
+replace_with_glass_and_dog_bark,siren,,0,0,16,0,2.0,
+replace_with_glass_and_dog_bark,thunderstorm,,0,0,0,60,0.0,
+replace_with_glass_and_vehicle_horn,glass_breaking,,48,10,0,2,,0.0
+replace_with_glass_and_vehicle_horn,gunshot_gunfire,,1,52,0,1,,0.0
+replace_with_glass_and_vehicle_horn,siren,,0,0,17,0,,1.0
+replace_with_glass_and_vehicle_horn,thunderstorm,,0,0,0,59,,1.0
+replace_with_glass_and_vehicle_horn,vehicle_horn,,0,0,2,6,,20.0

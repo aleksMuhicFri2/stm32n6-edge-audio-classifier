@@ -1,25 +1,42 @@
-# Hazard taxonomy revision after the speech hard-negative audit
+# Final Hazard-5 taxonomy revision
 
-The deployed five-class taxonomy performs strongly as a closed set, but live
-quiet voices and the 24-clip speech audit expose a structural problem:
-`screaming` is acoustically too close to ordinary speech for this dataset and
-YAMNet-256 head. Closed-set confidence rejects only 4/24 speech clips, and the
-best binary gate that preserves hazards rejects 21/24 rather than the required
-23/24.
+The first five-class firmware was accurate as a closed set, but live quiet
+voices exposed a product problem: a hazard-only softmax must always choose a
+hazard. The user therefore approved removing both `screaming` and `chainsaw`.
+No reserved-test clips were used to choose their replacements.
 
-The existing seven-candidate embedding study was re-analysed without using any
-reserved-test data:
+`glass_breaking` replaces `screaming`. It is useful for break-in or accident
+detection, simple to demonstrate safely with recorded audio, and avoids making
+ordinary voice a neighbor of a user-facing distress class.
 
-| Five-class option | Validation accuracy | Macro recall | Closest centroid pair | Similarity |
-|---|---:|---:|---|---:|
-| Current (`screaming`) | 97.71% | 97.49% | screaming / siren | 0.9764 |
-| Replace with `glass_breaking` | 92.86% | 90.59% | glass / gunshot | 0.9296 |
-| Replace with `crackling_fire` | 93.53% | 89.50% | fire / thunderstorm | 0.9735 |
+The second replacement study compared fire, dog bark, and vehicle horn while
+holding glass breaking, gunshot/gunfire, siren, and thunderstorm fixed:
 
-`glass_breaking` is the recommended revision. It removes ordinary voice from
-the user-facing taxonomy, has the lowest maximum inter-class centroid
-similarity, is safe and simple to demonstrate using recorded audio, and is a
-useful break-in or accident event. Its preliminary recall is 49/60 = 81.67%,
-so it must be retrained and pass the same background, NPU, and physical-playback
-gates before replacing the current model. The current firmware remains the
-rollback baseline until the user approves this taxonomy change.
+| Replacement | Validation accuracy | Macro recall | Minimum class recall | Closest centroid pair |
+|---|---:|---:|---:|---|
+| Crackling fire | 88.94% | 89.25% | 75.0% | fire / thunder, 0.9735 |
+| Dog bark | **89.29%** | **89.37%** | **78.33%** | dog / siren, 0.9309 |
+| Vehicle horn | 89.09% | 88.10% | 71.43% | siren / horn, 0.9364 |
+
+Dog bark was selected because it produced the best macro recall and minimum
+class recall, had substantially less centroid overlap than fire, and is a
+practical animal or property warning. The final five visible classes are:
+
+1. dog bark;
+2. glass breaking;
+3. gunshot/gunfire;
+4. emergency siren;
+5. thunderstorm.
+
+The independently evaluated int8 YAMNet-256 model classified 225/254
+development-validation clips correctly (88.58%); class recalls were 81.67%,
+81.67%, 90.74%, 90.0%, and 100%, respectively. It compiled to the same
+148,417-byte Neural-ART weight footprint as the earlier five-class model and
+was flashed with read-back verification.
+
+Background-aware, binary-gate, speech-heavy, seven-output, and confidence/margin
+experiments did not jointly retain the required hazard recall and reject 95% of
+speech, so none of those models was deployed. The product now logs the exact
+on-board spectrogram activity value for controlled live sensitivity calibration.
+Reserved ESC-50 fold 5 and FSD50K evaluation data remain untouched until the
+taxonomy, sensitivity threshold, and physical protocol are frozen.

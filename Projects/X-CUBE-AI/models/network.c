@@ -25,18 +25,18 @@
  * Command Line options:
  * --load-mdesc-file = "C:/ST/STEdgeAI/4.0/Utilities/configs/stm32n6"
  * --load-cdesc-file = "C:/ST/STEdgeAI/4.0/Utilities/configs/cortex-m55"
- * --load-mpool-file = "C:/Users/alexm/Downloads/bachelor-thesis-book-master/bachelor-thesis-book/ml-workspace/stedgeai/hazard5/14d9a98267a1/stm32n6"
+ * --load-mpool-file = "C:/Users/alexm/Downloads/bachelor-thesis-book-master/bachelor-thesis-book/ml-workspace/stedgeai/hazard5v3/59a6f68c28b1/stm32n6"
  * --cache-maintenance = true
  * --native-float = true
- * --json-quant-file = "C:/Users/alexm/Downloads/bachelor-thesis-book-master/bachelor-thesis-book/ml-workspace/stedgeai/hazard5/14d9a98267a1/gen-output/hazard5_yamnet256_int8_OE_3_3_1_Q.json"
+ * --json-quant-file = "C:/Users/alexm/Downloads/bachelor-thesis-book-master/bachelor-thesis-book/ml-workspace/stedgeai/hazard5v3/59a6f68c28b1/gen-output/hazard5v3_yamnet256_int8_OE_3_3_1_Q.json"
  * --optimization = 3
  * --Os = true
  * --Omax-ca-pipe = 4
  * --Ocache-opt = true
  * --csv-file = "network"
  * --output-info-file = "c_info"
- * --onnx-input = "C:/Users/alexm/Downloads/bachelor-thesis-book-master/bachelor-thesis-book/ml-workspace/stedgeai/hazard5/14d9a98267a1/gen-output/hazard5_yamnet256_int8_OE_3_3_1.onnx"
- * --out-dir-prefix = "C:/Users/alexm/Downloads/bachelor-thesis-book-master/bachelor-thesis-book/ml-workspace/stedgeai/hazard5/14d9a98267a1/gen-workspace/neural_art__network/"
+ * --onnx-input = "C:/Users/alexm/Downloads/bachelor-thesis-book-master/bachelor-thesis-book/ml-workspace/stedgeai/hazard5v3/59a6f68c28b1/gen-output/hazard5v3_yamnet256_int8_OE_3_3_1.onnx"
+ * --out-dir-prefix = "C:/Users/alexm/Downloads/bachelor-thesis-book-master/bachelor-thesis-book/ml-workspace/stedgeai/hazard5v3/59a6f68c28b1/gen-workspace/neural_art__network/"
  * --network-name = "network"
  * --all-buffers-info = true
  * --generate-stai = true
@@ -223,7 +223,7 @@ static void LL_ATON_Start_EpochBlock_3(const LL_ATON_RT_EpochBlockItem_t *epoch_
   /* kind=Conv node=Conv2D_4 */
   static const LL_Convacc_InitTypeDef Conv2D_4_init3 = {
     .simd = 2,
-    .fsub = 56,
+    .fsub = 55,
     .vshift = 0,
     .accumulate = 0,
     .rounding_f = 0,
@@ -4514,7 +4514,7 @@ static void LL_ATON_End_EpochBlock_15(const LL_ATON_RT_EpochBlockItem_t *epoch_b
     .general.output.mem.start_offset = ((unsigned char *)(ATON_LIB_PHYSICAL_TO_VIRTUAL_ADDR(0x34350000UL + 1040))) /* Equivalent hex address = 0x34350410UL */,
     .general.output.format.is_signed = 1,
     /* Node-specific Hyper-parameters: */
-    .quantized_multiplier = 1881810048,
+    .quantized_multiplier = 1930774528,
     .left_shift = 23,
     .diff_min = -248,
     .axis = 3,
@@ -4828,8 +4828,8 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
 {
   static const uint32_t buff_info__shape_1_64_96_1[] = { 1, 96, 1, 64 };
   static const uint32_t buff_info__mem_shape_F_1_64_96_1[] = { 1, 64, 96, 1 };
-  static const float buff_info_Input_0_out_0_quant_scale[] = { 0.07509845495224 };
-  static const int16_t buff_info_Input_0_out_0_quant_offset[] = { 56 };
+  static const float buff_info_Input_0_out_0_quant_scale[] = { 0.0753145441412926 };
+  static const int16_t buff_info_Input_0_out_0_quant_offset[] = { 55 };
 #if LL_ATON_DBG_BUFFER_INFO_EXCLUDED == 0
   static const uint32_t buff_info__shape_32_1_3_3[] = { 32, 3, 3, 1 };
   static const uint32_t buff_info__mem_shape_F_32_1_3_3[] = { 32, 1, 3, 3 };
@@ -4863,11 +4863,11 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Input_Buffers_Info_network(void)
   static const uint32_t buff_info__mem_shape_U_1[] = { 1 };
   static const uint32_t buff_info__shape_5_256_1_1[] = { 5, 1, 1, 256 };
   static const uint32_t buff_info__mem_shape_M128_5_256_1_1[] = { 5, 2, 1, 1, 128 };
-  static const float buff_info_Gemm_55_weights_transposed_3_quant_scale[] = { 0.00591515609994531, 0.00551283918321133, 0.00359241268597543, 0.00501881539821625, 0.00456993188709021 };
+  static const float buff_info_Gemm_55_weights_transposed_3_quant_scale[] = { 0.00624944409355521, 0.00641960324719548, 0.00630692252889276, 0.00510430382564664, 0.00540685001760721 };
   static const int16_t buff_info_Gemm_55_weights_transposed_3_quant_offset[] = { 0, 0, 0, 0, 0 };
   static const uint32_t buff_info__shape_32_1_1[] = { 1, 1, 1, 32 };
   static const uint32_t buff_info__mem_shape_M4_32_1_1[] = { 8, 1, 1, 4 };
-  static const float buff_info_Conv2D_9_zero_off_17_quant_scale[] = { 0.106026232242584 };
+  static const float buff_info_Conv2D_9_zero_off_17_quant_scale[] = { 0.113128304481506 };
   static const int16_t buff_info_Conv2D_9_zero_off_17_quant_offset[] = { 0 };
   static const float buff_info_Conv2D_13_zero_off_26_quant_scale[] = { 0.130727559328079 };
   static const int16_t buff_info_Conv2D_13_zero_off_26_quant_offset[] = { 0 };
@@ -6199,12 +6199,12 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Internal_Buffers_Info_network(void)
 {
   static const uint32_t buff_info__shape_1_1_64_96[] = { 1, 64, 96, 1 };
   static const uint32_t buff_info__mem_shape_F_1_1_64_96[] = { 1, 1, 64, 96 };
-  static const float buff_info_Transpose_1_out_0_quant_scale[] = { 0.07509845495224 };
-  static const int16_t buff_info_Transpose_1_out_0_quant_offset[] = { 56 };
+  static const float buff_info_Transpose_1_out_0_quant_scale[] = { 0.0753145441412926 };
+  static const int16_t buff_info_Transpose_1_out_0_quant_offset[] = { 55 };
   static const uint32_t buff_info__shape_1_1_96_64[] = { 1, 96, 64, 1 };
   static const uint32_t buff_info__mem_shape_F_1_1_96_64[] = { 1, 1, 96, 64 };
-  static const float buff_info_Transpose_3_out_0_quant_scale[] = { 0.07509845495224 };
-  static const int16_t buff_info_Transpose_3_out_0_quant_offset[] = { 56 };
+  static const float buff_info_Transpose_3_out_0_quant_scale[] = { 0.0753145441412926 };
+  static const int16_t buff_info_Transpose_3_out_0_quant_offset[] = { 55 };
   static const uint32_t buff_info__shape_1_32_48_32[] = { 1, 48, 32, 32 };
   static const uint32_t buff_info__mem_shape_L_1_32_48_32[] = { 1, 48, 32, 32 };
   static const float buff_info_Conv2D_13_zero_off_out_25_quant_scale[] = { 0.130727559328079 };
@@ -6243,12 +6243,12 @@ const LL_Buffer_InfoTypeDef *LL_ATON_Internal_Buffers_Info_network(void)
   static const int16_t buff_info_Gemm_55_conv_4_zero_off_out_106_quant_offset[] = { 0 };
   static const uint32_t buff_info__shape_1_5_1_1[] = { 1, 1, 1, 5 };
   static const uint32_t buff_info__mem_shape_F_1_5_1_1[] = { 1, 5, 1, 1 };
-  static const float buff_info_Gemm_55_conv_4_off_bias_out_112_quant_scale[] = { 0.10953576117754 };
-  static const int16_t buff_info_Gemm_55_conv_4_off_bias_out_112_quant_offset[] = { 64 };
+  static const float buff_info_Gemm_55_conv_4_off_bias_out_112_quant_scale[] = { 0.112385869026184 };
+  static const int16_t buff_info_Gemm_55_conv_4_off_bias_out_112_quant_offset[] = { 37 };
   static const uint32_t buff_info__shape_1_5[] = { 1, 1, 5, 1 };
   static const uint32_t buff_info__mem_shape_U_1_5[] = { 1, 5 };
-  static const float buff_info_Gemm_55_out_0_quant_scale[] = { 0.10953576117754 };
-  static const int16_t buff_info_Gemm_55_out_0_quant_offset[] = { 64 };
+  static const float buff_info_Gemm_55_out_0_quant_scale[] = { 0.112385869026184 };
+  static const int16_t buff_info_Gemm_55_out_0_quant_offset[] = { 37 };
   static const float buff_info_Softmax_58_out_0_quant_scale[] = { 0.00390625 };
   static const int16_t buff_info_Softmax_58_out_0_quant_offset[] = { -128 };
   static const uint32_t buff_info__shape_1_1_1_249[] = { 1, 1, 249, 1 };

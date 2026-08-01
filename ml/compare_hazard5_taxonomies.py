@@ -25,6 +25,27 @@ OPTIONS = {
     "replace_with_crackling_fire": [
         "chainsaw", "crackling_fire", "gunshot_gunfire", "siren", "thunderstorm"
     ],
+    "replace_voice_and_chainsaw": [
+        "crackling_fire",
+        "glass_breaking",
+        "gunshot_gunfire",
+        "siren",
+        "thunderstorm",
+    ],
+    "replace_with_glass_and_dog_bark": [
+        "dog_bark",
+        "glass_breaking",
+        "gunshot_gunfire",
+        "siren",
+        "thunderstorm",
+    ],
+    "replace_with_glass_and_vehicle_horn": [
+        "glass_breaking",
+        "gunshot_gunfire",
+        "siren",
+        "thunderstorm",
+        "vehicle_horn",
+    ],
 }
 
 
@@ -58,6 +79,8 @@ def main() -> None:
 
     for option_name, option_classes in OPTIONS.items():
         classes = sorted(option_classes)
+        if not set(classes).issubset(set(labels)):
+            continue
         selected = np.isin(labels, classes)
         train = selected & (roles == "train")
         validation = selected & (roles == "validation")
@@ -127,6 +150,18 @@ def main() -> None:
     pd.DataFrame(confusion_rows).to_csv(
         args.output_dir / "taxonomy_confusion_matrices.csv", index=False, lineterminator="\n"
     )
+    available_options = {str(option["option"]) for option in summaries}
+    recommended_option = (
+        "replace_with_glass_and_dog_bark"
+        if "replace_with_glass_and_dog_bark" in available_options
+        else "replace_voice_and_chainsaw"
+    )
+    recommendation_basis = (
+        "Replaces screaming and chainsaw with glass breaking and dog bark; "
+        "the dog option outperformed fire and vehicle horn in the expanded comparison"
+        if recommended_option == "replace_with_glass_and_dog_bark"
+        else "Implements the user-approved removal of screaming and chainsaw, replacing them with glass breaking and crackling fire"
+    )
     summary = {
         "experiment_id": "HAZARD5-TAXONOMY-REVISION-DEV-001",
         "status": "development recommendation; user approval required",
@@ -134,11 +169,8 @@ def main() -> None:
             "Class-balanced logistic probes on cached ST YAMNet-256 embeddings; "
             "same development train/validation roles; reserved tests untouched"
         ),
-        "recommended_option": "replace_with_glass_breaking",
-        "recommendation_basis": (
-            "Removes ordinary voice from the hazard taxonomy and has the lowest "
-            "maximum inter-class centroid similarity of the evaluated options"
-        ),
+        "recommended_option": recommended_option,
+        "recommendation_basis": recommendation_basis,
         "options": summaries,
         "embedding_sha256": sha256(args.embeddings),
         "index_sha256": sha256(args.index),

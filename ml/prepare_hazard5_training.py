@@ -20,7 +20,9 @@ from pathlib import Path
 import pandas as pd
 
 
-CLASSES = ["siren", "chainsaw", "gunshot_gunfire", "screaming", "thunderstorm"]
+DEFAULT_CLASSES = [
+    "siren", "chainsaw", "gunshot_gunfire", "screaming", "thunderstorm"
+]
 
 
 def parse_args() -> argparse.Namespace:
@@ -32,6 +34,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tracked-output", type=Path, default=Path("ml/data/hazard5"))
     parser.add_argument("--train-per-class", type=int, default=192)
     parser.add_argument("--validation-cap-per-class", type=int, default=60)
+    parser.add_argument("--classes", nargs="+", default=DEFAULT_CLASSES)
+    parser.add_argument("--experiment-id", default="HAZARD5-YAMNET256-DEV-001")
     return parser.parse_args()
 
 
@@ -69,13 +73,16 @@ def write_manifest(path: Path, rows: list[dict[str, object]]) -> None:
 
 def main() -> None:
     args = parse_args()
+    classes = list(dict.fromkeys(args.classes))
+    if len(classes) != 5:
+        raise ValueError(f"Exactly five unique hazard classes are required; got {classes}")
     for required in (args.catalog, args.esc50_root / "audio", args.fsd50k_dev_audio):
         if not required.exists():
             raise FileNotFoundError(required)
 
     catalog = pd.read_csv(args.catalog)
     catalog = catalog[
-        catalog["candidate_class"].isin(CLASSES)
+        catalog["candidate_class"].isin(classes)
         & (catalog["audio_available"] == 1)
         & catalog["selection_role"].isin(["train", "validation"])
     ].copy()
@@ -99,7 +106,7 @@ def main() -> None:
     original_counts: dict[str, dict[str, int]] = {"train": {}, "validation": {}}
 
     for role in ("train", "validation"):
-        for class_name in CLASSES:
+        for class_name in classes:
             available = catalog[
                 (catalog["selection_role"] == role)
                 & (catalog["candidate_class"] == class_name)
@@ -144,7 +151,7 @@ def main() -> None:
             existing.unlink()
 
     quantization_rows: list[dict[str, object]] = []
-    for class_name in CLASSES:
+    for class_name in classes:
         unique_sources: set[str] = set()
         for row in output_rows["train"]:
             if row["category"] != class_name or row["source_record_id"] in unique_sources:
@@ -177,8 +184,8 @@ def main() -> None:
                 writer.writerow({"dataset_role": role, **row})
 
     manifest = {
-        "experiment_id": "HAZARD5-YAMNET256-DEV-001",
-        "classes_in_model_output_order": CLASSES,
+        "experiment_id": args.experiment_id,
+        "classes_in_model_output_order": classes,
         "reserved_test_clips_used": 0,
         "development_test_is_validation_alias": True,
         "train_per_class_after_deterministic_oversampling": args.train_per_class,

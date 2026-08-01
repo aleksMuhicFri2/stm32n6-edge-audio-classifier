@@ -1,0 +1,25 @@
+{
+  "experiment_id": "HAZARD5V3-OPENSET-DEV-004",
+  "protocol": "Closed-set Hazard-5 int8 model evaluated unchanged on the common 302-clip development validation manifest; reserved test untouched",
+  "classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "thunderstorm"
+  ],
+  "clips": 374,
+  "hazard_clips": 254,
+  "background_clips": 120,
+  "speech_clips": 24,
+  "patches": 2396,
+  "closed_set_hazard_correct": 225,
+  "closed_set_hazard_accuracy": 0.8858267716535433,
+  "closed_set_regression_mismatches": 0,
+  "model_bytes": 184000,
+  "model_sha256": "59a6f68c28b187f787c1335b483381f08335e75af09642447c058f69159193c1",
+  "provenance_sha256": "f9ff0ae08f4435b020c1cc69f5f6f77cd6e4a2e5b21ff5604b0e3d243dd4c2a3",
+  "input_scale": 0.07531454414129257,
+  "input_zero_point": 55,
+  "tensorflow_version": "2.18.0"
+}

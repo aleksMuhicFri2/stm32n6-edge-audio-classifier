@@ -15,10 +15,10 @@
       "intq": {
         "axis": -1,
         "offsets": [
-          56
+          55
         ],
         "scales": [
-          0.075098455
+          0.0753145441
         ]
       },
       "is_param": false,
@@ -84,10 +84,10 @@
       "intq": {
         "axis": -1,
         "offsets": [
-          56
+          55
         ],
         "scales": [
-          0.075098455
+          0.0753145441
         ]
       },
       "is_param": false,
@@ -124,10 +124,10 @@
       "intq": {
         "axis": -1,
         "offsets": [
-          56
+          55
         ],
         "scales": [
-          0.075098455
+          0.0753145441
         ]
       },
       "is_param": false,
@@ -604,10 +604,10 @@
       "intq": {
         "axis": -1,
         "offsets": [
-          64
+          37
         ],
         "scales": [
-          0.109535761
+          0.112385869
         ]
       },
       "is_param": false,
@@ -644,10 +644,10 @@
       "intq": {
         "axis": -1,
         "offsets": [
-          64
+          37
         ],
         "scales": [
-          0.109535761
+          0.112385869
         ]
       },
       "is_param": false,
@@ -3320,11 +3320,11 @@
           0
         ],
         "scales": [
-          0.0059151561,
-          0.00551283918,
-          0.00359241269,
-          0.0050188154,
-          0.00456993189
+          0.00624944409,
+          0.00641960325,
+          0.00630692253,
+          0.00510430383,
+          0.00540685
         ]
       },
       "is_param": true,
@@ -3394,7 +3394,7 @@
           0
         ],
         "scales": [
-          0.106026232
+          0.113128304
         ]
       },
       "is_param": true,
@@ -5476,7 +5476,7 @@
   "ec_blobs_info": [],
   "environment": {
     "generated_model": {
-      "generated_time": "2026-08-01T20:29:50.319453300+0100",
+      "generated_time": "2026-08-01T23:15:31.708453200+0100",
       "model_files": [
         {
           "name": "network.c",
@@ -5512,23 +5512,23 @@
       "size": 0,
       "type": ""
     },
-    "network_signature": "0x9867110bef228d56",
+    "network_signature": "0x132025d64505dfca",
     "target": "",
     "test_name": "",
     "tools": [
       {
-        "arguments": "generate -m C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\ml\\models\\hazard5_yamnet256_int8.tflite --target stm32n6 --st-neural-art default@user_neural_art.json --workspace C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5\\14d9a98267a1\\gen-workspace --output C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5\\14d9a98267a1\\gen-output --with-report --verbosity 1",
+        "arguments": "generate -m C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\ml\\models\\hazard5v3_yamnet256_int8.tflite --target stm32n6 --st-neural-art default@user_neural_art.json --workspace C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v3\\59a6f68c28b1\\gen-workspace --output C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v3\\59a6f68c28b1\\gen-output --with-report --verbosity 1",
         "environment": [],
         "input_model": {
           "generated_time": "",
           "model_files": [
             {
-              "name": "hazard5_yamnet256_int8.tflite",
-              "signature": "0x131d6bceb79c83c14d80a8c4d26f42bd"
+              "name": "hazard5v3_yamnet256_int8.tflite",
+              "signature": "0xdac4694127cce1aa7ade60f82e3b47a9"
             }
           ],
           "n_params": 133445,
-          "name": "hazard5_yamnet256_int8",
+          "name": "hazard5v3_yamnet256_int8",
           "size": 137876,
           "type": "tflite"
         },
@@ -5536,14 +5536,14 @@
         "version": "4.0.1-20581 7ed50de05"
       },
       {
-        "arguments": " -i C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5\\14d9a98267a1\\gen-output\\hazard5_yamnet256_int8_OE_3_3_1.onnx --json-quant-file C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5\\14d9a98267a1\\gen-output\\hazard5_yamnet256_int8_OE_3_3_1_Q.json -g network.c --load-mdesc C:\\ST\\STEdgeAI\\4.0\\Utilities\\configs\\stm32n6.mdesc --load-mpool C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5\\14d9a98267a1\\stm32n6.mpool --load-cdesc C:\\ST\\STEdgeAI\\4.0\\Utilities\\configs\\cortex-m55.cdesc --save-mpool-file C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5\\14d9a98267a1\\gen-workspace\\neural_art__network\\stm32n6.mpool --out-dir-prefix C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5\\14d9a98267a1\\gen-workspace\\neural_art__network/ --network-name network --Ocache-opt -O3 --Os --native-float --Omax-ca-pipe 4 --cache-maintenance --csv-file network --all-buffers-info --output-info-file c_info.json --generate-stai",
+        "arguments": " -i C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v3\\59a6f68c28b1\\gen-output\\hazard5v3_yamnet256_int8_OE_3_3_1.onnx --json-quant-file C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v3\\59a6f68c28b1\\gen-output\\hazard5v3_yamnet256_int8_OE_3_3_1_Q.json -g network.c --load-mdesc C:\\ST\\STEdgeAI\\4.0\\Utilities\\configs\\stm32n6.mdesc --load-mpool C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v3\\59a6f68c28b1\\stm32n6.mpool --load-cdesc C:\\ST\\STEdgeAI\\4.0\\Utilities\\configs\\cortex-m55.cdesc --save-mpool-file C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v3\\59a6f68c28b1\\gen-workspace\\neural_art__network\\stm32n6.mpool --out-dir-prefix C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v3\\59a6f68c28b1\\gen-workspace\\neural_art__network/ --network-name network --Ocache-opt -O3 --Os --native-float --Omax-ca-pipe 4 --cache-maintenance --csv-file network --all-buffers-info --output-info-file c_info.json --generate-stai",
         "environment": [],
         "input_model": {
-          "generated_time": "2026-08-01T22:29:50+0200",
+          "generated_time": "2026-08-02T01:15:31+0200",
           "model_files": [
             {
-              "name": "hazard5_yamnet256_int8_OE_3_3_1.onnx",
-              "signature": "0x59b1c13d3dbce3ec46a93c9b3dfd2e79"
+              "name": "hazard5v3_yamnet256_int8_OE_3_3_1.onnx",
+              "signature": "0x5720545afd5aa4cd613b3141f0326785"
             }
           ],
           "n_params": 0,
@@ -9559,12 +9559,12 @@
           "data_format": {
             "quantizer": "UNIFORM",
             "scale": [
-              0.075098455
+              0.0753145441
             ],
             "size": 8,
             "type": "SIGNED",
             "zero": [
-              56
+              55
             ]
           },
           "name": "serving_default_input_layer0",

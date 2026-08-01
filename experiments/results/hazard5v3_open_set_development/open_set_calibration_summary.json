@@ -1,0 +1,97 @@
+{
+  "score_threshold": 0.44,
+  "margin_threshold": 0.055,
+  "hazard_detection_recall": 0.9566929133858267,
+  "hazard_detection_macro_recall": 0.9559259259259258,
+  "minimum_hazard_class_recall": 0.9333333333333333,
+  "hazard_exact_accuracy": 0.8661417322834646,
+  "hazard_exact_macro_recall": 0.8714814814814815,
+  "background_rejection_rate": 0.125,
+  "background_false_alert_rate": 0.875,
+  "speech_rejection_rate": 0.08333333333333333,
+  "overall_open_set_accuracy": 0.6283422459893048,
+  "per_hazard_detection_recall": {
+    "dog_bark": 0.9333333333333333,
+    "glass_breaking": 0.9666666666666667,
+    "gunshot_gunfire": 0.9629629629629629,
+    "siren": 0.95,
+    "thunderstorm": 0.9666666666666667
+  },
+  "per_hazard_exact_recall": {
+    "dog_bark": 0.8,
+    "glass_breaking": 0.7833333333333333,
+    "gunshot_gunfire": 0.9074074074074074,
+    "siren": 0.9,
+    "thunderstorm": 0.9666666666666667
+  },
+  "experiment_id": "HAZARD5V3-OPENSET-DEV-004",
+  "status": "development_gate_failed",
+  "point_kind": "diagnostic_point_not_approved",
+  "constraints": {
+    "minimum_hazard_detection_recall": 0.95,
+    "minimum_hazard_class_recall": 0.85,
+    "minimum_speech_rejection": 0.95
+  },
+  "rule": "accept when top1_score >= score_threshold and top1_margin >= margin_threshold",
+  "calibration_protocol": "Development validation only; reserved test partitions untouched",
+  "firmware_comparison_limitation": "Offline scores are means across clip patches; firmware applies the rule to EMA-smoothed live frames",
+  "current_threshold_baseline": {
+    "score_threshold": 0.55,
+    "margin_threshold": 0.0,
+    "hazard_detection_recall": 0.8937007874015748,
+    "hazard_detection_macro_recall": 0.8951851851851851,
+    "minimum_hazard_class_recall": 0.8166666666666667,
+    "hazard_exact_accuracy": 0.8385826771653543,
+    "hazard_exact_macro_recall": 0.8481481481481481,
+    "background_rejection_rate": 0.24166666666666667,
+    "background_false_alert_rate": 0.7583333333333333,
+    "speech_rejection_rate": 0.125,
+    "overall_open_set_accuracy": 0.6470588235294118,
+    "per_hazard_detection_recall": {
+      "dog_bark": 0.8666666666666667,
+      "glass_breaking": 0.8166666666666667,
+      "gunshot_gunfire": 0.9259259259259259,
+      "siren": 0.9,
+      "thunderstorm": 0.9666666666666667
+    },
+    "per_hazard_exact_recall": {
+      "dog_bark": 0.7833333333333333,
+      "glass_breaking": 0.6833333333333333,
+      "gunshot_gunfire": 0.9074074074074074,
+      "siren": 0.9,
+      "thunderstorm": 0.9666666666666667
+    }
+  },
+  "background_group_rejection": {
+    "esc50_diverse": {
+      "clips": 60,
+      "rejected": 10,
+      "rejection_rate": 0.16666666666666666
+    },
+    "fsd50k_general": {
+      "clips": 8,
+      "rejected": 1,
+      "rejection_rate": 0.125
+    },
+    "fsd50k_hard_negative": {
+      "clips": 8,
+      "rejected": 0,
+      "rejection_rate": 0.0
+    },
+    "fsd50k_human_non_speech": {
+      "clips": 8,
+      "rejected": 1,
+      "rejection_rate": 0.125
+    },
+    "fsd50k_music": {
+      "clips": 12,
+      "rejected": 1,
+      "rejection_rate": 0.08333333333333333
+    },
+    "fsd50k_speech": {
+      "clips": 24,
+      "rejected": 2,
+      "rejection_rate": 0.08333333333333333
+    }
+  }
+}

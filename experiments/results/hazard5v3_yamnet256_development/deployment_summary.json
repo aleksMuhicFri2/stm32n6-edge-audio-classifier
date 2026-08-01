@@ -1,0 +1,68 @@
+{
+  "experiment_id": "HAZARD5V3-YAMNET256-DEV-001",
+  "status": "flashed_verified_normal_boot_pending",
+  "model_output_order": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "thunderstorm"
+  ],
+  "development_evaluation": {
+    "clips": 254,
+    "correct": 225,
+    "incorrect": 29,
+    "clip_accuracy": 0.8858267716535433,
+    "macro_precision": 0.8983016902988064,
+    "macro_recall": 0.8881481481481481,
+    "macro_f1": 0.8904076430392219,
+    "reserved_test_used": false
+  },
+  "tflite": {
+    "bytes": 184000,
+    "sha256": "59a6f68c28b187f787c1335b483381f08335e75af09642447c058f69159193c1",
+    "input": "int8 1x64x96x1; scale 0.07531454414129257; zero point 55",
+    "output": "float32 1x5"
+  },
+  "neural_art": {
+    "stedgeai_core": "4.0.1-20581",
+    "weights_bytes": 148417,
+    "weights_sha256": "f30b62fc7ceeb351757376e2650327170297389b4a87184e175052f788bcc884",
+    "weights_address": "0x70180000"
+  },
+  "firmware": {
+    "configuration": "BM",
+    "build_errors": 0,
+    "build_warnings": 1,
+    "text_bytes": 227636,
+    "data_bytes": 8960,
+    "bss_bytes": 361760,
+    "raw_application_bytes": 236608,
+    "raw_application_sha256": "0b36a44c302b22c6c33997e814dec541f8bc9561c4a1357fbed82f7e063f0c95",
+    "signed_application_bytes": 237632,
+    "signed_application_sha256": "e452c98dbef87fb681f9ede28060eebc0fd5abba65d1f1c0a90fa13c38d01394",
+    "signed_payload_offset": "0x400",
+    "signed_payload_exact_match": true,
+    "uart_change": "AED_CSV now includes spectrogram_sum for live activity-threshold calibration"
+  },
+  "flash": {
+    "board": "STM32N6570-DK Rev B",
+    "stlink_serial": "0034004E3335510133383531",
+    "voltage_v": 3.27,
+    "application_address": "0x70100000",
+    "weights_address": "0x70180000",
+    "application_readback_verified": true,
+    "weights_readback_verified": true,
+    "fsbl_modified": false,
+    "otp_modified": false
+  },
+  "boot_validation": {
+    "software_reset_attempted": true,
+    "hardware_reset_attempted": true,
+    "uart_port": "COM3",
+    "uart_baud": 14400,
+    "uart_capture_seconds": 22,
+    "uart_bytes_received": 0,
+    "conclusion": "Physical boot selector must be returned to run mode before LCD and UART validation"
+  }
+}

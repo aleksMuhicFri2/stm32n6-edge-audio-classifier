@@ -20,6 +20,12 @@ CANDIDATES = {
     "fire_alarm": {"family": "periodic_alarm", "esc50": None, "fsd50k": None},
     "thunderstorm": {"family": "environmental_rumble", "esc50": "thunderstorm", "fsd50k": "Thunderstorm"},
     "crackling_fire": {"family": "stochastic_crackle", "esc50": "crackling_fire", "fsd50k": "Fire"},
+    "dog_bark": {"family": "animal_warning", "esc50": "dog", "fsd50k": "Bark"},
+    "vehicle_horn": {
+        "family": "traffic_warning",
+        "esc50": "car_horn",
+        "fsd50k": "Vehicle_horn_and_car_horn_and_honking",
+    },
 }
 
 SOURCE_URLS = {

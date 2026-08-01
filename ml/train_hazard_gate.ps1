@@ -1,15 +1,17 @@
 param(
     [switch]$SmokeTest,
     [switch]$FineTune,
-    [switch]$SpeechHeavy
+    [switch]$SpeechHeavy,
+    [switch]$V3,
+    [switch]$V3SpeechHeavy
 )
 
 $ErrorActionPreference = 'Stop'
 $longRepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $projectRoot = (Resolve-Path (Join-Path $longRepoRoot '..')).Path
 $shortDrive = 'T:'
-if ($FineTune -and $SpeechHeavy) {
-    throw 'FineTune and SpeechHeavy are separate controlled experiments.'
+if (@($FineTune, $SpeechHeavy, $V3, $V3SpeechHeavy).Where({ $_ }).Count -gt 1) {
+    throw 'Training variants are separate controlled experiments.'
 }
 if (Test-Path "$shortDrive\") {
     throw "Temporary training drive $shortDrive is already in use."
@@ -23,21 +25,37 @@ try {
     $python = Join-Path $workspaceRoot '.venv\Scripts\python.exe'
     $configRoot = Join-Path $repoRoot 'ml\configs'
     $cacheRoot = Join-Path $workspaceRoot 'cache\matplotlib'
-    $runName = if ($FineTune) {
+    $runName = if ($V3SpeechHeavy) {
+        'hazard_gate_v3_speechheavy_yamnet256'
+    } elseif ($V3) {
+        'hazard_gate_v3_yamnet256'
+    } elseif ($FineTune) {
         'hazard_gate_yamnet256_finetuned'
     } elseif ($SpeechHeavy) {
         'hazard_gate_speechheavy_yamnet256'
     } else {
         'hazard_gate_yamnet256'
     }
-    $mlflowName = if ($FineTune) {
+    $mlflowName = if ($V3SpeechHeavy) {
+        'mlruns-hazard-gate-v3-speechheavy-short'
+    } elseif ($V3) {
+        'mlruns-hazard-gate-v3-short'
+    } elseif ($FineTune) {
         'mlruns-hazard-gate-finetuned-short'
     } elseif ($SpeechHeavy) {
         'mlruns-hazard-gate-speechheavy-short'
     } else {
         'mlruns-hazard-gate-short'
     }
-    $datasetName = if ($SpeechHeavy) { 'hazard_gate_speechheavy' } else { 'hazard_gate' }
+    $datasetName = if ($V3SpeechHeavy) {
+        'hazard_gate_v3_speechheavy'
+    } elseif ($V3) {
+        'hazard_gate_v3'
+    } elseif ($SpeechHeavy) {
+        'hazard_gate_speechheavy'
+    } else {
+        'hazard_gate'
+    }
     $runRoot = Join-Path $workspaceRoot "training-runs\$runName"
     $mlflowRoot = Join-Path $workspaceRoot "training-runs\$mlflowName"
     foreach ($requiredPath in @(
@@ -71,7 +89,7 @@ try {
         $arguments += 'training.optimizer.Adam.learning_rate=0.0001'
         $arguments += 'general.project_name=stm32n6_hazard_gate_yamnet256_finetuned_development'
     }
-    if ($SpeechHeavy) {
+    if ($SpeechHeavy -or $V3 -or $V3SpeechHeavy) {
         $datasetRel = "../../datasets/$datasetName"
         $arguments += "dataset.training_audio_path=$datasetRel/audio"
         $arguments += "dataset.training_csv_path=$datasetRel/meta/hazard_gate_train.csv"
@@ -81,7 +99,14 @@ try {
         $arguments += "dataset.test_csv_path=$datasetRel/meta/hazard_gate_development_test.csv"
         $arguments += "dataset.quantization_audio_path=$datasetRel/audio"
         $arguments += "dataset.quantization_csv_path=$datasetRel/meta/hazard_gate_quantization.csv"
-        $arguments += 'general.project_name=stm32n6_hazard_gate_speechheavy_yamnet256_development'
+        $projectName = if ($V3SpeechHeavy) {
+            'stm32n6_hazard_gate_v3_speechheavy_yamnet256_development'
+        } elseif ($V3) {
+            'stm32n6_hazard_gate_v3_yamnet256_development'
+        } else {
+            'stm32n6_hazard_gate_speechheavy_yamnet256_development'
+        }
+        $arguments += "general.project_name=$projectName"
     }
     if ($SmokeTest) {
         $arguments += 'training.epochs=1'

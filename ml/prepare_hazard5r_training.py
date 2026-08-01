@@ -28,19 +28,30 @@ HAZARD_CLASSES = [
 ]
 MODEL_CLASSES = ["background_other", *HAZARD_CLASSES]
 
-ESC50_HAZARD_CATEGORIES = {"chainsaw", "gun_shot", "siren", "thunderstorm"}
-
-FSD50K_FORBIDDEN_LABELS = {
-    "Boom",
-    "Explosion",
-    "Gunshot_and_gunfire",
-    "Screaming",
-    "Shout",
-    "Siren",
-    "Thunder",
-    "Thunderstorm",
-    "Yell",
+FSD50K_HAZARD_LABELS = {
+    "chainsaw": {"Chainsaw"},
+    "crackling_fire": {"Crackle", "Fire"},
+    "dog_bark": {"Bark", "Dog"},
+    "glass_breaking": {"Glass", "Shatter"},
+    "gunshot_gunfire": {"Boom", "Explosion", "Gunshot_and_gunfire"},
+    "screaming": {"Screaming", "Shout", "Yell"},
+    "siren": {"Siren"},
+    "thunderstorm": {"Thunder", "Thunderstorm"},
+    "vehicle_horn": {"Vehicle_horn_and_car_horn_and_honking"},
 }
+
+ESC50_HAZARD_CATEGORY_MAP = {
+    "chainsaw": "chainsaw",
+    "crackling_fire": "crackling_fire",
+    "dog_bark": "dog",
+    "glass_breaking": "glass_breaking",
+    "gunshot_gunfire": "gun_shot",
+    "siren": "siren",
+    "thunderstorm": "thunderstorm",
+    "vehicle_horn": "car_horn",
+}
+
+FSD50K_FORBIDDEN_LABELS: set[str] = set()
 
 FSD50K_GROUP_LABELS = {
     "speech": {
@@ -52,6 +63,9 @@ FSD50K_GROUP_LABELS = {
         "Speech",
         "Speech_synthesizer",
         "Whispering",
+        "Screaming",
+        "Shout",
+        "Yell",
     },
     "music": {
         "Female_singing",
@@ -191,6 +205,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--esc50-background-train", type=int)
     parser.add_argument("--esc50-background-validation", type=int, default=60)
     parser.add_argument("--seed", type=int, default=120)
+    parser.add_argument("--hazard-classes", nargs="+", default=HAZARD_CLASSES)
+    parser.add_argument(
+        "--split-speech-class",
+        action="store_true",
+        help="Use a dedicated speech rejection output instead of folding speech into background_other.",
+    )
+    parser.add_argument("--experiment-id")
+    parser.add_argument("--hazard-source-experiment", default="HAZARD5-YAMNET256-DEV-001")
     return parser.parse_args()
 
 
@@ -269,6 +291,24 @@ def fsd50k_group(labels: set[str]) -> str | None:
 
 def main() -> None:
     args = parse_args()
+    hazard_classes = list(dict.fromkeys(args.hazard_classes))
+    if len(hazard_classes) != 5:
+        raise ValueError(f"Exactly five unique hazard classes are required; got {hazard_classes}")
+    unknown_classes = sorted(set(hazard_classes) - set(FSD50K_HAZARD_LABELS))
+    if unknown_classes:
+        raise ValueError(f"Missing FSD50K exclusion mapping for {unknown_classes}")
+    model_classes = ["background_other"]
+    if args.split_speech_class:
+        model_classes.append("speech")
+    model_classes.extend(hazard_classes)
+    forbidden_labels = set(FSD50K_FORBIDDEN_LABELS)
+    for class_name in hazard_classes:
+        forbidden_labels.update(FSD50K_HAZARD_LABELS[class_name])
+    esc50_hazard_categories = {
+        ESC50_HAZARD_CATEGORY_MAP[class_name]
+        for class_name in hazard_classes
+        if class_name in ESC50_HAZARD_CATEGORY_MAP
+    }
     required = [
         args.hazard5_provenance,
         args.hazard5_audio,
@@ -310,7 +350,7 @@ def main() -> None:
     }
     for row in hazard_rows:
         role = row["dataset_role"]
-        if role not in output_rows or row["category"] not in HAZARD_CLASSES:
+        if role not in output_rows or row["category"] not in hazard_classes:
             continue
         source = args.hazard5_audio / row["filename"]
         if not source.is_file():
@@ -339,7 +379,7 @@ def main() -> None:
     ):
         candidates: list[dict[str, object]] = []
         for row in esc50_rows:
-            if row["fold"] not in folds or row["category"] in ESC50_HAZARD_CATEGORIES:
+            if row["fold"] not in folds or row["category"] in esc50_hazard_categories:
                 continue
             candidates.append(
                 {
@@ -373,14 +413,18 @@ def main() -> None:
             if row["split"] != source_split or row["fname"] in fsd50k_hazard_ids:
                 continue
             labels = set(row["labels"].split(","))
-            if labels & FSD50K_FORBIDDEN_LABELS:
+            if labels & forbidden_labels:
                 continue
             group = fsd50k_group(labels)
             if group is None:
                 continue
             grouped[group].append(
                 {
-                    "category": "background_other",
+                    "category": (
+                        "speech"
+                        if args.split_speech_class and group == "speech"
+                        else "background_other"
+                    ),
                     "background_group": f"fsd50k_{group}",
                     "source_dataset": "FSD50K",
                     "source_partition": source_split,
@@ -419,7 +463,7 @@ def main() -> None:
             existing.unlink()
 
     quantization_rows: list[dict[str, object]] = []
-    for class_name in MODEL_CLASSES:
+    for class_name in model_classes:
         class_rows = [
             row for row in output_rows["train"] if row["category"] == class_name
         ]
@@ -471,23 +515,28 @@ def main() -> None:
             Counter(
                 str(row["background_group"])
                 for row in rows
-                if row["category"] == "background_other"
+                if row["category"] not in hazard_classes
             )
         )
         for role, rows in output_rows.items()
     }
     manifest = {
-        "experiment_id": {
+        "experiment_id": args.experiment_id or {
             "bg2x": "HAZARD5R-BG2X-YAMNET256-DEV-001",
             "balanced": "HAZARD5R-BAL-YAMNET256-DEV-002",
             "speech_heavy": "HAZARD5R-SPEECHHEAVY-SOURCE-DEV-003",
         }[args.background_profile],
         "purpose": "Reduce closed-set false alerts while retaining five user-facing hazards.",
         "background_profile": args.background_profile,
-        "classes_in_expected_model_output_order": MODEL_CLASSES,
-        "user_facing_hazard_count": 5,
+        "classes_in_expected_model_output_order": model_classes,
+        "user_facing_hazard_count": len(hazard_classes),
         "internal_rejection_class": "background_other",
-        "hazard_rows_reused_from": "HAZARD5-YAMNET256-DEV-001",
+        "internal_rejection_classes": [
+            class_name
+            for class_name in model_classes
+            if class_name not in hazard_classes
+        ],
+        "hazard_rows_reused_from": args.hazard_source_experiment,
         "class_counts": class_counts,
         "background_group_counts": background_groups,
         "reserved_test_clips_used": 0,
@@ -502,7 +551,11 @@ def main() -> None:
         "provenance_sha256": sha256(provenance_path),
         "notes": [
             "Hazard recordings and roles are identical to the closed-set baseline.",
-            "background_other includes speech because quiet voices caused qualitative false alerts on hardware.",
+            (
+                "Speech uses a dedicated internal rejection output."
+                if args.split_speech_class
+                else "background_other includes speech because quiet voices caused qualitative false alerts on hardware."
+            ),
             "The background class also includes diverse and confusable non-hazard events.",
             "Formal physical accuracy testing remains deferred until rejection behavior is calibrated.",
         ],

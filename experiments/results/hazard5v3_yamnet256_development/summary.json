@@ -1,0 +1,41 @@
+{
+  "experiment_id": "HAZARD5V3-YAMNET256-DEV-001",
+  "model_architecture": "YAMNet-256 transfer learning",
+  "classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "thunderstorm"
+  ],
+  "test_protocol": "Dog-glass revised five-hazard closed-set development validation; reserved external test untouched",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 254,
+  "correct_clips": 225,
+  "incorrect_clips": 29,
+  "clip_accuracy": 0.8858267716535433,
+  "patches": 1704,
+  "correct_patches": 1405,
+  "patch_accuracy": 0.8245305164319249,
+  "macro_precision": 0.8983016902988064,
+  "macro_recall": 0.8881481481481481,
+  "macro_f1": 0.8904076430392219,
+  "model_bytes": 184000,
+  "model_sha256": "59a6f68c28b187f787c1335b483381f08335e75af09642447c058f69159193c1",
+  "test_csv_sha256": "aca62206750d09e3668a6329c2bd15531d1114ad2dbf116a3ff8fcef81896320",
+  "input_shape": [
+    -1,
+    64,
+    96,
+    1
+  ],
+  "input_dtype": "int8",
+  "input_scale": 0.07531454414129257,
+  "input_zero_point": 55,
+  "output_shape": [
+    -1,
+    5
+  ],
+  "output_dtype": "float32",
+  "tensorflow_version": "2.18.0"
+}

@@ -1,0 +1,42 @@
+{
+  "experiment_id": "HAZARD5V3R-BG2X-YAMNET256-DEV-001",
+  "model_architecture": "YAMNet-256 transfer learning",
+  "classes": [
+    "background_other",
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "thunderstorm"
+  ],
+  "test_protocol": "Held-out development evaluation for dog bark, glass breaking, gunshot, siren, thunderstorm plus mixed background, including speech.",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 374,
+  "correct_clips": 295,
+  "incorrect_clips": 79,
+  "clip_accuracy": 0.7887700534759359,
+  "patches": 2396,
+  "correct_patches": 1662,
+  "patch_accuracy": 0.6936560934891486,
+  "macro_precision": 0.8149968157141759,
+  "macro_recall": 0.8148148148148149,
+  "macro_f1": 0.8074724376241346,
+  "model_bytes": 184280,
+  "model_sha256": "f17e6b818fd4e5393e141630a7ef0eea463025480db0cba29b84b19a914150a9",
+  "test_csv_sha256": "23324d03a4030c01996af5a927e292af947b8d6bb30d029cf186c0e8fe6e2fea",
+  "input_shape": [
+    -1,
+    64,
+    96,
+    1
+  ],
+  "input_dtype": "int8",
+  "input_scale": 0.07531454414129257,
+  "input_zero_point": 55,
+  "output_shape": [
+    -1,
+    6
+  ],
+  "output_dtype": "float32",
+  "tensorflow_version": "2.18.0"
+}

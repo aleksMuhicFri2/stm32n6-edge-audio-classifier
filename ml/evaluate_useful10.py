@@ -37,6 +37,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--experiment-id", default="AUDIO-CLASSIFIER-EVAL")
     parser.add_argument("--evaluation-protocol", default="Provided evaluation manifest")
+    parser.add_argument("--model-architecture", default="YAMNet-256 transfer learning")
     return parser.parse_args()
 
 
@@ -228,7 +229,7 @@ def main() -> None:
 
     summary = {
         "experiment_id": args.experiment_id,
-        "model_architecture": "YAMNet-256 transfer learning",
+        "model_architecture": args.model_architecture,
         "classes": class_names,
         "test_protocol": args.evaluation_protocol,
         "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",

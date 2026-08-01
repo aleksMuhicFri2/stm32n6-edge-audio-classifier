@@ -1,0 +1,42 @@
+{
+  "experiment_id": "HAZARD5V2R-BG2X-YAMNET256-DEV-001",
+  "model_architecture": "YAMNet-256 transfer learning",
+  "classes": [
+    "background_other",
+    "crackling_fire",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "thunderstorm"
+  ],
+  "test_protocol": "Revised Hazard-5 plus background on development validation; reserved external test untouched",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 350,
+  "correct_clips": 271,
+  "incorrect_clips": 79,
+  "clip_accuracy": 0.7742857142857142,
+  "patches": 2205,
+  "correct_patches": 1577,
+  "patch_accuracy": 0.7151927437641723,
+  "macro_precision": 0.7867078506490474,
+  "macro_recall": 0.8006172839506172,
+  "macro_f1": 0.7896090109326339,
+  "model_bytes": 184280,
+  "model_sha256": "20a3a80bd989e464935fe651c8c2244b098cfec06b2efbbe30b73ca0a2f7aead",
+  "test_csv_sha256": "686449cb4afab27b61b48c816ef31c8655c6a2b882e2b2d9571a335344e14d29",
+  "input_shape": [
+    -1,
+    64,
+    96,
+    1
+  ],
+  "input_dtype": "int8",
+  "input_scale": 0.07531454414129257,
+  "input_zero_point": 55,
+  "output_shape": [
+    -1,
+    6
+  ],
+  "output_dtype": "float32",
+  "tensorflow_version": "2.18.0"
+}

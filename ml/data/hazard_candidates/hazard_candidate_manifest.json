@@ -8,10 +8,12 @@
     "gunshot_gunfire",
     "fire_alarm",
     "thunderstorm",
-    "crackling_fire"
+    "crackling_fire",
+    "dog_bark",
+    "vehicle_horn"
   ],
-  "catalog_records": 3542,
-  "audio_files_available": 2707,
+  "catalog_records": 4341,
+  "audio_files_available": 3316,
   "source_metadata": {
     "esc50.csv": "8f8cb574a57e381872129b77425ab31a3c69b93a7a82101ede48e0abbb9990ca",
     "vocabulary.csv": "992b6e11422101ee575ab3022d37b79b98e19407b211331c72f5d9fdd16e7174",
@@ -21,8 +23,8 @@
     "eval_clips_info_FSD50K.json": "ced921d00c4f7ace86b92c259689a1a40a8452808e93235021165ad2d8b77e6c"
   },
   "outputs": {
-    "hazard_candidate_catalog.csv": "a611ef814d522653bf8430298f74d89d9286edae03d75e436dfbd2ed5965cb41",
-    "hazard_candidate_summary.csv": "a3a18d4937060644f966c7858db00c5c1ab2e186a168eb21b092f21373f88156"
+    "hazard_candidate_catalog.csv": "f110902d1be4e376ffc3dbda1eae2c88f616158d92a1968f150b132b8c8320a0",
+    "hazard_candidate_summary.csv": "d65830172b65409dace6026b90a35dd2a86f2bd14715d72dd9c4bfa0846909e7"
   },
   "notes": [
     "FSD50K evaluation remains reserved for final external testing.",

@@ -1,0 +1,7 @@
+actual_class,background_other,crackling_fire,glass_breaking,gunshot_gunfire,siren,thunderstorm
+background_other,84,12,12,2,1,9
+crackling_fire,2,27,1,1,0,5
+glass_breaking,12,5,38,3,0,2
+gunshot_gunfire,4,1,1,47,0,1
+siren,2,0,0,0,18,0
+thunderstorm,3,0,0,0,0,57
