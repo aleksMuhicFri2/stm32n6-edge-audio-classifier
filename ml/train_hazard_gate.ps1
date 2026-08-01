@@ -1,5 +1,6 @@
 param(
-    [switch]$SmokeTest
+    [switch]$SmokeTest,
+    [switch]$FineTune
 )
 
 $ErrorActionPreference = 'Stop'
@@ -18,8 +19,10 @@ try {
     $python = Join-Path $workspaceRoot '.venv\Scripts\python.exe'
     $configRoot = Join-Path $repoRoot 'ml\configs'
     $cacheRoot = Join-Path $workspaceRoot 'cache\matplotlib'
-    $runRoot = Join-Path $workspaceRoot 'training-runs\hazard_gate_yamnet256'
-    $mlflowRoot = Join-Path $workspaceRoot 'training-runs\mlruns-hazard-gate-short'
+    $runName = if ($FineTune) { 'hazard_gate_yamnet256_finetuned' } else { 'hazard_gate_yamnet256' }
+    $mlflowName = if ($FineTune) { 'mlruns-hazard-gate-finetuned-short' } else { 'mlruns-hazard-gate-short' }
+    $runRoot = Join-Path $workspaceRoot "training-runs\$runName"
+    $mlflowRoot = Join-Path $workspaceRoot "training-runs\$mlflowName"
     foreach ($requiredPath in @(
         $python,
         (Join-Path $serviceRoot 'stm32ai_main.py'),
@@ -46,6 +49,11 @@ try {
         "mlflow.uri=$mlflowUri",
         "hydra.run.dir=$hydraRunDir"
     )
+    if ($FineTune) {
+        $arguments += 'training.fine_tune=true'
+        $arguments += 'training.optimizer.Adam.learning_rate=0.0001'
+        $arguments += 'general.project_name=stm32n6_hazard_gate_yamnet256_finetuned_development'
+    }
     if ($SmokeTest) {
         $arguments += 'training.epochs=1'
         $arguments += '+training.dryrun=1'

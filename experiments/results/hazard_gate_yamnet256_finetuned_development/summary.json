@@ -1,0 +1,38 @@
+{
+  "experiment_id": "HAZARD-GATE-YAMNET256-FT-DEV-002",
+  "model_architecture": "YAMNet-256 transfer learning",
+  "classes": [
+    "background_other",
+    "hazard_any"
+  ],
+  "test_protocol": "Full-backbone fine-tuned gate on identical development validation; reserved external test untouched",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 302,
+  "correct_clips": 183,
+  "incorrect_clips": 119,
+  "clip_accuracy": 0.6059602649006622,
+  "patches": 1879,
+  "correct_patches": 1174,
+  "patch_accuracy": 0.6248004257583821,
+  "macro_precision": 0.5662961879691917,
+  "macro_recall": 0.5311355311355311,
+  "macro_f1": 0.4920782983534733,
+  "model_bytes": 183144,
+  "model_sha256": "9ff68703860953031eecf18a3fc14e8a968f28dfdb043373a5d1905fc4d3a926",
+  "test_csv_sha256": "1e69fe7de5fa6e44701c90f7d24e6922641c09c3aecd9cfe79f3e83860673265",
+  "input_shape": [
+    -1,
+    64,
+    96,
+    1
+  ],
+  "input_dtype": "int8",
+  "input_scale": 0.07483606040477753,
+  "input_zero_point": 57,
+  "output_shape": [
+    -1,
+    2
+  ],
+  "output_dtype": "float32",
+  "tensorflow_version": "2.18.0"
+}
