@@ -1,6 +1,6 @@
 {
   "experiment_id": "HAZARD5-YAMNET256-DEV-001",
-  "status": "trained_generated_built_signed_flashed_awaiting_normal_boot_validation",
+  "status": "hardware_running_closed_set_baseline_validated_rejection_improvement_required",
   "model_output_order": [
     "chainsaw",
     "gunshot_gunfire",
@@ -82,8 +82,18 @@
   "physical_validation": {
     "software_reset_attempted": true,
     "uart_port": "COM3",
-    "uart_capture_seconds": 10,
-    "uart_bytes_observed": 0,
-    "next_action": "Return BOOT1 to the normal boot position and power-cycle or reset the board, then observe LCD and UART"
+    "uart_baud": 14400,
+    "normal_boot_confirmed": true,
+    "lcd_confirmed_by_user": true,
+    "idle_capture_seconds": 8,
+    "idle_frames": 8,
+    "idle_waiting_frames": 8,
+    "mean_cpu_percent": 0.85,
+    "mean_preprocessing_ms": 0.7,
+    "mean_npu_inference_ms": 0.16,
+    "mean_postprocessing_ms": 0.0,
+    "qualitative_false_alert_observation": "User observed more alerts than the earlier useful-ten model including with quieter voices.",
+    "evidence": "experiments/results/hazard5_yamnet256_development/live_baseline_20260801.json",
+    "next_action": "Prepare a sixth internal background_other output while preserving five user-facing hazard classes; validate hard negatives and calibrate alert thresholds before formal physical accuracy trials."
   }
 }
