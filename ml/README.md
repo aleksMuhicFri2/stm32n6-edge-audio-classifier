@@ -122,7 +122,42 @@ python ml/evaluate_useful10.py `
   --output-dir experiments/results/useful10_yamnet256
 ```
 
-The next firmware step requires
-[STEdgeAI Core 4.0](https://www.st.com/en/development-tools/stedgeai-core.html)
-with both the STM32 MCU and ST Neural-ART components. The required
-`stedgeai.exe` was not present during this run.
+That historical run initially preceded the local ST Edge AI installation.
+STEdgeAI Core 4.0.1 was subsequently installed and used to generate, build,
+flash, and validate the useful-ten baseline.
+
+## Five-class hazard specialization
+
+The final demonstrator will use five danger sounds selected from an eight-class
+candidate pool using reproducible offline and physical-board evidence. The
+selection configuration is `configs/hazard_candidate_selection.yaml`, and the
+versioned source catalog is under `data/hazard_candidates`.
+
+The workflow is:
+
+1. freeze the validated ten-class firmware and model baseline;
+2. audit candidate availability and licenses in ESC-50 and FSD50K;
+3. compare training/validation embeddings without touching reserved test data;
+4. measure hard-negative rejection and fixed-setup playback performance;
+5. select the five candidates that pass the configured gates;
+6. train, quantize, deploy, and only then run the final reserved evaluation.
+
+The preliminary results, figures, workbook, acquisition instructions, and exact
+reproduction commands are documented in
+`../experiments/results/hazard_candidate_selection/README.md`.
+
+The provisional five-class development model has now completed steps 1-6. To
+recreate the balanced hard-linked dataset, train/quantize the model, and compile
+it for Neural-ART:
+
+```powershell
+python ml/prepare_hazard5_training.py --catalog ml/data/hazard_candidates/hazard_candidate_catalog.csv --esc50-root ..\ml-workspace\datasets\ESC-50 --fsd50k-dev-audio ..\ml-workspace\datasets\FSD50K\FSD50K.dev_audio --output-root ..\ml-workspace\datasets\hazard5
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ml\train_hazard5.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ml\generate_hazard5_neural_art.ps1
+```
+
+The exact deployment result is recorded under
+`../experiments/results/hazard5_yamnet256_development`. The five-class int8
+model reached 95.60% development-validation clip accuracy with no measured
+clip-level loss relative to the float model. Reserved external test data remains
+untouched pending the physical playback gate and taxonomy freeze.

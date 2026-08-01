@@ -23,7 +23,7 @@ feature_extraction:
   include_last_patch: False
 
 dataset:
-  class_names: ['chainsaw', 'clapping', 'coughing', 'crackling_fire', 'crying_baby', 'dog', 'door_wood_knock', 'footsteps', 'glass_breaking', 'siren']
+  class_names: ['chainsaw', 'gunshot_gunfire', 'screaming', 'siren', 'thunderstorm']
   use_garbage_class: False 
   
 deployment:

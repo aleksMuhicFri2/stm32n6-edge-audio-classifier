@@ -28,12 +28,11 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 #define CTRL_AI_HW_SELECT                        STM32N6570-DK
-#define CTRL_X_CUBE_AI_MODEL_NAME                "YAMNet-256 Useful-10"
+#define CTRL_X_CUBE_AI_MODEL_NAME                "YAMNet-256 Hazard-5"
 #define CTRL_X_CUBE_AI_MODEL_NB_OUTPUT            (1U)
 #define CTRL_X_CUBE_AI_MODEL_OUTPUT_1             (CTRL_AI_CLASS_DISTRIBUTION)
-#define CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER         (10U)
-#define CTRL_X_CUBE_AI_MODEL_CLASS_LIST           {"chainsaw","clapping","coughing","crackling_fire","crying_baby",\
-                                                  "dog","door_wood_knock","footsteps","glass_breaking","siren"}
+#define CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER         (5U)
+#define CTRL_X_CUBE_AI_MODEL_CLASS_LIST           {"chainsaw","gunshot_gunfire","screaming","siren","thunderstorm"}
 #define CTRL_X_CUBE_AI_SENSOR_TYPE               COM_TYPE_MIC
 #define CTRL_X_CUBE_AI_SENSOR_NAME               "imp34dt05"
 #define CTRL_X_CUBE_AI_SENSOR_ODR                (16000.0F)

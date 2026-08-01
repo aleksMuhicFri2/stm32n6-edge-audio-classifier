@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Evaluate the useful-10 TFLite model at patch and clip level.
+"""Evaluate a project TFLite audio classifier at patch and clip level.
 
 This script deliberately reproduces ST's audio preprocessing and clip
 aggregation rules, while preserving the individual predictions needed for
@@ -35,6 +35,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--test-csv", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--batch-size", type=int, default=16)
+    parser.add_argument("--experiment-id", default="AUDIO-CLASSIFIER-EVAL")
+    parser.add_argument("--evaluation-protocol", default="Provided evaluation manifest")
     return parser.parse_args()
 
 
@@ -73,8 +75,8 @@ def main() -> None:
     class_names = sorted(list(cfg.dataset.class_names))
     test_df = pd.read_csv(args.test_csv)
     test_df = test_df[test_df["category"].isin(class_names)].reset_index(drop=True)
-    if len(test_df) != 80:
-        raise ValueError(f"Expected 80 held-out clips, found {len(test_df)}")
+    if test_df.empty:
+        raise ValueError("Evaluation manifest contains no configured classes")
 
     time_pipeline, frequency_pipeline = get_pipelines(cfg)
     dataset = CustomAEDTFDataset(
@@ -109,9 +111,9 @@ def main() -> None:
             f"Expected input shape [batch, 64, 96, 1], got "
             f"{input_details['shape_signature'].tolist()}"
         )
-    if list(output_details["shape_signature"][1:]) != [10]:
+    if list(output_details["shape_signature"][1:]) != [len(class_names)]:
         raise ValueError(
-            f"Expected 10 outputs, got {output_details['shape_signature'].tolist()}"
+            f"Expected {len(class_names)} outputs, got {output_details['shape_signature'].tolist()}"
         )
 
     input_scale, input_zero_point = input_details["quantization"]
@@ -221,10 +223,10 @@ def main() -> None:
     )
 
     summary = {
-        "experiment_id": "USEFUL10-YAMNET256-FOLD5-001",
+        "experiment_id": args.experiment_id,
         "model_architecture": "YAMNet-256 transfer learning",
         "classes": class_names,
-        "test_protocol": "ESC-50 fold 5; 8 clips per class; 80 clips total",
+        "test_protocol": args.evaluation_protocol,
         "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
         "test_clips": len(test_df),
         "correct_clips": int(np.trace(matrix)),

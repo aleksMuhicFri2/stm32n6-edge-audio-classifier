@@ -1,0 +1,33 @@
+candidate_class,hard_negative_class,rationale,preferred_source
+siren,car_horn,tonal warning sound,ESC-50
+siren,church_bells,repeating tonal sound,ESC-50
+siren,clock_alarm,periodic alarm sound,ESC-50
+siren,music,tonal and harmonic content,FSD50K
+chainsaw,engine,continuous combustion engine,ESC-50
+chainsaw,vacuum_cleaner,continuous broadband machine,ESC-50
+chainsaw,hand_saw,related cutting tool,ESC-50
+chainsaw,helicopter,repeating mechanical sound,ESC-50
+glass_breaking,clapping,short bright transient,ESC-50
+glass_breaking,can_opening,metallic transient,ESC-50
+glass_breaking,door_wood_knock,impact transient,ESC-50
+glass_breaking,mouse_click,small sharp transient,ESC-50
+screaming,laughing,human voiced non-speech,ESC-50
+screaming,crying_baby,human distress vocalization,ESC-50
+screaming,coughing,human non-speech vocalization,ESC-50
+screaming,sneezing,short human vocal event,ESC-50
+gunshot_gunfire,fireworks,explosive impulse,ESC-50
+gunshot_gunfire,thunderstorm,low-frequency impulse and rumble,ESC-50
+gunshot_gunfire,clapping,short impulse,ESC-50
+gunshot_gunfire,door_wood_knock,short impact,ESC-50
+fire_alarm,clock_alarm,periodic electronic alarm,ESC-50
+fire_alarm,church_bells,repeating alarm-like tone,ESC-50
+fire_alarm,siren,emergency warning sound,ESC-50
+fire_alarm,car_horn,warning tone,ESC-50
+thunderstorm,fireworks,impulse and rumble,ESC-50
+thunderstorm,rain,shared environmental background,ESC-50
+thunderstorm,wind,broadband environmental noise,ESC-50
+thunderstorm,airplane,low-frequency rumble,ESC-50
+crackling_fire,rain,stochastic broadband texture,ESC-50
+crackling_fire,crickets,repeating high-frequency texture,ESC-50
+crackling_fire,pouring_water,irregular environmental texture,ESC-50
+crackling_fire,wind,broadband environmental noise,ESC-50

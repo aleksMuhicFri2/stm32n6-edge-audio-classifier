@@ -1,0 +1,41 @@
+{
+  "experiment_id": "HAZARD5-YAMNET256-DEV-001",
+  "model_architecture": "YAMNet-256 transfer learning",
+  "classes": [
+    "chainsaw",
+    "gunshot_gunfire",
+    "screaming",
+    "siren",
+    "thunderstorm"
+  ],
+  "test_protocol": "ESC-50 fold 4 plus FSD50K official development validation; 182 clips; reserved external test data untouched",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 182,
+  "correct_clips": 174,
+  "incorrect_clips": 8,
+  "clip_accuracy": 0.9560439560439561,
+  "patches": 1202,
+  "correct_patches": 1077,
+  "patch_accuracy": 0.8960066555740432,
+  "macro_precision": 0.9473945409429281,
+  "macro_recall": 0.9625925925925927,
+  "macro_f1": 0.950644553831794,
+  "model_bytes": 184000,
+  "model_sha256": "14d9a98267a16de742beab3166ff42d00cb8bda3992c373c1333028473ceade1",
+  "test_csv_sha256": "90635c78213466f716a6bce8261c63acd98d3d47342fbc6318925eb48ab39146",
+  "input_shape": [
+    -1,
+    64,
+    96,
+    1
+  ],
+  "input_dtype": "int8",
+  "input_scale": 0.07509845495223999,
+  "input_zero_point": 56,
+  "output_shape": [
+    -1,
+    5
+  ],
+  "output_dtype": "float32",
+  "tensorflow_version": "2.18.0"
+}

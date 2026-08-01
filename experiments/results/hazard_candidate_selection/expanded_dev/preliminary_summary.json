@@ -1,0 +1,44 @@
+{
+  "experiment_id": "HAZARD-CANDIDATE-MIXED-DEV-001",
+  "status": "selection-stage validation; reserved test data untouched",
+  "classes_evaluated": [
+    "chainsaw",
+    "crackling_fire",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "screaming",
+    "siren",
+    "thunderstorm"
+  ],
+  "train_clips": 1093,
+  "validation_clips": 269,
+  "reserved_test_clips_used": 0,
+  "deterministic_per_class_caps": {
+    "train": 200,
+    "validation": 60
+  },
+  "source_counts": {
+    "ESC-50": 112,
+    "FSD50K": 1250
+  },
+  "ambiguous_multicandidate_recordings_excluded": 3,
+  "validation_accuracy": 0.8773234200743495,
+  "macro_precision": 0.8888965061493492,
+  "macro_recall": 0.8608812755871579,
+  "macro_f1": 0.8697903058408001,
+  "closest_centroid_pair": [
+    "screaming",
+    "siren"
+  ],
+  "closest_centroid_cosine_similarity": 0.9763551950454712,
+  "backbone_sha256": "bd31f6849e89ae7514b95b2ff995b9433b8525f8f144465f582fd5bb9013c93a",
+  "catalog_sha256": "a611ef814d522653bf8430298f74d89d9286edae03d75e436dfbd2ed5965cb41",
+  "preprocessing_config_sha256": "fbd1c5f96912eb3e9eb22660c52162e7bfe51a76f90502d3c2cfc27254c6fd5f",
+  "selection_config_sha256": "75cace8cb350671fd8c9a010fd25b8a8b15e00f07eb0e4e58a35b04b9a45378f",
+  "method": "Mean ST YAMNet-256 embeddings per clip; class-balanced multinomial logistic probe; ESC-50 folds 1-3/fold 4 and FSD50K official development train/validation; exact recordings mapped to multiple danger candidates excluded",
+  "limitations": [
+    "fire_alarm lacks a matching class in the audited ESC-50 and FSD50K vocabularies",
+    "mixed-source class coverage can expose dataset-specific recording differences",
+    "physical speaker-to-board playback has not yet been measured"
+  ]
+}

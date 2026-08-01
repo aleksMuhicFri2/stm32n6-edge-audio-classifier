@@ -118,16 +118,11 @@ static const Glyph5x7_t s_glyphs[] =
 
 static const SoundProfile_t s_sound_profiles[] =
 {
-  {"chainsaw",         "CHAINSAW",        HAZARD_DANGER},
-  {"clapping",         "CLAPPING",        HAZARD_INFO},
-  {"coughing",         "COUGHING",        HAZARD_WARNING},
-  {"crackling_fire",   "CRACKLING FIRE",  HAZARD_DANGER},
-  {"crying_baby",      "CRYING BABY",     HAZARD_WARNING},
-  {"dog",              "DOG BARKING",     HAZARD_INFO},
-  {"door_wood_knock",  "DOOR KNOCK",      HAZARD_WARNING},
-  {"footsteps",        "FOOTSTEPS",       HAZARD_WARNING},
-  {"glass_breaking",   "GLASS BREAKING",  HAZARD_DANGER},
-  {"siren",            "SIREN",           HAZARD_DANGER}
+  {"chainsaw",         "CHAINSAW",         HAZARD_DANGER},
+  {"gunshot_gunfire",  "GUNSHOT",          HAZARD_DANGER},
+  {"screaming",        "SCREAMING",         HAZARD_DANGER},
+  {"siren",            "EMERGENCY SIREN",   HAZARD_DANGER},
+  {"thunderstorm",     "THUNDERSTORM",      HAZARD_DANGER}
 };
 
 static volatile uint16_t *s_framebuffer =
@@ -849,7 +844,7 @@ void AudioDisplay_SecurityConfig(void)
 bool AudioDisplay_Init(void)
 {
   static const char *initial_top_labels[AUDIO_EVENT_TOP_COUNT] =
-      {"chainsaw", "clapping", "coughing"};
+      {"chainsaw", "gunshot_gunfire", "screaming"};
   static const uint32_t initial_top_percent[AUDIO_EVENT_TOP_COUNT] = {0U, 0U, 0U};
 
   s_display_ready = false;
