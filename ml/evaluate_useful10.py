@@ -166,6 +166,7 @@ def main() -> None:
                 float(mean_scores[int(ranked[1])]),
                 class_names[int(ranked[2])],
                 float(mean_scores[int(ranked[2])]),
+                *[float(score) for score in mean_scores],
             ]
         )
 
@@ -195,6 +196,7 @@ def main() -> None:
             "top2_score",
             "top3_class",
             "top3_score",
+            *[f"score_{class_name}" for class_name in class_names],
         ],
         clip_rows,
     )
