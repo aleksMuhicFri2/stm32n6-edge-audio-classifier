@@ -120,20 +120,38 @@ FSD50K_GROUP_LABELS = {
     },
 }
 
-FSD50K_QUOTAS = {
-    "train": {
-        "speech": 80,
-        "music": 32,
-        "human_non_speech": 32,
-        "hard_negative": 32,
-        "general": 16,
+FSD50K_QUOTA_PROFILES = {
+    "bg2x": {
+        "train": {
+            "speech": 80,
+            "music": 32,
+            "human_non_speech": 32,
+            "hard_negative": 32,
+            "general": 16,
+        },
+        "validation": {
+            "speech": 24,
+            "music": 12,
+            "human_non_speech": 8,
+            "hard_negative": 8,
+            "general": 8,
+        },
     },
-    "validation": {
-        "speech": 24,
-        "music": 12,
-        "human_non_speech": 8,
-        "hard_negative": 8,
-        "general": 8,
+    "balanced": {
+        "train": {
+            "speech": 40,
+            "music": 16,
+            "human_non_speech": 16,
+            "hard_negative": 16,
+            "general": 8,
+        },
+        "validation": {
+            "speech": 24,
+            "music": 12,
+            "human_non_speech": 8,
+            "hard_negative": 8,
+            "general": 8,
+        },
     },
 }
 
@@ -149,7 +167,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--tracked-output", type=Path, default=Path("ml/data/hazard5r")
     )
-    parser.add_argument("--esc50-background-train", type=int, default=192)
+    parser.add_argument(
+        "--background-profile",
+        choices=sorted(FSD50K_QUOTA_PROFILES),
+        default="bg2x",
+    )
+    parser.add_argument("--esc50-background-train", type=int)
     parser.add_argument("--esc50-background-validation", type=int, default=60)
     parser.add_argument("--seed", type=int, default=120)
     return parser.parse_args()
@@ -255,6 +278,9 @@ def main() -> None:
     }
     link_modes: Counter[str] = Counter()
     expected_names: set[str] = set()
+    esc50_background_train = args.esc50_background_train
+    if esc50_background_train is None:
+        esc50_background_train = 192 if args.background_profile == "bg2x" else 96
 
     hazard_rows = read_rows(args.hazard5_provenance)
     fsd50k_hazard_ids = {
@@ -288,7 +314,7 @@ def main() -> None:
 
     esc50_rows = read_rows(args.esc50_root / "meta" / "esc50.csv")
     for role, folds, target_count in (
-        ("train", {"1", "2", "3"}, args.esc50_background_train),
+        ("train", {"1", "2", "3"}, esc50_background_train),
         ("validation", {"4"}, args.esc50_background_validation),
     ):
         candidates: list[dict[str, object]] = []
@@ -345,7 +371,7 @@ def main() -> None:
                 }
             )
 
-        for group, quota in FSD50K_QUOTAS[role].items():
+        for group, quota in FSD50K_QUOTA_PROFILES[args.background_profile][role].items():
             candidates = sorted(
                 grouped[group],
                 key=lambda row: stable_key(args.seed, role, group, row["source_id"]),
@@ -431,8 +457,13 @@ def main() -> None:
         for role, rows in output_rows.items()
     }
     manifest = {
-        "experiment_id": "HAZARD5R-YAMNET256-DEV-001",
+        "experiment_id": (
+            "HAZARD5R-BG2X-YAMNET256-DEV-001"
+            if args.background_profile == "bg2x"
+            else "HAZARD5R-BAL-YAMNET256-DEV-002"
+        ),
         "purpose": "Reduce closed-set false alerts while retaining five user-facing hazards.",
+        "background_profile": args.background_profile,
         "classes_in_expected_model_output_order": MODEL_CLASSES,
         "user_facing_hazard_count": 5,
         "internal_rejection_class": "background_other",

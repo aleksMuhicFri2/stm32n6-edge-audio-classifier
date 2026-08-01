@@ -1,0 +1,26 @@
+{
+  "experiment_id": "HAZARD5R-BAL-YAMNET256-DEV-002",
+  "status": "rejected_for_deployment",
+  "strict_development_gate": {
+    "minimum_hazard_macro_recall": 0.94,
+    "minimum_speech_rejection_rate": 0.95,
+    "passed": false,
+    "reason": "No calibration point satisfied the joint gate; the balanced model recovered hazard recall but weakened background and speech rejection."
+  },
+  "naive_top_one_rule": {
+    "background_rejection_rate": 0.5666666666666667,
+    "speech_rejection_rate": 0.8333333333333334,
+    "hazard_micro_accuracy": 0.9175824175824175,
+    "hazard_macro_recall": 0.9072222222222222
+  },
+  "relaxed_analysis_point_not_approved_for_deployment": {
+    "background_threshold": 0.32,
+    "background_margin": 0.0,
+    "background_rejection_rate": 0.5666666666666667,
+    "speech_rejection_rate": 0.8333333333333334,
+    "hazard_micro_accuracy": 0.9230769230769231,
+    "hazard_macro_recall": 0.9122222222222222
+  },
+  "decision": "Do not deploy. Replace the mutually competing six-way objective with a binary hazard gate followed by the validated closed-set five-hazard classifier.",
+  "reserved_test_data_used": false
+}
