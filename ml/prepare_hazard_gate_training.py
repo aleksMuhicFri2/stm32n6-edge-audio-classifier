@@ -32,6 +32,12 @@ def parse_args() -> argparse.Namespace:
         "--tracked-output", type=Path, default=Path("ml/data/hazard_gate")
     )
     parser.add_argument("--hazard-train-total", type=int, default=384)
+    parser.add_argument(
+        "--experiment-id", default="HAZARD-GATE-YAMNET256-DEV-001"
+    )
+    parser.add_argument(
+        "--source-experiment", default="HAZARD5R-BG2X-YAMNET256-DEV-001"
+    )
     parser.add_argument("--seed", type=int, default=120)
     return parser.parse_args()
 
@@ -219,10 +225,10 @@ def main() -> None:
                 writer.writerow({"dataset_role": role, **row})
 
     manifest = {
-        "experiment_id": "HAZARD-GATE-YAMNET256-DEV-001",
+        "experiment_id": args.experiment_id,
         "architecture_role": "Stage 1 binary gate for the Hazard-5 cascade",
         "classes": GATE_CLASSES,
-        "source_experiment": "HAZARD5R-BG2X-YAMNET256-DEV-001",
+        "source_experiment": args.source_experiment,
         "train_counts": dict(Counter(row["category"] for row in output_rows["train"])),
         "validation_counts": dict(
             Counter(row["category"] for row in output_rows["validation"])

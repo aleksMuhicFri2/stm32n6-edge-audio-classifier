@@ -153,6 +153,22 @@ FSD50K_QUOTA_PROFILES = {
             "general": 8,
         },
     },
+    "speech_heavy": {
+        "train": {
+            "speech": 192,
+            "music": 32,
+            "human_non_speech": 32,
+            "hard_negative": 48,
+            "general": 16,
+        },
+        "validation": {
+            "speech": 24,
+            "music": 12,
+            "human_non_speech": 8,
+            "hard_negative": 8,
+            "general": 8,
+        },
+    },
 }
 
 
@@ -280,7 +296,11 @@ def main() -> None:
     expected_names: set[str] = set()
     esc50_background_train = args.esc50_background_train
     if esc50_background_train is None:
-        esc50_background_train = 192 if args.background_profile == "bg2x" else 96
+        esc50_background_train = {
+            "bg2x": 192,
+            "balanced": 96,
+            "speech_heavy": 64,
+        }[args.background_profile]
 
     hazard_rows = read_rows(args.hazard5_provenance)
     fsd50k_hazard_ids = {
@@ -457,11 +477,11 @@ def main() -> None:
         for role, rows in output_rows.items()
     }
     manifest = {
-        "experiment_id": (
-            "HAZARD5R-BG2X-YAMNET256-DEV-001"
-            if args.background_profile == "bg2x"
-            else "HAZARD5R-BAL-YAMNET256-DEV-002"
-        ),
+        "experiment_id": {
+            "bg2x": "HAZARD5R-BG2X-YAMNET256-DEV-001",
+            "balanced": "HAZARD5R-BAL-YAMNET256-DEV-002",
+            "speech_heavy": "HAZARD5R-SPEECHHEAVY-SOURCE-DEV-003",
+        }[args.background_profile],
         "purpose": "Reduce closed-set false alerts while retaining five user-facing hazards.",
         "background_profile": args.background_profile,
         "classes_in_expected_model_output_order": MODEL_CLASSES,

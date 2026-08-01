@@ -1,0 +1,16 @@
+option,class_name,precision,recall,f1,support,correct
+current_screaming,chainsaw,1.0,1.0,1.0,4,4
+current_screaming,gunshot_gunfire,1.0,0.9814814814814815,0.9906542056074766,54,53
+current_screaming,screaming,0.9736842105263158,0.9487179487179487,0.961038961038961,39,37
+current_screaming,siren,0.8947368421052632,0.9444444444444444,0.918918918918919,18,17
+current_screaming,thunderstorm,0.9836065573770492,1.0,0.9917355371900827,60,60
+replace_with_glass_breaking,chainsaw,1.0,0.75,0.8571428571428571,4,3
+replace_with_glass_breaking,glass_breaking,0.9607843137254902,0.8166666666666667,0.8828828828828829,60,49
+replace_with_glass_breaking,gunshot_gunfire,0.8666666666666667,0.9629629629629629,0.9122807017543859,54,52
+replace_with_glass_breaking,siren,1.0,1.0,1.0,18,18
+replace_with_glass_breaking,thunderstorm,0.9375,1.0,0.967741935483871,60,60
+replace_with_crackling_fire,chainsaw,1.0,0.75,0.8571428571428571,4,3
+replace_with_crackling_fire,crackling_fire,0.8529411764705882,0.8529411764705882,0.8529411764705882,34,29
+replace_with_crackling_fire,gunshot_gunfire,0.9807692307692307,0.9444444444444444,0.9622641509433962,54,51
+replace_with_crackling_fire,siren,1.0,0.9444444444444444,0.9714285714285714,18,17
+replace_with_crackling_fire,thunderstorm,0.921875,0.9833333333333333,0.9516129032258065,60,59
