@@ -1,6 +1,6 @@
 {
   "experiment_id": "HAZARD5V3-YAMNET256-DEV-001",
-  "status": "flashed_verified_normal_boot_pending",
+  "status": "hardware_running_live_diagnostic_completed",
   "model_output_order": [
     "dog_bark",
     "glass_breaking",
@@ -63,6 +63,15 @@
     "uart_baud": 14400,
     "uart_capture_seconds": 22,
     "uart_bytes_received": 0,
-    "conclusion": "Physical boot selector must be returned to run mode before LCD and UART validation"
+    "conclusion": "Initial post-flash capture was made before the physical boot selector was returned to run mode"
+  },
+  "normal_boot_follow_up": {
+    "lcd_running": true,
+    "uart_stream_running": true,
+    "uart_port": "COM3",
+    "uart_baud": 14400,
+    "live_gunshot_attempts": 3,
+    "live_gunshot_active_attempts": 3,
+    "diagnostic_evidence": "live_gunshot_diagnostic_20260802.json"
   }
 }

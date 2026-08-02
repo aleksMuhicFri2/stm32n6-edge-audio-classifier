@@ -1,0 +1,51 @@
+{
+  "experiment_id": "HAZARD5V3-LIVE-GUNSHOT-20260802",
+  "recorded_at": "2026-08-02T23:50:00+02:00",
+  "purpose": "Diagnose why a user-selected gunshot recording is not recognized on the STM32N6570-DK",
+  "firmware_model": "hazard5v3_yamnet256_int8",
+  "activity_threshold": 3000.0,
+  "class_enter_threshold": 0.55,
+  "attempts": [
+    {
+      "spectrogram_sum": 4096.0,
+      "audio_active": true,
+      "displayed_state": "unknown",
+      "top_predictions": [
+        {"class": "dog_bark", "score": 0.5117},
+        {"class": "glass_breaking", "score": 0.2344},
+        {"class": "gunshot_gunfire", "score": 0.1328}
+      ]
+    },
+    {
+      "spectrogram_sum": 4268.0,
+      "audio_active": true,
+      "displayed_state": "unknown",
+      "top_predictions": [
+        {"class": "dog_bark", "score": 0.3264},
+        {"class": "siren", "score": 0.2721},
+        {"class": "glass_breaking", "score": 0.2293}
+      ]
+    },
+    {
+      "spectrogram_sum": 4204.0,
+      "audio_active": true,
+      "displayed_state": "unknown",
+      "top_predictions": [
+        {"class": "dog_bark", "score": 0.2767},
+        {"class": "siren", "score": 0.2755},
+        {"class": "glass_breaking", "score": 0.2605}
+      ]
+    }
+  ],
+  "reference_playback_check": {
+    "source": "ml-workspace/datasets/hazard5v3/audio/gunshot_gunfire__fsd50k__dev__368736__0046__r0.wav",
+    "offline_gunshot_score": 0.99609375,
+    "sample_rate_hz": 44100,
+    "duration_seconds": 0.768594,
+    "peak_amplitude": 0.65924,
+    "rms_amplitude": 0.15829,
+    "live_result": "inconclusive",
+    "reason": "Automatic computer playback did not exceed the board activity threshold; observed spectrogram sums were approximately 543 to 1063"
+  },
+  "conclusion": "The microphone and activity gate detected all three user attempts, but the deployed classifier confused this playback sample mainly with dog bark. Lowering the activity threshold cannot correct the class error and would increase false alerts. The next corrective experiment should add representative playback-domain gunshot examples and confusing hard negatives while preserving a separate evaluation set."
+}
