@@ -497,7 +497,7 @@ static void draw_header(void)
 
   format_elapsed(now_seconds, uptime, sizeof(uptime));
   (void)snprintf(uptime_text, sizeof(uptime_text), "UPTIME %s", uptime);
-  draw_text(674U, 29U, uptime_text, 1U, COLOR_MUTED);
+  draw_text(628U, 26U, uptime_text, 2U, COLOR_WHITE);
 }
 
 static void draw_confidence(uint32_t percent, uint16_t color)
