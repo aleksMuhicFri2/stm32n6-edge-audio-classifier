@@ -1,7 +1,7 @@
 {
   "experiment_id": "BASIC-UI-REVISION-20260806",
   "recorded_at": "2026-08-06T12:42:31+02:00",
-  "status": "built_signed_not_flashed",
+  "status": "flashed_verified_normal_boot_pending",
   "purpose": "Replace the product-style dashboard with a simpler presentation-oriented interface without changing audio acquisition, preprocessing, temporal filtering, or Neural-ART inference",
   "visible_elements": [
     "application title and monitoring state",
@@ -51,7 +51,18 @@
   },
   "hardware_validation": {
     "board_connected_during_build": false,
-    "flashed": false,
-    "next_step": "Connect the STM32N6570-DK through ST-LINK, flash only the signed application at 0x70100000, and visually confirm the simplified layout"
+    "board_connected_for_flash": true,
+    "board": "STM32N6570-DK Rev B",
+    "stlink_serial": "0034004E3335510133383531",
+    "voltage_v": 3.27,
+    "application_address": "0x70100000",
+    "application_readback_verified": true,
+    "model_weights_rewritten": false,
+    "fsbl_modified": false,
+    "otp_modified": false,
+    "software_reset_uart_lines": 0,
+    "hardware_reset_uart_lines": 0,
+    "flashed": true,
+    "next_step": "Return both boot switches to L run mode and physically reset or power-cycle the board, then visually and through UART confirm the simplified layout"
   }
 }
