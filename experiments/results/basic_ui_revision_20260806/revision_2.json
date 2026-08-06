@@ -1,7 +1,7 @@
 {
   "experiment_id": "BASIC-UI-REVISION-2-20260806",
   "recorded_at": "2026-08-06T13:28:34+02:00",
-  "status": "built_signed_flash_pending_board_disconnected",
+  "status": "flashed_verified_normal_boot_pending",
   "requested_changes": [
     "remove the monitoring status text from the header",
     "remove the green monitoring dot",
@@ -33,10 +33,18 @@
   },
   "deployment": {
     "flash_attempted": true,
-    "flash_started": false,
-    "programmer_result": "No debug probe detected",
-    "com_ports_detected_after_failure": [],
-    "board_flash_changed": false,
-    "next_step": "Reconnect the board through the ST-LINK connector and flash the signed revision-two application at 0x70100000"
+    "flash_started": true,
+    "programmer_result": "Download and read-back verification successful",
+    "board": "STM32N6570-DK Rev B",
+    "stlink_serial": "0034004E3335510133383531",
+    "voltage_v": 3.27,
+    "application_address": "0x70100000",
+    "application_readback_verified": true,
+    "model_weights_rewritten": false,
+    "fsbl_modified": false,
+    "otp_modified": false,
+    "software_reset_uart_lines": 0,
+    "board_flash_changed": true,
+    "next_step": "Return both boot switches to L run mode and physically reset or power-cycle the board, then confirm LCD and UART operation"
   }
 }
