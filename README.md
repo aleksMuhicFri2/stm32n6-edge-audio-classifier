@@ -19,8 +19,10 @@ dog bark, glass breaking, gunshot/gunfire, emergency siren, and thunderstorm.
 The last hardware-validated application uses the five-class model and the
 tear-free RGB565 display pipeline. The latest source revision simplifies the
 visible interface to a large current result, its confidence bar, the three
-strongest class probabilities, and basic status text. It removes visible event
-history, counters, severity badges, and decorative elements while retaining:
+strongest current class probabilities, three recent confirmed detections, and
+uptime. The recent list records one result per audio session rather than every
+960 ms frame. The interface removes counters, severity badges, decorative
+elements, and the monitoring badge while retaining:
 
 - 64x96 log-mel preprocessing from the onboard microphone at 16 kHz;
 - Neural-ART inference using the quantized YAMNet-256 model;

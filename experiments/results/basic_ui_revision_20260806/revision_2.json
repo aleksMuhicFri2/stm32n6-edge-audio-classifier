@@ -1,0 +1,42 @@
+{
+  "experiment_id": "BASIC-UI-REVISION-2-20260806",
+  "recorded_at": "2026-08-06T13:28:34+02:00",
+  "status": "built_signed_flash_pending_board_disconnected",
+  "requested_changes": [
+    "remove the monitoring status text from the header",
+    "remove the green monitoring dot",
+    "retain only uptime in the right side of the header",
+    "show recent confirmed detections with confidence percentages"
+  ],
+  "layout": {
+    "header": "title plus uptime only",
+    "main_card": "current sound and confidence",
+    "lower_left": "current top-three predictions with probability bars",
+    "lower_right": "three most recent confirmed detections with confidence and uptime timestamp",
+    "footer": "minimal controls or active alert text"
+  },
+  "history_policy": "One entry is stored per confirmed audio session rather than per 960 ms inference frame so repeated windows do not immediately overwrite the history",
+  "build": {
+    "configuration": "BM",
+    "errors": 0,
+    "warnings": 1,
+    "warning": "pre-existing ELF LOAD segment with RWX permissions",
+    "text_bytes": 224356,
+    "data_bytes": 8960,
+    "bss_bytes": 361760,
+    "raw_application_bytes": 233344,
+    "raw_application_sha256": "832240c26dfb5f02cc9983798b80afb0547fa24df3d7f314667bc78e660733eb",
+    "signed_application_bytes": 234368,
+    "signed_application_sha256": "f0e4bacd70a86dca819a6da31449767d2d52ffe84418c792612ecb103a9fa59c",
+    "signed_payload_offset": "0x400",
+    "signed_payload_exact_match": true
+  },
+  "deployment": {
+    "flash_attempted": true,
+    "flash_started": false,
+    "programmer_result": "No debug probe detected",
+    "com_ports_detected_after_failure": [],
+    "board_flash_changed": false,
+    "next_step": "Reconnect the board through the ST-LINK connector and flash the signed revision-two application at 0x70100000"
+  }
+}

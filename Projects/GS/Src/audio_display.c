@@ -489,19 +489,15 @@ static void update_audio_session(const char *decision_label, uint32_t percent,
 static void draw_header(void)
 {
   char uptime[20];
+  char uptime_text[32];
   const uint32_t now_seconds = HAL_GetTick() / 1000U;
 
   fill_rect(0U, 0U, DISPLAY_WIDTH, 68U, COLOR_HEADER);
   draw_text(24U, 20U, "AUDIO HAZARD DETECTOR", 3U, COLOR_WHITE);
 
   format_elapsed(now_seconds, uptime, sizeof(uptime));
-  draw_text(610U, 17U, uptime, 1U, COLOR_MUTED);
-  fill_rect(610U, 37U, 166U, 20U, COLOR_CARD_ALT);
-  fill_rect(622U, 43U, 8U, 8U,
-            s_monitoring_enabled ? COLOR_GREEN : COLOR_ORANGE);
-  draw_text(642U, 40U,
-            s_monitoring_enabled ? "MONITORING" : "PAUSED",
-            1U, s_monitoring_enabled ? COLOR_GREEN : COLOR_ORANGE);
+  (void)snprintf(uptime_text, sizeof(uptime_text), "UPTIME %s", uptime);
+  draw_text(674U, 29U, uptime_text, 1U, COLOR_MUTED);
 }
 
 static void draw_confidence(uint32_t percent, uint16_t color)
@@ -523,23 +519,50 @@ static void draw_top_predictions(
 {
   char percent_text[12];
 
-  draw_text(48U, 309U, "TOP PREDICTIONS", 2U, COLOR_MUTED);
+  draw_text(44U, 309U, "TOP PREDICTIONS", 2U, COLOR_MUTED);
   for (uint32_t rank = 0U; rank < AUDIO_EVENT_TOP_COUNT; rank++)
   {
     const uint32_t y = 341U + rank * 31U;
     const uint32_t bounded_percent =
         (top_percent[rank] > 100U) ? 100U : top_percent[rank];
-    const uint32_t bar_width = 4U * bounded_percent;
+    const uint32_t bar_width = (230U * bounded_percent) / 100U;
 
-    draw_text(48U, y, friendly_label(top_labels[rank]), 2U,
+    draw_text(44U, y, friendly_label(top_labels[rank]), 1U,
               (rank == 0U) ? COLOR_WHITE : COLOR_MUTED);
-    fill_rect(250U, y + 2U, 400U, 10U, COLOR_BAR_BACKGROUND);
-    fill_rect(250U, y + 2U, bar_width, 10U,
+    fill_rect(164U, y, 230U, 9U, COLOR_BAR_BACKGROUND);
+    fill_rect(164U, y, bar_width, 9U,
               (rank == 0U) ? COLOR_CYAN : COLOR_BLUE);
     (void)snprintf(percent_text, sizeof(percent_text), "%lu%%",
                    (unsigned long)bounded_percent);
-    draw_text(680U, y, percent_text, 2U,
+    draw_text(430U, y, percent_text, 1U,
               (rank == 0U) ? COLOR_WHITE : COLOR_MUTED);
+  }
+}
+
+static void draw_recent_predictions(void)
+{
+  char percent_text[12];
+  char time_text[12];
+
+  draw_text(536U, 309U, "RECENT DETECTIONS", 1U, COLOR_MUTED);
+  for (uint32_t index = 0U; index < DASHBOARD_HISTORY_COUNT; index++)
+  {
+    const uint32_t y = 339U + index * 31U;
+    if (s_history[index].valid)
+    {
+      format_elapsed(s_history[index].timestamp_seconds,
+                     time_text, sizeof(time_text));
+      (void)snprintf(percent_text, sizeof(percent_text), "%lu%%",
+                     (unsigned long)s_history[index].confidence_percent);
+      draw_text(536U, y, s_history[index].label, 1U, COLOR_WHITE);
+      draw_text(722U, y, percent_text, 1U,
+                hazard_color(s_history[index].hazard));
+      draw_text(536U, y + 13U, time_text, 1U, COLOR_MUTED);
+    }
+    else
+    {
+      draw_text(536U, y + 5U, "NO RECENT DETECTION", 1U, COLOR_MUTED);
+    }
   }
 }
 
@@ -591,9 +614,13 @@ static void draw_live_card(
   draw_text_centered_in(48U, 704U, 197U, subtitle, 1U, COLOR_MUTED);
   draw_confidence(decision_percent, accent);
 
-  fill_rect(24U, 286U, 752U, 142U, COLOR_CARD);
-  outline_rect(24U, 286U, 752U, 142U, 1U, COLOR_DIVIDER);
+  fill_rect(24U, 286U, 480U, 142U, COLOR_CARD);
+  outline_rect(24U, 286U, 480U, 142U, 1U, COLOR_DIVIDER);
   draw_top_predictions(top_labels, top_percent);
+
+  fill_rect(516U, 286U, 260U, 142U, COLOR_CARD);
+  outline_rect(516U, 286U, 260U, 142U, 1U, COLOR_DIVIDER);
+  draw_recent_predictions();
 }
 
 static void draw_footer(void)
