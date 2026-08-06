@@ -123,6 +123,7 @@ static const SoundProfile_t s_sound_profiles[] =
   {"glass_breaking",   "GLASS BREAKING",   HAZARD_DANGER},
   {"gunshot_gunfire",  "GUNSHOT",          HAZARD_DANGER},
   {"siren",            "EMERGENCY SIREN",   HAZARD_DANGER},
+  {"speech",           "HUMAN SPEECH",      HAZARD_INFO},
   {"thunderstorm",     "THUNDERSTORM",      HAZARD_DANGER}
 };
 
@@ -638,7 +639,7 @@ static void draw_footer(void)
   else
   {
     draw_text_centered_in(0U, DISPLAY_WIDTH, 456U,
-                          "USER1 PAUSE / RESUME     5 SOUND CLASSES",
+                          "USER1 PAUSE / RESUME     6 SOUND CLASSES",
                           1U, COLOR_MUTED);
   }
 }

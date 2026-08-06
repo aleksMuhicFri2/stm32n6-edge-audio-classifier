@@ -163,3 +163,25 @@ Neural-ART weights. The rejected background, cascade, confidence, wider-model,
 and dedicated-speech experiments are retained for the thesis rather than
 discarded. Reserved external test data remains untouched pending live
 sensitivity calibration and the physical playback gate.
+
+### Speech-aware Hazard-5 revision
+
+The deployed follow-up adds `speech` as a sixth output while retaining the same
+five hazards. It deliberately omits the earlier generic-background output,
+which competed too strongly with the hazards. Reproduce the balanced dataset,
+training run, calibration, and Neural-ART generation with:
+
+```powershell
+python ml/prepare_hazard5v3s_training.py --source-provenance ml/data/hazard5v3r_split_speech/hazard5r_training_provenance.csv --source-audio ..\ml-workspace\datasets\hazard5v3r_split_speech\audio --output-root ..\ml-workspace\datasets\hazard5v3s --tracked-output ml/data/hazard5v3s
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ml\train_hazard5v3s.ps1
+python ml/calibrate_speech_guard.py --predictions experiments/results/hazard5v3s_yamnet256_development/clip_predictions.csv --output-dir experiments/results/hazard5v3s_yamnet256_development
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ml\generate_hazard5_neural_art.ps1 -Model ml\models\hazard5v3s_yamnet256_int8.tflite -RunName hazard5v3s
+```
+
+The ordinary six-class argmax reached 87.05% development clip accuracy, but
+speech recall was 70.83%. A speech-first policy calibrated only on development
+data selected a 0.27 cutoff, producing 83.33% speech recall and 86.70% macro
+recall across the five hazards. That is a 2.11 percentage-point loss from the
+closed five-class baseline and passes the predefined deployment gates. The
+speech-2x retry was rejected because speech recall did not improve. Reserved
+external test data remains untouched.

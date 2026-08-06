@@ -12,6 +12,10 @@
 #include "ai_model_config.h"
 #include "app_config.h"
 
+#if CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX >= CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER
+#error "Speech class index must reference a configured model output"
+#endif
+
 static float s_smoothed_scores[CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER];
 static bool s_scores_initialized;
 static uint32_t s_frame_index;
@@ -120,42 +124,26 @@ void AudioEventFilter_Update(const float *scores,
   {
     const uint32_t candidate_index = result->top_indices[0];
     const float candidate_score = result->top_scores[0];
+    const bool speech_guard_active =
+        (CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX < class_count) &&
+        (s_smoothed_scores[CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX] >=
+         AUDIO_EVENT_SPEECH_GUARD_THRESHOLD);
 
-    if (s_stable_index == AUDIO_EVENT_NO_CLASS)
+    if (speech_guard_active)
     {
-      if (candidate_score >= AUDIO_EVENT_ENTER_THRESHOLD)
-      {
-        s_stable_index = candidate_index;
-        s_state = AUDIO_EVENT_CLASS;
-      }
-      else
-      {
-        s_state = AUDIO_EVENT_UNKNOWN;
-      }
+      /* Speech is allowed to override a hazard immediately. This asymmetric
+       * rule is intentionally separate from the normal 65% class threshold. */
+      s_stable_index = CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX;
+      s_state = AUDIO_EVENT_CLASS;
     }
     else
     {
-      const float stable_score = s_smoothed_scores[s_stable_index];
+      if (s_stable_index == CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX)
+      {
+        s_stable_index = AUDIO_EVENT_NO_CLASS;
+      }
 
-      if (candidate_index == s_stable_index)
-      {
-        if (stable_score < AUDIO_EVENT_RELEASE_THRESHOLD)
-        {
-          s_stable_index = AUDIO_EVENT_NO_CLASS;
-          s_state = AUDIO_EVENT_UNKNOWN;
-        }
-        else
-        {
-          s_state = AUDIO_EVENT_CLASS;
-        }
-      }
-      else if ((candidate_score >= AUDIO_EVENT_ENTER_THRESHOLD) &&
-               (candidate_score >= (stable_score + AUDIO_EVENT_SWITCH_MARGIN)))
-      {
-        s_stable_index = candidate_index;
-        s_state = AUDIO_EVENT_CLASS;
-      }
-      else if (stable_score < AUDIO_EVENT_RELEASE_THRESHOLD)
+      if (s_stable_index == AUDIO_EVENT_NO_CLASS)
       {
         if (candidate_score >= AUDIO_EVENT_ENTER_THRESHOLD)
         {
@@ -164,13 +152,48 @@ void AudioEventFilter_Update(const float *scores,
         }
         else
         {
-          s_stable_index = AUDIO_EVENT_NO_CLASS;
           s_state = AUDIO_EVENT_UNKNOWN;
         }
       }
       else
       {
-        s_state = AUDIO_EVENT_CLASS;
+        const float stable_score = s_smoothed_scores[s_stable_index];
+
+        if (candidate_index == s_stable_index)
+        {
+          if (stable_score < AUDIO_EVENT_RELEASE_THRESHOLD)
+          {
+            s_stable_index = AUDIO_EVENT_NO_CLASS;
+            s_state = AUDIO_EVENT_UNKNOWN;
+          }
+          else
+          {
+            s_state = AUDIO_EVENT_CLASS;
+          }
+        }
+        else if ((candidate_score >= AUDIO_EVENT_ENTER_THRESHOLD) &&
+                 (candidate_score >= (stable_score + AUDIO_EVENT_SWITCH_MARGIN)))
+        {
+          s_stable_index = candidate_index;
+          s_state = AUDIO_EVENT_CLASS;
+        }
+        else if (stable_score < AUDIO_EVENT_RELEASE_THRESHOLD)
+        {
+          if (candidate_score >= AUDIO_EVENT_ENTER_THRESHOLD)
+          {
+            s_stable_index = candidate_index;
+            s_state = AUDIO_EVENT_CLASS;
+          }
+          else
+          {
+            s_stable_index = AUDIO_EVENT_NO_CLASS;
+            s_state = AUDIO_EVENT_UNKNOWN;
+          }
+        }
+        else
+        {
+          s_state = AUDIO_EVENT_CLASS;
+        }
       }
     }
   }

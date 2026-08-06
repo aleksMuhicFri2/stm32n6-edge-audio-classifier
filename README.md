@@ -12,11 +12,12 @@ both RTOS and bare metal versions. A low power version is also provided.
 ## Diploma-project current state
 
 The `hazard-selection` branch extends ST's bare-metal AED example with a
-five-class YAMNet-256 transfer-learning model, a lightweight STM32N6570-DK
-interface, and a reproducible experiment pipeline. The active model classes are
-dog bark, glass breaking, gunshot/gunfire, emergency siren, and thunderstorm.
+six-output YAMNet-256 transfer-learning model, a lightweight STM32N6570-DK
+interface, and a reproducible experiment pipeline. The five hazard classes are
+dog bark, glass breaking, gunshot/gunfire, emergency siren, and thunderstorm;
+human speech is a sixth informational output used to suppress false alerts.
 
-The last hardware-validated application uses the five-class model and the
+The current flashed application uses the speech-aware model and the
 tear-free RGB565 display pipeline. The latest source revision simplifies the
 visible interface to a large current result, its confidence bar, the three
 strongest current class probabilities, three recent confirmed detections, and
@@ -30,14 +31,17 @@ elements, and the monitoring badge while retaining:
   hysteresis;
 - a `4000` spectral-activity gate with `0.65` class-entry and `0.50`
   class-release thresholds for the current close-range calibration;
+- a calibrated asymmetric speech guard at `0.27`; speech is displayed as an
+  informational result and never latches an alert;
 - separate `WAITING` (silence), `UNKNOWN` (audible but uncertain), and detected
   states;
 - double buffering with vertical-blank swaps to prevent screen tearing; and
 - one machine-readable `AED_CSV` UART row for every 960 ms model window.
 
 The blue `USER1` button pauses or resumes monitoring. The `TAMP` button clears
-the internally latched alert. The simplified revision builds and signs cleanly,
-but still needs to be flashed and visually checked on the board.
+the internally latched alert. The speech-aware weights and signed application
+were flashed and read-back verified on 2026-08-06; live speech playback and
+final physical accuracy testing remain pending.
 
 Use `tools/capture_uart_experiment.ps1` to preserve the raw UART stream and
 append normalized run and frame evidence under `experiments/`. The CSV record

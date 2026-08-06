@@ -1,0 +1,57 @@
+{
+  "experiment_id": "HAZARD5V3S-YAMNET256-DEV-001",
+  "purpose": "Add a dedicated human-speech output without the competing generic background class.",
+  "classes_in_expected_model_output_order": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "source_experiment": "HAZARD5V3R-SPLIT-SPEECH-YAMNET256-DEV-003",
+  "class_counts": {
+    "train": {
+      "dog_bark": 192,
+      "glass_breaking": 192,
+      "gunshot_gunfire": 192,
+      "siren": 192,
+      "thunderstorm": 192,
+      "speech": 192
+    },
+    "validation": {
+      "dog_bark": 60,
+      "glass_breaking": 60,
+      "gunshot_gunfire": 54,
+      "siren": 20,
+      "thunderstorm": 60,
+      "speech": 24
+    }
+  },
+  "reserved_test_clips_used": 0,
+  "esc50_reserved_fold": 5,
+  "fsd50k_evaluation_used": false,
+  "development_test_is_validation_alias": true,
+  "link_modes_created_this_run": {
+    "hardlink": 1430
+  },
+  "audio_files_in_combined_directory": 1430,
+  "manifest_hashes": {
+    "hazard6_train.csv": "41db3a4f16e16a4a26963797f1d57b081be7522490679af71afc78d4e543cd18",
+    "hazard6_validation.csv": "be6c4aad7375d4083bd8553e8b14ce234fa553596d5d038d987ae0f4f793fe27",
+    "hazard6_development_test.csv": "be6c4aad7375d4083bd8553e8b14ce234fa553596d5d038d987ae0f4f793fe27",
+    "hazard6_quantization.csv": "fc0f163b8ba5c736aa73fbc0430ab36eb02020bdec1d82919ec19be8cf56fbf3"
+  },
+  "provenance_sha256": "47f682ca9d1cbbebcc1423ca800421253d6bc7b5962231e7cda27b284baaf58b",
+  "deployment_gate": {
+    "minimum_speech_recall": 0.8,
+    "minimum_hazard_macro_recall": 0.85,
+    "maximum_hazard_macro_recall_loss_vs_closed_baseline": 0.04
+  },
+  "notes": [
+    "All hazard recordings and development roles are reused from the deployed Hazard-5 V3 model.",
+    "Speech recordings and roles are reused from the audited split-speech development experiment.",
+    "A confirmed speech result is informational and must never latch a danger alert.",
+    "Formal reserved-set and physical accuracy tests remain deferred until the model passes the development gate."
+  ]
+}

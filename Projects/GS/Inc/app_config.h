@@ -77,6 +77,11 @@
 #define AUDIO_EVENT_SWITCH_MARGIN               (0.08F)
 #define AUDIO_EVENT_SILENCE_TO_WAIT_FRAMES      (2U)
 
+/* Development calibration uses speech as an asymmetric guard: it can suppress
+ * a false hazard decision at a lower score, but it is informational and never
+ * latches a danger alert. The model-specific index is in ai_model_config.h. */
+#define AUDIO_EVENT_SPEECH_GUARD_THRESHOLD       (0.27F)
+
 #ifndef USE_NPU_CACHE
   #define USE_NPU_CACHE 1
 #endif

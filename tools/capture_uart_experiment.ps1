@@ -86,7 +86,7 @@ $header = @(
     "distance_cm=$DistanceCm",
     "volume_percent=$VolumePercent",
     "firmware_git_commit=$gitCommit",
-    "decision_filter=EMA alpha 0.65; enter 0.55; release 0.40; switch margin 0.08",
+    "decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27",
     "notes=$Notes",
     "--- UART ---"
 ) -join [Environment]::NewLine

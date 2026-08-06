@@ -1,0 +1,62 @@
+{
+  "experiment_id": "HAZARD5V3S-YAMNET256-DEV-001",
+  "deployed_at": "2026-08-06T16:02:00+02:00",
+  "status": "flashed_and_readback_verified_live_validation_pending",
+  "model": {
+    "architecture": "YAMNet-256 transfer learning",
+    "classes": [
+      "dog_bark",
+      "glass_breaking",
+      "gunshot_gunfire",
+      "siren",
+      "speech",
+      "thunderstorm"
+    ],
+    "tflite_bytes": 184280,
+    "tflite_sha256": "1e04ff9d9394ace17020077e804bf40fbbaf0312c81ad9e83ea3ffb56e84946a"
+  },
+  "development_policy": {
+    "speech_guard_threshold": 0.27,
+    "speech_recall": 0.8333333333333334,
+    "speech_correct": 20,
+    "speech_total": 24,
+    "hazard_macro_recall": 0.867037037037037,
+    "closed_baseline_hazard_macro_recall": 0.8881481481481481,
+    "hazard_macro_recall_loss": 0.02111111111111108,
+    "hazards_suppressed_as_speech": 11,
+    "hazard_total": 254,
+    "all_deployment_gates_passed": true
+  },
+  "neural_art": {
+    "stedgeai_version": "4.0.1-20581",
+    "weights_bytes": 148657,
+    "weights_sha256": "11e531fd75604bda595fca0feccfa1a5857cb3ad8efb9fba9a645f8231a49274",
+    "activation_bytes": 147456,
+    "macc": 27772547,
+    "hardware_epochs": 12,
+    "hybrid_epochs": 1,
+    "software_epochs": 2
+  },
+  "firmware": {
+    "build": "bare metal",
+    "build_errors": 0,
+    "raw_application_bytes": 234432,
+    "signed_application_bytes": 235456,
+    "signed_application_sha256": "1499efbfd11c02d4dc310b359ce0c2745587e1940b6f726974ae63a39d00afd9",
+    "signed_payload_matches_raw_at_offset": "0x400",
+    "application_address": "0x70100000",
+    "weights_address": "0x70180000",
+    "application_readback_verified": true,
+    "weights_readback_verified": true,
+    "software_reset_performed": true,
+    "uart_data_after_software_reset": false,
+    "physical_run_mode_reset_may_be_required": true,
+    "fsbl_modified": false,
+    "otp_modified": false
+  },
+  "validation_scope": {
+    "development_clips": 278,
+    "reserved_test_used": false,
+    "live_speech_validation_pending": true
+  }
+}
