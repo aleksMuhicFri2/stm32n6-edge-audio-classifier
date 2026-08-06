@@ -9,28 +9,31 @@ extraction, the machine learning inference itself, and a post processing step
 before exposing the results to the user in real time. The project implements
 both RTOS and bare metal versions. A low power version is also provided.
 
-## Diploma-project extensions
+## Diploma-project current state
 
-The `thesis-development` branch extends ST's bare-metal AED example with a
-custom ten-class YAMNet-256 classifier, a product-style STM32N6570-DK safety
-dashboard, and a reproducible experiment pipeline.
-The current application adds:
+The `hazard-selection` branch extends ST's bare-metal AED example with a
+five-class YAMNet-256 transfer-learning model, a lightweight STM32N6570-DK
+interface, and a reproducible experiment pipeline. The active model classes are
+dog bark, glass breaking, gunshot/gunfire, emergency siren, and thunderstorm.
 
-- an 800x480 RGB565 acoustic-safety dashboard in internal AXI SRAM;
-- top-three class probabilities and the stable decision confidence;
+The last hardware-validated application uses the five-class model and the
+tear-free RGB565 display pipeline. The latest source revision simplifies the
+visible interface to a large current result, its confidence bar, the three
+strongest class probabilities, and basic status text. It removes visible event
+history, counters, severity badges, and decorative elements while retaining:
+
+- 64x96 log-mel preprocessing from the onboard microphone at 16 kHz;
+- Neural-ART inference using the quantized YAMNet-256 model;
 - a 65% exponential moving average with enter, release, and class-switch
-  hysteresis to reduce one-window label jumps;
+  hysteresis;
 - separate `WAITING` (silence), `UNKNOWN` (audible but uncertain), and detected
-  class states;
-- session-level event grouping, three-item event history, severity levels,
-  counters, a latched alert banner, uptime, and pause/acknowledge controls; and
+  states;
+- double buffering with vertical-blank swaps to prevent screen tearing; and
 - one machine-readable `AED_CSV` UART row for every 960 ms model window.
 
-The blue `USER1` button pauses or resumes monitoring. The `TAMP` button
-acknowledges the currently latched warning or danger alert. Informational
-events are clapping and dog barking; attention events are coughing, crying
-baby, door knock, and footsteps; danger events are chainsaw, crackling fire,
-glass breaking, and siren.
+The blue `USER1` button pauses or resumes monitoring. The `TAMP` button clears
+the internally latched alert. The simplified revision builds and signs cleanly,
+but still needs to be flashed and visually checked on the board.
 
 Use `tools/capture_uart_experiment.ps1` to preserve the raw UART stream and
 append normalized run and frame evidence under `experiments/`. The CSV record
