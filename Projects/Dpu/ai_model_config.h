@@ -50,7 +50,7 @@ extern "C" {
 #define CTRL_X_CUBE_AI_SPECTROGRAM_FMAX          (7500U)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_TYPE          (SPECTRUM_TYPE_MAGNITUDE) /*!< magnitude spectrum */
 #define CTRL_X_CUBE_AI_SPECTROGRAM_LOG_FORMULA   (LOGMELSPECTROGRAM_SCALE_LOG) /* LOGMELSPECTROGRAM_SCALE_DB */
-#define CTRL_X_CUBE_AI_SPECTROGRAM_SILENCE_THR   (3000.0F) /* 0 means disabled */
+#define CTRL_X_CUBE_AI_SPECTROGRAM_SILENCE_THR   (4000.0F) /* 0 means disabled */
 #define CTRL_X_CUBE_AI_OOD_THR                   (0.5F)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_WIN           (user_win)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_MEL_LUT       (user_melFiltersLut)

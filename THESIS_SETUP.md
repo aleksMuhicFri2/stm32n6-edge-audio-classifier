@@ -82,6 +82,15 @@ The corrected signed build was then validated from external flash with both boot
 
 The original reference emitted the maximum class independently for every non-silent 960 ms window. That behavior made the visible label vulnerable to a single anomalous prediction. Requiring three consecutive results was rejected because it would add up to 2.88 seconds of fixed confirmation delay. The new application instead applies an exponential moving average with 65% weight on the newest window. A class enters at 0.55 confidence, remains active down to 0.40, and a competing class must exceed it by 0.08 before an immediate switch. Two consecutive silent windows reset the filter to `WAITING`; audible input below the enter threshold is `UNKNOWN`.
 
+Following live close-range testing, the development calibration increased the
+spectral-activity threshold from 3000 to 4000, the class-entry threshold from
+0.55 to 0.65, and the release threshold from 0.40 to 0.50. Recorded quiet-room
+spectral sums were approximately 543--2062, while three deliberate close
+playback attempts measured 4096, 4268, and 4204. Uncertain active audio now
+shows `UNKNOWN` as the large result while retaining its top-three probabilities
+for diagnosis. These revised values remain subject to a controlled sensitivity
+experiment rather than being treated as final constants.
+
 The LCD now shows the stable decision, its confidence bar, and the three highest smoothed class probabilities. Every processed window also emits an `AED_CSV` UART record containing the frame index, audio-activity flag, stable decision and confidence, top-three classes and confidences, and a decision-change flag. The host capture tool joins this record with the corresponding CPU-stage timings and preserves both normalized CSV data and the immutable raw UART stream. Historical frame rows are retained with blank values for measurements that the earlier firmware did not expose.
 
 The first local build of this milestone completed with zero compiler errors. It contains 228,820 bytes of text, 10,248 bytes of initialized data, and 361,552 bytes of BSS. Relative to the previously validated LCD build, temporal filtering, top-three rendering, and structured logging add 4,120 bytes of text, 24 bytes of initialized data, and 152 bytes of BSS.

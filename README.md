@@ -28,6 +28,8 @@ elements, and the monitoring badge while retaining:
 - Neural-ART inference using the quantized YAMNet-256 model;
 - a 65% exponential moving average with enter, release, and class-switch
   hysteresis;
+- a `4000` spectral-activity gate with `0.65` class-entry and `0.50`
+  class-release thresholds for the current close-range calibration;
 - separate `WAITING` (silence), `UNKNOWN` (audible but uncertain), and detected
   states;
 - double buffering with vertical-blank swaps to prevent screen tearing; and

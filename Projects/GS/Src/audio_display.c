@@ -595,7 +595,7 @@ static void draw_live_card(
     const HazardLevel_t live_hazard = hazard_for_label(top_labels[0]);
 
     accent = unknown ? COLOR_ORANGE : hazard_color(live_hazard);
-    primary_label = friendly_label(top_labels[0]);
+    primary_label = unknown ? "UNKNOWN" : friendly_label(top_labels[0]);
     subtitle = unknown ? "LOW CONFIDENCE - NOT CONFIRMED" : "DETECTED";
     decision_percent = top_percent[0];
   }

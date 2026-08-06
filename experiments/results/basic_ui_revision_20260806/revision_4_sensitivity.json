@@ -1,0 +1,62 @@
+{
+  "experiment_id": "BASIC-UI-SENSITIVITY-REVISION-4-20260806",
+  "recorded_at": "2026-08-06T15:35:31+02:00",
+  "status": "flashed_verified_live_observation_pending",
+  "trigger": "User reported that close-range testing caused nearly every sound to produce a class result",
+  "changes": {
+    "spectrogram_activity_threshold": {
+      "previous": 3000.0,
+      "new": 4000.0
+    },
+    "class_enter_threshold": {
+      "previous": 0.55,
+      "new": 0.65
+    },
+    "class_release_threshold": {
+      "previous": 0.40,
+      "new": 0.50
+    },
+    "uncertain_main_label": {
+      "previous": "show the current top-class name with a low-confidence subtitle",
+      "new": "show UNKNOWN while retaining top-three probabilities"
+    }
+  },
+  "calibration_basis": {
+    "previous_quiet_room_spectrogram_sum_approximate_range": [543.0, 2062.0],
+    "previous_deliberate_close_playback_spectrogram_sums": [4096.0, 4268.0, 4204.0],
+    "interpretation": "A 4000 activity threshold is a modest boundary above recorded ambient activity while remaining below the three recorded deliberate attempts"
+  },
+  "behavior": {
+    "predictions_below_activity_threshold": "WAITING",
+    "active_predictions_below_0_65": "UNKNOWN and excluded from recent confirmed detections",
+    "active_predictions_at_or_above_0_65": "confirmed class detection",
+    "release_below": 0.50,
+    "top_three_probabilities_visible_for_unknown": true
+  },
+  "build": {
+    "configuration": "BM",
+    "errors": 0,
+    "warnings": 1,
+    "warning": "pre-existing ELF LOAD segment with RWX permissions",
+    "text_bytes": 224372,
+    "data_bytes": 8960,
+    "bss_bytes": 361760,
+    "raw_application_bytes": 233344,
+    "raw_application_sha256": "955c9a873d41523903ea662ea56b0e1ac5a54f239a05f111a880e91ae30ab2f1",
+    "signed_application_bytes": 234368,
+    "signed_application_sha256": "589bc6fe4de404a86166045efd7d0f690ada6565b12ec6874566fba439e7f315",
+    "signed_payload_offset": "0x400",
+    "signed_payload_exact_match": true
+  },
+  "deployment": {
+    "board": "STM32N6570-DK Rev B",
+    "stlink_serial": "0034004E3335510133383531",
+    "voltage_v": 3.27,
+    "application_address": "0x70100000",
+    "application_readback_verified": true,
+    "model_weights_rewritten": false,
+    "fsbl_modified": false,
+    "otp_modified": false
+  },
+  "next_step": "Boot in run mode and compare quiet speech miscellaneous close sounds and the five target classes before accepting or revising the thresholds"
+}

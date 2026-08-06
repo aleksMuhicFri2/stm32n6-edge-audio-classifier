@@ -72,8 +72,8 @@
 /* Audio-event decision filter. Each model window covers 960 ms, so an EMA
  * provides stability without adding a fixed multi-window confirmation delay. */
 #define AUDIO_EVENT_EMA_ALPHA                   (0.65F)
-#define AUDIO_EVENT_ENTER_THRESHOLD             (0.55F)
-#define AUDIO_EVENT_RELEASE_THRESHOLD           (0.40F)
+#define AUDIO_EVENT_ENTER_THRESHOLD             (0.65F)
+#define AUDIO_EVENT_RELEASE_THRESHOLD           (0.50F)
 #define AUDIO_EVENT_SWITCH_MARGIN               (0.08F)
 #define AUDIO_EVENT_SILENCE_TO_WAIT_FRAMES      (2U)
 
