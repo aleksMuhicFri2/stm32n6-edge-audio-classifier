@@ -74,6 +74,14 @@ every derived WAV so gain is never silently clipped. Three sources require no
 limiting; the remaining impulsive multiple-shot source is reported with its
 exact limited-sample count and fraction.
 
+After `P2-A02`, the operator reported that all gunshot stimuli were still very
+quiet and short and that some glass-breaking stimuli had the same problem.
+This post-run observation does not erase or rescore trials. It changes their
+interpretation: low-activity misses are combined stimulus-delivery,
+temporal-coverage, and classification failures rather than clean evidence of a
+classifier-head error. The observation and matching activity counts are stored
+in `operator_observations.csv`.
+
 This creates four paired observations per level. The +5 dB stratum must reach
 at least 3/4 confirmed detections; the net -1 dB stratum is reported as a
 paired sensitivity result rather than folded into one accuracy percentage.

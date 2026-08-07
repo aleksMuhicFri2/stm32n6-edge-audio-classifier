@@ -1,0 +1,5 @@
+review_id,source_id,variant,low_trial_id,high_trial_id,low_gain_db,high_gain_db,paired_difference_db,low_active_frames,high_active_frames,low_peak_gunshot_probability,high_peak_gunshot_probability,probability_change,low_confirmed,high_confirmed
+P2R-003,P2R-003,multiple_shots,P2-007,P2-018,-1.0,5.0,6.0,1,2,0.2891,0.2785,-0.010599999999999998,False,False
+P2R-018,P2R-018,single_shot,P2-011,P2-027,-1.0,5.0,6.0,0,0,0.0,0.0,0.0,False,False
+P2R-044,P2R-044,single_shot,P2-016,P2-025,-1.0,5.0,6.0,1,2,0.2539,0.2773,0.023399999999999976,False,False
+P2R-052,P2R-052,multiple_shots,P2-002,P2-004,-1.0,5.0,6.0,2,2,0.4965,0.4062,-0.09029999999999999,False,False
