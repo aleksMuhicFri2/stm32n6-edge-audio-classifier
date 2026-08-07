@@ -1,0 +1,4 @@
+calibration_scope,label,trials,activity_passed,audibility_passed,fully_qualified,semantic_rejected,usable_for_next_design,mean_active_frames,all_qualified
+gunshot_repeated,Gunshot repeated (+8 dB),4,4,3,3,2,1,9.5,False
+glass_low_activity_repeated,Glass repeated (+3 dB),2,2,2,2,0,2,6.5,True
+ood_middle_level,OOD repeated (-15 dB),5,2,2,1,0,1,3.6,False

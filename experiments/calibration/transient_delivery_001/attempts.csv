@@ -1,0 +1,2 @@
+attempt_id,status,completed_at,run_start,run_end,trial_count,volume_percent,frame_count,active_frame_count,delivery_qualified,semantic_rejected,usable_for_next_design,scoring_policy,notes
+TD-A01,completed,2026-08-07T19:39:05+02:00,RUN-20260807-193323,RUN-20260807-193845,11,75,393,69,6,2,4,classification_accuracy_not_reported,"All four gunshot and both glass trials passed activity; two comfortable gunshot sources were semantically rejected by the operator; only crying baby passed both OOD delivery gates"

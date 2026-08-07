@@ -18,6 +18,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 import numpy as np
 import pandas as pd
 
@@ -67,7 +68,14 @@ def as_bool(series: pd.Series) -> pd.Series:
 
 def plot_results(results: pd.DataFrame, output_path: Path) -> None:
     data = results.sort_values("trial_order")
-    colors = ["#2a9d8f" if value else "#d55e00" for value in data["qualified"]]
+    colors = [
+        "#7b2cbf"
+        if row.semantic_status == "rejected_by_operator"
+        else "#2a9d8f"
+        if row.usable_for_next_design
+        else "#d55e00"
+        for row in data.itertuples(index=False)
+    ]
     figure, axis = plt.subplots(figsize=(11.5, 5.7))
     x = np.arange(len(data))
     bars = axis.bar(
@@ -77,7 +85,7 @@ def plot_results(results: pd.DataFrame, output_path: Path) -> None:
         edgecolor="#333333",
         linewidth=0.6,
     )
-    axis.axhline(
+    threshold_line = axis.axhline(
         REQUIRED_ACTIVE_FRAMES,
         color="#333333",
         linestyle="--",
@@ -92,7 +100,7 @@ def plot_results(results: pd.DataFrame, output_path: Path) -> None:
     )
     axis.set_ylabel("Active-audio telemetry frames")
     axis.set_xlabel("Non-scored delivery-calibration trial")
-    axis.set_title("A clip qualifies only when board activity and human audibility both pass")
+    axis.set_title("Delivery qualification and post-run semantic audit")
     axis.set_ylim(0, max(float(data["active_frames"].max()) + 4.0, 8.0))
     for bar, row in zip(bars, data.itertuples(index=False)):
         rating = {
@@ -108,7 +116,16 @@ def plot_results(results: pd.DataFrame, output_path: Path) -> None:
             va="bottom",
             fontsize=8,
         )
-    axis.legend(frameon=False)
+    axis.legend(
+        handles=[
+            threshold_line,
+            Patch(facecolor="#2a9d8f", label="usable"),
+            Patch(facecolor="#d55e00", label="delivery adjustment needed"),
+            Patch(facecolor="#7b2cbf", label="semantic source rejected"),
+        ],
+        ncol=2,
+        frameon=False,
+    )
     axis.grid(axis="y", alpha=0.25)
     axis.grid(axis="x", visible=False)
     figure.tight_layout()
@@ -129,6 +146,9 @@ def main() -> None:
         (calibration_dir / "manifest.json").read_text(encoding="utf-8")
     )
     responses = pd.read_csv(calibration_dir / "operator_responses.csv")
+    semantic = pd.read_csv(
+        calibration_dir / "operator_semantic_interpretation.csv"
+    )
     if len(manifest) != EXPECTED_TRIALS or manifest["trial_id"].nunique() != EXPECTED_TRIALS:
         raise RuntimeError("Calibration manifest must contain 11 unique trials")
     if sha256(manifest_path) != manifest_info["manifest_sha256"]:
@@ -143,6 +163,13 @@ def main() -> None:
         raise RuntimeError("Unknown operator audibility rating")
     if set(responses["manifest_sha256"]) != {manifest_info["manifest_sha256"]}:
         raise RuntimeError("Operator response manifest hash mismatch")
+    if len(semantic) != 4 or semantic["trial_id"].nunique() != 4:
+        raise RuntimeError("Expected semantic interpretation for four gunshot trials")
+    if set(semantic["semantic_status"]) - {
+        "rejected_by_operator",
+        "no_semantic_rejection",
+    }:
+        raise RuntimeError("Unknown semantic interpretation status")
 
     all_runs = pd.read_csv(repo_root / "experiments" / "runs.csv")
     runs = all_runs.loc[
@@ -189,6 +216,17 @@ def main() -> None:
     ].astype(int)
     joined["audibility_pass"] = joined["audibility_rating"] == "comfortable"
     joined["qualified"] = joined["activity_pass"] & joined["audibility_pass"]
+    joined = joined.merge(
+        semantic[
+            ["trial_id", "semantic_status", "basis", "design_consequence"]
+        ],
+        on="trial_id",
+        how="left",
+        validate="one_to_one",
+    )
+    joined["semantic_status"] = joined["semantic_status"].fillna("not_assessed")
+    joined["semantic_pass"] = joined["semantic_status"] != "rejected_by_operator"
+    joined["usable_for_next_design"] = joined["qualified"] & joined["semantic_pass"]
     joined["classification_scored"] = False
 
     result_columns = [
@@ -209,6 +247,11 @@ def main() -> None:
         "audibility_rating",
         "audibility_pass",
         "qualified",
+        "semantic_status",
+        "semantic_pass",
+        "usable_for_next_design",
+        "basis",
+        "design_consequence",
         "operator_note",
         "classification_scored",
         "sha256",
@@ -226,8 +269,14 @@ def main() -> None:
                 "activity_passed": int(selected["activity_pass"].sum()),
                 "audibility_passed": int(selected["audibility_pass"].sum()),
                 "fully_qualified": int(selected["qualified"].sum()),
+                "semantic_rejected": int(
+                    (selected["semantic_status"] == "rejected_by_operator").sum()
+                ),
+                "usable_for_next_design": int(
+                    selected["usable_for_next_design"].sum()
+                ),
                 "mean_active_frames": float(selected["active_frames"].mean()),
-                "all_qualified": bool(selected["qualified"].all()),
+                "all_qualified": bool(selected["usable_for_next_design"].all()),
             }
         )
     scopes = pd.DataFrame(scope_rows)
@@ -239,7 +288,9 @@ def main() -> None:
 
     recommendations: list[str] = []
     for row in results.loc[~results["qualified"]].itertuples(index=False):
-        if not row.activity_pass and row.audibility_rating == "too_quiet":
+        if row.true_category == "rain" and not row.activity_pass:
+            action = "increase level modestly; the repeated duration already provides temporal coverage"
+        elif not row.activity_pass and row.audibility_rating == "too_quiet":
             action = "increase level or repetition duration"
         elif not row.activity_pass:
             action = "increase temporal coverage without assuming more loudness is needed"
@@ -248,6 +299,12 @@ def main() -> None:
         else:
             action = "adjust level according to the operator rating"
         recommendations.append(f"{row.trial_id} ({row.true_category}): {action}")
+    for row in results.loc[
+        results["semantic_status"] == "rejected_by_operator"
+    ].itertuples(index=False):
+        recommendations.append(
+            f"{row.trial_id} ({row.true_category}): replace the source; gain changes cannot repair semantic mismatch"
+        )
     summary = {
         "calibration_id": CALIBRATION_ID,
         "attempt_id": ATTEMPT_ID,
@@ -255,6 +312,12 @@ def main() -> None:
         "frame_count": int(len(frames)),
         "active_frame_count": int(frames["audio_active"].sum()),
         "qualified_trials": int(results["qualified"].sum()),
+        "semantically_rejected_trials": int(
+            (results["semantic_status"] == "rejected_by_operator").sum()
+        ),
+        "usable_for_next_design_trials": int(
+            results["usable_for_next_design"].sum()
+        ),
         "all_trials_qualified": bool(results["qualified"].all()),
         "classification_accuracy_reported": False,
         "scope_results": json.loads(scopes.to_json(orient="records")),
@@ -266,12 +329,12 @@ def main() -> None:
     )
 
     table_lines = [
-        "| Scope | Qualified | Trials | Mean active frames |",
-        "|---|---:|---:|---:|",
+        "| Scope | Delivery-qualified | Semantically rejected | Usable | Trials | Mean active frames |",
+        "|---|---:|---:|---:|---:|---:|",
     ]
     for row in scopes.itertuples(index=False):
         table_lines.append(
-            f"| {row.label} | {row.fully_qualified} | {row.trials} | {row.mean_active_frames:.1f} |"
+            f"| {row.label} | {row.fully_qualified} | {row.semantic_rejected} | {row.usable_for_next_design} | {row.trials} | {row.mean_active_frames:.1f} |"
         )
     follow_up = (
         "\n".join(f"- {item}" for item in recommendations)
@@ -293,6 +356,7 @@ reuse development sources already seen during engineering.
 | Parsed frames | {len(frames)} |
 | Active-audio frames | {int(frames['audio_active'].sum())} |
 | Fully qualified trials | {int(results['qualified'].sum())}/{len(results)} |
+| Usable after semantic notes | {int(results['usable_for_next_design'].sum())}/{len(results)} |
 
 ## Scope summary
 

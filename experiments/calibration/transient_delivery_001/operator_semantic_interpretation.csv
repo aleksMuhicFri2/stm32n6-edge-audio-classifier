@@ -1,0 +1,5 @@
+trial_id,recorded_at,semantic_status,basis,design_consequence
+TD-002,2026-08-07T19:40:00+02:00,rejected_by_operator,"Operator said the recording does not sound enough like a gunshot although loudness is acceptable","Do not fix this source by changing gain; replace it with a more canonical gunshot source"
+TD-003,2026-08-07T19:40:00+02:00,rejected_by_operator,"Operator said the burst is too quick and sounds too high","Do not fix this source by changing gain; replace it with a slower more canonical gunshot source"
+TD-008,2026-08-07T19:40:00+02:00,no_semantic_rejection,"Operator questioned recognition but did not reject the sound itself","Retain the repeated delivery setting for development diagnostics"
+TD-011,2026-08-07T19:40:00+02:00,no_semantic_rejection,"Operator reported insufficient loudness and sub-threshold recognition but did not reject the sound itself","Retain the source and test a modest level increase in a new calibration attempt"

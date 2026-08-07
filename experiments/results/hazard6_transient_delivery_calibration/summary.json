@@ -1,0 +1,60 @@
+{
+  "calibration_id": "STM32N6-TRANSIENT-DELIVERY-CAL-001",
+  "attempt_id": "TD-A01",
+  "trial_count": 11,
+  "frame_count": 393,
+  "active_frame_count": 69,
+  "qualified_trials": 6,
+  "semantically_rejected_trials": 2,
+  "usable_for_next_design_trials": 4,
+  "all_trials_qualified": false,
+  "classification_accuracy_reported": false,
+  "scope_results": [
+    {
+      "calibration_scope": "gunshot_repeated",
+      "label": "Gunshot repeated (+8 dB)",
+      "trials": 4,
+      "activity_passed": 4,
+      "audibility_passed": 3,
+      "fully_qualified": 3,
+      "semantic_rejected": 2,
+      "usable_for_next_design": 1,
+      "mean_active_frames": 9.5,
+      "all_qualified": false
+    },
+    {
+      "calibration_scope": "glass_low_activity_repeated",
+      "label": "Glass repeated (+3 dB)",
+      "trials": 2,
+      "activity_passed": 2,
+      "audibility_passed": 2,
+      "fully_qualified": 2,
+      "semantic_rejected": 0,
+      "usable_for_next_design": 2,
+      "mean_active_frames": 6.5,
+      "all_qualified": true
+    },
+    {
+      "calibration_scope": "ood_middle_level",
+      "label": "OOD repeated (-15 dB)",
+      "trials": 5,
+      "activity_passed": 2,
+      "audibility_passed": 2,
+      "fully_qualified": 1,
+      "semantic_rejected": 0,
+      "usable_for_next_design": 1,
+      "mean_active_frames": 3.6,
+      "all_qualified": false
+    }
+  ],
+  "required_follow_up": [
+    "TD-001 (door_wood_knock): increase level or repetition duration",
+    "TD-004 (clapping): reduce level while preserving at least three active frames",
+    "TD-005 (clock_tick): increase level or repetition duration",
+    "TD-009 (rain): increase level modestly; the repeated duration already provides temporal coverage",
+    "TD-011 (gunshot_gunfire): adjust level according to the operator rating",
+    "TD-002 (gunshot_gunfire): replace the source; gain changes cannot repair semantic mismatch",
+    "TD-003 (gunshot_gunfire): replace the source; gain changes cannot repair semantic mismatch"
+  ],
+  "manifest_sha256": "662ed04015ea90689a8184bb946d32169dcea3336f2b0fb0d5a42174d91e24b6"
+}
