@@ -45,3 +45,11 @@ Stop and report the affected trial order if the board resets, UART capture
 fails, the speaker or board moves, system volume changes, or another sound masks
 the stimulus. Preserve the incomplete record and resume with `-StartOrder`.
 
+## Completed pilot
+
+The controlled run completed on 2026-08-07 with all 35 planned trials and 746
+parsed frames. Only siren passed the four-of-five class gate. The aggregate
+positive detection rate was 13/30 (43.3%), and OOD hazard rejection was 3/5
+(60%). The firmware was not frozen. Detailed class results, failure patterns,
+the pre-run parser instrumentation note, and the next engineering decision are
+recorded in [SUMMARY.md](SUMMARY.md) and `summary.json`.

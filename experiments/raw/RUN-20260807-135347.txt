@@ -1,0 +1,66 @@
+run_id=RUN-20260807-135347
+recorded_at=2026-08-07T13:53:47.8730493+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=20
+stimulus=PILOT-011 | siren__fsd50k__dev__34952__0013__r0.wav
+stimulus_hash=39ce340fb4b3bfae94322a64e6e11fc5dcaf502d5e27450d1ca219ad778f63e5
+expected_class=siren
+test_type=positive
+source=FSD50K dev via Windows speaker
+distance_cm=30
+volume_percent=50
+firmware_git_commit=9a614d2
+capture_source_git_commit=9716a27
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard5v3s\audio\siren__fsd50k__dev__34952__0013__r0.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Pilot order 11; true category siren; fixed seed 120.
+--- UART ---
+
+{"class":"dog_bark"}
+AED_CSV,405,1,36192.00,dog_bark,0.7910,dog_bark,0.7910,speech,0.1110,siren,0.0824,1
+                    | 405     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"unknown"}
+AED_CSV,406,1,4296.00,unknown,0.4114,dog_bark,0.4114,siren,0.2675,speech,0.1150,1
+                    | 406     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,407,0,851.00,unknown,0.4114,dog_bark,0.4114,siren,0.2675,speech,0.1150,0
+                    | 407     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"waiting"}
+AED_CSV,408,0,728.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 408     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,409,0,1805.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 409     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,410,0,2234.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 410     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,411,0,1913.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 411     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,412,0,1881.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 412     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,413,0,1391.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 413     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,414,0,1257.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 414     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,415,0,1185.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 415     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,416,0,992.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 416     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,417,0,905.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 417     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,418,0,922.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 418     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,419,0,1056.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 419     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,420,0,2054.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 420     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"siren"}
+AED_CSV,421,1,4756.00,siren,0.9297,siren,0.9297,speech,0.0234,glass_breaking,0.0195,1
+                    | 421     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,422,1,45216.00,siren,0.8891,siren,0.8891,speech,0.0717,dog_bark,0.0232,0
+                    | 422     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,423,1,4832.00,siren,0.9434,siren,0.9434,speech,0.0302,dog_bark,0.0132,0
+                    | 423     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,424,1,4212.00,siren,0.9523,siren,0.9523,thunderstorm,0.0242,speech,0.0156,0
+                    | 424     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,425,1,5392.00,siren,0.9681,siren,0.9681,thunderstorm,0.0186,speech,0.0080,0
+                    | 425     |  0.85%|  0.69|  0.16|  0.00|

@@ -1,0 +1,65 @@
+run_id=RUN-20260807-140110
+recorded_at=2026-08-07T14:01:10.9846016+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=20
+stimulus=PILOT-033 | thunderstorm__fsd50k__dev__344435__0048__r0.wav
+stimulus_hash=231bcb64e656079f6241eda4b76054cf2bf9c4dc0dee072487c6efc176e77bda
+expected_class=thunderstorm
+test_type=positive
+source=FSD50K dev via Windows speaker
+distance_cm=30
+volume_percent=50
+firmware_git_commit=9a614d2
+capture_source_git_commit=9716a27
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard5v3s\audio\thunderstorm__fsd50k__dev__344435__0048__r0.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Pilot order 33; true category thunderstorm; fixed seed 120.
+--- UART ---
+
+AED_CSV,861,0,685.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 861     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,862,0,606.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 862     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,863,0,556.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 863     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,864,0,614.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 864     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,865,0,776.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 865     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,866,0,2156.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 866     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,867,0,1311.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 867     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"unknown"}
+AED_CSV,868,1,5084.00,unknown,0.3281,siren,0.3281,speech,0.2578,thunderstorm,0.2578,1
+                    | 868     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,869,1,11376.00,unknown,0.4500,siren,0.4500,thunderstorm,0.3264,speech,0.1385,0
+                    | 869     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,870,1,15776.00,unknown,0.4468,thunderstorm,0.4468,siren,0.3936,speech,0.1018,0
+                    | 870     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,871,1,20288.00,unknown,0.5753,thunderstorm,0.5753,siren,0.3053,speech,0.0686,0
+                    | 871     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"thunderstorm"}
+AED_CSV,872,1,18784.00,thunderstorm,0.6838,thunderstorm,0.6838,siren,0.2161,speech,0.0545,1
+                    | 872     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"unknown"}
+AED_CSV,873,1,13944.00,unknown,0.4729,thunderstorm,0.4729,siren,0.4438,speech,0.0521,1
+                    | 873     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,874,1,10744.00,unknown,0.5235,siren,0.5235,thunderstorm,0.2976,speech,0.1350,0
+                    | 874     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,875,1,8456.00,unknown,0.5031,siren,0.5031,thunderstorm,0.3327,speech,0.1107,0
+                    | 875     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,876,1,13280.00,unknown,0.5874,siren,0.5874,thunderstorm,0.2815,speech,0.0845,0
+                    | 876     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,877,1,8360.00,unknown,0.5408,siren,0.5408,thunderstorm,0.3651,speech,0.0600,0
+                    | 877     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,878,1,5612.00,unknown,0.5727,siren,0.5727,thunderstorm,0.2979,speech,0.0896,0
+                    | 878     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,879,1,5504.00,unknown,0.5610,siren,0.5610,thunderstorm,0.2465,speech,0.1329,0
+                    | 879     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,880,1,8368.00,unknown,0.5213,siren,0.5213,thunderstorm,0.2310,speech,0.1506,0
+                    | 880     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,881,1,7548.00,unknown,0.4237,siren,0.4237,thunderstorm,0.4211,speech,0.1010,0
+                    | 881     |  0.85%|  0.69|  0.16|  0.00|

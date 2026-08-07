@@ -255,7 +255,10 @@ overview.getRange("A3:A10").format.columnWidth = 28;
 overview.getRange("B3:B10").format.columnWidth = 48;
 overview.getRange("B8:B9").format.numberFormat = "0.0%";
 overview.getRange("A12:H15").merge();
-overview.getRange("A12:H15").values = [["Current status: the workbook is ready for capture. Thirty development positives and five development hard negatives are randomized with seed 120. Prior smoke-test clips are excluded. ESC-50 fold 5 and the FSD50K evaluation split remain untouched. Rebuild this workbook after the pilot to populate results and charts."]];
+const overviewStatus = pilotRuns.length >= manifest.rows.length
+  ? "Current status: the controlled development pilot is complete. All 35 planned trials were captured under fixed conditions. The class gates below determine what must be reviewed before firmware freeze; reserved ESC-50 fold 5 and FSD50K evaluation data remain untouched for the final evaluation."
+  : "Current status: the workbook is ready for capture. Thirty development positives and five development hard negatives are randomized with seed 120. Prior smoke-test clips are excluded. ESC-50 fold 5 and the FSD50K evaluation split remain untouched. Rebuild this workbook after the pilot to populate results and charts.";
+overview.getRange("A12:H15").values = [[overviewStatus]];
 overview.getRange("A12:H15").format = { fill: colors.light, font: { color: colors.muted, italic: true }, wrapText: true, verticalAlignment: "top", borders: { preset: "outside", style: "thin", color: colors.line } };
 
 results.showGridLines = false;
@@ -356,6 +359,7 @@ const previews = [
   ["Pilot Runs", `A1:N${Math.min(runsLastRow, 12)}`, "pilot_runs_preview.png"],
   ["Pilot Frames", `A1:V${Math.min(framesLastRow, 12)}`, "pilot_frames_preview.png"],
   ["Results", "A1:I27", "pilot_results_preview.png"],
+  ["Results", "K1:R28", "pilot_results_chart_preview.png"],
   ["Protocol", `A1:H${protocolRows.length + 2}`, "pilot_protocol_preview.png"],
 ];
 for (const [sheetName, range, fileName] of previews) {

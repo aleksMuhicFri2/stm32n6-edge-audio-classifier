@@ -1,0 +1,62 @@
+run_id=RUN-20260807-135207
+recorded_at=2026-08-07T13:52:07.1190589+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=20
+stimulus=PILOT-006 | thunderstorm__esc50__fold_4__156993__0004__r0.wav
+stimulus_hash=542138c59d58acaab06659a09902e49fe7acffb07594680210f38a6ba21898e5
+expected_class=thunderstorm
+test_type=positive
+source=ESC-50 fold_4 via Windows speaker
+distance_cm=30
+volume_percent=50
+firmware_git_commit=9a614d2
+capture_source_git_commit=9716a27
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard5v3s\audio\thunderstorm__esc50__fold_4__156993__0004__r0.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Pilot order 6; true category thunderstorm; fixed seed 120.
+--- UART ---
+
+AED_CSV,302,0,941.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 302     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,303,0,836.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 303     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,304,0,779.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 304     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,305,0,1360.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 305     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"unknown"}
+AED_CSV,306,1,34976.00,unknown,0.3750,thunderstorm,0.3750,siren,0.2969,gunshot_gunfire,0.1484,1
+                    | 306     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,307,1,21984.00,unknown,0.4619,siren,0.4619,thunderstorm,0.2582,gunshot_gunfire,0.1535,0
+                    | 307     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,308,1,10944.00,unknown,0.5984,siren,0.5984,thunderstorm,0.2630,gunshot_gunfire,0.0613,0
+                    | 308     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,309,1,23200.00,unknown,0.5669,thunderstorm,0.5669,siren,0.3288,gunshot_gunfire,0.0545,0
+                    | 309     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,310,1,18992.00,unknown,0.5132,thunderstorm,0.5132,siren,0.3131,gunshot_gunfire,0.0902,0
+                    | 310     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,311,0,666.00,unknown,0.5132,thunderstorm,0.5132,siren,0.3131,gunshot_gunfire,0.0902,0
+                    | 311     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"waiting"}
+AED_CSV,312,0,829.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 312     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,313,0,777.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 313     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,314,0,875.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 314     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,315,0,605.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 315     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,316,0,700.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 316     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,317,0,853.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 317     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,318,0,641.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 318     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,319,0,614.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 319     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,320,0,707.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 320     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,321,0,699.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 321     |  0.85%|  0.69|  0.16|  0.00|

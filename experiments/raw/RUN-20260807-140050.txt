@@ -1,0 +1,62 @@
+run_id=RUN-20260807-140050
+recorded_at=2026-08-07T14:00:50.8419666+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=20
+stimulus=PILOT-032 | gunshot_gunfire__fsd50k__dev__257963__0035__r0.wav
+stimulus_hash=3540c70455e1d345be6cdd491cd36ffcc51bbdde57a811d87cbc6c12783af496
+expected_class=gunshot_gunfire
+test_type=positive
+source=FSD50K dev via Windows speaker
+distance_cm=30
+volume_percent=50
+firmware_git_commit=9a614d2
+capture_source_git_commit=9716a27
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard5v3s\audio\gunshot_gunfire__fsd50k__dev__257963__0035__r0.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Pilot order 32; true category gunshot_gunfire; fixed seed 120.
+--- UART ---
+
+AED_CSV,841,0,562.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 841     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,842,0,585.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 842     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,843,0,630.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 843     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"unknown"}
+AED_CSV,844,1,18304.00,unknown,0.2969,dog_bark,0.2969,siren,0.2656,gunshot_gunfire,0.2109,1
+                    | 844     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,845,1,4380.00,unknown,0.4064,gunshot_gunfire,0.4064,siren,0.2250,dog_bark,0.1623,0
+                    | 845     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,846,0,632.00,unknown,0.4064,gunshot_gunfire,0.4064,siren,0.2250,dog_bark,0.1623,0
+                    | 846     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"waiting"}
+AED_CSV,847,0,566.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 847     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,848,0,663.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 848     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,849,0,707.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 849     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,850,0,671.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 850     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,851,0,613.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 851     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,852,0,679.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 852     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,853,0,589.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 853     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,854,0,562.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 854     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,855,0,638.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 855     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,856,0,684.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 856     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,857,0,693.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 857     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,858,0,618.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 858     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,859,0,634.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 859     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,860,0,613.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 860     |  0.85%|  0.69|  0.16|  0.00|

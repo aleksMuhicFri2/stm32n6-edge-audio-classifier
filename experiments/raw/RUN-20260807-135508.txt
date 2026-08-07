@@ -1,0 +1,65 @@
+run_id=RUN-20260807-135508
+recorded_at=2026-08-07T13:55:08.3985653+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=20
+stimulus=PILOT-015 | dog_bark__fsd50k__dev__221207__0034__r0.wav
+stimulus_hash=7330cfc7df3dbc33b962f27d5fd7a202903f21296beab807bc0fae5109dc3f47
+expected_class=dog_bark
+test_type=positive
+source=FSD50K dev via Windows speaker
+distance_cm=30
+volume_percent=50
+firmware_git_commit=9a614d2
+capture_source_git_commit=9716a27
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard5v3s\audio\dog_bark__fsd50k__dev__221207__0034__r0.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Pilot order 15; true category dog_bark; fixed seed 120.
+--- UART ---
+
+AED_CSV,488,0,774.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 488     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,489,0,793.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 489     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,490,0,752.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 490     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,491,0,662.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 491     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"dog_bark"}
+AED_CSV,492,1,15712.00,dog_bark,0.7109,dog_bark,0.7109,speech,0.2539,siren,0.0273,1
+                    | 492     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"speech"}
+AED_CSV,493,1,6628.00,speech,0.4012,dog_bark,0.4697,speech,0.4012,siren,0.0883,1
+                    | 493     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,494,1,18400.00,speech,0.2826,dog_bark,0.6646,speech,0.2826,siren,0.0385,0
+                    | 494     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,495,1,10320.00,speech,0.4468,speech,0.4468,dog_bark,0.3545,siren,0.1125,0
+                    | 495     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,496,0,693.50,speech,0.4468,speech,0.4468,dog_bark,0.3545,siren,0.1125,0
+                    | 496     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"waiting"}
+AED_CSV,497,0,807.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 497     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,498,0,791.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 498     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,499,0,806.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 499     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,500,0,600.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 500     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,501,0,723.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 501     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,502,0,816.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 502     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,503,0,681.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 503     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,504,0,634.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 504     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,505,0,762.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 505     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,506,0,897.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 506     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,507,0,1631.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 507     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,508,0,899.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 508     |  0.85%|  0.69|  0.16|  0.00|

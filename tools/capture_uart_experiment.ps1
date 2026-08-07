@@ -129,7 +129,7 @@ $header = @(
 [System.IO.File]::WriteAllText($rawPath, $header + [Environment]::NewLine + $cleanText)
 
 $framePattern = "\|\s*(\d+)\s*\|\s*([\d.]+)%\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|"
-$aedPattern = "AED_CSV,(\d+),([01]),([^,\r\n]+),([\d.]+),([^,\r\n]+),([\d.]+),([^,\r\n]+),([\d.]+),([^,\r\n]+),([\d.]+),([01])"
+$aedPattern = "AED_CSV,(\d+),([01]),([^,\r\n]+),([^,\r\n]+),([\d.]+),([^,\r\n]+),([\d.]+),([^,\r\n]+),([\d.]+),([^,\r\n]+),([\d.]+),([01])"
 $statsByFrame = @{}
 
 foreach ($match in [regex]::Matches($cleanText, $framePattern)) {
@@ -152,7 +152,7 @@ $frames = [System.Collections.Generic.List[object]]::new()
 for ($index = 0; $index -lt $aedMatches.Count; $index++) {
     $match = $aedMatches[$index]
     $frameId = [int]$match.Groups[1].Value
-    $predictedClass = $match.Groups[3].Value
+    $predictedClass = $match.Groups[4].Value
     $stats = $statsByFrame[$frameId]
     if ($TestType -in @("ood", "idle")) {
         $isCorrect = $predictedClass -in $safeOutputClasses
@@ -175,14 +175,14 @@ for ($index = 0; $index -lt $aedMatches.Count; $index++) {
         postprocess_ms = if ($null -ne $stats) { $stats.postprocess_ms } else { $null }
         record_completeness = if ($null -ne $stats) { "direct_complete_estimated_offset" } else { "decision_complete_no_timing" }
         audio_active = [bool]([int]$match.Groups[2].Value)
-        decision_confidence = [double]$match.Groups[4].Value
-        top1_class = $match.Groups[5].Value
-        top1_confidence = [double]$match.Groups[6].Value
-        top2_class = $match.Groups[7].Value
-        top2_confidence = [double]$match.Groups[8].Value
-        top3_class = $match.Groups[9].Value
-        top3_confidence = [double]$match.Groups[10].Value
-        decision_changed = [bool]([int]$match.Groups[11].Value)
+        decision_confidence = [double]$match.Groups[5].Value
+        top1_class = $match.Groups[6].Value
+        top1_confidence = [double]$match.Groups[7].Value
+        top2_class = $match.Groups[8].Value
+        top2_confidence = [double]$match.Groups[9].Value
+        top3_class = $match.Groups[10].Value
+        top3_confidence = [double]$match.Groups[11].Value
+        decision_changed = [bool]([int]$match.Groups[12].Value)
     })
 }
 

@@ -4,7 +4,8 @@ param(
     [int]$StartOrder = 1,
     [ValidateRange(1, 35)]
     [int]$EndOrder = 35,
-    [switch]$ValidateOnly
+    [switch]$ValidateOnly,
+    [switch]$AutoConfirm
 )
 
 $ErrorActionPreference = "Stop"
@@ -49,9 +50,11 @@ Write-Host "  2. Set Windows playback volume to 50 percent."
 Write-Host "  3. Keep the room quiet and do not move the board or speaker."
 Write-Host "  4. Confirm that the board is monitoring and press TAMP once."
 Write-Host "The run takes about $([math]::Ceiling($trials.Count * 20 / 60)) minutes and plays automatically."
-$confirmation = Read-Host "Type START to begin"
-if ($confirmation -ne "START") {
-    throw "Pilot cancelled before data capture."
+if (-not $AutoConfirm) {
+    $confirmation = Read-Host "Type START to begin"
+    if ($confirmation -ne "START") {
+        throw "Pilot cancelled before data capture."
+    }
 }
 
 foreach ($trial in $trials) {

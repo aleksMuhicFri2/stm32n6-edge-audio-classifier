@@ -1,0 +1,62 @@
+run_id=RUN-20260807-135709
+recorded_at=2026-08-07T13:57:09.2797661+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=20
+stimulus=PILOT-021 | gunshot_gunfire__fsd50k__dev__150139__0011__r0.wav
+stimulus_hash=483a5e00e438e1f22636c71d84dec95946450f41f26968afc7166d1ee9a2fef6
+expected_class=gunshot_gunfire
+test_type=positive
+source=FSD50K dev via Windows speaker
+distance_cm=30
+volume_percent=50
+firmware_git_commit=9a614d2
+capture_source_git_commit=9716a27
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard5v3s\audio\gunshot_gunfire__fsd50k__dev__150139__0011__r0.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Pilot order 21; true category gunshot_gunfire; fixed seed 120.
+--- UART ---
+  0.00|
+AED_CSV,613,0,697.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 613     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,614,0,733.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 614     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,615,0,639.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 615     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"unknown"}
+AED_CSV,616,1,30448.00,unknown,0.3438,siren,0.3438,gunshot_gunfire,0.3047,dog_bark,0.1719,1
+                    | 616     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,617,1,9712.00,unknown,0.5230,gunshot_gunfire,0.5230,siren,0.2523,dog_bark,0.0982,0
+                    | 617     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,618,0,893.00,unknown,0.5230,gunshot_gunfire,0.5230,siren,0.2523,dog_bark,0.0982,0
+                    | 618     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"waiting"}
+AED_CSV,619,0,1062.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 619     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,620,0,626.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 620     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,621,0,696.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 621     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,622,0,624.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 622     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,623,0,597.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 623     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,624,0,595.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 624     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,625,0,632.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 625     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,626,0,680.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 626     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,627,0,642.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 627     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,628,0,647.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 628     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,629,0,690.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 629     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,630,0,693.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 630     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,631,0,642.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 631     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,632,0,628.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 632     |  0.85%|  0.69|  0.16|  0.00|
