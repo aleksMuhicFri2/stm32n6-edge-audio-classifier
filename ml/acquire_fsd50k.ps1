@@ -109,8 +109,12 @@ foreach ($archive in @('FSD50K.dev_audio.zip', 'FSD50K.eval_audio.zip')) {
         continue
     }
     Write-Host ('Extracting {0}...' -f $archive)
-    & $winRar x -inul -y $archivePath "$Destination\"
-    if ($LASTEXITCODE -ne 0) {
+    $extract = Start-Process -FilePath $winRar `
+        -ArgumentList @('x', '-inul', '-y', $archivePath, ($Destination.TrimEnd('\') + '\')) `
+        -WindowStyle Hidden `
+        -Wait `
+        -PassThru
+    if ($extract.ExitCode -ne 0) {
         throw "Extraction failed: $archive"
     }
 }

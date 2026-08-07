@@ -1,0 +1,39 @@
+{
+  "evaluation_id": "STM32N6-HAZARD6-FINAL-001",
+  "attempt_id": "FE-A01",
+  "status": "frozen_not_started",
+  "purpose": "One-time reserved physical evaluation of the frozen STM32N6 deployment.",
+  "trial_count": 70,
+  "class_counts": {
+    "dog_bark": 10,
+    "glass_breaking": 10,
+    "gunshot_gunfire": 10,
+    "out_of_distribution": 10,
+    "siren": 10,
+    "speech": 10,
+    "thunderstorm": 10
+  },
+  "selection_seed": 501,
+  "ood_selection_seed": 502,
+  "order_seed": 503,
+  "selection_policy": "Metadata-only deterministic target-label selection with no competing model-output label, canonical subtype filters, and distinct uploaders within each positive class; no model predictions or listening-based exclusions.",
+  "positive_source": "FSD50K evaluation split",
+  "ood_source": "ESC-50 fold 5",
+  "primary_metric": "Trial-level confirmed target-detection rate for each of six model outputs.",
+  "ood_metric": "Trial-level confirmed hazard false-alert rate; inactive trials remain valid system outcomes.",
+  "physical_setup": {
+    "windows_volume_percent": 75,
+    "distance_cm": 30,
+    "playback_delay_s": 3,
+    "capture_duration_s": 20
+  },
+  "firmware_commit": "9a614d2",
+  "model_name": "YAMNet-256 Hazard-5 + Speech int8",
+  "model_sha256": "1e04ff9d9394ace17020077e804bf40fbbaf0312c81ad9e83ea3ffb56e84946a",
+  "source_metadata_sha256": {
+    "fsd50k_eval_csv": "ef861a4619691783bfceb7f43e1a395dcf969150ba4ad34dcb36b93abd26b3d6",
+    "fsd50k_eval_metadata": "ced921d00c4f7ace86b92c259689a1a40a8452808e93235021165ad2d8b77e6c",
+    "esc50_csv": "8f8cb574a57e381872129b77425ab31a3c69b93a7a82101ede48e0abbb9990ca"
+  },
+  "manifest_sha256": "439f00ddb787948d2b2253d450030c0881af766066b36a300cde3121142043ec"
+}
