@@ -73,7 +73,7 @@ foreach ($trial in $trials) {
         -DurationSeconds ([int]$trial.capture_duration_s) `
         -Stimulus "$($trial.trial_id) | $($trial.review_id) | $($trial.stimulus_file)" `
         -ExpectedClass $trial.expected_class `
-        -QualityLevel controlled_canonical_normalized `
+        -QualityLevel controlled `
         -TestType $trial.test_type `
         -Source $source `
         -DistanceCm ([int]$trial.distance_cm) `
