@@ -1,0 +1,141 @@
+{
+  "experiment_id": "STM32N6-HAZARD6-PILOT-002-STIMULUS-SCREEN-001",
+  "candidate_count": 58,
+  "reviewed_count": 56,
+  "missing_review_ids": [
+    "P2R-014",
+    "P2R-054"
+  ],
+  "missing_review_classes": [
+    "siren",
+    "out_of_distribution"
+  ],
+  "representativeness": {
+    "dog_bark": {
+      "canonical": 6,
+      "atypical_valid": 1,
+      "ambiguous_wrong": 1
+    },
+    "glass_breaking": {
+      "canonical": 4,
+      "atypical_valid": 2,
+      "ambiguous_wrong": 2
+    },
+    "gunshot_gunfire": {
+      "canonical": 4,
+      "ambiguous_wrong": 3,
+      "atypical_valid": 1
+    },
+    "siren": {
+      "canonical": 6,
+      "atypical_valid": 1
+    },
+    "speech": {
+      "atypical_valid": 1,
+      "ambiguous_wrong": 4,
+      "canonical": 3
+    },
+    "thunderstorm": {
+      "atypical_valid": 3,
+      "canonical": 5
+    },
+    "out_of_distribution": {
+      "ambiguous_wrong": 4,
+      "atypical_valid": 3,
+      "canonical": 2
+    }
+  },
+  "audibility": {
+    "dog_bark": {
+      "normal": 7,
+      "loud_distorted": 1
+    },
+    "glass_breaking": {
+      "loud_distorted": 2,
+      "normal": 6
+    },
+    "gunshot_gunfire": {
+      "normal": 5,
+      "quiet": 1,
+      "loud_distorted": 2
+    },
+    "siren": {
+      "loud_distorted": 3,
+      "normal": 4
+    },
+    "speech": {
+      "loud_distorted": 7,
+      "normal": 1
+    },
+    "thunderstorm": {
+      "normal": 7,
+      "loud_distorted": 1
+    },
+    "out_of_distribution": {
+      "loud_distorted": 7,
+      "normal": 2
+    }
+  },
+  "initial_targeted_eligible_counts": {
+    "dog_bark": 6,
+    "glass_breaking": 2,
+    "gunshot_gunfire": 4,
+    "siren": 3,
+    "speech": 0,
+    "thunderstorm": 3,
+    "out_of_distribution": 1
+  },
+  "eligible_variant_counts": {
+    "dog_bark": {
+      "not_recorded": 6
+    },
+    "gunshot_gunfire": {
+      "multiple_shots": 2,
+      "single_shot": 2
+    },
+    "glass_breaking": {
+      "clean_shatter": 2
+    },
+    "thunderstorm": {
+      "not_recorded": 3
+    },
+    "siren": {
+      "not_recorded": 3
+    },
+    "out_of_distribution": {
+      "not_recorded": 1
+    }
+  },
+  "targeted_physical_classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "thunderstorm"
+  ],
+  "classes_not_retested": {
+    "speech": "Normal live speech already passed the dedicated 3/3 smoke test; operator requested no repeat in targeted Pilot 2.",
+    "siren": "Pilot 1 already passed 5/5; operator requested no repeat in targeted Pilot 2."
+  },
+  "operator_followup": {
+    "thunderstorm": "Most candidate recordings contain an unrealistic high-pitched background; exclude those recordings.",
+    "gunshot_gunfire": "Recognition depends strongly on playback loudness; evaluate fixed gain strata."
+  },
+  "high_pitch_thunder_exclusions": [
+    "P2R-025",
+    "P2R-032",
+    "P2R-039",
+    "P2R-053"
+  ],
+  "model_outcome_leakage": {
+    "detected_in_notes": true,
+    "affected_review_ids": [
+      "P2R-001",
+      "P2R-005",
+      "P2R-025",
+      "P2R-037"
+    ],
+    "interpretation": "The runner hid predictions, but the operator could see the live board display. Semantic judgments remain useful for engineering selection, but this screen is not a prediction-blind accuracy set."
+  },
+  "reporting_rule": "Use the resulting targeted run as development verification only. Do not report it as unbiased final accuracy and do not replace Pilot 1.",
+  "reserved_final_data_used": false
+}

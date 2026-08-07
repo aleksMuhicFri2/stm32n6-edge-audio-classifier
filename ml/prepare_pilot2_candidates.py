@@ -107,15 +107,22 @@ def max_frame_rms(audio: np.ndarray, sample_rate: int) -> float:
     return maxima
 
 
-def normalize_audio(source: Path, target: Path) -> dict[str, object]:
+def normalize_audio(
+    source: Path,
+    target: Path,
+    target_frame_rms_dbfs: float = TARGET_MAX_FRAME_RMS_DBFS,
+    peak_ceiling_dbfs: float = PEAK_CEILING_DBFS,
+    maximum_gain_db: float = MAX_ABS_GAIN_DB,
+    maximum_attenuation_db: float = MAX_ABS_GAIN_DB,
+) -> dict[str, object]:
     audio, sample_rate = sf.read(source, dtype="float32", always_2d=True)
     mono = np.mean(audio, axis=1, dtype=np.float32)
     original_peak = float(np.max(np.abs(mono))) if len(mono) else 0.0
     original_frame_rms = max_frame_rms(mono, sample_rate)
-    desired_gain_db = TARGET_MAX_FRAME_RMS_DBFS - dbfs(original_frame_rms)
-    peak_limited_gain_db = PEAK_CEILING_DBFS - dbfs(original_peak)
-    applied_gain_db = min(desired_gain_db, peak_limited_gain_db, MAX_ABS_GAIN_DB)
-    applied_gain_db = max(applied_gain_db, -MAX_ABS_GAIN_DB)
+    desired_gain_db = target_frame_rms_dbfs - dbfs(original_frame_rms)
+    peak_limited_gain_db = peak_ceiling_dbfs - dbfs(original_peak)
+    applied_gain_db = min(desired_gain_db, peak_limited_gain_db, maximum_gain_db)
+    applied_gain_db = max(applied_gain_db, -maximum_attenuation_db)
     normalized = mono * np.float32(10.0 ** (applied_gain_db / 20.0))
     normalized = np.clip(normalized, -1.0, 1.0)
 

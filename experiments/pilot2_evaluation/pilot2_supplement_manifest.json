@@ -1,0 +1,25 @@
+{
+  "experiment_id": "STM32N6-HAZARD6-PILOT-002-SUPPLEMENT-001",
+  "selection_seed": 209,
+  "candidate_count": 24,
+  "candidate_plan": {
+    "glass_breaking": 6,
+    "thunderstorm": 6,
+    "ood:clapping": 3,
+    "ood:door_wood_knock": 3,
+    "ood:rain": 3,
+    "ood:clock_tick": 3
+  },
+  "reason": "Fill clean glass, thunderstorm, and OOD shortages after the first semantic screen; gunfire already has four canonical sources for a paired loudness test.",
+  "normalization": {
+    "target_max_100ms_frame_rms_dbfs": -18.0,
+    "peak_ceiling_dbfs": -6.0,
+    "maximum_gain_db": 6.0,
+    "maximum_attenuation_db": 24.0
+  },
+  "source_disjoint_from_pilot1_and_initial_pilot2_candidates": true,
+  "selection_used_model_predictions": false,
+  "review_requirement": "Turn off the board or fully hide its screen before listening.",
+  "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
+  "manifest_sha256": "56ad2eb31b305bf651d205905f09eb31d064cf6728f8560ad1f47846a79e8b9f"
+}

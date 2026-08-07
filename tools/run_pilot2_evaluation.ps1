@@ -1,9 +1,9 @@
 param(
     [string]$Port = "COM3",
-    [ValidateRange(1, 35)]
+    [ValidateRange(1, 28)]
     [int]$StartOrder = 1,
-    [ValidateRange(1, 35)]
-    [int]$EndOrder = 35,
+    [ValidateRange(1, 28)]
+    [int]$EndOrder = 28,
     [switch]$ValidateOnly,
     [switch]$AutoConfirm
 )
@@ -24,8 +24,8 @@ if ($Port -notin [System.IO.Ports.SerialPort]::GetPortNames()) {
 }
 
 $allTrials = @(Import-Csv -LiteralPath $manifestPath | Sort-Object { [int]$_.trial_order })
-if ($allTrials.Count -ne 35) {
-    throw "Expected 35 frozen Pilot 2 trials; found $($allTrials.Count)."
+if ($allTrials.Count -ne 28) {
+    throw "Expected 28 frozen targeted Pilot 2 trials; found $($allTrials.Count)."
 }
 $trials = @($allTrials | Where-Object {
     [int]$_.trial_order -ge $StartOrder -and [int]$_.trial_order -le $EndOrder
@@ -45,7 +45,7 @@ if ($ValidateOnly) {
     return
 }
 
-Write-Host "STM32N6 clean-stimulus development pilot: $($trials.Count) trials."
+Write-Host "STM32N6 targeted clean-stimulus development verification: $($trials.Count) trials."
 Write-Host "Before continuing:"
 Write-Host "  1. Put the speaker 30 cm from the board microphone."
 Write-Host "  2. Set Windows playback volume to 50 percent."
@@ -65,7 +65,7 @@ foreach ($trial in $trials) {
     $audioPath = (Resolve-Path -LiteralPath (Join-Path $repoRoot ($trial.stimulus_path -replace "/", "\"))).Path
     $source = "$($trial.source_dataset) $($trial.source_partition) normalized development playback"
     Write-Host ""
-    Write-Host "[$order/35] $($trial.trial_id)"
+    Write-Host "[$order/28] $($trial.trial_id) | $($trial.loudness_stratum)"
 
     & $captureScript `
         -Port $Port `
@@ -79,7 +79,7 @@ foreach ($trial in $trials) {
         -DistanceCm ([int]$trial.distance_cm) `
         -VolumePercent ([int]$trial.volume_percent) `
         -StimulusHash $trial.sha256 `
-        -Notes "Pilot 2 order $order; true category $($trial.true_category); semantic variant $($trial.variant); final-order seed 208." `
+        -Notes "Targeted Pilot 2 order $order; true category $($trial.true_category); semantic variant $($trial.variant); loudness stratum $($trial.loudness_stratum); final-order seed 210." `
         -PlaybackFile $audioPath `
         -PlaybackDelaySeconds 3 `
         -FirmwareCommit "9a614d2" `
