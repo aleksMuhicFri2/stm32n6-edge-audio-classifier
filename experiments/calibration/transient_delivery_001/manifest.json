@@ -1,0 +1,23 @@
+{
+  "calibration_id": "STM32N6-TRANSIENT-DELIVERY-CAL-001",
+  "attempt_id": "TD-A01",
+  "purpose": "Non-scored qualification of playback audibility and board-side activity coverage before another physical evaluation.",
+  "trial_count": 11,
+  "order_seed": 407,
+  "scope_counts": {
+    "glass_low_activity_repeated": 2,
+    "gunshot_repeated": 4,
+    "ood_middle_level": 5
+  },
+  "activity_gate": "At least 3 active-audio telemetry frames per trial.",
+  "audibility_gate": "Operator rating must be comfortable, not too quiet and not too loud or distorted.",
+  "scoring_policy": "Do not calculate or report classification accuracy from these reused development sources.",
+  "gunshot_processing": "Four Pilot 2 high-stratum sources receive 3 dB additional pregain for net +8 dB relative to their reviewed parents, a -1 dBFS safety ceiling, transient trimming, and repetition to at least 10 seconds.",
+  "glass_processing": "The inactive and single-active-frame Pilot 2 glass sources receive 3 dB additional pregain, transient trimming, and repetition to at least 10 seconds.",
+  "ood_processing": "All five OOD sources move from -20 dB to -15 dB relative to their reviewed parents and repeat to at least 10 seconds.",
+  "firmware_commit": "9a614d2",
+  "model_name": "YAMNet-256 Hazard-5 + Speech int8",
+  "model_sha256": "1e04ff9d9394ace17020077e804bf40fbbaf0312c81ad9e83ea3ffb56e84946a",
+  "reserved_data_policy": "Uses only previously selected development sources; ESC-50 fold 5 and FSD50K evaluation remain untouched.",
+  "manifest_sha256": "662ed04015ea90689a8184bb946d32169dcea3336f2b0fb0d5a42174d91e24b6"
+}
