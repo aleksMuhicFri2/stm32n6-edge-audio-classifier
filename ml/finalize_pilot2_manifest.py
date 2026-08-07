@@ -188,7 +188,7 @@ def main() -> None:
                 "audibility": row["audibility"],
                 "variant": row["variant"],
                 "eligible_for_targeted_pilot2": semantically_eligible(row),
-                "note": row["note"],
+                "note": row["note"].strip(),
             }
         )
     write_csv(experiment_dir / "pilot2_review_qualification.csv", qualification_rows)
@@ -249,11 +249,7 @@ def main() -> None:
     if not ambient_choices:
         raise RuntimeError("No eligible rain or wind ambient OOD clip")
     ambient = ambient_choices[0]
-    ambient_stratum = (
-        "reviewed_loud_attenuated_6db"
-        if ambient["audibility"] == "loud_distorted"
-        else "reviewed_nominal"
-    )
+    ambient_stratum = "reviewed_very_loud_attenuated_12db"
     selected.append({**ambient, "loudness_stratum": ambient_stratum})
     selected_ood_categories.append(ambient["true_category"])
 
@@ -274,7 +270,10 @@ def main() -> None:
         output_path = output_audio / output_name
         source_path = resolve_stimulus(repo_root, row)
         derived_gain_db = 0.0
-        if row["loudness_stratum"] in {
+        if row["loudness_stratum"] == "reviewed_very_loud_attenuated_12db":
+            derived_gain_db = -12.0
+            attenuate_pcm16(source_path, output_path, derived_gain_db)
+        elif row["loudness_stratum"] in {
             "reduced_6db",
             "reviewed_loud_attenuated_6db",
         }:
@@ -347,7 +346,8 @@ def main() -> None:
             "gunshot_reduced_6db": "descriptive paired sensitivity result",
             "ood_rejection": "at least 4/5 without a confirmed hazard",
         },
-        "selection_limitation": "The initial semantic screen had visible-board outcome leakage. The supplemental shortage review hid the board. This remains development verification, not unbiased final accuracy.",
+        "selection_limitation": "The initial semantic screen had visible-board outcome leakage. The supplemental and ambient reviews hid the board. This remains development verification, not unbiased final accuracy.",
+        "playback_level_rationale": "Windows volume remains fixed at 50 percent. Ordinary clips judged correct but loud receive 6 dB waveform attenuation. Every final ambient candidate was judged far too loud, so the selected ambient clip receives 12 dB attenuation. Parent hashes and derived gains are recorded.",
         "replaces_pilot1": False,
         "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
         "manifest_sha256": sha256(final_csv),

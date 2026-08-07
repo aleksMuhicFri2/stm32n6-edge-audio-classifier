@@ -2,6 +2,7 @@
   "experiment_id": "STM32N6-HAZARD6-PILOT-002-AMBIENT-CHECK-001",
   "seed": 211,
   "candidate_count": 4,
+  "review_volume_percent": 50,
   "categories": {
     "rain": 2,
     "wind_fallback": 2

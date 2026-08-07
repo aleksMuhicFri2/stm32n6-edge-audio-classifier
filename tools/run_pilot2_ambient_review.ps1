@@ -25,6 +25,7 @@ if ($ValidateOnly) {
 }
 
 Write-Host "Final four-clip ambient check. Keep the STM32 screen hidden."
+Write-Host "Set Windows playback volume to 50 percent and keep it fixed."
 Write-Host "Judge only whether each clip clearly sounds like the stated safe sound."
 foreach ($trial in $trials) {
     if ((-not $Redo) -and $existing.ContainsKey($trial.review_id)) { continue }

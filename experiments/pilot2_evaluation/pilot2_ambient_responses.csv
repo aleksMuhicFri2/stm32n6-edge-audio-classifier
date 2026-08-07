@@ -1,0 +1,5 @@
+﻿"candidate_order","review_id","expected_class","true_category","stimulus_sha256","representativeness","audibility","variant","note"
+"1","P2A-001","out_of_distribution","rain","79d83e81b1554249e541242b90962d1d8cf51975b49f3a66187710c80d7c71db","canonical","loud_distorted","not_recorded","too loud"
+"2","P2A-002","out_of_distribution","wind","467bab689f12707c0257c132f377888a52e7827359fec09e79dfad375df21a4b","canonical","loud_distorted","not_recorded","TOO LOUD"
+"3","P2A-003","out_of_distribution","wind","69f40ed81b7f270ec4804293cb6ff3028335eaf8e4d2da362d52ca689d63301f","canonical","loud_distorted","not_recorded","TOO LOUD"
+"4","P2A-004","out_of_distribution","rain","6f31f3655f48fe8f89efd63b17d008560909b4483ef6bf8446212c91fdec8efc","canonical","loud_distorted","not_recorded","TOO LOUD"

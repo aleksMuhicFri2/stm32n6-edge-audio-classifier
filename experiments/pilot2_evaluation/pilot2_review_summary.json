@@ -2,6 +2,7 @@
   "experiment_id": "STM32N6-HAZARD6-PILOT-002-STIMULUS-SCREEN-001",
   "candidate_count": 58,
   "reviewed_count": 56,
+  "review_volume_percent": 50,
   "missing_review_ids": [
     "P2R-014",
     "P2R-054"

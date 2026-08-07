@@ -53,6 +53,7 @@ def main() -> None:
     summary = {
         "experiment_id": "STM32N6-HAZARD6-PILOT-002-SUPPLEMENT-001",
         "reviewed_count": len(joined),
+        "review_volume_percent": 50,
         "representativeness": dict(Counter(row["representativeness"] for row in joined)),
         "audibility": dict(Counter(row["audibility"] for row in joined)),
         "category_outcomes": {

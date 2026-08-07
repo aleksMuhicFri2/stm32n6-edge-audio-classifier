@@ -1,0 +1,44 @@
+{
+  "experiment_id": "STM32N6-HAZARD6-PILOT-002-TARGETED",
+  "purpose": "Review-driven development verification of unresolved classes and paired gunshot loudness sensitivity.",
+  "trial_count": 28,
+  "final_order_seed": 210,
+  "class_counts": {
+    "thunderstorm": 5,
+    "gunshot_gunfire": 8,
+    "glass_breaking": 5,
+    "dog_bark": 5,
+    "out_of_distribution": 5
+  },
+  "gunshot_loudness_counts": {
+    "reduced_6db": 4,
+    "nominal": 4
+  },
+  "ood_categories": [
+    "clapping",
+    "door_wood_knock",
+    "crying_baby",
+    "clock_tick",
+    "rain"
+  ],
+  "classes_not_retested": {
+    "siren": "Pilot 1 passed 5/5.",
+    "speech": "Normal live-speech smoke test passed 3/3; Pilot 1 speech files were not representative of normal conversation."
+  },
+  "firmware_commit": "9a614d2",
+  "model_name": "YAMNet-256 Hazard-5 + Speech int8",
+  "model_sha256": "1e04ff9d9394ace17020077e804bf40fbbaf0312c81ad9e83ea3ffb56e84946a",
+  "development_gates": {
+    "dog_bark": "at least 4/5 confirmed",
+    "glass_breaking": "at least 4/5 confirmed",
+    "thunderstorm": "at least 4/5 confirmed",
+    "gunshot_nominal": "at least 3/4 confirmed",
+    "gunshot_reduced_6db": "descriptive paired sensitivity result",
+    "ood_rejection": "at least 4/5 without a confirmed hazard"
+  },
+  "selection_limitation": "The initial semantic screen had visible-board outcome leakage. The supplemental and ambient reviews hid the board. This remains development verification, not unbiased final accuracy.",
+  "playback_level_rationale": "Windows volume remains fixed at 50 percent. Ordinary clips judged correct but loud receive 6 dB waveform attenuation. Every final ambient candidate was judged far too loud, so the selected ambient clip receives 12 dB attenuation. Parent hashes and derived gains are recorded.",
+  "replaces_pilot1": false,
+  "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
+  "manifest_sha256": "fa39a0c4f83b68f52790ed84eb909f403d24fe060d8b39f0fee3f661734444b6"
+}

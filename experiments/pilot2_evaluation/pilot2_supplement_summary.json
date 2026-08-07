@@ -1,6 +1,7 @@
 {
   "experiment_id": "STM32N6-HAZARD6-PILOT-002-SUPPLEMENT-001",
   "reviewed_count": 24,
+  "review_volume_percent": 50,
   "representativeness": {
     "ambiguous_wrong": 8,
     "canonical": 15,

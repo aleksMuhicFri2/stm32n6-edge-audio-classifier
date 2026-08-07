@@ -118,6 +118,7 @@ def main() -> None:
         "experiment_id": "STM32N6-HAZARD6-PILOT-002-STIMULUS-SCREEN-001",
         "candidate_count": len(candidates),
         "reviewed_count": len(responses),
+        "review_volume_percent": 50,
         "missing_review_ids": [row["review_id"] for row in missing],
         "missing_review_classes": [row["expected_class"] for row in missing],
         "representativeness": distributions,

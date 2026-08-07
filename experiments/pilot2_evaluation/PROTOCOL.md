@@ -44,6 +44,13 @@ check therefore contains the last two unused ESC-50 fold-4 rain sources and two
 source-disjoint wind fallbacks. Clean rain is preferred; wind is used only if
 both remaining rain recordings are also unsuitable.
 
+All semantic reviews used Windows playback volume 50%. The operator clarified
+that the excessive loudness observation applied specifically to all four final
+ambient candidates, not to the complete stimulus set. The physical targeted run
+therefore remains fixed at 50%. The selected ambient clip receives a recorded
+12 dB waveform attenuation; other canonical clips rejected only for loudness
+receive 6 dB attenuation.
+
 ## Loudness correction and gunfire factor
 
 The operator observed that gunshot recognition depends strongly on loudness.

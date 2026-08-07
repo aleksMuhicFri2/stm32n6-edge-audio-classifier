@@ -114,6 +114,7 @@ def main() -> None:
         "experiment_id": "STM32N6-HAZARD6-PILOT-002-AMBIENT-CHECK-001",
         "seed": SEED,
         "candidate_count": 4,
+        "review_volume_percent": 50,
         "categories": {"rain": 2, "wind_fallback": 2},
         "reason": "All five previously reviewed rain sources were semantically unsuitable.",
         "source_disjoint_from_prior_physical_trials_and_reviews": True,

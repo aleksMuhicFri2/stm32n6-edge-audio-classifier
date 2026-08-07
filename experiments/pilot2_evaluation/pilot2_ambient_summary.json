@@ -1,0 +1,15 @@
+{
+  "experiment_id": "STM32N6-HAZARD6-PILOT-002-AMBIENT-CHECK-001",
+  "reviewed_count": 4,
+  "review_volume_percent": 50,
+  "board_screen_hidden_by_operator": true,
+  "category_counts": {
+    "rain": 2,
+    "wind": 2
+  },
+  "canonical_count": 4,
+  "loud_distorted_count": 4,
+  "operator_observation": "All four clips were semantically canonical but far too loud at the fixed 50 percent review volume.",
+  "engineering_decision": "Prefer a rain source and derive the physical-test stimulus with exactly 12 dB attenuation. Keep global Windows volume at 50 percent.",
+  "reserved_final_data_used": false
+}
