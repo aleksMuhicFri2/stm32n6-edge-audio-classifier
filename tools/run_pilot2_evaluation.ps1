@@ -12,6 +12,7 @@ $ErrorActionPreference = "Stop"
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $manifestPath = Join-Path $repoRoot "experiments\pilot2_evaluation\pilot2_manifest.csv"
 $captureScript = Join-Path $PSScriptRoot "capture_uart_experiment.ps1"
+$attemptId = "P2-A02"
 
 if ($StartOrder -gt $EndOrder) {
     throw "StartOrder must be less than or equal to EndOrder."
@@ -46,11 +47,13 @@ if ($ValidateOnly) {
 }
 
 Write-Host "STM32N6 targeted clean-stimulus development verification: $($trials.Count) trials."
+Write-Host "Attempt: $attemptId (P2-A01 at 50 percent is retained but excluded)."
 Write-Host "Before continuing:"
 Write-Host "  1. Put the speaker 30 cm from the board microphone."
-Write-Host "  2. Set Windows playback volume to 50 percent."
+Write-Host "  2. Set Windows playback volume to 75 percent."
 Write-Host "  3. Keep the room quiet and do not move the board or speaker."
 Write-Host "  4. Confirm the unchanged firmware is running and press NRST once."
+Write-Host "  5. If external interference occurs, stop the run and report it."
 $captureSeconds = ($trials | Measure-Object -Property capture_duration_s -Sum).Sum
 Write-Host "The selected run takes approximately $([math]::Ceiling($captureSeconds / 60)) minutes plus brief file-loading time."
 if (-not $AutoConfirm) {
@@ -79,7 +82,7 @@ foreach ($trial in $trials) {
         -DistanceCm ([int]$trial.distance_cm) `
         -VolumePercent ([int]$trial.volume_percent) `
         -StimulusHash $trial.sha256 `
-        -Notes "Targeted Pilot 2 order $order; true category $($trial.true_category); semantic variant $($trial.variant); loudness stratum $($trial.loudness_stratum); final-order seed 210." `
+        -Notes "Targeted Pilot 2 attempt $attemptId; order $order; true category $($trial.true_category); semantic variant $($trial.variant); loudness stratum $($trial.loudness_stratum); final-order seed 210." `
         -PlaybackFile $audioPath `
         -PlaybackDelaySeconds 3 `
         -FirmwareCommit "9a614d2" `

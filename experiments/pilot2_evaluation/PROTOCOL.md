@@ -44,10 +44,18 @@ check therefore contains the last two unused ESC-50 fold-4 rain sources and two
 source-disjoint wind fallbacks. Clean rain is preferred; wind is used only if
 both remaining rain recordings are also unsuitable.
 
-All semantic reviews used Windows playback volume 50%. The physical targeted
-run remains fixed at 50%. At the operator's request, all five final OOD
+All semantic reviews used Windows playback volume 50%. Replacement physical
+attempt `P2-A02` is fixed at 75%. At the operator's request, all five final OOD
 waveforms—clapping, wooden-door knocking, crying baby, clock ticking, and
 rain—receive a recorded 20 dB attenuation.
+
+Physical attempt `P2-A01` completed 28 captures at 50%, but the operator
+reported that many stimuli were too quiet and that external interference had
+occurred. The full attempt was excluded before prediction outcomes were
+analyzed. Its raw UART logs remain preserved as engineering evidence and are
+not mixed with the replacement attempt. `P2-A02` repeats the same frozen order,
+waveforms, distances, capture durations, firmware, and model at 75%; the
+playback setting is the only planned factor change.
 
 ## Loudness correction and gunfire factor
 
@@ -99,7 +107,7 @@ choice from making the rejection result trivially perfect through silence.
 - STM32N6570-DK onboard microphone and unchanged firmware `9a614d2`.
 - YAMNet-256 Hazard-5 + Speech int8 model, SHA-256
   `1e04ff9d9394ace17020077e804bf40fbbaf0312c81ad9e83ea3ffb56e84946a`.
-- Speaker 30 cm from the board microphone at Windows volume 50%.
+- Speaker 30 cm from the board microphone at Windows volume 75%.
 - Quiet room with stationary board and speaker.
 - UART COM3 at 14400 baud unless recorded run metadata states otherwise.
 - Three-second playback lead-in; capture extends through the complete stimulus
