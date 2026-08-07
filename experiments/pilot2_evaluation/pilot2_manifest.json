@@ -34,11 +34,11 @@
     "thunderstorm": "at least 4/5 confirmed",
     "gunshot_nominal": "at least 3/4 confirmed",
     "gunshot_reduced_6db": "descriptive paired sensitivity result",
-    "ood_rejection": "at least 4/5 without a confirmed hazard"
+    "ood_rejection": "at least 4/5 without a confirmed hazard; a trial must contain at least one active-audio frame to be evaluable"
   },
   "selection_limitation": "The initial semantic screen had visible-board outcome leakage. The supplemental and ambient reviews hid the board. This remains development verification, not unbiased final accuracy.",
-  "playback_level_rationale": "Windows volume remains fixed at 50 percent. Ordinary clips judged correct but loud receive 6 dB waveform attenuation. Every final ambient candidate was judged far too loud, so the selected ambient clip receives 12 dB attenuation. Parent hashes and derived gains are recorded.",
+  "playback_level_rationale": "Windows volume remains fixed at 50 percent. All five OOD waveforms receive 20 dB attenuation at the operator's request. OOD rejection counts only when the board reports at least one active-audio frame, preventing inaudible playback from earning an artificial pass. Parent hashes and derived gains are recorded.",
   "replaces_pilot1": false,
   "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
-  "manifest_sha256": "fa39a0c4f83b68f52790ed84eb909f403d24fe060d8b39f0fee3f661734444b6"
+  "manifest_sha256": "7bd321a9769b5654641050bd5d8b903ad799c3647093d01caace9d6020efcb85"
 }

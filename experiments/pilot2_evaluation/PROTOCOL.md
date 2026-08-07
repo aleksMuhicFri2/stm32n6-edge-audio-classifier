@@ -44,12 +44,10 @@ check therefore contains the last two unused ESC-50 fold-4 rain sources and two
 source-disjoint wind fallbacks. Clean rain is preferred; wind is used only if
 both remaining rain recordings are also unsuitable.
 
-All semantic reviews used Windows playback volume 50%. The operator clarified
-that the excessive loudness observation applied specifically to all four final
-ambient candidates, not to the complete stimulus set. The physical targeted run
-therefore remains fixed at 50%. The selected ambient clip receives a recorded
-12 dB waveform attenuation; other canonical clips rejected only for loudness
-receive 6 dB attenuation.
+All semantic reviews used Windows playback volume 50%. The physical targeted
+run remains fixed at 50%. At the operator's request, all five final OOD
+waveforms—clapping, wooden-door knocking, crying baby, clock ticking, and
+rain—receive a recorded 20 dB attenuation.
 
 ## Loudness correction and gunfire factor
 
@@ -84,12 +82,17 @@ finalizer creates 28 randomized trials:
 | Thunderstorm without high-pitched contamination | 5 | at least 4/5 confirmed |
 | Gunfire, nominal | 4 | at least 3/4 confirmed |
 | Same gunfire, -6 dB | 4 | descriptive paired sensitivity |
-| OOD rejection | 5 | at least 4/5 without a confirmed hazard |
+| OOD rejection, all at -20 dB | 5 | at least 4/5 active trials without a confirmed hazard |
 
 The OOD set contains clapping, wooden-door knocking, crying baby, clock ticking,
 and one ambient sound. The ambient sound is rain when a clean rain source passes
 the last review, otherwise clean wind. Final order uses deterministic seed 210
 and prevents adjacent trials from sharing the same expected class.
+
+An OOD trial is evaluable only if firmware telemetry reports at least one active
+audio frame. A clip that never crosses the board activity gate is reported as
+inactive, not counted as a successful rejection. This prevents the -20 dB
+choice from making the rejection result trivially perfect through silence.
 
 ## Fixed physical setup
 

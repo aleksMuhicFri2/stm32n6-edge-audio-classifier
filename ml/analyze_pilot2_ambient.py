@@ -51,7 +51,7 @@ def main() -> None:
             row["audibility"] == "loud_distorted" for row in joined
         ),
         "operator_observation": "All four clips were semantically canonical but far too loud at the fixed 50 percent review volume.",
-        "engineering_decision": "Prefer a rain source and derive the physical-test stimulus with exactly 12 dB attenuation. Keep global Windows volume at 50 percent.",
+        "engineering_decision": "Prefer a rain source and derive the physical-test stimulus with exactly 20 dB attenuation at the operator's request. Keep global Windows volume at 50 percent.",
         "reserved_final_data_used": False,
     }
     (directory / "pilot2_ambient_summary.json").write_text(

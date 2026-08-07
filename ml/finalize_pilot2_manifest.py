@@ -224,12 +224,7 @@ def main() -> None:
             raise RuntimeError(f"No eligible OOD clip for {category}")
         choices.sort(key=lambda row: 0 if row["audibility"] == "normal" else 1)
         chosen = choices[0]
-        stratum = (
-            "reviewed_loud_attenuated_6db"
-            if chosen["audibility"] == "loud_distorted"
-            else "reviewed_nominal"
-        )
-        selected.append({**chosen, "loudness_stratum": stratum})
+        selected.append({**chosen, "loudness_stratum": "ood_attenuated_20db"})
         selected_ood_categories.append(category)
 
     ambient_choices = [
@@ -249,7 +244,7 @@ def main() -> None:
     if not ambient_choices:
         raise RuntimeError("No eligible rain or wind ambient OOD clip")
     ambient = ambient_choices[0]
-    ambient_stratum = "reviewed_very_loud_attenuated_12db"
+    ambient_stratum = "ood_attenuated_20db"
     selected.append({**ambient, "loudness_stratum": ambient_stratum})
     selected_ood_categories.append(ambient["true_category"])
 
@@ -270,8 +265,8 @@ def main() -> None:
         output_path = output_audio / output_name
         source_path = resolve_stimulus(repo_root, row)
         derived_gain_db = 0.0
-        if row["loudness_stratum"] == "reviewed_very_loud_attenuated_12db":
-            derived_gain_db = -12.0
+        if row["loudness_stratum"] == "ood_attenuated_20db":
+            derived_gain_db = -20.0
             attenuate_pcm16(source_path, output_path, derived_gain_db)
         elif row["loudness_stratum"] in {
             "reduced_6db",
@@ -344,10 +339,10 @@ def main() -> None:
             "thunderstorm": "at least 4/5 confirmed",
             "gunshot_nominal": "at least 3/4 confirmed",
             "gunshot_reduced_6db": "descriptive paired sensitivity result",
-            "ood_rejection": "at least 4/5 without a confirmed hazard",
+            "ood_rejection": "at least 4/5 without a confirmed hazard; a trial must contain at least one active-audio frame to be evaluable",
         },
         "selection_limitation": "The initial semantic screen had visible-board outcome leakage. The supplemental and ambient reviews hid the board. This remains development verification, not unbiased final accuracy.",
-        "playback_level_rationale": "Windows volume remains fixed at 50 percent. Ordinary clips judged correct but loud receive 6 dB waveform attenuation. Every final ambient candidate was judged far too loud, so the selected ambient clip receives 12 dB attenuation. Parent hashes and derived gains are recorded.",
+        "playback_level_rationale": "Windows volume remains fixed at 50 percent. All five OOD waveforms receive 20 dB attenuation at the operator's request. OOD rejection counts only when the board reports at least one active-audio frame, preventing inaudible playback from earning an artificial pass. Parent hashes and derived gains are recorded.",
         "replaces_pilot1": False,
         "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
         "manifest_sha256": sha256(final_csv),
