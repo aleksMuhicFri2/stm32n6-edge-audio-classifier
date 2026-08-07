@@ -1,0 +1,79 @@
+{
+  "experiment_id": "HAZARD6-PILOT-STIMULUS-AUDIT-001",
+  "source_pilot": "STM32N6-HAZARD6-PILOT-001",
+  "trials": 35,
+  "activity_threshold": 4000.0,
+  "positive_pass_correlations": {
+    "p95_frame_rms_dbfs": -0.20173470595074425,
+    "board_active_frames": 0.42555330352772164,
+    "board_spectrogram_sum_max": 0.1006486714532558,
+    "board_active_spectrogram_sum_p95": 0.07833417113460822,
+    "expected_peak_probability": 0.730572114007106
+  },
+  "gunshot_board_level_vs_expected_probability_correlation": 0.8334122939741411,
+  "gunshot_energy_aware_rule": {
+    "best_with_zero_ood_false_alerts": {
+      "score_threshold": 0.52,
+      "minimum_spectrogram_sum": 9000.0,
+      "gunshot_trials_detected": 1.0,
+      "ood_false_alert_trials": 0.0,
+      "speech_false_alert_trials": 0.0
+    },
+    "best_allowing_one_of_five_ood_false_alerts": {
+      "score_threshold": 0.52,
+      "minimum_spectrogram_sum": 4000.0,
+      "gunshot_trials_detected": 1.0,
+      "ood_false_alert_trials": 0.0,
+      "speech_false_alert_trials": 0.0
+    },
+    "interpretation": "A minimum-energy condition cannot safely recover the weak gunshot trials because the clapping and wooden-knock gunshot candidates are at least as energetic."
+  },
+  "gunshot_trials": [
+    {
+      "trial_id": "PILOT-005",
+      "p95_frame_rms_dbfs": -1.912064078538343,
+      "board_active_frames": 2,
+      "board_spectrogram_sum_max": 22080.0,
+      "expected_peak_probability": 0.3596,
+      "passed": false
+    },
+    {
+      "trial_id": "PILOT-014",
+      "p95_frame_rms_dbfs": -19.116327584411913,
+      "board_active_frames": 2,
+      "board_spectrogram_sum_max": 15200.0,
+      "expected_peak_probability": 0.3451,
+      "passed": false
+    },
+    {
+      "trial_id": "PILOT-021",
+      "p95_frame_rms_dbfs": -2.4280392998927685,
+      "board_active_frames": 2,
+      "board_spectrogram_sum_max": 30448.0,
+      "expected_peak_probability": 0.523,
+      "passed": false
+    },
+    {
+      "trial_id": "PILOT-026",
+      "p95_frame_rms_dbfs": -10.152042050421425,
+      "board_active_frames": 2,
+      "board_spectrogram_sum_max": 28736.0,
+      "expected_peak_probability": 0.4336,
+      "passed": false
+    },
+    {
+      "trial_id": "PILOT-032",
+      "p95_frame_rms_dbfs": -13.970957336366476,
+      "board_active_frames": 2,
+      "board_spectrogram_sum_max": 18304.0,
+      "expected_peak_probability": 0.4064,
+      "passed": false
+    }
+  ],
+  "interpretation_limits": [
+    "File dBFS is a source-level proxy; the board spectrogram sum is the relevant observed activity measure.",
+    "Correlation across different classes is descriptive and confounded by sound type.",
+    "Semantic representativeness cannot be inferred from amplitude and requires a listening review blinded to board outcome.",
+    "No scored trial is removed or relabeled by this audit."
+  ]
+}

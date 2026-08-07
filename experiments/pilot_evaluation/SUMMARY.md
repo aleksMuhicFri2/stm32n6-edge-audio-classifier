@@ -58,6 +58,27 @@ frames: 0.85% reported CPU load, 0.69 ms preprocessing, 0.16 ms inference, and
 0.00 ms postprocessing. These are firmware-reported values, not independent
 external latency measurements, and should be described that way in the thesis.
 
+## Post-pilot stimulus audit
+
+The operator reported that some speech clips sounded like screaming or
+whispering and that some glass recordings were atypical. A subsequent acoustic
+audit confirmed that glass trial `PILOT-020` never crossed the activity
+threshold (maximum spectrogram sum 2012 versus threshold 4000), while
+`PILOT-030` crossed it for only one frame. These failures therefore cannot be
+treated as clean classifier-head errors.
+
+All five gunshot recordings activated the board for exactly two frames. Within
+those trials, board level and gunshot probability were strongly related
+(`r = 0.83`), supporting the observation that loudness matters. Nevertheless,
+clapping and wooden knocking produced gunshot-like scores near 0.42 at equal or
+higher energy. An energy-plus-score sweep still recovered only one of five
+gunshot trials with zero OOD false alerts. All speech clips crossed the activity
+gate; the two misses were classified as siren and require semantic listening
+review. The audit changes the interpretation, not any original trial score.
+
+Detailed evidence and figures are in
+`experiments/results/hazard6_physical_pilot_threshold_analysis/`.
+
 ## Instrumentation note
 
 Before the scored run, `RUN-20260807-134911` captured valid UART telemetry but
