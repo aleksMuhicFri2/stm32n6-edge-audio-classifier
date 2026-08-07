@@ -38,6 +38,12 @@ shortages. The board must be disconnected or its screen completely hidden for
 this review. Supplemental selection uses no model prediction and uses sources
 disjoint from Pilot 1 and the initial Pilot 2 shortlist.
 
+The completed supplement supplied enough thunderstorm material, but none of its
+three rain recordings was semantically suitable. A final four-clip audio-only
+check therefore contains the last two unused ESC-50 fold-4 rain sources and two
+source-disjoint wind fallbacks. Clean rain is preferred; wind is used only if
+both remaining rain recordings are also unsuitable.
+
 ## Loudness correction and gunfire factor
 
 The operator observed that gunshot recognition depends strongly on loudness.
@@ -54,6 +60,10 @@ The supplemental review uses gentler normalization than the initial shortlist:
 maximum 100 ms frame RMS targets -18 dBFS, peak level is capped at -6 dBFS,
 positive gain is limited to 6 dB, and attenuation is limited to 24 dB. This
 responds to the operator's report that many initial OOD clips sounded too loud.
+Clips judged canonical but loud are eligible only after deterministic 6 dB
+attenuation; the derived gain and parent hash are recorded. This rule supplies
+one clean glass shatter plus usable clapping and clock-tick hard negatives
+without treating the originally reviewed loudness as a model result.
 
 ## Frozen targeted design
 
@@ -69,9 +79,10 @@ finalizer creates 28 randomized trials:
 | Same gunfire, -6 dB | 4 | descriptive paired sensitivity |
 | OOD rejection | 5 | at least 4/5 without a confirmed hazard |
 
-The five OOD categories remain clapping, wooden-door knocking, rain, crying
-baby, and clock ticking. Final order uses deterministic seed 210 and prevents
-adjacent trials from sharing the same expected class.
+The OOD set contains clapping, wooden-door knocking, crying baby, clock ticking,
+and one ambient sound. The ambient sound is rain when a clean rain source passes
+the last review, otherwise clean wind. Final order uses deterministic seed 210
+and prevents adjacent trials from sharing the same expected class.
 
 ## Fixed physical setup
 
@@ -94,7 +105,8 @@ ESC-50 fold 5 and FSD50K evaluation remain untouched. Technical interruptions
 are preserved; model failures are never silently repeated.
 
 1. Complete `tools/run_pilot2_supplement_review.ps1` with the board hidden.
-2. Run `ml/finalize_pilot2_manifest.py`; it refuses any semantic shortage.
-3. Validate the board and hashes with
+2. Complete the four-clip `tools/run_pilot2_ambient_review.ps1` check.
+3. Run `ml/finalize_pilot2_manifest.py`; it refuses any semantic shortage.
+4. Validate the board and hashes with
    `tools/run_pilot2_evaluation.ps1 -ValidateOnly`.
-4. Run the frozen targeted verification once and retain every raw log.
+5. Run the frozen targeted verification once and retain every raw log.

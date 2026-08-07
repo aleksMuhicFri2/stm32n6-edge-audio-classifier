@@ -24,10 +24,9 @@ TARGET_COUNTS = {
     "gunshot_sources": 4,
     "thunderstorm": 5,
 }
-OOD_CATEGORIES = [
+OOD_CORE_CATEGORIES = [
     "clapping",
     "door_wood_knock",
-    "rain",
     "crying_baby",
     "clock_tick",
 ]
@@ -79,16 +78,22 @@ def join_review(
 
 
 def semantically_eligible(row: dict[str, str]) -> bool:
-    if row["representativeness"] != "canonical" or row["audibility"] != "normal":
+    if row["representativeness"] != "canonical":
+        return False
+    if row["audibility"] not in {"normal", "loud_distorted"}:
         return False
     if row["expected_class"] == "glass_breaking":
-        return row["variant"] == "clean_shatter"
+        return row["variant"] == "clean_shatter" or (
+            row["review_id"] == "P2S-018"
+            and "multiple breaking" in row["note"].lower()
+        )
     if row["expected_class"] == "gunshot_gunfire":
         return row["variant"] in {"single_shot", "multiple_shots"}
     if row["expected_class"] == "thunderstorm":
         if row["review_id"] in HIGH_PITCH_THUNDER_IDS:
             return False
-        return "high pitch" not in row["note"].lower()
+        note = row["note"].lower().replace("-", " ")
+        return "high pitch" not in note
     return True
 
 
@@ -101,6 +106,7 @@ def select_rows(
         if row["expected_class"] == class_name and semantically_eligible(row)
     ]
     rng.shuffle(choices)
+    choices.sort(key=lambda row: 0 if row["audibility"] == "normal" else 1)
     if len(choices) < count:
         raise RuntimeError(
             f"Only {len(choices)} eligible {class_name} clips; need {count}"
@@ -154,10 +160,20 @@ def main() -> None:
     supplement_responses = read_csv(supplement_response_path)
     if len(supplement_responses) != 24:
         raise RuntimeError("Complete all 24 board-hidden supplemental reviews first")
+    ambient_response_path = experiment_dir / "pilot2_ambient_responses.csv"
+    if not ambient_response_path.is_file():
+        raise RuntimeError(
+            "Complete tools/run_pilot2_ambient_review.ps1 before finalization"
+        )
+    ambient_candidates = read_csv(experiment_dir / "pilot2_ambient_candidates.csv")
+    ambient_responses = read_csv(ambient_response_path)
+    if len(ambient_responses) != 4:
+        raise RuntimeError("Complete all four board-hidden ambient reviews first")
     rows = join_review(initial_candidates, initial_responses, "initial")
     rows.extend(
         join_review(supplement_candidates, supplement_responses, "supplement")
     )
+    rows.extend(join_review(ambient_candidates, ambient_responses, "ambient"))
     rng = random.Random(FINAL_ORDER_SEED)
 
     qualification_rows: list[dict[str, object]] = []
@@ -180,7 +196,12 @@ def main() -> None:
     selected: list[dict[str, object]] = []
     for class_name in ("dog_bark", "glass_breaking", "thunderstorm"):
         for row in select_rows(rows, class_name, TARGET_COUNTS[class_name], rng):
-            selected.append({**row, "loudness_stratum": "reviewed_nominal"})
+            stratum = (
+                "reviewed_loud_attenuated_6db"
+                if row["audibility"] == "loud_distorted"
+                else "reviewed_nominal"
+            )
+            selected.append({**row, "loudness_stratum": stratum})
 
     gunshots = select_rows(
         rows, "gunshot_gunfire", TARGET_COUNTS["gunshot_sources"], rng
@@ -189,7 +210,8 @@ def main() -> None:
         selected.append({**row, "loudness_stratum": "nominal"})
         selected.append({**row, "loudness_stratum": "reduced_6db"})
 
-    for category in OOD_CATEGORIES:
+    selected_ood_categories: list[str] = []
+    for category in OOD_CORE_CATEGORIES:
         choices = [
             row
             for row in rows
@@ -200,7 +222,40 @@ def main() -> None:
         rng.shuffle(choices)
         if not choices:
             raise RuntimeError(f"No eligible OOD clip for {category}")
-        selected.append({**choices[0], "loudness_stratum": "reviewed_nominal"})
+        choices.sort(key=lambda row: 0 if row["audibility"] == "normal" else 1)
+        chosen = choices[0]
+        stratum = (
+            "reviewed_loud_attenuated_6db"
+            if chosen["audibility"] == "loud_distorted"
+            else "reviewed_nominal"
+        )
+        selected.append({**chosen, "loudness_stratum": stratum})
+        selected_ood_categories.append(category)
+
+    ambient_choices = [
+        row
+        for row in rows
+        if row["review_phase"] == "ambient"
+        and row["expected_class"] == "out_of_distribution"
+        and semantically_eligible(row)
+    ]
+    ambient_choices.sort(
+        key=lambda row: (
+            0 if row["true_category"] == "rain" else 1,
+            0 if row["audibility"] == "normal" else 1,
+            row["review_id"],
+        )
+    )
+    if not ambient_choices:
+        raise RuntimeError("No eligible rain or wind ambient OOD clip")
+    ambient = ambient_choices[0]
+    ambient_stratum = (
+        "reviewed_loud_attenuated_6db"
+        if ambient["audibility"] == "loud_distorted"
+        else "reviewed_nominal"
+    )
+    selected.append({**ambient, "loudness_stratum": ambient_stratum})
+    selected_ood_categories.append(ambient["true_category"])
 
     ordered = order_without_adjacent_duplicates(selected, rng)
     output_audio = (
@@ -219,7 +274,10 @@ def main() -> None:
         output_path = output_audio / output_name
         source_path = resolve_stimulus(repo_root, row)
         derived_gain_db = 0.0
-        if row["loudness_stratum"] == "reduced_6db":
+        if row["loudness_stratum"] in {
+            "reduced_6db",
+            "reviewed_loud_attenuated_6db",
+        }:
             derived_gain_db = -6.0
             attenuate_pcm16(source_path, output_path, derived_gain_db)
         else:
@@ -273,6 +331,7 @@ def main() -> None:
         "final_order_seed": FINAL_ORDER_SEED,
         "class_counts": dict(class_counts),
         "gunshot_loudness_counts": dict(loudness_counts),
+        "ood_categories": selected_ood_categories,
         "classes_not_retested": {
             "siren": "Pilot 1 passed 5/5.",
             "speech": "Normal live-speech smoke test passed 3/3; Pilot 1 speech files were not representative of normal conversation.",

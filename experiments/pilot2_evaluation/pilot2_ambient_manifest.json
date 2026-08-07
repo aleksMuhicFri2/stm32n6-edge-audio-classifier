@@ -1,0 +1,14 @@
+{
+  "experiment_id": "STM32N6-HAZARD6-PILOT-002-AMBIENT-CHECK-001",
+  "seed": 211,
+  "candidate_count": 4,
+  "categories": {
+    "rain": 2,
+    "wind_fallback": 2
+  },
+  "reason": "All five previously reviewed rain sources were semantically unsuitable.",
+  "source_disjoint_from_prior_physical_trials_and_reviews": true,
+  "selection_used_model_predictions": false,
+  "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
+  "manifest_sha256": "0aec1039ba7350c388f88ceb3147ba7c1f9de8106312a22b7c06762040239f02"
+}

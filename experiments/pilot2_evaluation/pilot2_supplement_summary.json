@@ -1,0 +1,54 @@
+{
+  "experiment_id": "STM32N6-HAZARD6-PILOT-002-SUPPLEMENT-001",
+  "reviewed_count": 24,
+  "representativeness": {
+    "ambiguous_wrong": 8,
+    "canonical": 15,
+    "atypical_valid": 1
+  },
+  "audibility": {
+    "loud_distorted": 13,
+    "quiet": 1,
+    "normal": 10
+  },
+  "category_outcomes": {
+    "glass_breaking": {
+      "reviewed": 6,
+      "canonical_normal": 2,
+      "canonical_loud": 1
+    },
+    "thunderstorm": {
+      "reviewed": 6,
+      "canonical_normal": 3,
+      "canonical_loud": 1
+    },
+    "clapping": {
+      "reviewed": 3,
+      "canonical_normal": 0,
+      "canonical_loud": 2
+    },
+    "door_wood_knock": {
+      "reviewed": 3,
+      "canonical_normal": 1,
+      "canonical_loud": 2
+    },
+    "rain": {
+      "reviewed": 3,
+      "canonical_normal": 0,
+      "canonical_loud": 0
+    },
+    "clock_tick": {
+      "reviewed": 3,
+      "canonical_normal": 0,
+      "canonical_loud": 3
+    }
+  },
+  "board_screen_hidden_by_operator": true,
+  "model_outcome_language_in_notes": [],
+  "engineering_interpretation": {
+    "glass_breaking": "One clean normal shatter and one canonical normal multiple-shatter recording augment the initial clean clips; one initial clean but loud clip will be attenuated 6 dB.",
+    "thunderstorm": "Enough clean thunder recordings now exist after high-pitched sources are excluded.",
+    "ood": "Door knock is usable directly; canonical loud clapping and clock-tick clips require fixed 6 dB attenuation; reviewed rain remains semantically unsuitable."
+  },
+  "reserved_final_data_used": false
+}
