@@ -45,8 +45,6 @@ Write-Host "Blinded pilot-stimulus review: $($trials.Count) clips."
 Write-Host "Board predictions and pass/fail results are intentionally hidden."
 Write-Host "Responses are saved after every clip to $responsePath"
 
-Add-Type -AssemblyName System.Windows.Extensions
-
 foreach ($trial in $trials) {
     if ((-not $Redo) -and $existing.ContainsKey($trial.trial_id)) {
         Write-Host "Skipping completed $($trial.trial_id)."
