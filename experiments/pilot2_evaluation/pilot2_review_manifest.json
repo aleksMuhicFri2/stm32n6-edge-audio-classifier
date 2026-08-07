@@ -1,0 +1,40 @@
+{
+  "experiment_id": "STM32N6-HAZARD6-PILOT-002-STIMULUS-REVIEW",
+  "purpose": "Prediction-blind semantic qualification before the second physical development pilot.",
+  "selection_seed": 207,
+  "final_order_seed": 208,
+  "candidate_count": 58,
+  "candidate_counts": {
+    "dog_bark": 8,
+    "glass_breaking": 8,
+    "gunshot_gunfire": 8,
+    "thunderstorm": 8,
+    "speech": 8,
+    "siren": 8,
+    "out_of_distribution": 10
+  },
+  "positive_candidates_per_class": 8,
+  "ood_candidates_per_category": 2,
+  "source_disjoint_from_pilot1": true,
+  "selection_used_model_predictions": false,
+  "normalization": {
+    "format": "mono PCM16; original sample rate retained",
+    "target_max_100ms_frame_rms_dbfs": -12.0,
+    "peak_ceiling_dbfs": -1.0,
+    "maximum_absolute_gain_db": 24.0
+  },
+  "speech_metadata_prefilter": {
+    "required_label": "Speech",
+    "excluded_labels": [
+      "Screaming",
+      "Shout",
+      "Singing",
+      "Speech_synthesizer",
+      "Whispering",
+      "Yell"
+    ]
+  },
+  "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
+  "candidate_manifest_sha256": "260b16b92b6b471b96be20aed728e4d38d318a6ea0ec945064ea7ee89c616588",
+  "next_action": "Complete tools/run_pilot2_stimulus_review.ps1 before finalizing Pilot 2."
+}
