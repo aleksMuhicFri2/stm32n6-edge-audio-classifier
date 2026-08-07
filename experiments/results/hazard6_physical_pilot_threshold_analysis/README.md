@@ -69,20 +69,54 @@ path effects. It must not be described as a pure model-accuracy measurement.
 No pilot trial is deleted, repeated, relabeled, or converted from fail to pass
 by this audit.
 
+## Completed blinded listening review
+
+The operator subsequently reviewed the 15 speech, glass-breaking, and gunshot
+recordings without seeing the board prediction, confidence, or pass/fail result.
+This review is exploratory post-pilot evidence; the original 35 predeclared
+scores above remain unchanged.
+
+| Class | Canonical | Atypical valid | Ambiguous/wrong | Valid clips confirmed by deployed rule |
+|---|---:|---:|---:|---:|
+| Speech | 1 | 0 | 4 | 1/1 |
+| Glass breaking | 2 | 1 | 2 | 1/3 |
+| Gunshot/gunfire | 3 | 1 | 1 | 0/4 |
+
+Four of five speech recordings were judged to be screams, a growl, or
+strongly pitch-altered speech rather than ordinary speech. The sole canonical
+speech recording was handled correctly by the deployed firmware. Therefore the
+original 3/5 result must not be presented as an estimate of normal
+conversational-speech performance.
+
+All three valid glass recordings made glass breaking the highest-ranked hazard
+at least once. One crossed the deployed decision rule; all three cross the
+diagnostic threshold-only replay. The two remaining files were a glass toast
+and a glass sound followed by a dominant boom.
+
+Most importantly, all three canonical gunshot recordings made gunshot/gunfire
+the highest-ranked hazard on the live percentage list, with peaks of 34.5%,
+52.3%, and 40.6%. They were therefore *recognized in the ranking*, but none
+crossed the deployed 65% rule required to replace `UNKNOWN` with a confirmed
+gunshot alert. The valid multiple-shot recording did not rank gunshot first.
+This distinction resolves the apparent conflict between the operator's visual
+observation and the formal 0/5 alert result. It is not safe to fix the problem
+by lowering the threshold alone because clapping and wooden knocking reached
+gunshot scores near 42%.
+
 ## Engineering decision
 
-Do not flash the threshold-only candidate. First perform the blinded listening
-review in `experiments/pilot_evaluation/STIMULUS_REVIEW_PROTOCOL.md`. The next
-training iteration should then:
+Do not flash the threshold-only candidate. The completed review shows that the
+next training iteration should:
 
-1. define operational speech as either normal conversational speech only or the
-   broader set of speech, whispers, screams, and other vocalizations;
-2. separate clear glass shattering from ambiguous handling or impact sounds;
-3. retain gunshot loudness variation while adding clapping and wooden knocks as
-   explicit impulsive hard negatives;
-4. add a safe internal `background_other` output for rain, ticks, crying,
-   impacts, and other non-hazard sounds while leaving the user-facing five
-   hazard labels unchanged;
+1. define operational speech as normal conversational speech and separately
+   retain screams, growls, and pitch-altered voices as non-hazard hard cases;
+2. pre-screen development glass clips and report canonical shattering separately
+   from glass-plus-impact recordings;
+3. retain both isolated and repeated gunfire at several playback levels while
+   adding clapping, wooden knocks, door slams, and dropped objects as explicit
+   impulsive hard negatives;
+4. compare a targeted internal non-hazard output with the current six-output
+   model instead of assuming that a broad generic background class will help;
 5. add speaker/microphone-path gain and room-response augmentation; and
 6. validate the retrained model on a new disjoint development pilot before the
    reserved final evaluation.
@@ -97,6 +131,13 @@ clips must not be presented as the formal evaluation set.
 - `speech_guard_sweep.csv`: physical ceilings and 278-clip guard constraints.
 - `stimulus_acoustics.csv`: WAV-level and board-level measurements by trial.
 - `stimulus_audit_summary.json`: correlations and gunshot energy/score audit.
+- `listening_review_summary.json`: blinded semantic-review counts and corrected
+  interpretation.
+- `listening_review_outcome_join.csv`: clip labels joined to ranking and
+  confirmation outcomes.
 - `gunshot_energy_score_grid.csv`: energy-aware gunshot rule search.
 - `trial_replay_*.csv` and `frame_replay_*.csv`: auditable replay outputs.
-- PNG files: thesis-ready threshold, separation, loudness, and comparison plots.
+- `hazard_ranking_vs_confirmation.png`: the distinction between top ranking and
+  deployed alert confirmation for valid glass and gunshot clips.
+- Other PNG files: thesis-ready threshold, separation, loudness, and comparison
+  plots.

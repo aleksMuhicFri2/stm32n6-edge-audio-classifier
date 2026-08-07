@@ -79,6 +79,29 @@ review. The audit changes the interpretation, not any original trial score.
 Detailed evidence and figures are in
 `experiments/results/hazard6_physical_pilot_threshold_analysis/`.
 
+## Blinded semantic review of difficult classes
+
+After the scored run, the operator listened to the 15 speech, glass-breaking,
+and gunshot source files in a runner that intentionally hid every board result.
+Only 1/5 speech clips was judged canonical; that clip passed. Three of five
+glass clips were valid, and all three ranked glass first at least once, although
+only one generated a confirmed alert. Four of five gunshot clips were valid.
+
+The three canonical gunshot clips all ranked gunshot/gunfire first on the live
+percentage list (peak probabilities 34.5%, 52.3%, and 40.6%), but none met the
+65% confirmation threshold. Thus the formal pilot result remains 0/5 confirmed
+gunshot alerts, while the more precise diagnostic statement is that canonical
+gunshots were recognized at the ranking level but not confirmed. This is a
+confidence-calibration and class-separation problem, not an absence of learned
+gunshot response. Lowering the threshold into this range would also admit the
+observed clapping and wooden-knock confusers near 42%.
+
+The completed responses and joined evidence are retained in
+`listening_review_responses.csv` and
+`../results/hazard6_physical_pilot_threshold_analysis/listening_review_summary.json`.
+These post-pilot subgroups do not replace the original predeclared accuracy
+table.
+
 ## Instrumentation note
 
 Before the scored run, `RUN-20260807-134911` captured valid UART telemetry but
