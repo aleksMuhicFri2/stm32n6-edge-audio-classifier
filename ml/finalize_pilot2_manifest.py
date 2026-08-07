@@ -114,12 +114,26 @@ def select_rows(
     return choices[:count]
 
 
-def attenuate_pcm16(source: Path, target: Path, gain_db: float) -> None:
+def apply_gain_pcm16(
+    source: Path,
+    target: Path,
+    gain_db: float,
+    limiter_ceiling_dbfs: float | None = None,
+) -> tuple[int, float]:
     audio, sample_rate = sf.read(source, dtype="float32", always_2d=False)
     if audio.ndim != 1:
         raise RuntimeError(f"Expected mono source: {source}")
-    scaled = np.clip(audio * np.float32(10.0 ** (gain_db / 20.0)), -1.0, 1.0)
+    scaled = audio * np.float32(10.0 ** (gain_db / 20.0))
+    limited_samples = 0
+    if limiter_ceiling_dbfs is not None:
+        ceiling = np.float32(10.0 ** (limiter_ceiling_dbfs / 20.0))
+        limited_samples = int(np.count_nonzero(np.abs(scaled) > ceiling))
+        scaled = np.clip(scaled, -ceiling, ceiling)
+    elif np.any(np.abs(scaled) > 1.0):
+        raise RuntimeError(f"Unbounded gain would clip: {source}")
     sf.write(target, scaled, sample_rate, subtype="PCM_16")
+    limited_fraction_pct = 100.0 * limited_samples / max(int(audio.size), 1)
+    return limited_samples, limited_fraction_pct
 
 
 def order_without_adjacent_duplicates(
@@ -207,8 +221,10 @@ def main() -> None:
         rows, "gunshot_gunfire", TARGET_COUNTS["gunshot_sources"], rng
     )
     for row in gunshots:
-        selected.append({**row, "loudness_stratum": "nominal"})
-        selected.append({**row, "loudness_stratum": "reduced_6db"})
+        selected.append({**row, "loudness_stratum": "gunshot_boosted_5db"})
+        selected.append(
+            {**row, "loudness_stratum": "gunshot_boosted_5db_reduced_6db"}
+        )
 
     selected_ood_categories: list[str] = []
     for category in OOD_CORE_CATEGORIES:
@@ -265,15 +281,35 @@ def main() -> None:
         output_path = output_audio / output_name
         source_path = resolve_stimulus(repo_root, row)
         derived_gain_db = 0.0
+        gain_processing = "unchanged_pcm"
+        limiter_ceiling_dbfs: float | str = ""
+        limited_samples = 0
+        limited_fraction_pct = 0.0
         if row["loudness_stratum"] == "ood_attenuated_20db":
             derived_gain_db = -20.0
-            attenuate_pcm16(source_path, output_path, derived_gain_db)
-        elif row["loudness_stratum"] in {
-            "reduced_6db",
-            "reviewed_loud_attenuated_6db",
-        }:
+            gain_processing = "linear_gain"
+            limited_samples, limited_fraction_pct = apply_gain_pcm16(
+                source_path, output_path, derived_gain_db
+            )
+        elif row["loudness_stratum"] == "gunshot_boosted_5db":
+            derived_gain_db = 5.0
+            gain_processing = "linear_pregain_with_safety_ceiling"
+            limiter_ceiling_dbfs = -1.0
+            limited_samples, limited_fraction_pct = apply_gain_pcm16(
+                source_path, output_path, derived_gain_db, limiter_ceiling_dbfs
+            )
+        elif row["loudness_stratum"] == "gunshot_boosted_5db_reduced_6db":
+            derived_gain_db = -1.0
+            gain_processing = "linear_gain"
+            limited_samples, limited_fraction_pct = apply_gain_pcm16(
+                source_path, output_path, derived_gain_db
+            )
+        elif row["loudness_stratum"] == "reviewed_loud_attenuated_6db":
             derived_gain_db = -6.0
-            attenuate_pcm16(source_path, output_path, derived_gain_db)
+            gain_processing = "linear_gain"
+            limited_samples, limited_fraction_pct = apply_gain_pcm16(
+                source_path, output_path, derived_gain_db
+            )
         else:
             shutil.copy2(source_path, output_path)
         expected_output_names.add(output_name)
@@ -291,6 +327,10 @@ def main() -> None:
                 "variant": row["variant"],
                 "loudness_stratum": row["loudness_stratum"],
                 "derived_gain_db": derived_gain_db,
+                "gain_processing": gain_processing,
+                "limiter_ceiling_dbfs": limiter_ceiling_dbfs,
+                "limited_samples": limited_samples,
+                "limited_fraction_pct": round(limited_fraction_pct, 6),
                 "parent_stimulus_sha256": row["stimulus_sha256"],
                 "stimulus_file": output_name,
                 "stimulus_path": "../ml-workspace/datasets/hazard6_pilot2_targeted/audio/"
@@ -337,12 +377,12 @@ def main() -> None:
             "dog_bark": "at least 4/5 confirmed",
             "glass_breaking": "at least 4/5 confirmed",
             "thunderstorm": "at least 4/5 confirmed",
-            "gunshot_nominal": "at least 3/4 confirmed",
-            "gunshot_reduced_6db": "descriptive paired sensitivity result",
+            "gunshot_boosted_5db": "at least 3/4 confirmed",
+            "gunshot_boosted_5db_reduced_6db": "descriptive paired sensitivity result",
             "ood_rejection": "at least 4/5 without a confirmed hazard; a trial must contain at least one active-audio frame to be evaluable",
         },
         "selection_limitation": "The initial semantic screen had visible-board outcome leakage. The supplemental and ambient reviews hid the board. This remains development verification, not unbiased final accuracy.",
-        "playback_level_rationale": "Replacement attempt P2-A02 uses Windows volume 75 percent because the operator invalidated P2-A01 before outcome analysis after reporting insufficient audibility and external interference at 50 percent. All five OOD waveforms retain their 20 dB attenuation. OOD rejection counts only when the board reports at least one active-audio frame. Parent hashes and derived gains are recorded.",
+        "playback_level_rationale": "Replacement attempt P2-A02 uses Windows volume 75 percent because the operator invalidated P2-A01 before outcome analysis after reporting insufficient audibility and external interference at 50 percent. All eight gunshot trials receive 5 dB more pregain than their earlier P2-A01 counterparts while retaining the paired 6 dB separation; the high stratum uses a recorded -1 dBFS safety ceiling. All five OOD waveforms retain their 20 dB attenuation. OOD rejection counts only when the board reports at least one active-audio frame. Parent hashes, gains, limiter exposure, and derived hashes are recorded.",
         "replaces_pilot1": False,
         "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
         "manifest_sha256": sha256(final_csv),

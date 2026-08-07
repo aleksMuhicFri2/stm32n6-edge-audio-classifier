@@ -28,6 +28,18 @@ $allTrials = @(Import-Csv -LiteralPath $manifestPath | Sort-Object { [int]$_.tri
 if ($allTrials.Count -ne 28) {
     throw "Expected 28 frozen targeted Pilot 2 trials; found $($allTrials.Count)."
 }
+if (@($allTrials | Where-Object { [int]$_.volume_percent -ne 75 }).Count -ne 0) {
+    throw "Pilot 2 replacement manifest must use Windows volume 75 percent."
+}
+$gunshotHigh = @($allTrials | Where-Object {
+    $_.expected_class -eq "gunshot_gunfire" -and [double]$_.derived_gain_db -eq 5.0
+})
+$gunshotLow = @($allTrials | Where-Object {
+    $_.expected_class -eq "gunshot_gunfire" -and [double]$_.derived_gain_db -eq -1.0
+})
+if ($gunshotHigh.Count -ne 4 -or $gunshotLow.Count -ne 4) {
+    throw "Pilot 2 replacement manifest must contain four +5 dB and four -1 dB gunshot trials."
+}
 $trials = @($allTrials | Where-Object {
     [int]$_.trial_order -ge $StartOrder -and [int]$_.trial_order -le $EndOrder
 })
@@ -82,7 +94,7 @@ foreach ($trial in $trials) {
         -DistanceCm ([int]$trial.distance_cm) `
         -VolumePercent ([int]$trial.volume_percent) `
         -StimulusHash $trial.sha256 `
-        -Notes "Targeted Pilot 2 attempt $attemptId; order $order; true category $($trial.true_category); semantic variant $($trial.variant); loudness stratum $($trial.loudness_stratum); final-order seed 210." `
+        -Notes "Targeted Pilot 2 attempt $attemptId; order $order; true category $($trial.true_category); semantic variant $($trial.variant); loudness stratum $($trial.loudness_stratum); derived gain $($trial.derived_gain_db) dB; gain processing $($trial.gain_processing); limited samples $($trial.limited_samples); final-order seed 210." `
         -PlaybackFile $audioPath `
         -PlaybackDelaySeconds 3 `
         -FirmwareCommit "9a614d2" `

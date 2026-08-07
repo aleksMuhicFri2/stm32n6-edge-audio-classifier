@@ -54,20 +54,29 @@ reported that many stimuli were too quiet and that external interference had
 occurred. The full attempt was excluded before prediction outcomes were
 analyzed. Its raw UART logs remain preserved as engineering evidence and are
 not mixed with the replacement attempt. `P2-A02` repeats the same frozen order,
-waveforms, distances, capture durations, firmware, and model at 75%; the
-playback setting is the only planned factor change.
+distances, capture durations, firmware, and model at 75%. Its non-gunshot
+waveforms remain byte-identical to the prepared replacement; the eight gunshot
+trials receive the additional gain described below.
 
 ## Loudness correction and gunfire factor
 
 The operator observed that gunshot recognition depends strongly on loudness.
-The four already-qualified gunfire sources are therefore tested twice:
+The four already-qualified gunfire sources are therefore tested twice. After
+the excluded 50% attempt, the operator requested 5 dB more gunshot level for
+the 75% replacement attempt:
 
-- `nominal`: the reviewed normalized bytes; and
-- `reduced_6db`: the same PCM waveform attenuated by exactly 6 dB.
+- `gunshot_boosted_5db`: the reviewed normalized bytes with +5 dB pregain; and
+- `gunshot_boosted_5db_reduced_6db`: the same parent waveform at net -1 dB,
+  preserving an exact 6 dB paired separation.
 
-This creates four paired observations per level. The nominal stratum must reach
-at least 3/4 confirmed detections; the reduced stratum is reported as a paired
-sensitivity result rather than folded into a single accuracy percentage.
+The +5 dB stratum has a -1 dBFS safety ceiling. Limiter exposure is stored for
+every derived WAV so gain is never silently clipped. Three sources require no
+limiting; the remaining impulsive multiple-shot source is reported with its
+exact limited-sample count and fraction.
+
+This creates four paired observations per level. The +5 dB stratum must reach
+at least 3/4 confirmed detections; the net -1 dB stratum is reported as a
+paired sensitivity result rather than folded into one accuracy percentage.
 
 The supplemental review uses gentler normalization than the initial shortlist:
 maximum 100 ms frame RMS targets -18 dBFS, peak level is capped at -6 dBFS,
@@ -88,8 +97,8 @@ finalizer creates 28 randomized trials:
 | Dog bark | 5 | at least 4/5 confirmed |
 | Clean glass shatter | 5 | at least 4/5 confirmed |
 | Thunderstorm without high-pitched contamination | 5 | at least 4/5 confirmed |
-| Gunfire, nominal | 4 | at least 3/4 confirmed |
-| Same gunfire, -6 dB | 4 | descriptive paired sensitivity |
+| Gunfire, +5 dB pregain | 4 | at least 3/4 confirmed |
+| Same gunfire, net -1 dB | 4 | descriptive paired sensitivity |
 | OOD rejection, all at -20 dB | 5 | at least 4/5 active trials without a confirmed hazard |
 
 The OOD set contains clapping, wooden-door knocking, crying baby, clock ticking,

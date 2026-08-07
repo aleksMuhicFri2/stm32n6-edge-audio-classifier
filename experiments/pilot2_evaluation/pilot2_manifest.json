@@ -11,8 +11,8 @@
     "out_of_distribution": 5
   },
   "gunshot_loudness_counts": {
-    "reduced_6db": 4,
-    "nominal": 4
+    "gunshot_boosted_5db_reduced_6db": 4,
+    "gunshot_boosted_5db": 4
   },
   "ood_categories": [
     "clapping",
@@ -32,13 +32,13 @@
     "dog_bark": "at least 4/5 confirmed",
     "glass_breaking": "at least 4/5 confirmed",
     "thunderstorm": "at least 4/5 confirmed",
-    "gunshot_nominal": "at least 3/4 confirmed",
-    "gunshot_reduced_6db": "descriptive paired sensitivity result",
+    "gunshot_boosted_5db": "at least 3/4 confirmed",
+    "gunshot_boosted_5db_reduced_6db": "descriptive paired sensitivity result",
     "ood_rejection": "at least 4/5 without a confirmed hazard; a trial must contain at least one active-audio frame to be evaluable"
   },
   "selection_limitation": "The initial semantic screen had visible-board outcome leakage. The supplemental and ambient reviews hid the board. This remains development verification, not unbiased final accuracy.",
-  "playback_level_rationale": "Replacement attempt P2-A02 uses Windows volume 75 percent because the operator invalidated P2-A01 before outcome analysis after reporting insufficient audibility and external interference at 50 percent. All five OOD waveforms retain their 20 dB attenuation. OOD rejection counts only when the board reports at least one active-audio frame. Parent hashes and derived gains are recorded.",
+  "playback_level_rationale": "Replacement attempt P2-A02 uses Windows volume 75 percent because the operator invalidated P2-A01 before outcome analysis after reporting insufficient audibility and external interference at 50 percent. All eight gunshot trials receive 5 dB more pregain than their earlier P2-A01 counterparts while retaining the paired 6 dB separation; the high stratum uses a recorded -1 dBFS safety ceiling. All five OOD waveforms retain their 20 dB attenuation. OOD rejection counts only when the board reports at least one active-audio frame. Parent hashes, gains, limiter exposure, and derived hashes are recorded.",
   "replaces_pilot1": false,
   "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
-  "manifest_sha256": "2c5d30cfa202883911e8fb651fc7522034a2b67735deb5cf0ebf5a5198a8df54"
+  "manifest_sha256": "390c7d32fb6f14078a72a99679084764ba059b92ce69640f8f79489ec0dc06d2"
 }
