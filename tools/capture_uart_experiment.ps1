@@ -15,7 +15,14 @@ param(
     [Nullable[int]]$DistanceCm = $null,
     [Nullable[int]]$VolumePercent = $null,
     [string]$StimulusHash = "",
-    [string]$Notes = ""
+    [string]$Notes = "",
+    [string]$PlaybackFile = "",
+    [ValidateRange(0, 60)]
+    [int]$PlaybackDelaySeconds = 3,
+    [string]$FirmwareCommit = "",
+    [string]$ModelName = "YAMNet-256 Hazard-5 + Speech int8",
+    [ValidateRange(1, 1000)]
+    [int]$ModelClasses = 6
 )
 
 $ErrorActionPreference = "Stop"
@@ -33,13 +40,22 @@ if ($QualityLevel -eq "controlled" -and $TestType -ne "idle") {
         throw "Controlled non-idle runs require -DistanceCm, -VolumePercent, -Source, and -StimulusHash."
     }
 }
+if ($PlaybackFile -and -not (Test-Path -LiteralPath $PlaybackFile)) {
+    throw "Playback file does not exist: $PlaybackFile"
+}
 
 $start = Get-Date
 $runId = "RUN-" + $start.ToString("yyyyMMdd-HHmmss")
 $rawRelativePath = "experiments/raw/$runId.txt"
 $rawPath = Join-Path $repoRoot ($rawRelativePath -replace "/", "\")
-$gitCommit = (& git -C $repoRoot rev-parse --short HEAD 2>$null)
-if (-not $gitCommit) { $gitCommit = "unknown" }
+$sourceCommit = (& git -C $repoRoot rev-parse --short HEAD 2>$null)
+if (-not $sourceCommit) { $sourceCommit = "unknown" }
+$gitCommit = if ($FirmwareCommit) { $FirmwareCommit } else { $sourceCommit }
+$resolvedPlaybackFile = if ($PlaybackFile) {
+    (Resolve-Path -LiteralPath $PlaybackFile).Path
+} else {
+    ""
+}
 
 $serial = [System.IO.Ports.SerialPort]::new(
     $Port,
@@ -51,6 +67,13 @@ $serial = [System.IO.Ports.SerialPort]::new(
 $serial.Handshake = [System.IO.Ports.Handshake]::None
 $serial.ReadTimeout = 500
 $rawText = ""
+$player = $null
+$playbackStarted = $false
+
+if ($resolvedPlaybackFile) {
+    $player = [System.Media.SoundPlayer]::new($resolvedPlaybackFile)
+    $player.Load()
+}
 
 Write-Host "Starting $runId on $Port for $DurationSeconds seconds."
 Write-Host "Stimulus: $Stimulus | Expected: $ExpectedClass | Type: $TestType"
@@ -59,12 +82,22 @@ try {
     $serial.Open()
     $timer = [System.Diagnostics.Stopwatch]::StartNew()
     while ($timer.Elapsed.TotalSeconds -lt $DurationSeconds) {
+        if ($player -and -not $playbackStarted -and
+            $timer.Elapsed.TotalSeconds -ge $PlaybackDelaySeconds) {
+            Write-Host "Playing $resolvedPlaybackFile"
+            $player.Play()
+            $playbackStarted = $true
+        }
         $chunk = $serial.ReadExisting()
         if ($chunk) { $rawText += $chunk }
         Start-Sleep -Milliseconds 50
     }
 }
 finally {
+    if ($player) {
+        $player.Stop()
+        $player.Dispose()
+    }
     if ($serial.IsOpen) { $serial.Close() }
     $serial.Dispose()
 }
@@ -86,6 +119,9 @@ $header = @(
     "distance_cm=$DistanceCm",
     "volume_percent=$VolumePercent",
     "firmware_git_commit=$gitCommit",
+    "capture_source_git_commit=$sourceCommit",
+    "playback_file=$resolvedPlaybackFile",
+    "playback_delay_seconds=$PlaybackDelaySeconds",
     "decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27",
     "notes=$Notes",
     "--- UART ---"
@@ -110,6 +146,8 @@ if ($aedMatches.Count -eq 0) {
     throw "No AED_CSV records were parsed. Flash the temporal-filter firmware first. Raw UART was saved to $rawPath."
 }
 
+$safeOutputClasses = @("unknown", "waiting", "no_output", "speech")
+$hazardClasses = @("dog_bark", "glass_breaking", "gunshot_gunfire", "siren", "thunderstorm")
 $frames = [System.Collections.Generic.List[object]]::new()
 for ($index = 0; $index -lt $aedMatches.Count; $index++) {
     $match = $aedMatches[$index]
@@ -117,7 +155,7 @@ for ($index = 0; $index -lt $aedMatches.Count; $index++) {
     $predictedClass = $match.Groups[3].Value
     $stats = $statsByFrame[$frameId]
     if ($TestType -in @("ood", "idle")) {
-        $isCorrect = $predictedClass -in @("unknown", "waiting")
+        $isCorrect = $predictedClass -in $safeOutputClasses
     }
     else {
         $isCorrect = $predictedClass -eq $ExpectedClass
@@ -150,11 +188,12 @@ for ($index = 0; $index -lt $aedMatches.Count; $index++) {
 
 $frames | Export-Csv -LiteralPath $framesPath -NoTypeInformation -Append -Encoding utf8
 $detections = @($frames | Where-Object { $_.predicted_class -notin @("no_output", "unknown", "waiting") })
+$hazardDetections = @($frames | Where-Object { $_.predicted_class -in $hazardClasses })
 $correct = @($frames | Where-Object { $_.is_correct }).Count
 $unknown = @($frames | Where-Object { $_.predicted_class -eq "unknown" }).Count
 $result = if ($TestType -eq "positive") {
     if (@($frames | Where-Object { $_.predicted_class -eq $ExpectedClass }).Count -gt 0) { "pass_with_detection" } else { "fail_no_target_detection" }
-} elseif (@($frames | Where-Object { $_.predicted_class -notin @("unknown", "waiting", "no_output") }).Count -eq 0) {
+} elseif ($hazardDetections.Count -eq 0) {
     "pass_no_false_positive"
 } else {
     "fail_false_positive"
@@ -169,8 +208,8 @@ $run = [pscustomobject][ordered]@{
     board_revision = "Rev B"
     firmware_commit = $gitCommit
     configuration = "BM EMA-0.65 hysteresis"
-    model_name = "YAMNet-256 Useful-10 int8"
-    model_classes = 10
+    model_name = $ModelName
+    model_classes = $ModelClasses
     stimulus = $Stimulus
     expected_class = $ExpectedClass
     source = $Source

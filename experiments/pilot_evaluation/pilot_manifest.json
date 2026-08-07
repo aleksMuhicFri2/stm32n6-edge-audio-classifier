@@ -1,0 +1,38 @@
+{
+  "experiment_id": "STM32N6-HAZARD6-PILOT-001",
+  "selection_seed": 120,
+  "firmware_commit": "9a614d2",
+  "model_name": "YAMNet-256 Hazard-5 + Speech int8",
+  "model_classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "samples_per_model_class": 5,
+  "ood_categories": [
+    "clapping",
+    "door_wood_knock",
+    "rain",
+    "crying_baby",
+    "clock_tick"
+  ],
+  "trial_count": 35,
+  "excluded_prior_smoke_files": [
+    "dog_bark__fsd50k__dev__266603__0041__r0.wav",
+    "glass_breaking__fsd50k__dev__233586__0040__r0.wav",
+    "gunshot_gunfire__fsd50k__dev__128981__0003__r0.wav",
+    "gunshot_gunfire__fsd50k__dev__197322__0024__r0.wav",
+    "gunshot_gunfire__fsd50k__dev__353093__0042__r0.wav",
+    "gunshot_gunfire__fsd50k__dev__35800__0044__r0.wav",
+    "gunshot_gunfire__fsd50k__dev__36815__0045__r0.wav",
+    "siren__fsd50k__dev__62878__0019__r0.wav",
+    "thunderstorm__esc50__fold_4__125071__0001__r0.wav",
+    "thunderstorm__esc50__fold_4__161519__0005__r0.wav",
+    "thunderstorm__fsd50k__dev__124587__0008__r0.wav"
+  ],
+  "reserved_test_policy": "ESC-50 fold 5 and FSD50K evaluation remain untouched.",
+  "manifest_sha256": "f4d2646861a5f77406993b2dd82a4299b72dc8140a7c962162f696309f8a0081"
+}
