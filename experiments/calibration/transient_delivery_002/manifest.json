@@ -1,0 +1,27 @@
+{
+  "calibration_id": "STM32N6-TRANSIENT-DELIVERY-CAL-002",
+  "attempt_id": "TD-A02",
+  "purpose": "Focused non-scored level adjustment for the five unresolved TD-A01 delivery settings.",
+  "trial_count": 5,
+  "order_seed": 408,
+  "activity_gate": "At least 3 active-audio telemetry frames per trial.",
+  "audibility_gate": "Operator rating must be comfortable.",
+  "adjustments_db": {
+    "TD-001": 2.0,
+    "TD-004": -3.0,
+    "TD-005": 3.0,
+    "TD-009": 2.0,
+    "TD-011": 2.0
+  },
+  "excluded_from_retest": {
+    "glass": "Both glass sequences passed TD-A01.",
+    "crying_baby": "Passed TD-A01.",
+    "gunshot_TD-008": "Passed delivery and was not semantically rejected.",
+    "gunshot_TD-002_TD-003": "Semantically rejected; level changes cannot repair the sources."
+  },
+  "scoring_policy": "Classification accuracy is not reported.",
+  "firmware_commit": "9a614d2",
+  "model_name": "YAMNet-256 Hazard-5 + Speech int8",
+  "reserved_data_policy": "Uses only prior development calibration sequences; reserved evaluation data remain untouched.",
+  "manifest_sha256": "4fbc51ed2e7bab19b9baee5d9836a48e1e4b7cd04a7c860d26083b303148b853"
+}
