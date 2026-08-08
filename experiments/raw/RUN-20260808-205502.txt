@@ -1,0 +1,63 @@
+run_id=RUN-20260808-205502
+recorded_at=2026-08-08T20:55:02.0748107+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=20
+stimulus=FE-018 | reserved final stimulus | FE-018.wav
+stimulus_hash=e7097225eddaa0187b1b1d041be438458969c8683160c2c32ea78f3e612f33b1
+expected_class=siren
+test_type=positive
+source=FSD50K eval frozen reserved playback
+distance_cm=30
+volume_percent=75
+firmware_git_commit=9a614d2
+capture_source_git_commit=ea9ad91
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard6_final_evaluation\audio\FE-018.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Reserved final evaluation STM32N6-HAZARD6-FINAL-001 attempt FE-A01; order 18; true category siren; source FSD50K eval 414494; delivery reference 0.0 dB; applied delivery gain 0.0 dB; repetitions 3; manifest 439f00ddb787948d2b2253d450030c0881af766066b36a300cde3121142043ec.
+--- UART ---
+
+AED_CSV,693,0,633.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 693     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,694,0,590.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 694     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,695,0,524.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 695     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"unknown"}
+AED_CSV,696,1,10784.00,unknown,0.6328,siren,0.6328,speech,0.1992,dog_bark,0.1406,1
+                    | 696     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"siren"}
+AED_CSV,697,1,19856.00,siren,0.8639,siren,0.8639,speech,0.0773,dog_bark,0.0492,1
+                    | 697     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,698,1,17872.00,siren,0.9422,siren,0.9422,speech,0.0372,dog_bark,0.0198,0
+                    | 698     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,699,1,17680.00,siren,0.9772,siren,0.9772,speech,0.0156,dog_bark,0.0069,0
+                    | 699     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,700,1,13872.00,siren,0.6569,siren,0.6569,speech,0.1806,dog_bark,0.1598,0
+                    | 700     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,701,1,19120.00,siren,0.8723,siren,0.8723,speech,0.0708,dog_bark,0.0585,0
+                    | 701     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,702,1,17936.00,siren,0.9451,siren,0.9451,speech,0.0324,dog_bark,0.0205,0
+                    | 702     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,703,1,16784.00,siren,0.9681,siren,0.9681,speech,0.0215,dog_bark,0.0097,0
+                    | 703     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,704,1,17440.00,siren,0.9076,siren,0.9076,speech,0.0583,dog_bark,0.0313,0
+                    | 704     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,705,1,18880.00,siren,0.9575,siren,0.9575,speech,0.0280,dog_bark,0.0110,0
+                    | 705     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,706,1,16752.00,siren,0.9750,siren,0.9750,speech,0.0200,dog_bark,0.0038,0
+                    | 706     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,707,1,12168.00,siren,0.9557,siren,0.9557,speech,0.0375,dog_bark,0.0064,0
+                    | 707     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,708,0,583.00,siren,0.9557,siren,0.9557,speech,0.0375,dog_bark,0.0064,0
+                    | 708     |  0.85%|  0.69|  0.16|  0.00|
+{"class":"waiting"}
+AED_CSV,709,0,572.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 709     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,710,0,552.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 710     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,711,0,542.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 711     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,712,0,601.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 712     |  0.85%|  0.69|  0.16|  0.00|

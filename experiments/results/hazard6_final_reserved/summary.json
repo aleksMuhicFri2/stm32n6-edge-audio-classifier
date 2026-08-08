@@ -1,0 +1,180 @@
+{
+  "evaluation_id": "STM32N6-HAZARD6-FINAL-001",
+  "attempt_id": "FE-A01",
+  "status": "completed",
+  "manifest_sha256": "439f00ddb787948d2b2253d450030c0881af766066b36a300cde3121142043ec",
+  "run_count": 70,
+  "raw_log_count": 70,
+  "frame_count": 1441,
+  "active_frame_count": 498,
+  "positive_confirmed_target_trials": 37,
+  "positive_trials": 60,
+  "positive_confirmed_target_rate": 0.6166666666666667,
+  "positive_wilson95": {
+    "low": 0.49017595824099924,
+    "high": 0.7291172762591798
+  },
+  "hazard_confirmed_target_trials": 27,
+  "hazard_trials": 50,
+  "hazard_confirmed_target_rate": 0.54,
+  "hazard_wilson95": {
+    "low": 0.40398871399157477,
+    "high": 0.6703034780777566
+  },
+  "speech_confirmed_trials": 10,
+  "speech_trials": 10,
+  "speech_hazard_false_alert_trials": 1,
+  "ood_hazard_false_alert_trials": 2,
+  "ood_trials": 10,
+  "ood_hazard_false_alert_rate": 0.2,
+  "ood_false_alert_wilson95": {
+    "low": 0.05668215145437519,
+    "high": 0.5098375284633583
+  },
+  "ood_inactive_trials": 6,
+  "class_results": [
+    {
+      "expected_class": "dog_bark",
+      "label": "Dog bark",
+      "trials": 10,
+      "confirmed_target_trials": 6,
+      "confirmed_target_rate": 0.6,
+      "wilson95_low": 0.3126737697,
+      "wilson95_high": 0.8318196703,
+      "active_trials": 9,
+      "expected_rank1_seen_trials": 9,
+      "mean_peak_expected_probability": 0.68453,
+      "median_peak_expected_probability": 0.83425,
+      "hazard_false_alert_trials": 0
+    },
+    {
+      "expected_class": "glass_breaking",
+      "label": "Glass",
+      "trials": 10,
+      "confirmed_target_trials": 5,
+      "confirmed_target_rate": 0.5,
+      "wilson95_low": 0.2365930905,
+      "wilson95_high": 0.7634069095,
+      "active_trials": 9,
+      "expected_rank1_seen_trials": 9,
+      "mean_peak_expected_probability": 0.65792,
+      "median_peak_expected_probability": 0.63865,
+      "hazard_false_alert_trials": 0
+    },
+    {
+      "expected_class": "gunshot_gunfire",
+      "label": "Gunshot",
+      "trials": 10,
+      "confirmed_target_trials": 3,
+      "confirmed_target_rate": 0.3,
+      "wilson95_low": 0.1077912674,
+      "wilson95_high": 0.6032218525,
+      "active_trials": 10,
+      "expected_rank1_seen_trials": 7,
+      "mean_peak_expected_probability": 0.5325,
+      "median_peak_expected_probability": 0.5276,
+      "hazard_false_alert_trials": 0
+    },
+    {
+      "expected_class": "siren",
+      "label": "Siren",
+      "trials": 10,
+      "confirmed_target_trials": 9,
+      "confirmed_target_rate": 0.9,
+      "wilson95_low": 0.5958499732,
+      "wilson95_high": 0.9821237869,
+      "active_trials": 10,
+      "expected_rank1_seen_trials": 9,
+      "mean_peak_expected_probability": 0.81337,
+      "median_peak_expected_probability": 0.8854,
+      "hazard_false_alert_trials": 0
+    },
+    {
+      "expected_class": "speech",
+      "label": "Speech",
+      "trials": 10,
+      "confirmed_target_trials": 10,
+      "confirmed_target_rate": 1.0,
+      "wilson95_low": 0.7224672001,
+      "wilson95_high": 1.0,
+      "active_trials": 10,
+      "expected_rank1_seen_trials": 9,
+      "mean_peak_expected_probability": 0.79205,
+      "median_peak_expected_probability": 0.8841,
+      "hazard_false_alert_trials": 1
+    },
+    {
+      "expected_class": "thunderstorm",
+      "label": "Thunderstorm",
+      "trials": 10,
+      "confirmed_target_trials": 4,
+      "confirmed_target_rate": 0.4,
+      "wilson95_low": 0.1681803297,
+      "wilson95_high": 0.6873262303,
+      "active_trials": 9,
+      "expected_rank1_seen_trials": 8,
+      "mean_peak_expected_probability": 0.54507,
+      "median_peak_expected_probability": 0.60685,
+      "hazard_false_alert_trials": 0
+    }
+  ],
+  "firmware_reported_performance": [
+    {
+      "metric": "cpu_load_percent",
+      "label": "CPU load",
+      "unit": "%",
+      "observations": 1438,
+      "mean": 0.85,
+      "median": 0.85,
+      "p95": 0.85,
+      "minimum": 0.85,
+      "maximum": 0.85
+    },
+    {
+      "metric": "preprocess_ms",
+      "label": "Preprocessing",
+      "unit": "ms",
+      "observations": 1438,
+      "mean": 0.69,
+      "median": 0.69,
+      "p95": 0.69,
+      "minimum": 0.69,
+      "maximum": 0.69
+    },
+    {
+      "metric": "inference_ms",
+      "label": "Neural-ART inference",
+      "unit": "ms",
+      "observations": 1438,
+      "mean": 0.16,
+      "median": 0.16,
+      "p95": 0.16,
+      "minimum": 0.16,
+      "maximum": 0.16
+    },
+    {
+      "metric": "postprocess_ms",
+      "label": "Postprocessing",
+      "unit": "ms",
+      "observations": 1438,
+      "mean": 0.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    {
+      "metric": "reported_pipeline_ms",
+      "label": "Reported processing total",
+      "unit": "ms",
+      "observations": 1438,
+      "mean": 0.85,
+      "median": 0.85,
+      "p95": 0.85,
+      "minimum": 0.85,
+      "maximum": 0.85
+    }
+  ],
+  "timing_qualification": "Firmware-reported telemetry; not independent GPIO or oscilloscope timing.",
+  "selection_qualification": "Reserved metadata-only deterministic selection; final outcomes were not used for tuning."
+}

@@ -359,8 +359,11 @@ def plot_detection_rates(summary: pd.DataFrame, ood: pd.DataFrame, path: Path) -
     totals = list(summary["trials"].astype(int)) + [len(ood)]
     rates = np.array([s / n for s, n in zip(successes, totals)], dtype=float)
     intervals = [wilson_interval(s, n) for s, n in zip(successes, totals)]
-    lower = rates - np.array([item[0] for item in intervals])
-    upper = np.array([item[1] for item in intervals]) - rates
+    # Clamp round-off at the probability boundaries. For perfect rates,
+    # Wilson's upper bound can differ from 1.0 by a tiny negative epsilon,
+    # which Matplotlib correctly rejects as a negative error-bar length.
+    lower = np.maximum(0.0, rates - np.array([item[0] for item in intervals]))
+    upper = np.maximum(0.0, np.array([item[1] for item in intervals]) - rates)
     figure, axis = plt.subplots(figsize=(10.8, 5.8))
     x = np.arange(len(labels))
     colors = ["#2a9d8f"] * len(summary) + ["#4c78a8"]

@@ -1,0 +1,62 @@
+run_id=RUN-20260808-205602
+recorded_at=2026-08-08T20:56:02.5616272+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=20
+stimulus=FE-021 | reserved final stimulus | FE-021.wav
+stimulus_hash=4ecea03d1fed712f7045cb20ab42e069e57804806b453370aadfb966591b40f2
+expected_class=out_of_distribution
+test_type=ood
+source=ESC-50 fold_5 frozen reserved playback
+distance_cm=30
+volume_percent=75
+firmware_git_commit=9a614d2
+capture_source_git_commit=ea9ad91
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard6_final_evaluation\audio\FE-021.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Reserved final evaluation STM32N6-HAZARD6-FINAL-001 attempt FE-A01; order 21; true category door_wood_knock; source ESC-50 fold_5 256512; delivery reference -14.0 dB; applied delivery gain -21.67 dB; repetitions 4; manifest 439f00ddb787948d2b2253d450030c0881af766066b36a300cde3121142043ec.
+--- UART ---
+
+AED_CSV,755,0,526.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 755     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,756,0,599.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 756     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,757,0,630.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 757     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,758,0,569.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 758     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,759,0,746.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 759     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,760,0,824.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 760     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,761,0,613.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 761     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,762,0,832.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 762     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,763,0,914.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 763     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,764,0,726.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 764     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,765,0,825.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 765     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,766,0,754.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 766     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,767,0,707.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 767     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,768,0,862.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 768     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,769,0,787.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 769     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,770,0,611.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 770     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,771,0,578.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 771     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,772,0,676.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 772     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,773,0,759.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 773     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,774,0,770.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 774     |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,775,0,749.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 775     |  0.85%|  0.69|  0.16|  0.00|

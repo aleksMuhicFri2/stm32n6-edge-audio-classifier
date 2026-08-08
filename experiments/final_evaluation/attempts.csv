@@ -1,1 +1,2 @@
 attempt_id,status,started_at,completed_at,first_run_id,last_run_id,captured_trials,volume_percent,distance_cm,manifest_sha256,operator_note
+"FE-A01","completed","2026-08-08T20:49:19.3843343+02:00","2026-08-08T22:01:48.2352649+02:00","RUN-20260808-204919","RUN-20260808-211230","70","75","30","439f00ddb787948d2b2253d450030c0881af766066b36a300cde3121142043ec","The ones that failed were either too loud or had weird background noise or weird sounds that made it change detected sound"

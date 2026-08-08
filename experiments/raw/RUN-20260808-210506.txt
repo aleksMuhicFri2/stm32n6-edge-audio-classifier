@@ -1,0 +1,62 @@
+run_id=RUN-20260808-210506
+recorded_at=2026-08-08T21:05:06.9024128+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=20
+stimulus=FE-048 | reserved final stimulus | FE-048.wav
+stimulus_hash=c6773e26403f24c4c85f34132690fd1baf4bb3de2882c805d32c1c00bedde7c4
+expected_class=speech
+test_type=positive
+source=FSD50K eval frozen reserved playback
+distance_cm=30
+volume_percent=75
+firmware_git_commit=9a614d2
+capture_source_git_commit=ea9ad91
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard6_final_evaluation\audio\FE-048.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Reserved final evaluation STM32N6-HAZARD6-FINAL-001 attempt FE-A01; order 48; true category speech; source FSD50K eval 264611; delivery reference 0.0 dB; applied delivery gain -0.1027 dB; repetitions 2; manifest 439f00ddb787948d2b2253d450030c0881af766066b36a300cde3121142043ec.
+--- UART ---
+
+AED_CSV,1316,0,604.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1316    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1317,0,552.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1317    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1318,0,603.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1318    |  0.85%|  0.69|  0.16|  0.00|
+{"class":"speech"}
+AED_CSV,1319,1,12400.00,speech,0.4141,speech,0.4141,siren,0.2930,dog_bark,0.2617,1
+                    | 1319    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1320,1,23952.00,speech,0.7441,speech,0.7441,dog_bark,0.1246,siren,0.1203,0
+                    | 1320    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1321,0,772.00,speech,0.7441,speech,0.7441,dog_bark,0.1246,siren,0.1203,0
+                    | 1321    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1322,1,12808.00,speech,0.7200,speech,0.7200,dog_bark,0.1579,siren,0.1081,0
+                    | 1322    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1323,1,18944.00,speech,0.8309,speech,0.8309,dog_bark,0.1060,siren,0.0556,0
+                    | 1323    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1324,0,591.00,speech,0.8309,speech,0.8309,dog_bark,0.1060,siren,0.0556,0
+                    | 1324    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1325,1,12512.00,speech,0.8189,speech,0.8189,dog_bark,0.1412,siren,0.0372,0
+                    | 1325    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1326,1,8216.00,speech,0.7564,speech,0.7564,siren,0.1451,dog_bark,0.0951,0
+                    | 1326    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1327,0,520.00,speech,0.7564,speech,0.7564,siren,0.1451,dog_bark,0.0951,0
+                    | 1327    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1328,1,12816.00,speech,0.8512,speech,0.8512,dog_bark,0.0917,siren,0.0559,0
+                    | 1328    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1329,1,9280.00,speech,0.6991,speech,0.6991,siren,0.2201,dog_bark,0.0778,0
+                    | 1329    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1330,0,529.00,speech,0.6991,speech,0.6991,siren,0.2201,dog_bark,0.0778,0
+                    | 1330    |  0.85%|  0.69|  0.16|  0.00|
+{"class":"waiting"}
+AED_CSV,1331,0,603.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 1331    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1332,0,554.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1332    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1333,0,548.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1333    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1334,0,512.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1334    |  0.85%|  0.69|  0.16|  0.00|
+AED_CSV,1335,0,582.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1335    |  0.85%|  0.69|  0.16|  0.00|

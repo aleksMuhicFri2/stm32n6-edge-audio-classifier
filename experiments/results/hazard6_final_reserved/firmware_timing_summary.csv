@@ -1,0 +1,6 @@
+metric,label,unit,observations,mean,median,p95,minimum,maximum
+cpu_load_percent,CPU load,%,1438,0.8499999999999998,0.85,0.85,0.85,0.85
+preprocess_ms,Preprocessing,ms,1438,0.6899999999999998,0.69,0.69,0.69,0.69
+inference_ms,Neural-ART inference,ms,1438,0.15999999999999998,0.16,0.16,0.16,0.16
+postprocess_ms,Postprocessing,ms,1438,0.0,0.0,0.0,0.0,0.0
+reported_pipeline_ms,Reported processing total,ms,1438,0.8499999999999998,0.85,0.85,0.85,0.85
