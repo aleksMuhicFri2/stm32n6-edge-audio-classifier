@@ -1,0 +1,118 @@
+{
+  "firmware_commit": "9a614d2a7f5c91b0721363cba6783047a854b955",
+  "release_tag": "v1.0.0-thesis-evaluated",
+  "release_commit": "a258842689c745041b9a5e8d98ae0ba5fcbb9279",
+  "firmware_model_unchanged_to_release_tag": true,
+  "model_name": "YAMNet-256 Hazard-5 + Speech int8",
+  "model_sha256": "1e04ff9d9394ace17020077e804bf40fbbaf0312c81ad9e83ea3ffb56e84946a",
+  "model_input_shape": "1x64x96x1",
+  "model_output_classes": 6,
+  "model_macc": 24385580,
+  "tflite_bytes": 184280,
+  "compiled_parameter_bytes": 138136,
+  "compiled_weight_blob_bytes": 148657,
+  "npu_activation_bytes": 147456,
+  "epochs": {
+    "total": 15,
+    "pure_hardware": 12,
+    "hybrid": 1,
+    "pure_software": 2
+  },
+  "application": {
+    "text_bytes": 225452,
+    "data_bytes": 8968,
+    "bss_including_heap_stack_bytes": 361760,
+    "zero_initialized_excluding_heap_stack_bytes": 275744,
+    "heap_bytes": 65536,
+    "stack_bytes": 20480,
+    "linked_ram_total_bytes": 596180,
+    "linker_ram_capacity_bytes": 1047552,
+    "unsigned_binary_bytes": 234432,
+    "signed_binary_bytes": 235456,
+    "signing_prefix_bytes": 1024
+  },
+  "display": {
+    "width": 800,
+    "height": 480,
+    "bytes_per_pixel": 2,
+    "framebuffer_count": 2,
+    "total_framebuffer_bytes": 1536000
+  },
+  "resources": [
+    {
+      "resource": "Application linker RAM",
+      "region": "0x34000400-0x34100000",
+      "used_bytes": 596180,
+      "capacity_bytes": 1047552,
+      "utilization_percent": 56.9117,
+      "measurement_type": "GNU ELF section measurement",
+      "notes": "Code executes from RAM; includes text, initialized data, BSS, and reserved heap/stack."
+    },
+    {
+      "resource": "NPU activation RAM",
+      "region": "0x34350000-0x343C0000",
+      "used_bytes": 147456,
+      "capacity_bytes": 458752,
+      "utilization_percent": 32.1429,
+      "measurement_type": "ST Edge AI compiler allocation",
+      "notes": "Dedicated npuRAM6 activation pool; input/output buffers are included."
+    },
+    {
+      "resource": "External HyperRAM UI",
+      "region": "0x90000000-0x91000000",
+      "used_bytes": 1536000,
+      "capacity_bytes": 16777216,
+      "utilization_percent": 9.1553,
+      "measurement_type": "Source-derived fixed allocation",
+      "notes": "Two 800x480 RGB565 framebuffers at 0x90E80000 and 0x90F3B800."
+    },
+    {
+      "resource": "External flash app partition",
+      "region": "0x70100000-0x70180000",
+      "used_bytes": 235456,
+      "capacity_bytes": 524288,
+      "utilization_percent": 44.9097,
+      "measurement_type": "Signed deployment file size",
+      "notes": "Includes the 1024-byte STM32 secure-boot signing prefix."
+    },
+    {
+      "resource": "External flash NPU weights",
+      "region": "0x70180000-0x74080000",
+      "used_bytes": 148657,
+      "capacity_bytes": 66060288,
+      "utilization_percent": 0.225,
+      "measurement_type": "ST Edge AI compiler allocation",
+      "notes": "Compiled Neural-ART weight blob stored separately from the application."
+    }
+  ],
+  "firmware_reported_timing": {
+    "cpu_load_percent": {
+      "mean": 0.85,
+      "unit": "%",
+      "observations": 1438
+    },
+    "preprocess_ms": {
+      "mean": 0.69,
+      "unit": "ms",
+      "observations": 1438
+    },
+    "inference_ms": {
+      "mean": 0.16,
+      "unit": "ms",
+      "observations": 1438
+    },
+    "postprocess_ms": {
+      "mean": 0.0,
+      "unit": "ms",
+      "observations": 1438
+    },
+    "reported_pipeline_ms": {
+      "mean": 0.85,
+      "unit": "ms",
+      "observations": 1438
+    }
+  },
+  "timing_qualification": "Firmware-reported telemetry; not independent GPIO or oscilloscope timing.",
+  "power_measurement_available": false,
+  "power_qualification": "No independent board power measurement was performed."
+}

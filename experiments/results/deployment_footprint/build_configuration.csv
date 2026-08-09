@@ -1,0 +1,12 @@
+setting,value,source
+Board,STM32N6570-DK Rev B,final evaluation manifest
+Configuration,Bare metal (APP_BARE_METAL),Projects/GS/STM32CubeIDE/BM/Application/X-CUBE-AI/subdir.mk
+Processor,Arm Cortex-M55,-mcpu=cortex-m55
+Optimization,-Ofast,Projects/GS/STM32CubeIDE/BM/Application/X-CUBE-AI/subdir.mk
+Floating point,"FPv5-D16, hard-float ABI",Projects/GS/STM32CubeIDE/BM/Application/X-CUBE-AI/subdir.mk
+Neural-ART runtime,asynchronous with software fallback,Projects/GS/STM32CubeIDE/BM/Application/X-CUBE-AI/subdir.mk
+NPU cache,enabled,Projects/GS/Inc/app_config.h
+GNU compiler,arm-none-eabi-gcc.exe (GNU Tools for STM32 14.3.rel1.20251027-0700) 14.3.1 20250623,C:\ST\STM32CubeIDE_2.2.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740\tools\bin\arm-none-eabi-gcc.exe
+ST Edge AI Core,ST Edge AI Core v4.0.1-20581 7ed50de05,Projects/X-CUBE-AI/models/network_generate_report.txt
+Neural-ART compiler,1.1.3-275,Projects/X-CUBE-AI/models/network_generate_report.txt
+Link strategy,load-and-run from internal RAM,Projects/GS/STM32CubeIDE/STM32N657XX_LRUN.ld

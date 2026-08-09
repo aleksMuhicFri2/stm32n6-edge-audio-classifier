@@ -1,0 +1,8 @@
+component,bytes,location
+Application code and read-only data,225452,Application linker RAM
+Application initialized data,8968,Application linker RAM
+Application zero-initialized data,275744,Application linker RAM
+Reserved heap and stack,86016,Application linker RAM
+Compiled NPU weights,148657,External octoFlash
+NPU activations,147456,Dedicated npuRAM6
+Two RGB565 framebuffers,1536000,External HyperRAM

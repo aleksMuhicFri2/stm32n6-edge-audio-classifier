@@ -1,0 +1,6 @@
+resource,region,used_bytes,capacity_bytes,utilization_percent,measurement_type,notes
+Application linker RAM,0x34000400-0x34100000,596180,1047552,56.9117,GNU ELF section measurement,"Code executes from RAM; includes text, initialized data, BSS, and reserved heap/stack."
+NPU activation RAM,0x34350000-0x343C0000,147456,458752,32.1429,ST Edge AI compiler allocation,Dedicated npuRAM6 activation pool; input/output buffers are included.
+External HyperRAM UI,0x90000000-0x91000000,1536000,16777216,9.1553,Source-derived fixed allocation,Two 800x480 RGB565 framebuffers at 0x90E80000 and 0x90F3B800.
+External flash app partition,0x70100000-0x70180000,235456,524288,44.9097,Signed deployment file size,Includes the 1024-byte STM32 secure-boot signing prefix.
+External flash NPU weights,0x70180000-0x74080000,148657,66060288,0.225,ST Edge AI compiler allocation,Compiled Neural-ART weight blob stored separately from the application.

@@ -1,0 +1,9 @@
+artifact,role,bytes,kib,sha256,qualification
+ml/models/hazard5v3s_yamnet256_int8.tflite,Quantized six-class TensorFlow Lite source model,184280,179.9609,1e04ff9d9394ace17020077e804bf40fbbaf0312c81ad9e83ea3ffb56e84946a,tracked source artifact
+Projects/X-CUBE-AI/models/aed_weights.bin,Compiled Neural-ART weights flashed at 0x70180000,148657,145.1729,11e531fd75604bda595fca0feccfa1a5857cb3ad8efb9fba9a645f8231a49274,tracked deployment artifact
+Projects/GS/STM32CubeIDE/BM/GS_Audio_N6.bin,Bare-metal application payload,234432,228.9375,b0003c7b816c8af6583806a13e38dcc2f3dd74c83e1afc41b9bc85de9781efc9,local generated build artifact
+Projects/GS/STM32CubeIDE/BM/GS_Audio_N6_hazard5v3s_speech_guard_sign.bin,Aligned secure-boot application flashed at 0x70100000,235456,229.9375,1499efbfd11c02d4dc310b359ce0c2745587e1940b6f726974ae63a39d00afd9,local generated deployment artifact
+Projects/GS/STM32CubeIDE/BM/GS_Audio_N6.elf,Application ELF with debug and section metadata,6298228,6150.6133,decd71de70a5a5e1e72e8caf5ac91da564c059763aa7bb68f06b79ca552a0f3d,local generated analysis artifact
+Projects/GS/STM32CubeIDE/BM/GS_Audio_N6.map,Application linker map,2325473,2270.9697,6a17fa6039b0fbc39181431dee8652b52e55a61384e5ecf8d3a02fc00a2314fd,local generated analysis artifact
+Projects/X-CUBE-AI/models/network_c_info.json,Machine-readable ST Edge AI compiler report,243235,237.5342,b006210dd39a9b59cb66ccc30aed9be8f69b8cf377f2a50d36ce9fd812589354,tracked compiler evidence
+Projects/X-CUBE-AI/models/network_generate_report.txt,Human-readable ST Edge AI compiler report,11589,11.3174,69d9bb850a52627acbae033f69642cfc50a843d37c0ffe700995df0449aa31e3,tracked compiler evidence

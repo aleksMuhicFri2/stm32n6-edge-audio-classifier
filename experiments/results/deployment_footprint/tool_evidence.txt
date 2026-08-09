@@ -1,0 +1,51 @@
+Evaluated deployment footprint evidence
+======================================
+Firmware commit: 9a614d2a7f5c91b0721363cba6783047a854b955
+Evaluated release tag: v1.0.0-thesis-evaluated
+Evaluated release commit: a258842689c745041b9a5e8d98ae0ba5fcbb9279
+Firmware/model path diff from firmware commit to release tag: none
+Final manifest trials checked: 70
+Model SHA-256: 1e04ff9d9394ace17020077e804bf40fbbaf0312c81ad9e83ea3ffb56e84946a
+Signed prefix bytes: 1024
+Signed payload equals unsigned application: true
+
+$ arm-none-eabi-size --version
+GNU size (GNU Tools for STM32 14.3.rel1.20251027-0700) 2.44.0.20250616
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or (at your option) any later version.
+This program has absolutely no warranty.
+
+$ arm-none-eabi-size Projects/GS/STM32CubeIDE/BM/GS_Audio_N6.elf
+   text	   data	    bss	    dec	    hex	filename
+ 225452	   8968	 361760	 596180	  918d4	Projects/GS/STM32CubeIDE/BM/GS_Audio_N6.elf
+
+$ arm-none-eabi-size -A -d Projects/GS/STM32CubeIDE/BM/GS_Audio_N6.elf
+Projects/GS/STM32CubeIDE/BM/GS_Audio_N6.elf  :
+section                size        addr
+.isr_vector             844   872416256
+.text                152560   872417104
+.rodata               72008   872569664
+.ARM.extab                0   872641672
+.ARM                      8   872641672
+.preinit_array            0   872641680
+.init_array               4   872641680
+.fini_array               4   872641684
+.data                  7552   872641688
+.noncacheable          1408   872649248
+.gnu.sgstubs             32   872650656
+.bss                 275744   872650688
+._user_heap_stack     86016   872926432
+.ARM.attributes          58           0
+.debug_info          713953           0
+.debug_abbrev         57260           0
+.debug_loclists      477851           0
+.debug_aranges        14200           0
+.debug_rnglists       58184           0
+.debug_macro         498802           0
+.debug_line          671976           0
+.debug_str          3434447           0
+.comment                134           0
+.debug_frame          52260           0
+.debug_line_str         313           0
+Total               6575618

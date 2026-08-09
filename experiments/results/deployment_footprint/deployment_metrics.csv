@@ -1,0 +1,21 @@
+metric,value,unit,source,qualification
+Evaluated firmware commit,9a614d2a7f5c91b0721363cba6783047a854b955,git commit,Git,Firmware/model identity used by all 70 final trials
+Evaluated release commit,a258842689c745041b9a5e8d98ae0ba5fcbb9279,git commit,Git tag,v1.0.0-thesis-evaluated
+TFLite model size,184280,bytes,ml/models/hazard5v3s_yamnet256_int8.tflite,Quantized source model container
+Compiled parameter payload,138136,bytes,Projects/X-CUBE-AI/models/network_generate_report.txt,Raw model parameter count reported before final memory packing
+Compiled Neural-ART weight blob,148657,bytes,Projects/X-CUBE-AI/models/network_c_info.json,Exact external-flash allocation and file size
+NPU activation pool use,147456,bytes,Projects/X-CUBE-AI/models/network_c_info.json,Input/output buffers included
+Model operations,24385580,MACC,Projects/X-CUBE-AI/models/network_generate_report.txt,Compiler-reported multiply-accumulate count
+Model input shape,1x64x96x1,elements,Projects/X-CUBE-AI/models/network_generate_report.txt,Batch x mel bands x time frames x channels
+Model output classes,6,classes,Projects/X-CUBE-AI/models/network_generate_report.txt,Five danger classes plus speech
+Pure hardware epochs,12,epochs,Projects/X-CUBE-AI/models/network_generate_report.txt,Epoch count is not an operation-weighted acceleration percentage
+Hybrid epochs,1,epochs,Projects/X-CUBE-AI/models/network_generate_report.txt,Uses software and Neural-ART hardware
+Pure software epochs,2,epochs,Projects/X-CUBE-AI/models/network_generate_report.txt,Generated fallback or conversion work
+Application linked RAM footprint,596180,bytes,arm-none-eabi-size,Includes the RAM-resident program and reserved heap/stack
+Signed application storage,235456,bytes,Projects/GS/STM32CubeIDE/BM/GS_Audio_N6_hazard5v3s_speech_guard_sign.bin,Includes 1024-byte secure-boot prefix
+External UI framebuffer allocation,1536000,bytes,Projects/GS/Inc/stm32n6570_discovery_conf.h,Two fixed RGB565 buffers
+Preprocessing time,0.69,ms,experiments/results/hazard6_final_reserved/summary.json,Firmware-reported mean across 1438 observations; not an independent instrument measurement
+Neural-ART inference time,0.16,ms,experiments/results/hazard6_final_reserved/summary.json,Firmware-reported mean across 1438 observations; not an independent instrument measurement
+Postprocessing time,0.0,ms,experiments/results/hazard6_final_reserved/summary.json,Firmware-reported mean across 1438 observations; not an independent instrument measurement
+Reported processing total,0.85,ms,experiments/results/hazard6_final_reserved/summary.json,Firmware-reported mean across 1438 observations; not an independent instrument measurement
+CPU load,0.85,%,experiments/results/hazard6_final_reserved/summary.json,Firmware-reported mean across 1438 observations; not an independent instrument measurement
