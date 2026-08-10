@@ -1,0 +1,18 @@
+{
+  "compiler": "ST Edge AI Core 4.0.1-20581",
+  "target": "STM32N6 Neural-ART accelerator",
+  "model_sha256": "a6edaf838608b28583106abf79aa4c1209e181008e6914332a227e4d3441ddbf",
+  "weights_bytes": 3279505,
+  "weights_sha256": "399f175110de03de00768a4d4ba5dfe1d8f9d0413a6717751b4c7497d755f875",
+  "activation_bytes": 245760,
+  "multiply_accumulate_operations": 72748547,
+  "total_execution_epochs": 34,
+  "hardware_epochs": 29,
+  "software_epochs": 5,
+  "hybrid_epochs": 0,
+  "input_shape": [1, 1, 96, 64],
+  "input_type": "int8",
+  "input_scale": 0.0343001597,
+  "input_zero_point": 51,
+  "status": "compile_passed_not_deployed"
+}

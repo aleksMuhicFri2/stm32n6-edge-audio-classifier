@@ -1,0 +1,61 @@
+{
+  "experiment_id": "HAZARD5V4-PATCH-BALANCED-AUG-V2-REVIEW-GATE-001",
+  "reviewed": 21,
+  "valid_events": 20,
+  "valid_event_rate": 0.9523809523809523,
+  "canonical_events": 19,
+  "truncated_events": 0,
+  "truncated_event_rate": 0.0,
+  "quiet_events": 2,
+  "validity_counts": {
+    "canonical": 19,
+    "wrong_or_absent": 1,
+    "atypical_valid": 1
+  },
+  "per_class": {
+    "glass_breaking": {
+      "reviewed": 9,
+      "valid_events": 8,
+      "valid_event_rate": 0.8888888888888888,
+      "canonical_events": 7,
+      "truncated_events": 0,
+      "truncated_event_rate": 0.0,
+      "quiet_events": 2,
+      "validity_counts": {
+        "canonical": 7,
+        "wrong_or_absent": 1,
+        "atypical_valid": 1
+      }
+    },
+    "gunshot_gunfire": {
+      "reviewed": 12,
+      "valid_events": 12,
+      "valid_event_rate": 1.0,
+      "canonical_events": 12,
+      "truncated_events": 0,
+      "truncated_event_rate": 0.0,
+      "quiet_events": 0,
+      "validity_counts": {
+        "canonical": 12
+      }
+    }
+  },
+  "predefined_thresholds": {
+    "minimum_valid_event_rate_overall": 0.9,
+    "minimum_valid_event_rate_per_class": 0.85,
+    "maximum_truncated_event_rate": 0.1
+  },
+  "gate_checks": {
+    "overall_valid_event_rate": true,
+    "each_class_valid_event_rate": true,
+    "truncated_event_rate": true,
+    "glass_audio_unchanged_since_v1_review": true
+  },
+  "gate_passed": true,
+  "evidence_reuse": {
+    "glass_review": "experiments/patch_balanced_augmentation_review",
+    "gunshot_review": "experiments/patch_balanced_augmentation_review_v2",
+    "verified_identical_glass_files": 1152
+  },
+  "interpretation": "Proceed to controlled V2 patch-balanced training."
+}

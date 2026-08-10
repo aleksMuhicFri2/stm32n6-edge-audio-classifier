@@ -1,0 +1,65 @@
+{
+  "created_at": "2026-08-10T23:51:05+02:00",
+  "status": "flashed_verified_smoke_failed_alternating_ranks",
+  "board": "STM32N6570-DK",
+  "model": "YAMNet-1024 Hazard-5 + Speech V3 int8",
+  "model_changed": false,
+  "weights_binary": "Projects/X-CUBE-AI/models/aed_weights.bin",
+  "weights_bytes": 3279505,
+  "weights_sha256": "65b800338e97202922064b2efe09e4b120f6d37a5acbfba2c08fc9ec81eb18ef",
+  "decision_change": {
+    "general_enter_threshold": 0.65,
+    "general_release_threshold": 0.50,
+    "thunder_enter_threshold": 0.35,
+    "thunder_release_threshold": 0.28,
+    "thunder_confirmation_active_frames": 2,
+    "speech_guard_threshold": 0.27
+  },
+  "calibration_evidence": {
+    "unique_stimuli": 13,
+    "captured_playbacks": 14,
+    "thunder_playbacks": 6,
+    "negative_playbacks": 8,
+    "observed_thunder_detection_rate": 1.0,
+    "observed_thunder_false_positive_rate": 0.0,
+    "summary": "experiments/results/hazard5v4_patch_balanced_v3_thunder_calibration/summary.json"
+  },
+  "firmware_build": {
+    "configuration": "bare_metal",
+    "errors": 0,
+    "warnings": 1,
+    "warning": "Existing linker warning: one load segment has read, write, and execute permissions.",
+    "text_bytes": 230292,
+    "data_bytes": 10320,
+    "bss_bytes": 360120,
+    "raw_binary_bytes": 240640,
+    "raw_binary_sha256": "f7612f001a63ceea0ea596d2087961e90cb542332aa5f41a4cc3d0af9dc754bb",
+    "signed_binary": "Projects/GS/STM32CubeIDE/BM/GS_Audio_N6_hazard5v4_patch_balanced_v3_thunder_calibrated_sign.bin",
+    "signed_binary_bytes": 241664,
+    "signed_binary_sha256": "2887f6dce5bcfd14f799ae03a197e96938ae41ae1896409dd4600d58884e3122",
+    "application_address": "0x70100000",
+    "application_end_address": "0x7013afff",
+    "weights_address": "0x70180000",
+    "overlap_check": "passed"
+  },
+  "flash": {
+    "timestamp": "2026-08-10T23:54:09+02:00",
+    "programmer": "STM32CubeProgrammer 2.23.0",
+    "debug_probe_serial": "0034004E3335510133383531",
+    "debug_probe_firmware": "V3J15M6",
+    "measured_voltage_volts": 3.28,
+    "interface": "serial_wire_debug_hot_plug",
+    "application_write_verified": true,
+    "weights_rewritten": false,
+    "bootloader_rewritten": false
+  },
+  "post_flash_smoke_test": {
+    "run_id": "RUN-20260810-235454",
+    "application_started": true,
+    "display_result_reported": false,
+    "serial_target_decision_emitted": false,
+    "maximum_thunder_score": 0.4048,
+    "diagnosis": "Thunder alternated between first and second place with siren, so two consecutive top-ranked thunder frames did not occur."
+  },
+  "next_gate": "Use consecutive thunder evidence independent of rank, still require thunder to be top-ranked on the confirmation frame, rebuild, and repeat the smoke test."
+}

@@ -1,0 +1,54 @@
+{
+  "experiment_id": "HAZARD5V4-SHATTER-ABLATION-001",
+  "shared_test_manifest_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983",
+  "variants": [
+    {
+      "variant": "broad_glass_baseline",
+      "display_label": "Broad Glass baseline",
+      "clip_accuracy": 0.8741007194244604,
+      "macro_precision": 0.868629237154591,
+      "macro_recall": 0.8893518518518518,
+      "macro_f1": 0.8695646826846449,
+      "glass_recall": "0.75",
+      "gunshot_recall": "0.9444444444444444",
+      "model_sha256": "01590e4367359dfb8f3420ce246d79682fe211e452327af37683805a7b80c762",
+      "test_csv_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983"
+    },
+    {
+      "variant": "refined_shatter",
+      "display_label": "Refined Shatter",
+      "clip_accuracy": 0.8848920863309353,
+      "macro_precision": 0.8666666666666667,
+      "macro_recall": 0.9012345679012346,
+      "macro_f1": 0.8732502793156999,
+      "glass_recall": "0.8333333333333334",
+      "gunshot_recall": "0.9074074074074074",
+      "model_sha256": "532f288de137483e652fd3fe94096d720970594f922560a4f347b77eedf1ad72",
+      "test_csv_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983"
+    },
+    {
+      "variant": "refined_shatter_event_windows",
+      "display_label": "Shatter + event windows",
+      "clip_accuracy": 0.8381294964028777,
+      "macro_precision": 0.8231074824824823,
+      "macro_recall": 0.8580246913580248,
+      "macro_f1": 0.8228559269263367,
+      "glass_recall": "0.7333333333333333",
+      "gunshot_recall": "0.8148148148148148",
+      "model_sha256": "9fcab55d7b91e7e263237adc24dc72e9d4d9bddc5bb1be488a6c8b64281ebcd4",
+      "test_csv_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983"
+    }
+  ],
+  "percentage_point_deltas": {
+    "refined_vs_broad_accuracy_percentage_points": 1.0791366906474864,
+    "refined_vs_broad_macro_recall_percentage_points": 1.1882716049382736,
+    "refined_vs_broad_glass_recall_percentage_points": 8.333333333333337,
+    "refined_vs_broad_gunshot_recall_percentage_points": -3.703703703703698,
+    "event_vs_refined_accuracy_percentage_points": -4.67625899280576,
+    "event_vs_refined_glass_recall_percentage_points": -10.000000000000009,
+    "event_vs_refined_gunshot_recall_percentage_points": -9.259259259259267
+  },
+  "selected_variant": "refined_shatter",
+  "rejected_variant": "refined_shatter_event_windows",
+  "conclusion": "Correcting the target taxonomy improves glass recall and overall accuracy. Replacing every transient training clip with one one-second window reduces both transient recall and overall accuracy and is not selected for deployment."
+}

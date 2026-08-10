@@ -1,0 +1,375 @@
+slice_file_name,freesound_source_id,source_group,source_author,source_url,dataset_license,fold,start_s,end_s,salience,relationship_to_b0,eligible_for_b2_training,exclusion_reason
+102305-6-0-0.wav,102305,freesound:102305,Saturnvandel,https://freesound.org/s/102305/,CC BY-NC 3.0,1,0.0,2.61161,1,new_source,true,
+106955-6-0-0.wav,106955,freesound:106955,Tito Lahaye,https://freesound.org/s/106955/,CC BY-NC 3.0,9,0.495575,1.649031,1,new_source,false,reserved_urbansound_fold
+110622-6-0-0.wav,110622,freesound:110622,soundscalpel.com,https://freesound.org/s/110622/,CC BY-NC 3.0,3,0.0,1.501211,1,new_source,true,
+111048-6-0-0.wav,111048,freesound:111048,Cyberkineticfilms,https://freesound.org/s/111048/,CC BY-NC 3.0,6,0.0,1.314579,1,new_source,true,
+122690-6-0-0.wav,122690,freesound:122690,Mittelmorder,https://freesound.org/s/122690/,CC BY-NC 3.0,1,12.231953,15.37784,1,new_source,true,
+131571-6-0-0.wav,131571,freesound:131571,vtkproductions.com,https://freesound.org/s/131571/,CC BY-NC 3.0,8,0.128306,2.031517,1,new_source,true,
+133797-6-0-0.wav,133797,freesound:133797,Julien Nicolas,https://freesound.org/s/133797/,CC BY-NC 3.0,6,3.254115,4.66165,1,new_source,true,
+133797-6-1-0.wav,133797,freesound:133797,Julien Nicolas,https://freesound.org/s/133797/,CC BY-NC 3.0,6,6.895626,8.845512,1,new_source,true,
+133797-6-2-0.wav,133797,freesound:133797,Julien Nicolas,https://freesound.org/s/133797/,CC BY-NC 3.0,6,9.116689,10.885791,1,new_source,true,
+135526-6-0-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,3.531258,5.006647,1,new_source,true,
+135526-6-1-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,5.006647,6.457848,1,new_source,true,
+135526-6-10-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,22.759683,25.371846,1,new_source,true,
+135526-6-11-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,25.371846,27.766329,1,new_source,true,
+135526-6-12-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,27.766329,30.451053,1,new_source,true,
+135526-6-13-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,30.451053,31.007347,1,new_source,true,
+135526-6-2-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,6.457848,9.045825,1,new_source,true,
+135526-6-3-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,9.045825,10.569587,1,new_source,true,
+135526-6-4-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,10.569587,12.359403,1,new_source,true,
+135526-6-5-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,12.359403,14.657139,1,new_source,true,
+135526-6-6-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,14.657139,16.858129,1,new_source,true,
+135526-6-7-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,16.858129,18.913998,1,new_source,true,
+135526-6-8-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,18.913998,20.776374,1,new_source,true,
+135526-6-9-0.wav,135526,freesound:135526,jackgarrison,https://freesound.org/s/135526/,CC BY-NC 3.0,3,20.776374,22.759683,1,new_source,true,
+135527-6-0-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,0.0,1.280285,2,new_source,true,
+135527-6-1-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,1.280285,4.511481,2,new_source,true,
+135527-6-10-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,32.860655,33.714179,2,new_source,true,
+135527-6-11-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,36.274749,38.164694,2,new_source,true,
+135527-6-12-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,38.469524,40.420435,2,new_source,true,
+135527-6-13-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,43.468733,45.17578,2,new_source,true,
+135527-6-14-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,48.406976,52.406976,2,new_source,true,
+135527-6-14-1.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,48.906976,52.906976,2,new_source,true,
+135527-6-14-10.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,53.406976,57.406976,2,new_source,true,
+135527-6-14-2.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,49.406976,53.406976,2,new_source,true,
+135527-6-14-3.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,49.906976,53.906976,2,new_source,true,
+135527-6-14-4.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,50.406976,54.406976,2,new_source,true,
+135527-6-14-5.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,50.906976,54.906976,2,new_source,true,
+135527-6-14-6.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,51.406976,55.406976,2,new_source,true,
+135527-6-14-7.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,51.906976,55.906976,2,new_source,true,
+135527-6-14-8.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,52.406976,56.406976,2,new_source,true,
+135527-6-14-9.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,52.906976,56.906976,2,new_source,true,
+135527-6-2-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,4.511481,6.64529,2,new_source,true,
+135527-6-3-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,9.205861,10.486146,2,new_source,true,
+135527-6-4-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,10.486146,12.680921,2,new_source,true,
+135527-6-5-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,12.680921,14.936661,2,new_source,true,
+135527-6-6-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,16.095015,18.533653,2,new_source,true,
+135527-6-7-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,18.777517,21.15519,2,new_source,true,
+135527-6-8-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,21.642918,23.471897,2,new_source,true,
+135527-6-9-0.wav,135527,freesound:135527,jackgarrison,https://freesound.org/s/135527/,CC BY-NC 3.0,7,23.471897,25.544739,2,new_source,true,
+135528-6-0-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,8.25396,10.70784,2,new_source,true,
+135528-6-1-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,10.98669,13.161721,2,new_source,true,
+135528-6-10-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,58.112342,60.231602,2,new_source,true,
+135528-6-11-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,62.127782,63.968193,2,new_source,true,
+135528-6-12-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,65.027823,67.370163,2,new_source,true,
+135528-6-2-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,13.440571,17.440571,2,new_source,true,
+135528-6-3-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,18.515641,21.359911,2,new_source,true,
+135528-6-4-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,21.359911,25.359911,2,new_source,true,
+135528-6-4-1.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,21.859911,25.859911,2,new_source,true,
+135528-6-4-2.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,22.359911,26.359911,2,new_source,true,
+135528-6-5-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,30.338881,32.569681,2,new_source,true,
+135528-6-6-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,34.633171,36.640891,2,new_source,true,
+135528-6-7-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,38.871692,40.489022,2,new_source,true,
+135528-6-8-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,45.173702,46.456412,2,new_source,true,
+135528-6-9-0.wav,135528,freesound:135528,jackgarrison,https://freesound.org/s/135528/,CC BY-NC 3.0,4,49.021832,50.248772,2,new_source,true,
+135544-6-0-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,1.551861,3.879652,1,new_source,true,
+135544-6-1-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,3.879652,6.262867,1,new_source,true,
+135544-6-10-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,34.584329,35.526531,1,new_source,true,
+135544-6-11-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,35.526531,36.025343,1,new_source,true,
+135544-6-12-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,36.025343,37.078392,1,new_source,true,
+135544-6-13-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,37.078392,38.242287,1,new_source,true,
+135544-6-14-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,38.242287,39.239912,1,new_source,true,
+135544-6-15-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,39.572454,40.791773,1,new_source,true,
+135544-6-16-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,41.013467,42.454481,1,new_source,true,
+135544-6-17-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,42.731599,44.338884,1,new_source,true,
+135544-6-18-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,44.338884,46.167863,1,new_source,true,
+135544-6-19-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,46.389557,48.107689,1,new_source,true,
+135544-6-2-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,6.262867,8.036423,1,new_source,true,
+135544-6-3-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,23.776726,25.273164,1,new_source,true,
+135544-6-4-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,25.716553,26.935872,1,new_source,true,
+135544-6-5-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,27.379261,29.041969,1,new_source,true,
+135544-6-6-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,29.041969,30.538406,1,new_source,true,
+135544-6-7-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,31.148066,32.478232,1,new_source,true,
+135544-6-8-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,32.478232,33.143316,1,new_source,true,
+135544-6-9-0.wav,135544,freesound:135544,jackgarrison,https://freesound.org/s/135544/,CC BY-NC 3.0,6,33.143316,34.584329,1,new_source,true,
+136399-6-0-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,0.0,3.353689,1,new_source,false,reserved_urbansound_fold
+136399-6-1-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,4.547806,8.231783,1,new_source,false,reserved_urbansound_fold
+136399-6-2-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,10.010255,13.262317,1,new_source,false,reserved_urbansound_fold
+136399-6-3-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,14.608874,17.556056,1,new_source,false,reserved_urbansound_fold
+136399-6-4-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,19.537781,21.4941,1,new_source,false,reserved_urbansound_fold
+136399-6-5-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,21.4941,23.856927,1,new_source,false,reserved_urbansound_fold
+136399-6-6-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,24.06018,25.991092,1,new_source,false,reserved_urbansound_fold
+136399-6-7-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,26.194346,28.81124,1,new_source,false,reserved_urbansound_fold
+136399-6-8-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,28.938274,30.488085,1,new_source,false,reserved_urbansound_fold
+136399-6-9-0.wav,136399,freesound:136399,felix.blume,https://freesound.org/s/136399/,CC BY-NC 3.0,9,30.488085,32.520624,1,new_source,false,reserved_urbansound_fold
+145206-6-0-0.wav,145206,freesound:145206,lensflare8642,https://freesound.org/s/145206/,CC BY-NC 3.0,8,0.099885,1.340558,1,current_training_source,false,current_training_source
+145206-6-1-0.wav,145206,freesound:145206,lensflare8642,https://freesound.org/s/145206/,CC BY-NC 3.0,8,1.340558,2.812544,1,current_training_source,false,current_training_source
+145206-6-2-0.wav,145206,freesound:145206,lensflare8642,https://freesound.org/s/145206/,CC BY-NC 3.0,8,2.849344,3.800877,1,current_training_source,false,current_training_source
+145206-6-3-0.wav,145206,freesound:145206,lensflare8642,https://freesound.org/s/145206/,CC BY-NC 3.0,8,3.800877,5.020523,1,current_training_source,false,current_training_source
+145206-6-4-0.wav,145206,freesound:145206,lensflare8642,https://freesound.org/s/145206/,CC BY-NC 3.0,8,5.020523,5.987828,1,current_training_source,false,current_training_source
+145206-6-5-0.wav,145206,freesound:145206,lensflare8642,https://freesound.org/s/145206/,CC BY-NC 3.0,8,5.987828,6.739592,1,current_training_source,false,current_training_source
+145608-6-0-0.wav,145608,freesound:145608,touchassembly,https://freesound.org/s/145608/,CC BY-NC 3.0,2,2.331561,3.340491,2,new_source,true,
+145608-6-1-0.wav,145608,freesound:145608,touchassembly,https://freesound.org/s/145608/,CC BY-NC 3.0,2,4.196809,5.231175,2,new_source,true,
+145608-6-2-0.wav,145608,freesound:145608,touchassembly,https://freesound.org/s/145608/,CC BY-NC 3.0,2,5.875533,6.833593,2,new_source,true,
+145608-6-3-0.wav,145608,freesound:145608,touchassembly,https://freesound.org/s/145608/,CC BY-NC 3.0,2,8.842974,9.750163,2,new_source,true,
+145609-6-0-0.wav,145609,freesound:145609,touchassembly,https://freesound.org/s/145609/,CC BY-NC 3.0,5,1.969512,3.235187,2,current_training_source,false,current_training_source
+145609-6-1-0.wav,145609,freesound:145609,touchassembly,https://freesound.org/s/145609/,CC BY-NC 3.0,5,4.148941,5.235569,2,current_training_source,false,current_training_source
+145611-6-0-0.wav,145611,freesound:145611,touchassembly,https://freesound.org/s/145611/,CC BY-NC 3.0,5,5.074933,6.231719,2,new_source,true,
+145611-6-1-0.wav,145611,freesound:145611,touchassembly,https://freesound.org/s/145611/,CC BY-NC 3.0,5,9.814025,10.989469,2,new_source,true,
+145611-6-2-0.wav,145611,freesound:145611,touchassembly,https://freesound.org/s/145611/,CC BY-NC 3.0,5,14.459828,15.560641,2,new_source,true,
+145611-6-3-0.wav,145611,freesound:145611,touchassembly,https://freesound.org/s/145611/,CC BY-NC 3.0,5,17.855555,18.975026,2,new_source,true,
+145611-6-4-0.wav,145611,freesound:145611,touchassembly,https://freesound.org/s/145611/,CC BY-NC 3.0,5,21.307256,22.370753,2,new_source,true,
+145612-6-0-0.wav,145612,freesound:145612,touchassembly,https://freesound.org/s/145612/,CC BY-NC 3.0,8,1.620559,2.595642,2,new_source,true,
+145612-6-1-0.wav,145612,freesound:145612,touchassembly,https://freesound.org/s/145612/,CC BY-NC 3.0,8,3.886596,4.683142,2,new_source,true,
+145612-6-2-0.wav,145612,freesound:145612,touchassembly,https://freesound.org/s/145612/,CC BY-NC 3.0,8,5.493422,6.406703,2,new_source,true,
+145612-6-3-0.wav,145612,freesound:145612,touchassembly,https://freesound.org/s/145612/,CC BY-NC 3.0,8,7.127715,8.253866,2,new_source,true,
+145683-6-0-0.wav,145683,freesound:145683,touchassembly,https://freesound.org/s/145683/,CC BY-NC 3.0,9,2.970842,4.205206,2,new_source,false,reserved_urbansound_fold
+145683-6-1-0.wav,145683,freesound:145683,touchassembly,https://freesound.org/s/145683/,CC BY-NC 3.0,9,7.071442,8.452256,2,new_source,false,reserved_urbansound_fold
+145683-6-2-0.wav,145683,freesound:145683,touchassembly,https://freesound.org/s/145683/,CC BY-NC 3.0,9,11.172041,12.092583,2,new_source,false,reserved_urbansound_fold
+145683-6-3-0.wav,145683,freesound:145683,touchassembly,https://freesound.org/s/145683/,CC BY-NC 3.0,9,17.46939,18.452696,2,new_source,false,reserved_urbansound_fold
+145683-6-4-0.wav,145683,freesound:145683,touchassembly,https://freesound.org/s/145683/,CC BY-NC 3.0,9,21.339853,22.32316,2,new_source,false,reserved_urbansound_fold
+145683-6-5-0.wav,145683,freesound:145683,touchassembly,https://freesound.org/s/145683/,CC BY-NC 3.0,9,26.109938,26.612052,2,new_source,false,reserved_urbansound_fold
+147317-6-0-0.wav,147317,freesound:147317,udikagan,https://freesound.org/s/147317/,CC BY-NC 3.0,7,0.916114,2.20664,1,current_validation_source,false,current_validation_source
+148166-6-0-0.wav,148166,freesound:148166,nukemjustin,https://freesound.org/s/148166/,CC BY-NC 3.0,9,0.075742,1.102948,1,current_validation_source,false,reserved_urbansound_fold
+148827-6-0-0.wav,148827,freesound:148827,cedarstudios,https://freesound.org/s/148827/,CC BY-NC 3.0,7,0.30659,1.258978,1,new_source,true,
+148827-6-1-0.wav,148827,freesound:148827,cedarstudios,https://freesound.org/s/148827/,CC BY-NC 3.0,7,1.836281,2.622326,1,new_source,true,
+148827-6-2-0.wav,148827,freesound:148827,cedarstudios,https://freesound.org/s/148827/,CC BY-NC 3.0,7,2.899562,3.6693,1,new_source,true,
+148827-6-3-0.wav,148827,freesound:148827,cedarstudios,https://freesound.org/s/148827/,CC BY-NC 3.0,7,3.884565,4.902184,1,new_source,true,
+148827-6-4-0.wav,148827,freesound:148827,cedarstudios,https://freesound.org/s/148827/,CC BY-NC 3.0,7,5.17942,5.746939,1,new_source,true,
+148828-6-0-0.wav,148828,freesound:148828,cedarstudios,https://freesound.org/s/148828/,CC BY-NC 3.0,7,0.800693,1.948198,1,current_training_source,false,current_training_source
+148828-6-1-0.wav,148828,freesound:148828,cedarstudios,https://freesound.org/s/148828/,CC BY-NC 3.0,7,2.597597,3.691568,1,current_training_source,false,current_training_source
+148833-6-0-0.wav,148833,freesound:148833,cedarstudios,https://freesound.org/s/148833/,CC BY-NC 3.0,6,1.145889,2.623483,1,new_source,true,
+148833-6-1-0.wav,148833,freesound:148833,cedarstudios,https://freesound.org/s/148833/,CC BY-NC 3.0,6,3.993859,5.903673,1,new_source,true,
+148834-6-0-0.wav,148834,freesound:148834,cedarstudios,https://freesound.org/s/148834/,CC BY-NC 3.0,6,0.119197,0.781005,1,new_source,true,
+148835-6-0-0.wav,148835,freesound:148835,cedarstudios,https://freesound.org/s/148835/,CC BY-NC 3.0,6,1.440367,2.259399,1,new_source,true,
+148835-6-1-0.wav,148835,freesound:148835,cedarstudios,https://freesound.org/s/148835/,CC BY-NC 3.0,6,2.259399,3.202698,1,new_source,true,
+148835-6-2-0.wav,148835,freesound:148835,cedarstudios,https://freesound.org/s/148835/,CC BY-NC 3.0,6,4.275913,5.546825,1,new_source,true,
+148835-6-3-0.wav,148835,freesound:148835,cedarstudios,https://freesound.org/s/148835/,CC BY-NC 3.0,6,5.546825,7.038028,1,new_source,true,
+148835-6-4-0.wav,148835,freesound:148835,cedarstudios,https://freesound.org/s/148835/,CC BY-NC 3.0,6,9.252239,9.952653,1,new_source,true,
+148837-6-0-0.wav,148837,freesound:148837,cedarstudios,https://freesound.org/s/148837/,CC BY-NC 3.0,4,0.564257,1.772279,1,current_training_source,false,current_training_source
+148837-6-1-0.wav,148837,freesound:148837,cedarstudios,https://freesound.org/s/148837/,CC BY-NC 3.0,4,1.772279,2.959783,1,current_training_source,false,current_training_source
+148837-6-2-0.wav,148837,freesound:148837,cedarstudios,https://freesound.org/s/148837/,CC BY-NC 3.0,4,2.959783,4.424286,1,current_training_source,false,current_training_source
+148838-6-0-0.wav,148838,freesound:148838,cedarstudios,https://freesound.org/s/148838/,CC BY-NC 3.0,3,0.248919,1.270571,1,current_training_source,false,current_training_source
+148838-6-1-0.wav,148838,freesound:148838,cedarstudios,https://freesound.org/s/148838/,CC BY-NC 3.0,3,1.270571,2.476207,1,current_training_source,false,current_training_source
+148838-6-2-0.wav,148838,freesound:148838,cedarstudios,https://freesound.org/s/148838/,CC BY-NC 3.0,3,2.584432,3.813878,1,current_training_source,false,current_training_source
+148841-6-0-0.wav,148841,freesound:148841,cedarstudios,https://freesound.org/s/148841/,CC BY-NC 3.0,5,0.722118,2.245611,1,new_source,true,
+148841-6-1-0.wav,148841,freesound:148841,cedarstudios,https://freesound.org/s/148841/,CC BY-NC 3.0,5,6.120392,7.450146,1,new_source,true,
+148841-6-2-0.wav,148841,freesound:148841,cedarstudios,https://freesound.org/s/148841/,CC BY-NC 3.0,5,9.132153,10.787741,1,new_source,true,
+149177-6-0-0.wav,149177,freesound:149177,deathnsorrow,https://freesound.org/s/149177/,CC BY-NC 3.0,2,0.0,0.81678,1,current_validation_source,false,current_validation_source
+151065-6-0-0.wav,151065,freesound:151065,vabadus,https://freesound.org/s/151065/,CC BY-NC 3.0,7,0.162737,1.759161,1,current_training_source,false,current_training_source
+151069-6-0-0.wav,151069,freesound:151069,vabadus,https://freesound.org/s/151069/,CC BY-NC 3.0,8,0.018056,1.871429,1,current_training_source,false,current_training_source
+151071-6-0-0.wav,151071,freesound:151071,vabadus,https://freesound.org/s/151071/,CC BY-NC 3.0,3,0.018986,1.760726,1,new_source,true,
+156897-6-0-0.wav,156897,freesound:156897,MultiMax2121,https://freesound.org/s/156897/,CC BY-NC 3.0,4,1.24645,4.686652,1,new_source,true,
+157207-6-0-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,0.165287,3.093233,1,current_training_source,false,reserved_urbansound_fold
+157207-6-1-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,3.376583,6.576073,1,current_training_source,false,reserved_urbansound_fold
+157207-6-10-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,18.830944,20.802585,1,current_training_source,false,reserved_urbansound_fold
+157207-6-2-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,8.335201,9.504019,1,current_training_source,false,reserved_urbansound_fold
+157207-6-3-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,9.504019,10.401293,1,current_training_source,false,reserved_urbansound_fold
+157207-6-4-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,10.401293,11.345791,1,current_training_source,false,reserved_urbansound_fold
+157207-6-5-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,11.345791,13.423689,1,current_training_source,false,reserved_urbansound_fold
+157207-6-6-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,13.423689,14.686956,1,current_training_source,false,reserved_urbansound_fold
+157207-6-7-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,14.686956,15.702292,1,current_training_source,false,reserved_urbansound_fold
+157207-6-8-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,15.702292,16.74124,1,current_training_source,false,reserved_urbansound_fold
+157207-6-9-0.wav,157207,freesound:157207,poissonmort,https://freesound.org/s/157207/,CC BY-NC 3.0,10,16.74124,18.830944,1,current_training_source,false,reserved_urbansound_fold
+157799-6-0-0.wav,157799,freesound:157799,SoundCollectah,https://freesound.org/s/157799/,CC BY-NC 3.0,4,0.0,2.272653,1,current_training_source,false,current_training_source
+157800-6-0-0.wav,157800,freesound:157800,SoundCollectah,https://freesound.org/s/157800/,CC BY-NC 3.0,10,0.0,1.149388,1,current_training_source,false,reserved_urbansound_fold
+157801-6-0-0.wav,157801,freesound:157801,SoundCollectah,https://freesound.org/s/157801/,CC BY-NC 3.0,9,0.0,2.533878,1,current_training_source,false,reserved_urbansound_fold
+158977-6-0-0.wav,158977,freesound:158977,CGEffex,https://freesound.org/s/158977/,CC BY-NC 3.0,4,0.0,1.886562,1,current_training_source,false,current_training_source
+158978-6-0-0.wav,158978,freesound:158978,CGEffex,https://freesound.org/s/158978/,CC BY-NC 3.0,7,0.0,1.737542,1,current_training_source,false,current_training_source
+158979-6-0-0.wav,158979,freesound:158979,CGEffex,https://freesound.org/s/158979/,CC BY-NC 3.0,6,0.155453,2.512917,1,current_training_source,false,current_training_source
+159701-6-0-0.wav,159701,freesound:159701,AnthonyChan0,https://freesound.org/s/159701/,CC BY-NC 3.0,5,0.080091,1.978243,1,new_source,true,
+159701-6-1-0.wav,159701,freesound:159701,AnthonyChan0,https://freesound.org/s/159701/,CC BY-NC 3.0,5,1.978243,4.020558,1,new_source,true,
+159701-6-2-0.wav,159701,freesound:159701,AnthonyChan0,https://freesound.org/s/159701/,CC BY-NC 3.0,5,4.020558,5.582329,1,new_source,true,
+159701-6-3-0.wav,159701,freesound:159701,AnthonyChan0,https://freesound.org/s/159701/,CC BY-NC 3.0,5,5.582329,7.336318,1,new_source,true,
+159701-6-4-0.wav,159701,freesound:159701,AnthonyChan0,https://freesound.org/s/159701/,CC BY-NC 3.0,5,7.336318,9.650942,1,new_source,true,
+159701-6-5-0.wav,159701,freesound:159701,AnthonyChan0,https://freesound.org/s/159701/,CC BY-NC 3.0,5,9.650942,12.093712,1,new_source,true,
+159701-6-6-0.wav,159701,freesound:159701,AnthonyChan0,https://freesound.org/s/159701/,CC BY-NC 3.0,5,12.093712,14.112,1,new_source,true,
+159702-6-0-0.wav,159702,freesound:159702,AnthonyChan0,https://freesound.org/s/159702/,CC BY-NC 3.0,6,0.0,0.597821,1,new_source,true,
+159702-6-1-0.wav,159702,freesound:159702,AnthonyChan0,https://freesound.org/s/159702/,CC BY-NC 3.0,6,0.597821,1.174665,1,new_source,true,
+159702-6-2-0.wav,159702,freesound:159702,AnthonyChan0,https://freesound.org/s/159702/,CC BY-NC 3.0,6,1.174665,1.76899,1,new_source,true,
+159702-6-3-0.wav,159702,freesound:159702,AnthonyChan0,https://freesound.org/s/159702/,CC BY-NC 3.0,6,1.76899,2.405267,1,new_source,true,
+159702-6-4-0.wav,159702,freesound:159702,AnthonyChan0,https://freesound.org/s/159702/,CC BY-NC 3.0,6,2.405267,3.003087,1,new_source,true,
+159702-6-5-0.wav,159702,freesound:159702,AnthonyChan0,https://freesound.org/s/159702/,CC BY-NC 3.0,6,3.003087,3.621884,1,new_source,true,
+159702-6-6-0.wav,159702,freesound:159702,AnthonyChan0,https://freesound.org/s/159702/,CC BY-NC 3.0,6,3.621884,5.705516,1,new_source,true,
+159703-6-0-0.wav,159703,freesound:159703,AnthonyChan0,https://freesound.org/s/159703/,CC BY-NC 3.0,5,0.0,1.872,1,current_training_source,false,current_training_source
+159704-6-0-0.wav,159704,freesound:159704,AnthonyChan0,https://freesound.org/s/159704/,CC BY-NC 3.0,6,0.125348,2.096345,1,current_training_source,false,current_training_source
+159705-6-0-0.wav,159705,freesound:159705,AnthonyChan0,https://freesound.org/s/159705/,CC BY-NC 3.0,7,0.071101,1.387787,1,current_training_source,false,current_training_source
+159706-6-0-0.wav,159706,freesound:159706,AnthonyChan0,https://freesound.org/s/159706/,CC BY-NC 3.0,8,0.195647,1.825444,1,current_training_source,false,current_training_source
+159707-6-0-0.wav,159707,freesound:159707,AnthonyChan0,https://freesound.org/s/159707/,CC BY-NC 3.0,9,0.0,2.132946,1,new_source,false,reserved_urbansound_fold
+159708-6-0-0.wav,159708,freesound:159708,AnthonyChan0,https://freesound.org/s/159708/,CC BY-NC 3.0,7,0.0,0.339735,1,current_training_source,false,current_training_source
+159708-6-1-0.wav,159708,freesound:159708,AnthonyChan0,https://freesound.org/s/159708/,CC BY-NC 3.0,7,0.339735,0.625168,1,current_training_source,false,current_training_source
+159708-6-2-0.wav,159708,freesound:159708,AnthonyChan0,https://freesound.org/s/159708/,CC BY-NC 3.0,7,0.625168,0.914779,1,current_training_source,false,current_training_source
+159708-6-3-0.wav,159708,freesound:159708,AnthonyChan0,https://freesound.org/s/159708/,CC BY-NC 3.0,7,0.914779,1.214135,1,current_training_source,false,current_training_source
+159708-6-4-0.wav,159708,freesound:159708,AnthonyChan0,https://freesound.org/s/159708/,CC BY-NC 3.0,7,1.214135,1.516277,1,current_training_source,false,current_training_source
+159708-6-5-0.wav,159708,freesound:159708,AnthonyChan0,https://freesound.org/s/159708/,CC BY-NC 3.0,7,1.516277,1.822596,1,current_training_source,false,current_training_source
+159708-6-6-0.wav,159708,freesound:159708,AnthonyChan0,https://freesound.org/s/159708/,CC BY-NC 3.0,7,1.822596,2.453333,1,current_training_source,false,current_training_source
+159709-6-0-0.wav,159709,freesound:159709,AnthonyChan0,https://freesound.org/s/159709/,CC BY-NC 3.0,10,0.0,1.92,1,new_source,false,reserved_urbansound_fold
+159710-6-0-0.wav,159710,freesound:159710,AnthonyChan0,https://freesound.org/s/159710/,CC BY-NC 3.0,2,0.031546,1.204005,1,current_training_source,false,current_training_source
+161195-6-0-0.wav,161195,freesound:161195,aleksnascimento,https://freesound.org/s/161195/,CC BY-NC 3.0,3,0.0,0.799932,1,current_validation_source,false,current_validation_source
+162431-6-0-0.wav,162431,freesound:162431,ermfilm,https://freesound.org/s/162431/,CC BY-NC 3.0,3,0.0,1.081659,1,current_training_source,false,current_training_source
+162431-6-1-0.wav,162431,freesound:162431,ermfilm,https://freesound.org/s/162431/,CC BY-NC 3.0,3,1.787897,2.884424,1,current_training_source,false,current_training_source
+162431-6-2-0.wav,162431,freesound:162431,ermfilm,https://freesound.org/s/162431/,CC BY-NC 3.0,3,4.449299,5.084913,1,current_training_source,false,current_training_source
+162431-6-3-0.wav,162431,freesound:162431,ermfilm,https://freesound.org/s/162431/,CC BY-NC 3.0,3,5.497504,6.333839,1,current_training_source,false,current_training_source
+162432-6-0-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,0.786751,1.846456,1,new_source,true,
+162432-6-1-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,3.130947,4.222765,1,new_source,true,
+162432-6-10-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,23.907591,24.903071,1,new_source,true,
+162432-6-11-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,24.903071,25.86644,1,new_source,true,
+162432-6-12-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,25.86644,26.877976,1,new_source,true,
+162432-6-13-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,26.877976,27.712896,1,new_source,true,
+162432-6-14-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,27.712896,28.290917,1,new_source,true,
+162432-6-2-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,5.250357,6.326119,1,new_source,true,
+162432-6-3-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,9.93875,11.078736,1,new_source,true,
+162432-6-4-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,13.310539,14.338132,1,new_source,true,
+162432-6-5-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,16.345149,17.420911,1,new_source,true,
+162432-6-6-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,18.014988,19.219198,1,new_source,true,
+162432-6-7-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,19.363703,20.519745,1,new_source,true,
+162432-6-8-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,21.338609,22.41437,1,new_source,true,
+162432-6-9-0.wav,162432,freesound:162432,ermfilm,https://freesound.org/s/162432/,CC BY-NC 3.0,5,22.41437,23.779142,1,new_source,true,
+162433-6-0-0.wav,162433,freesound:162433,ermfilm,https://freesound.org/s/162433/,CC BY-NC 3.0,8,0.027122,0.672627,1,new_source,true,
+162433-6-1-0.wav,162433,freesound:162433,ermfilm,https://freesound.org/s/162433/,CC BY-NC 3.0,8,0.753993,1.253039,1,new_source,true,
+162433-6-2-0.wav,162433,freesound:162433,ermfilm,https://freesound.org/s/162433/,CC BY-NC 3.0,8,1.309995,1.743948,1,new_source,true,
+162433-6-3-0.wav,162433,freesound:162433,ermfilm,https://freesound.org/s/162433/,CC BY-NC 3.0,8,1.776495,2.240282,1,new_source,true,
+162433-6-4-0.wav,162433,freesound:162433,ermfilm,https://freesound.org/s/162433/,CC BY-NC 3.0,8,2.256555,2.793572,1,new_source,true,
+162433-6-5-0.wav,162433,freesound:162433,ermfilm,https://freesound.org/s/162433/,CC BY-NC 3.0,8,2.82883,3.338725,1,new_source,true,
+162433-6-6-0.wav,162433,freesound:162433,ermfilm,https://freesound.org/s/162433/,CC BY-NC 3.0,8,3.371272,3.905576,1,new_source,true,
+162433-6-7-0.wav,162433,freesound:162433,ermfilm,https://freesound.org/s/162433/,CC BY-NC 3.0,8,3.905576,4.347666,1,new_source,true,
+162433-6-8-0.wav,162433,freesound:162433,ermfilm,https://freesound.org/s/162433/,CC BY-NC 3.0,8,4.347666,4.778906,1,new_source,true,
+162434-6-0-0.wav,162434,freesound:162434,ermfilm,https://freesound.org/s/162434/,CC BY-NC 3.0,6,0.354842,1.173267,1,current_training_source,false,current_training_source
+162434-6-1-0.wav,162434,freesound:162434,ermfilm,https://freesound.org/s/162434/,CC BY-NC 3.0,6,1.549094,2.283579,1,current_training_source,false,current_training_source
+162434-6-2-0.wav,162434,freesound:162434,ermfilm,https://freesound.org/s/162434/,CC BY-NC 3.0,6,2.525863,3.361458,1,current_training_source,false,current_training_source
+162435-6-0-0.wav,162435,freesound:162435,ermfilm,https://freesound.org/s/162435/,CC BY-NC 3.0,4,0.0,0.716105,1,new_source,true,
+162435-6-1-0.wav,162435,freesound:162435,ermfilm,https://freesound.org/s/162435/,CC BY-NC 3.0,4,0.77919,1.495295,1,new_source,true,
+162435-6-2-0.wav,162435,freesound:162435,ermfilm,https://freesound.org/s/162435/,CC BY-NC 3.0,4,1.699896,2.27278,1,new_source,true,
+162435-6-3-0.wav,162435,freesound:162435,ermfilm,https://freesound.org/s/162435/,CC BY-NC 3.0,4,2.27278,3.004229,1,new_source,true,
+162436-6-0-0.wav,162436,freesound:162436,ermfilm,https://freesound.org/s/162436/,CC BY-NC 3.0,3,0.0,1.796802,1,current_training_source,false,current_training_source
+163460-6-0-0.wav,163460,freesound:163460,LeMudCrab,https://freesound.org/s/163460/,CC BY-NC 3.0,2,0.0,0.672222,1,current_training_source,false,current_training_source
+164646-6-0-0.wav,164646,freesound:164646,Adam_N,https://freesound.org/s/164646/,CC BY-NC 3.0,10,0.02888,0.81557,1,current_training_source,false,reserved_urbansound_fold
+164667-6-0-0.wav,164667,freesound:164667,Adam_N,https://freesound.org/s/164667/,CC BY-NC 3.0,5,0.056354,0.80246,1,current_training_source,false,current_training_source
+169261-6-0-0.wav,169261,freesound:169261,tm1000,https://freesound.org/s/169261/,CC BY-NC 3.0,10,0.571057,2.23122,1,new_source,false,reserved_urbansound_fold
+174282-6-0-0.wav,174282,freesound:174282,ingudios,https://freesound.org/s/174282/,CC BY-NC 3.0,9,0.0,2.588937,1,new_source,false,reserved_urbansound_fold
+174282-6-1-0.wav,174282,freesound:174282,ingudios,https://freesound.org/s/174282/,CC BY-NC 3.0,9,2.588937,5.210563,1,new_source,false,reserved_urbansound_fold
+174282-6-2-0.wav,174282,freesound:174282,ingudios,https://freesound.org/s/174282/,CC BY-NC 3.0,9,5.210563,8.995904,1,new_source,false,reserved_urbansound_fold
+174284-6-0-0.wav,174284,freesound:174284,ingudios,https://freesound.org/s/174284/,CC BY-NC 3.0,7,0.0,2.549372,1,new_source,true,
+174284-6-1-0.wav,174284,freesound:174284,ingudios,https://freesound.org/s/174284/,CC BY-NC 3.0,7,2.549372,5.175802,1,new_source,true,
+174284-6-2-0.wav,174284,freesound:174284,ingudios,https://freesound.org/s/174284/,CC BY-NC 3.0,7,5.175802,8.181107,1,new_source,true,
+174285-6-0-0.wav,174285,freesound:174285,ingudios,https://freesound.org/s/174285/,CC BY-NC 3.0,8,0.0,2.558383,1,new_source,true,
+174285-6-1-0.wav,174285,freesound:174285,ingudios,https://freesound.org/s/174285/,CC BY-NC 3.0,8,2.558383,5.192354,1,new_source,true,
+174285-6-2-0.wav,174285,freesound:174285,ingudios,https://freesound.org/s/174285/,CC BY-NC 3.0,8,5.192354,8.913638,1,new_source,true,
+174287-6-0-0.wav,174287,freesound:174287,ingudios,https://freesound.org/s/174287/,CC BY-NC 3.0,9,0.169635,1.958517,1,new_source,false,reserved_urbansound_fold
+174287-6-1-0.wav,174287,freesound:174287,ingudios,https://freesound.org/s/174287/,CC BY-NC 3.0,9,5.227853,7.463956,1,new_source,false,reserved_urbansound_fold
+174287-6-2-0.wav,174287,freesound:174287,ingudios,https://freesound.org/s/174287/,CC BY-NC 3.0,9,9.869694,11.843632,1,new_source,false,reserved_urbansound_fold
+174287-6-3-0.wav,174287,freesound:174287,ingudios,https://freesound.org/s/174287/,CC BY-NC 3.0,9,14.881647,16.716793,1,new_source,false,reserved_urbansound_fold
+174289-6-0-0.wav,174289,freesound:174289,ingudios,https://freesound.org/s/174289/,CC BY-NC 3.0,10,0.675822,2.896379,1,new_source,false,reserved_urbansound_fold
+174289-6-1-0.wav,174289,freesound:174289,ingudios,https://freesound.org/s/174289/,CC BY-NC 3.0,10,5.728394,8.07768,1,new_source,false,reserved_urbansound_fold
+174289-6-2-0.wav,174289,freesound:174289,ingudios,https://freesound.org/s/174289/,CC BY-NC 3.0,10,10.378692,12.840614,1,new_source,false,reserved_urbansound_fold
+174289-6-3-0.wav,174289,freesound:174289,ingudios,https://freesound.org/s/174289/,CC BY-NC 3.0,10,15.3669,17.603549,1,new_source,false,reserved_urbansound_fold
+174290-6-0-0.wav,174290,freesound:174290,ingudios,https://freesound.org/s/174290/,CC BY-NC 3.0,1,0.273102,2.366884,1,new_source,true,
+174290-6-1-0.wav,174290,freesound:174290,ingudios,https://freesound.org/s/174290/,CC BY-NC 3.0,1,5.355833,7.889612,1,new_source,true,
+174290-6-2-0.wav,174290,freesound:174290,ingudios,https://freesound.org/s/174290/,CC BY-NC 3.0,1,9.968221,12.289587,1,new_source,true,
+174290-6-3-0.wav,174290,freesound:174290,ingudios,https://freesound.org/s/174290/,CC BY-NC 3.0,1,14.959918,17.372318,1,new_source,true,
+174292-6-0-0.wav,174292,freesound:174292,ingudios,https://freesound.org/s/174292/,CC BY-NC 3.0,10,0.0,2.929375,1,new_source,false,reserved_urbansound_fold
+174292-6-1-0.wav,174292,freesound:174292,ingudios,https://freesound.org/s/174292/,CC BY-NC 3.0,10,4.249521,7.140352,1,new_source,false,reserved_urbansound_fold
+174292-6-2-0.wav,174292,freesound:174292,ingudios,https://freesound.org/s/174292/,CC BY-NC 3.0,10,10.079363,13.567632,1,new_source,false,reserved_urbansound_fold
+174293-6-0-0.wav,174293,freesound:174293,ingudios,https://freesound.org/s/174293/,CC BY-NC 3.0,2,0.109464,2.572406,1,new_source,true,
+174293-6-1-0.wav,174293,freesound:174293,ingudios,https://freesound.org/s/174293/,CC BY-NC 3.0,2,4.387686,6.713798,1,new_source,true,
+174293-6-2-0.wav,174293,freesound:174293,ingudios,https://freesound.org/s/174293/,CC BY-NC 3.0,2,10.234894,12.606616,1,new_source,true,
+174294-6-0-0.wav,174294,freesound:174294,ingudios,https://freesound.org/s/174294/,CC BY-NC 3.0,1,0.0,2.535721,1,new_source,true,
+174294-6-1-0.wav,174294,freesound:174294,ingudios,https://freesound.org/s/174294/,CC BY-NC 3.0,1,4.167707,7.343939,1,new_source,true,
+174294-6-2-0.wav,174294,freesound:174294,ingudios,https://freesound.org/s/174294/,CC BY-NC 3.0,1,10.046368,13.126084,1,new_source,true,
+180960-6-0-0.wav,180960,freesound:180960,Kleeb,https://freesound.org/s/180960/,CC BY-NC 3.0,3,0.066816,2.140544,1,new_source,true,
+191449-6-0-0.wav,191449,freesound:191449,klankbeeld,https://freesound.org/s/191449/,CC BY-NC 3.0,5,3.094025,4.7257,1,current_training_source,false,current_training_source
+196400-6-0-0.wav,196400,freesound:196400,Callum_Sharp279,https://freesound.org/s/196400/,CC BY-NC 3.0,1,0.0,3.139605,1,new_source,true,
+197318-6-0-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,0.401594,1.93267,1,new_source,true,
+197318-6-1-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,2.409563,4.216735,1,new_source,true,
+197318-6-10-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,31.24902,32.5291,1,new_source,true,
+197318-6-11-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,33.909579,35.741851,1,new_source,true,
+197318-6-12-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,37.549023,38.879303,1,new_source,true,
+197318-6-2-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,4.417532,6.350202,1,new_source,true,
+197318-6-3-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,6.801996,8.759765,1,new_source,true,
+197318-6-4-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,10.843033,12.800803,1,new_source,true,
+197318-6-5-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,13.70439,15.411163,1,new_source,true,
+197318-6-6-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,16.641044,18.724312,1,new_source,true,
+197318-6-7-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,20.054592,21.886864,1,new_source,true,
+197318-6-8-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,22.388856,24.07053,1,new_source,true,
+197318-6-9-0.wav,197318,freesound:197318,hendmik,https://freesound.org/s/197318/,CC BY-NC 3.0,1,27.659775,29.592446,1,new_source,true,
+197320-6-0-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,0.830595,2.88401,1,new_source,true,
+197320-6-1-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,2.88401,4.914352,1,new_source,true,
+197320-6-10-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,31.631818,34.262035,1,new_source,true,
+197320-6-11-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,34.262035,37.284477,1,new_source,true,
+197320-6-12-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,37.884351,40.653,1,new_source,true,
+197320-6-2-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,4.914352,7.290776,1,new_source,true,
+197320-6-3-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,7.290776,9.805633,1,new_source,true,
+197320-6-4-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,11.236102,14.097039,1,new_source,true,
+197320-6-5-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,14.097039,16.934905,1,new_source,true,
+197320-6-6-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,17.142553,19.841986,1,new_source,true,
+197320-6-7-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,20.372644,22.77214,1,new_source,true,
+197320-6-8-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,22.77214,25.171636,1,new_source,true,
+197320-6-9-0.wav,197320,freesound:197320,hendmik,https://freesound.org/s/197320/,CC BY-NC 3.0,2,28.078718,30.501286,1,new_source,true,
+200460-6-0-0.wav,200460,freesound:200460,Tito Lahaye,https://freesound.org/s/200460/,CC BY-NC 3.0,10,1.282736,3.181186,1,new_source,false,reserved_urbansound_fold
+200460-6-1-0.wav,200460,freesound:200460,Tito Lahaye,https://freesound.org/s/200460/,CC BY-NC 3.0,10,3.181186,4.987279,1,new_source,false,reserved_urbansound_fold
+200460-6-2-0.wav,200460,freesound:200460,Tito Lahaye,https://freesound.org/s/200460/,CC BY-NC 3.0,10,4.987279,5.849278,1,new_source,false,reserved_urbansound_fold
+200460-6-3-0.wav,200460,freesound:200460,Tito Lahaye,https://freesound.org/s/200460/,CC BY-NC 3.0,10,5.849278,7.096097,1,new_source,false,reserved_urbansound_fold
+200460-6-4-0.wav,200460,freesound:200460,Tito Lahaye,https://freesound.org/s/200460/,CC BY-NC 3.0,10,7.096097,7.952965,1,new_source,false,reserved_urbansound_fold
+200460-6-5-0.wav,200460,freesound:200460,Tito Lahaye,https://freesound.org/s/200460/,CC BY-NC 3.0,10,7.952965,9.040726,1,new_source,false,reserved_urbansound_fold
+205013-6-0-0.wav,205013,freesound:205013,pepv,https://freesound.org/s/205013/,CC BY-NC 3.0,10,0.0,1.497188,1,new_source,false,reserved_urbansound_fold
+23161-6-0-0.wav,23161,freesound:23161,acclivity,https://freesound.org/s/23161/,CC BY-NC 3.0,4,58.366645,58.635605,2,new_source,true,
+23161-6-1-0.wav,23161,freesound:23161,acclivity,https://freesound.org/s/23161/,CC BY-NC 3.0,4,59.265667,59.581943,2,new_source,true,
+24631-6-0-0.wav,24631,freesound:24631,dobroide,https://freesound.org/s/24631/,CC BY-NC 3.0,7,9.230523,9.486839,2,new_source,true,
+24632-6-0-0.wav,24632,freesound:24632,dobroide,https://freesound.org/s/24632/,CC BY-NC 3.0,4,26.769969,27.264824,2,new_source,true,
+24632-6-1-0.wav,24632,freesound:24632,dobroide,https://freesound.org/s/24632/,CC BY-NC 3.0,4,29.012176,29.292025,2,new_source,true,
+24652-6-0-0.wav,24652,freesound:24652,dobroide,https://freesound.org/s/24652/,CC BY-NC 3.0,4,43.452133,43.932788,2,new_source,true,
+25037-6-0-0.wav,25037,freesound:25037,dobroide,https://freesound.org/s/25037/,CC BY-NC 3.0,10,0.031984,1.365476,2,current_training_source,false,reserved_urbansound_fold
+25037-6-1-0.wav,25037,freesound:25037,dobroide,https://freesound.org/s/25037/,CC BY-NC 3.0,10,1.377778,2.703889,2,current_training_source,false,reserved_urbansound_fold
+25038-6-0-0.wav,25038,freesound:25038,dobroide,https://freesound.org/s/25038/,CC BY-NC 3.0,9,0.073727,1.754709,1,current_training_source,false,reserved_urbansound_fold
+25038-6-1-0.wav,25038,freesound:25038,dobroide,https://freesound.org/s/25038/,CC BY-NC 3.0,9,1.754709,3.150612,1,current_training_source,false,reserved_urbansound_fold
+25039-6-0-0.wav,25039,freesound:25039,dobroide,https://freesound.org/s/25039/,CC BY-NC 3.0,8,0.265152,1.970138,1,new_source,true,
+25039-6-1-0.wav,25039,freesound:25039,dobroide,https://freesound.org/s/25039/,CC BY-NC 3.0,8,1.970138,3.712121,1,new_source,true,
+34708-6-0-0.wav,34708,freesound:34708,Jon285,https://freesound.org/s/34708/,CC BY-NC 3.0,3,4.044883,5.450308,1,current_training_source,false,current_training_source
+34708-6-1-0.wav,34708,freesound:34708,Jon285,https://freesound.org/s/34708/,CC BY-NC 3.0,3,7.901233,9.25524,1,current_training_source,false,current_training_source
+34708-6-2-0.wav,34708,freesound:34708,Jon285,https://freesound.org/s/34708/,CC BY-NC 3.0,3,11.329099,12.871639,1,current_training_source,false,current_training_source
+34708-6-3-0.wav,34708,freesound:34708,Jon285,https://freesound.org/s/34708/,CC BY-NC 3.0,3,14.671269,16.488038,1,current_training_source,false,current_training_source
+34708-6-4-0.wav,34708,freesound:34708,Jon285,https://freesound.org/s/34708/,CC BY-NC 3.0,3,17.516398,18.938963,1,current_training_source,false,current_training_source
+34708-6-5-0.wav,34708,freesound:34708,Jon285,https://freesound.org/s/34708/,CC BY-NC 3.0,3,20.070159,21.304191,1,current_training_source,false,current_training_source
+35799-6-0-0.wav,35799,freesound:35799,kante,https://freesound.org/s/35799/,CC BY-NC 3.0,4,0.285213,1.297721,1,current_validation_source,false,current_validation_source
+35800-6-0-0.wav,35800,freesound:35800,kante,https://freesound.org/s/35800/,CC BY-NC 3.0,2,0.297187,4.297187,1,current_validation_source,false,current_validation_source
+36403-6-0-0.wav,36403,freesound:36403,reinsamba,https://freesound.org/s/36403/,CC BY-NC 3.0,6,26.137402,26.89012,2,new_source,true,
+37236-6-0-0.wav,37236,freesound:37236,Shades,https://freesound.org/s/37236/,CC BY-NC 3.0,2,0.0,2.17,1,new_source,true,
+46654-6-0-0.wav,46654,freesound:46654,cognito perceptu,https://freesound.org/s/46654/,CC BY-NC 3.0,1,0.084334,1.222838,1,new_source,true,
+46655-6-0-0.wav,46655,freesound:46655,cognito perceptu,https://freesound.org/s/46655/,CC BY-NC 3.0,2,0.365045,1.559262,1,new_source,true,
+46656-6-0-0.wav,46656,freesound:46656,cognito perceptu,https://freesound.org/s/46656/,CC BY-NC 3.0,1,0.247654,1.666033,1,new_source,true,
+46656-6-1-0.wav,46656,freesound:46656,cognito perceptu,https://freesound.org/s/46656/,CC BY-NC 3.0,1,3.32081,4.637877,1,new_source,true,
+46656-6-2-0.wav,46656,freesound:46656,cognito perceptu,https://freesound.org/s/46656/,CC BY-NC 3.0,1,5.549692,7.046871,1,new_source,true,
+46656-6-3-0.wav,46656,freesound:46656,cognito perceptu,https://freesound.org/s/46656/,CC BY-NC 3.0,1,7.519664,8.938044,1,new_source,true,
+46656-6-4-0.wav,46656,freesound:46656,cognito perceptu,https://freesound.org/s/46656/,CC BY-NC 3.0,1,9.118156,10.626591,1,new_source,true,
+46656-6-5-0.wav,46656,freesound:46656,cognito perceptu,https://freesound.org/s/46656/,CC BY-NC 3.0,1,10.761675,12.112513,1,new_source,true,
+50618-6-0-0.wav,50618,freesound:50618,fastson,https://freesound.org/s/50618/,CC BY-NC 3.0,4,7.305945,8.639775,1,new_source,true,
+52284-6-0-0.wav,52284,freesound:52284,trip2000,https://freesound.org/s/52284/,CC BY-NC 3.0,8,0.035404,0.803219,1,new_source,true,
+52357-6-0-0.wav,52357,freesound:52357,trip2000,https://freesound.org/s/52357/,CC BY-NC 3.0,3,0.033194,0.902864,1,new_source,true,
+64346-6-0-0.wav,64346,freesound:64346,Robinhood76,https://freesound.org/s/64346/,CC BY-NC 3.0,6,0.076806,1.581198,1,new_source,true,
+7060-6-0-0.wav,7060,freesound:7060,Sonic,https://freesound.org/s/7060/,CC BY-NC 3.0,7,0.964552,2.4055,1,new_source,true,
+7060-6-1-0.wav,7060,freesound:7060,Sonic,https://freesound.org/s/7060/,CC BY-NC 3.0,7,3.487681,5.040375,1,new_source,true,
+7060-6-2-0.wav,7060,freesound:7060,Sonic,https://freesound.org/s/7060/,CC BY-NC 3.0,7,5.869655,7.4694,1,new_source,true,
+7061-6-0-0.wav,7061,freesound:7061,Sonic,https://freesound.org/s/7061/,CC BY-NC 3.0,1,0.978088,3.231723,1,new_source,true,
+7062-6-0-0.wav,7062,freesound:7062,Sonic,https://freesound.org/s/7062/,CC BY-NC 3.0,10,0.978754,2.345351,1,new_source,false,reserved_urbansound_fold
+7063-6-0-0.wav,7063,freesound:7063,Sonic,https://freesound.org/s/7063/,CC BY-NC 3.0,9,0.971596,2.737551,1,new_source,false,reserved_urbansound_fold
+7064-6-0-0.wav,7064,freesound:7064,Sonic,https://freesound.org/s/7064/,CC BY-NC 3.0,4,0.948524,2.358256,1,new_source,true,
+7064-6-1-0.wav,7064,freesound:7064,Sonic,https://freesound.org/s/7064/,CC BY-NC 3.0,4,2.358256,3.585246,1,new_source,true,
+7064-6-2-0.wav,7064,freesound:7064,Sonic,https://freesound.org/s/7064/,CC BY-NC 3.0,4,3.585246,4.760023,1,new_source,true,
+7064-6-3-0.wav,7064,freesound:7064,Sonic,https://freesound.org/s/7064/,CC BY-NC 3.0,4,4.760023,5.952204,1,new_source,true,
+7064-6-4-0.wav,7064,freesound:7064,Sonic,https://freesound.org/s/7064/,CC BY-NC 3.0,4,5.952204,7.283618,1,new_source,true,
+7064-6-5-0.wav,7064,freesound:7064,Sonic,https://freesound.org/s/7064/,CC BY-NC 3.0,4,8.17993,10.12919,1,new_source,true,
+7065-6-0-0.wav,7065,freesound:7065,Sonic,https://freesound.org/s/7065/,CC BY-NC 3.0,8,0.976582,3.999932,1,new_source,true,
+7066-6-0-0.wav,7066,freesound:7066,Sonic,https://freesound.org/s/7066/,CC BY-NC 3.0,5,0.972779,1.791962,1,new_source,true,
+7066-6-1-0.wav,7066,freesound:7066,Sonic,https://freesound.org/s/7066/,CC BY-NC 3.0,5,1.791962,4.957761,1,new_source,true,
+7067-6-0-0.wav,7067,freesound:7067,Sonic,https://freesound.org/s/7067/,CC BY-NC 3.0,7,0.969265,3.698209,1,new_source,true,
+7068-6-0-0.wav,7068,freesound:7068,Sonic,https://freesound.org/s/7068/,CC BY-NC 3.0,8,0.971344,3.160567,1,new_source,true,
+76089-6-0-0.wav,76089,freesound:76089,Tito Lahaye,https://freesound.org/s/76089/,CC BY-NC 3.0,2,0.433166,1.013356,1,new_source,true,
+76090-6-0-0.wav,76090,freesound:76090,Tito Lahaye,https://freesound.org/s/76090/,CC BY-NC 3.0,2,1.331177,1.809629,1,new_source,true,
+76090-6-1-0.wav,76090,freesound:76090,Tito Lahaye,https://freesound.org/s/76090/,CC BY-NC 3.0,2,2.100944,2.473288,1,new_source,true,
+76091-6-0-0.wav,76091,freesound:76091,Tito Lahaye,https://freesound.org/s/76091/,CC BY-NC 3.0,2,1.30469,1.714005,1,new_source,true,
+76091-6-1-0.wav,76091,freesound:76091,Tito Lahaye,https://freesound.org/s/76091/,CC BY-NC 3.0,2,2.255494,2.673336,1,new_source,true,
+76091-6-2-0.wav,76091,freesound:76091,Tito Lahaye,https://freesound.org/s/76091/,CC BY-NC 3.0,2,3.125287,3.321417,1,new_source,true,
+76091-6-3-0.wav,76091,freesound:76091,Tito Lahaye,https://freesound.org/s/76091/,CC BY-NC 3.0,2,3.67104,3.850115,1,new_source,true,
+76091-6-4-0.wav,76091,freesound:76091,Tito Lahaye,https://freesound.org/s/76091/,CC BY-NC 3.0,2,4.212529,4.378813,1,new_source,true,
+76091-6-5-0.wav,76091,freesound:76091,Tito Lahaye,https://freesound.org/s/76091/,CC BY-NC 3.0,2,4.485405,5.099377,1,new_source,true,
+76093-6-0-0.wav,76093,freesound:76093,Tito Lahaye,https://freesound.org/s/76093/,CC BY-NC 3.0,1,3.2671,4.13887,1,new_source,true,
+76093-6-1-0.wav,76093,freesound:76093,Tito Lahaye,https://freesound.org/s/76093/,CC BY-NC 3.0,1,4.586976,5.222472,1,new_source,true,
+76094-6-0-0.wav,76094,freesound:76094,Tito Lahaye,https://freesound.org/s/76094/,CC BY-NC 3.0,3,0.978498,1.888797,1,new_source,true,
+76094-6-1-0.wav,76094,freesound:76094,Tito Lahaye,https://freesound.org/s/76094/,CC BY-NC 3.0,3,2.763515,3.801315,1,new_source,true,
+77246-6-0-0.wav,77246,freesound:77246,Tito Lahaye,https://freesound.org/s/77246/,CC BY-NC 3.0,1,2.329836,3.657301,1,new_source,true,
+77247-6-0-0.wav,77247,freesound:77247,Tito Lahaye,https://freesound.org/s/77247/,CC BY-NC 3.0,5,2.802008,3.454014,1,new_source,true,
+78776-6-0-0.wav,78776,freesound:78776,knufds,https://freesound.org/s/78776/,CC BY-NC 3.0,3,0.094899,2.613121,1,new_source,true,
+84254-6-0-0.wav,84254,freesound:84254,Tito Lahaye,https://freesound.org/s/84254/,CC BY-NC 3.0,5,0.314041,1.369388,1,new_source,true,
+86278-6-0-0.wav,86278,freesound:86278,Tito Lahaye,https://freesound.org/s/86278/,CC BY-NC 3.0,1,0.242924,1.384127,1,new_source,true,
+87562-6-0-0.wav,87562,freesound:87562,knufds,https://freesound.org/s/87562/,CC BY-NC 3.0,9,0.0,3.044845,1,new_source,false,reserved_urbansound_fold
+93139-6-0-0.wav,93139,freesound:93139,CGEffex,https://freesound.org/s/93139/,CC BY-NC 3.0,5,1.091134,2.538287,1,new_source,true,

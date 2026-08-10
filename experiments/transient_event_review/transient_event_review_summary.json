@@ -1,0 +1,48 @@
+{
+  "reviewed": 30,
+  "valid_events": 26,
+  "valid_event_rate": 0.8666666666666667,
+  "truncated_events": 3,
+  "truncated_event_rate": 0.1,
+  "per_class": {
+    "glass_breaking": {
+      "reviewed": 15,
+      "valid_events": 11,
+      "valid_event_rate": 0.7333333333333333,
+      "canonical_events": 5,
+      "truncated_events": 2,
+      "truncated_event_rate": 0.13333333333333333,
+      "quiet_events": 6,
+      "validity_counts": {
+        "canonical": 5,
+        "atypical_valid": 6,
+        "wrong_or_absent": 4
+      }
+    },
+    "gunshot_gunfire": {
+      "reviewed": 15,
+      "valid_events": 15,
+      "valid_event_rate": 1.0,
+      "canonical_events": 11,
+      "truncated_events": 1,
+      "truncated_event_rate": 0.06666666666666667,
+      "quiet_events": 1,
+      "validity_counts": {
+        "canonical": 11,
+        "atypical_valid": 4
+      }
+    }
+  },
+  "predefined_thresholds": {
+    "minimum_valid_event_rate_overall": 0.9,
+    "minimum_valid_event_rate_per_class": 0.85,
+    "maximum_truncated_event_rate": 0.1
+  },
+  "gate_checks": {
+    "overall_valid_event_rate": false,
+    "each_class_valid_event_rate": false,
+    "truncated_event_rate": true
+  },
+  "gate_passed": false,
+  "interpretation": "Inspect failed review rows and revise the event extractor before training."
+}

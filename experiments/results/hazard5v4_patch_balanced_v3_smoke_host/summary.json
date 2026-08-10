@@ -1,0 +1,44 @@
+{
+  "experiment_id": "HAZARD5V4-PATCH-BALANCED-V3-SMOKE-HOST-001",
+  "model_architecture": "YAMNet-1024 transfer learning",
+  "classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "test_protocol": "Six canonical clips for functional smoke testing only",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 6,
+  "correct_clips": 6,
+  "incorrect_clips": 0,
+  "clip_accuracy": 1.0,
+  "patches": 30,
+  "correct_patches": 27,
+  "patch_accuracy": 0.9,
+  "macro_precision": 1.0,
+  "macro_recall": 1.0,
+  "macro_f1": 1.0,
+  "model_bytes": 3462018,
+  "model_sha256": "2f29a3b26971bdadd05ab069c231e2a8aac83ec4b6fe14015a6551cb344a5978",
+  "test_csv_sha256": "c76001f1f251df2a7e95a0e422bbf9d5b7c3468ac47298add89122e42b450df5",
+  "model_format": "ONNX QDQ with int8 boundary",
+  "input_shape": [
+    "unk__0",
+    1,
+    96,
+    64
+  ],
+  "input_dtype": "tensor(int8)",
+  "input_scale": 0.03430015966296196,
+  "input_zero_point": 51,
+  "input_layout": "nchw_time_mel",
+  "output_shape": [
+    "unk__301",
+    6
+  ],
+  "output_dtype": "tensor(float)",
+  "tensorflow_version": "2.18.0"
+}

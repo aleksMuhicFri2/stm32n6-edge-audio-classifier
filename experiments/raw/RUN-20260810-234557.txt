@@ -1,0 +1,84 @@
+run_id=RUN-20260810-234557
+recorded_at=2026-08-10T23:45:57.3815103+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=14
+stimulus=V3TC-010
+stimulus_hash=fb6a5cf46fd7d72b16c724321852cc0bc5210adbb29c3fcf69e1f443a1a69381
+expected_class=out_of_distribution
+test_type=ood
+source=V3 smoke set:gunshot_gunfire
+distance_cm=30
+volume_percent=70
+firmware_git_commit=working-tree-v3
+capture_source_git_commit=e77db8b
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard6_v3_thunder_calibration\audio\10_gunshot_gunfire.wav
+playback_delay_seconds=3
+decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27
+notes=Thunder decision calibration; role=negative_known_class; category=gunshot_gunfire; processing=exact_copy; gain_db=0.0; excluded from final evaluation
+--- UART ---
+
+AED_CSV,1803,0,554.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1803    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1804,0,596.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1804    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1805,0,588.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1805    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1806,0,506.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1806    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1807,0,514.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1807    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1808,0,596.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1808    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1809,0,575.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1809    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1810,0,584.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1810    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1811,0,710.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1811    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1812,0,826.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1812    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1813,0,628.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1813    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1814,0,736.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1814    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1815,0,568.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1815    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1816,0,632.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1816    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1817,0,597.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1817    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1818,0,719.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1818    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1819,0,649.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1819    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1820,0,597.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1820    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1821,0,1130.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1821    |  5.34%|  0.71|  4.63|  0.00|
+{"class":"glass_breaking"}
+AED_CSV,1822,1,5828.00,glass_breaking,0.7065,glass_breaking,0.7065,gunshot_gunfire,0.2368,thunderstorm,0.0319,1
+                    | 1822    |  5.34%|  0.71|  4.63|  0.00|
+{"class":"unknown"}
+AED_CSV,1823,1,18320.00,unknown,0.5048,gunshot_gunfire,0.5048,glass_breaking,0.3021,siren,0.0595,1
+                    | 1823    |  5.34%|  0.71|  4.63|  0.00|
+{"class":"gunshot_gunfire"}
+AED_CSV,1824,1,19328.00,gunshot_gunfire,0.7118,gunshot_gunfire,0.7118,glass_breaking,0.1381,thunderstorm,0.0779,1
+                    | 1824    |  5.34%|  0.71|  4.63|  0.00|
+{"class":"unknown"}
+AED_CSV,1825,1,5480.00,unknown,0.4156,gunshot_gunfire,0.4156,glass_breaking,0.3157,thunderstorm,0.1019,1
+                    | 1825    |  5.34%|  0.71|  4.63|  0.00|
+{"class":"gunshot_gunfire"}
+AED_CSV,1826,1,22192.00,gunshot_gunfire,0.7280,gunshot_gunfire,0.7280,glass_breaking,0.1398,speech,0.0546,1
+                    | 1826    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1827,0,1228.00,gunshot_gunfire,0.7280,gunshot_gunfire,0.7280,glass_breaking,0.1398,speech,0.0546,0
+                    | 1827    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1828,1,22080.00,gunshot_gunfire,0.8579,gunshot_gunfire,0.8579,glass_breaking,0.0591,speech,0.0327,0
+                    | 1828    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1829,0,624.00,gunshot_gunfire,0.8579,gunshot_gunfire,0.8579,glass_breaking,0.0591,speech,0.0327,0
+                    | 1829    |  5.34%|  0.71|  4.63|  0.00|
+{"class":"waiting"}
+AED_CSV,1830,0,524.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 1830    |  5.34%|  0.71|  4.63|  0.00|
+AED_CSV,1831,0,560.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1831    |  5.34%|  0.71|  4.63|  0.00|

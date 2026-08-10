@@ -1,0 +1,44 @@
+{
+  "experiment_id": "HAZARD5V3S-YAMNET1024-PATCH-AGG-001",
+  "model_architecture": "YAMNet-1024 frozen transfer-learning backbone with six-class head",
+  "classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "test_protocol": "Same frozen 278-clip development manifest; patch aggregation diagnostic",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 278,
+  "correct_clips": 244,
+  "incorrect_clips": 34,
+  "clip_accuracy": 0.8776978417266187,
+  "patches": 1826,
+  "correct_patches": 1432,
+  "patch_accuracy": 0.7842278203723987,
+  "macro_precision": 0.8671967775701092,
+  "macro_recall": 0.8921296296296296,
+  "macro_f1": 0.8708308113082137,
+  "model_bytes": 3462018,
+  "model_sha256": "01590e4367359dfb8f3420ce246d79682fe211e452327af37683805a7b80c762",
+  "test_csv_sha256": "be6c4aad7375d4083bd8553e8b14ce234fa553596d5d038d987ae0f4f793fe27",
+  "model_format": "ONNX QDQ with int8 boundary",
+  "input_shape": [
+    "unk__0",
+    1,
+    96,
+    64
+  ],
+  "input_dtype": "tensor(int8)",
+  "input_scale": 0.03455062583088875,
+  "input_zero_point": 55,
+  "input_layout": "nchw_time_mel",
+  "output_shape": [
+    "unk__302",
+    6
+  ],
+  "output_dtype": "tensor(float)",
+  "tensorflow_version": "2.18.0"
+}

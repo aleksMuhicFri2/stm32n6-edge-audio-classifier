@@ -1,0 +1,7 @@
+class_name,precision,recall,f1_score,support,correct
+dog_bark,1.0,0.6666666666666666,0.8,6,4
+glass_breaking,0.8333333333333334,1.0,0.9090909090909091,5,5
+gunshot_gunfire,1.0,1.0,1.0,4,4
+siren,1.0,1.0,1.0,3,3
+speech,0.7142857142857143,0.8333333333333334,0.7692307692307693,6,5
+thunderstorm,1.0,1.0,1.0,6,6

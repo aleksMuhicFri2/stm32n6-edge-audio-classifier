@@ -1,0 +1,59 @@
+{
+  "experiment_id": "HAZARD5V4-PATCH-BALANCED-AUG-V3-ANALYSIS-001",
+  "shared_test_manifest_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983",
+  "same_test_clips_for_all_variants": true,
+  "variants": [
+    {
+      "variant": "refined_shatter",
+      "display_label": "Refined Shatter baseline",
+      "correct_clips": 246,
+      "test_clips": 278,
+      "clip_accuracy": 0.8848920863309353,
+      "macro_recall": 0.9012345679012346,
+      "macro_f1": 0.8732502793156999,
+      "dog_bark_recall": "0.7833333333333333",
+      "glass_recall": "0.8333333333333334",
+      "gunshot_recall": "0.9074074074074074",
+      "model_sha256": "532f288de137483e652fd3fe94096d720970594f922560a4f347b77eedf1ad72",
+      "test_csv_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983"
+    },
+    {
+      "variant": "patch_balanced_v2",
+      "display_label": "Gunshot-safe V2",
+      "correct_clips": 246,
+      "test_clips": 278,
+      "clip_accuracy": 0.8848920863309353,
+      "macro_recall": 0.8966049382716049,
+      "macro_f1": 0.8733477698607021,
+      "dog_bark_recall": "0.8",
+      "glass_recall": "0.7833333333333333",
+      "gunshot_recall": "0.9629629629629629",
+      "model_sha256": "a6edaf838608b28583106abf79aa4c1209e181008e6914332a227e4d3441ddbf",
+      "test_csv_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983"
+    },
+    {
+      "variant": "patch_balanced_v3",
+      "display_label": "Balanced V3",
+      "correct_clips": 246,
+      "test_clips": 278,
+      "clip_accuracy": 0.8848920863309353,
+      "macro_recall": 0.9015432098765433,
+      "macro_f1": 0.8757709688295972,
+      "dog_bark_recall": "0.75",
+      "glass_recall": "0.85",
+      "gunshot_recall": "0.9259259259259259",
+      "model_sha256": "2f29a3b26971bdadd05ab069c231e2a8aac83ec4b6fe14015a6551cb344a5978",
+      "test_csv_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983"
+    }
+  ],
+  "selected_v3_minus_baseline_percentage_points": {
+    "clip_accuracy": 0.0,
+    "macro_recall": 0.030864197530877657,
+    "macro_f1": 0.25206895138972785,
+    "dog_bark_recall": -3.3333333333333326,
+    "glass_recall": 1.6666666666666607,
+    "gunshot_recall": 1.851851851851849
+  },
+  "selection": "patch_balanced_v3_for_hardware_integration",
+  "conclusion": "V3 keeps overall accuracy unchanged while improving both short hazard-event recalls and macro metrics relative to the refined baseline. Dog-bark recall falls by two clips, which must be stated as the remaining tradeoff."
+}

@@ -1,0 +1,79 @@
+{
+  "experiment_id": "HAZARD5V4-PATCH-BALANCED-V3-POST-CALIBRATION-SMOKE-001",
+  "completed_at": "2026-08-11T00:02:23+02:00",
+  "purpose": "Post-deployment functional smoke and regression test only; not a final accuracy estimate.",
+  "board": "STM32N6570-DK",
+  "model": "YAMNet-1024 Hazard-5 + Speech V3 int8",
+  "firmware": "thunder evidence threshold 0.32 in two consecutive active frames; thunder top-ranked on confirmation; release threshold 0.25",
+  "conditions": {
+    "windows_volume_percent": 70,
+    "speaker_distance_cm": 30,
+    "playback_device_and_board_placement_unchanged": true
+  },
+  "summary": {
+    "classes_tested": 6,
+    "classes_with_target_detection": 6,
+    "functional_class_pass_rate": 1.0,
+    "non_thunder_trials": 5,
+    "false_thunder_decisions_on_non_thunder_trials": 0,
+    "mean_neural_inference_ms_approximately": 4.63
+  },
+  "results": [
+    {
+      "class": "thunderstorm",
+      "run_id": "RUN-20260810-235950",
+      "active_frames": 5,
+      "target_decision_frames": 5,
+      "maximum_decision_confidence": 0.7601,
+      "result": "pass"
+    },
+    {
+      "class": "siren",
+      "run_id": "RUN-20260811-000042",
+      "active_frames": 4,
+      "target_decision_frames": 5,
+      "maximum_decision_confidence": 0.9910,
+      "false_thunder_decision_frames": 0,
+      "result": "pass"
+    },
+    {
+      "class": "gunshot_gunfire",
+      "run_id": "RUN-20260811-000053",
+      "active_frames": 4,
+      "target_decision_frames": 6,
+      "maximum_decision_confidence": 0.9209,
+      "false_thunder_decision_frames": 0,
+      "result": "pass"
+    },
+    {
+      "class": "speech",
+      "run_id": "RUN-20260811-000142",
+      "active_frames": 4,
+      "target_decision_frames": 5,
+      "maximum_decision_confidence": 0.9968,
+      "false_thunder_decision_frames": 0,
+      "result": "pass"
+    },
+    {
+      "class": "dog_bark",
+      "run_id": "RUN-20260811-000154",
+      "active_frames": 5,
+      "target_decision_frames": 2,
+      "maximum_decision_confidence": 0.6624,
+      "false_thunder_decision_frames": 0,
+      "result": "pass"
+    },
+    {
+      "class": "glass_breaking",
+      "run_id": "RUN-20260811-000207",
+      "active_frames": 3,
+      "target_decision_frames": 6,
+      "maximum_decision_confidence": 0.9832,
+      "false_thunder_decision_frames": 0,
+      "result": "pass"
+    }
+  ],
+  "interpretation_note": "Decision-frame counts can exceed active-frame counts because the hysteresis intentionally retains a class for one silent frame before returning to waiting.",
+  "status": "passed",
+  "next_gate": "Freeze the firmware and protocol, then run the reserved final evaluation without further calibration on final data."
+}

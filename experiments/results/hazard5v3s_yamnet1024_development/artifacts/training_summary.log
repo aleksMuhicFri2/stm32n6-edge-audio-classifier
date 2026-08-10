@@ -1,0 +1,25 @@
+operation_mode: chain_tqe
+[2026-08-10 19:57:15,802][absl][WARNING] - No training configuration found in the save file, so the model was *not* compiled. Compile it manually.
+Model name : yamnet_e1024
+Using pretrained weights
+Dataset : custom
+The last epoch history :
+['epoch', 'accuracy', 'learning_rate', 'loss', 'val_accuracy', 'val_loss']
+['16', '0.9137321710586548', '0.0002500000118743628', '0.273282915353775', '0.8143482804298401', '0.7982901334762573']
+Training runtime : 122 s
+Average time per epoch : 7.18 s
+Nb params of float model : 3223494
+Float model test_set:
+Patch-level accuracy of float model : 82.15 %
+Clip-level accuracy of float model : 89.21 %
+Loss of float model : 0.6906200647354126 
+[2026-08-10 19:59:33,978][tf2onnx.tfonnx][INFO] - Using tensorflow=2.18.0, onnx=1.16.1, tf2onnx=1.16.1/15c810
+[2026-08-10 19:59:33,978][tf2onnx.tfonnx][INFO] - Using opset <onnx, 17>
+[2026-08-10 19:59:34,037][tf2onnx.tf_utils][INFO] - Computed 0 values for constant folding
+[2026-08-10 19:59:34,085][tf2onnx.tfonnx][WARNING] - transpose_output for new_head: shape must be rank 4, ignored
+[2026-08-10 19:59:34,134][tf2onnx.optimizer][INFO] - Optimizing ONNX model
+[2026-08-10 19:59:34,351][tf2onnx.optimizer][INFO] - After optimization: Add -14 (28->14), Const -13 (84->71), GlobalAveragePool +1 (0->1), Identity -2 (2->0), ReduceMean -1 (1->0), Reshape -12 (13->1), Squeeze +1 (0->1), Transpose -67 (68->1)
+ONNX model test_set:
+Patch-level accuracy of Quantized ONNX model : 7831.0 %
+Clip-level accuracy of Quantized ONNX model : 8741.0 %
+operation finished: chain_tqe

@@ -1,0 +1,95 @@
+{
+  "experiment_id": "HAZARD5V4-PATCH-BALANCED-AUG-V3-YAMNET1024-DEV-001",
+  "integration_date": "2026-08-10",
+  "board": "STM32N6570-DK",
+  "model_backbone": "YAMNet-1024",
+  "model_input": {
+    "data_type": "int8",
+    "shape": [1, 1, 96, 64],
+    "layout": "channel_first_time_major",
+    "scale": 0.03430015966296196,
+    "zero_point": 51
+  },
+  "preprocessing_change": "Store each 64-band mel column contiguously so the flattened buffer is ordered by time then mel band.",
+  "neural_art": {
+    "weights_bytes": 3279505,
+    "weights_sha256": "65b800338e97202922064b2efe09e4b120f6d37a5acbfba2c08fc9ec81eb18ef",
+    "activations_bytes": 245760,
+    "multiply_accumulate_operations": 72748547,
+    "execution_epochs_total": 34,
+    "execution_epochs_hardware": 29,
+    "execution_epochs_software": 5
+  },
+  "firmware_build": {
+    "configuration": "bare_metal",
+    "errors": 0,
+    "warnings": 1,
+    "warning": "Existing linker warning: one load segment has read, write, and execute permissions.",
+    "text_bytes": 230028,
+    "data_bytes": 10320,
+    "bss_bytes": 360120,
+    "raw_binary_bytes": 240352,
+    "raw_binary_sha256": "bbaef50c6e3c41bf8c74a5d360440a8b85f23ffd06aabd41b5f62615dfbcc5d7",
+    "signed_binary_bytes": 241376,
+    "signed_binary_sha256": "fb486a9ccddfee21cadadba7f12e109b1bab89af92e4a69c70a783289786caa3",
+    "signed_binary": "Projects/GS/STM32CubeIDE/BM/GS_Audio_N6_hazard5v4_patch_balanced_v3_sign.bin",
+    "weights_binary": "Projects/X-CUBE-AI/models/aed_weights.bin",
+    "weights_address": "0x70180000",
+    "application_address": "0x70100000",
+    "overlap_check": "passed"
+  },
+  "flash": {
+    "timestamp": "2026-08-10T23:15:25+02:00",
+    "programmer": "STM32CubeProgrammer 2.23.0",
+    "debug_probe_serial": "0034004E3335510133383531",
+    "debug_probe_firmware": "V3J15M6",
+    "measured_voltage_volts": 3.27,
+    "interface": "serial_wire_debug_hot_plug",
+    "weights_write_verified": true,
+    "application_write_verified": true,
+    "bootloader_rewritten": false
+  },
+  "startup_smoke_test": {
+    "date": "2026-08-10",
+    "boot_switch_returned_to_run_position": true,
+    "application_started": true,
+    "display_initialized": true,
+    "user_observation": "looks ok",
+    "result": "passed"
+  },
+  "physical_smoke_test": {
+    "result": "five_of_six_main_display_detections",
+    "idle_false_alert": false,
+    "calibration_issue": "Thunderstorm was top-ranked on four active frames with a maximum smoothed score of 0.4391, below the legacy 0.65 entry threshold.",
+    "evidence": "experiments/v3_smoke_test/summary.json"
+  },
+  "thunder_decision_calibration": {
+    "unique_stimuli": 13,
+    "captured_playbacks": 15,
+    "thunder_playbacks": 7,
+    "negative_playbacks": 8,
+    "thunder_evidence_threshold": 0.32,
+    "consecutive_active_evidence_frames": 2,
+    "thunder_top_rank_required_on_confirmation": true,
+    "thunder_release_threshold": 0.25,
+    "observed_calibration_detection_rate": 1.0,
+    "observed_calibration_false_positive_rate": 0.0,
+    "evidence": "experiments/results/hazard5v4_patch_balanced_v3_thunder_calibration/summary.json"
+  },
+  "calibrated_firmware": {
+    "signed_binary": "Projects/GS/STM32CubeIDE/BM/GS_Audio_N6_hazard5v4_patch_balanced_v3_thunder_evidence_sign.bin",
+    "signed_binary_bytes": 241280,
+    "signed_binary_sha256": "7c587de39f17d4fdd53a125e38b8145832ff835d9413d0bc6639e8df710e5087",
+    "application_write_verified": true,
+    "weights_rewritten": false
+  },
+  "post_calibration_functional_smoke": {
+    "classes_tested": 6,
+    "classes_with_target_detection": 6,
+    "false_thunder_decisions_on_non_thunder_trials": 0,
+    "result": "passed",
+    "evidence": "experiments/results/hazard5v4_patch_balanced_v3_thunder_calibration/post_calibration_functional_smoke.json"
+  },
+  "status": "deployed_calibrated_smoke_passed_final_evaluation_ready",
+  "next_gate": "Freeze the firmware and protocol, then run the reserved final evaluation without further tuning on final data."
+}

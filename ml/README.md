@@ -185,3 +185,158 @@ recall across the five hazards. That is a 2.11 percentage-point loss from the
 closed five-class baseline and passes the predefined deployment gates. The
 speech-2x retry was rejected because speech recall did not improve. Reserved
 external test data remains untouched.
+
+### Controlled YAMNet-1024 candidate
+
+A wider YAMNet-1024 transfer-learning candidate was trained with the exact
+same six classes, split manifests, preprocessing, augmentation, seed, and
+frozen-backbone policy as the deployed YAMNet-256 model:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ml\train_hazard5v3s_yamnet1024.ps1
+```
+
+The model reached 87.77% clip accuracy and 89.21% macro recall on the same
+278-clip development manifest. The corresponding YAMNet-256 values were
+87.05% and 85.73%. Gunshot, siren, and speech recall improved, but glass
+breaking fell from 90% to 76.67%, so the candidate has not replaced the
+evaluated board release.
+
+ST Edge AI Core generated 3,279,505 bytes of weights and 245,760 bytes of
+activations. The exact int8 Open Neural Network Exchange candidate is
+`models/hazard5v3s_yamnet1024_int8_nchw_qdq.onnx`. It uses a direct
+channel-first time-by-mel input, so deployment also requires the firmware
+preprocessor to emit time-major spectrogram data.
+
+Detailed model, training, compilation, threshold, and transient-patch results
+are recorded under `../experiments/results/hazard5v3s_yamnet1024_development`
+and `../experiments/results/yamnet_patch_aggregation`.
+
+### Event-aware transient experiment
+
+The B1 experiment tests whether short gunshot and glass-breaking events are
+diluted by long training recordings. It derives one deterministic one-second
+window from each of the 384 current transient training recordings. A combined
+short-time energy-rise and spectral-change score locates the event. Source
+loudness is preserved, all other training audio is byte-identical, and the
+development split is unchanged.
+
+Prepare and review the derived data with:
+
+```powershell
+..\ml-workspace\.venv\Scripts\python.exe .\ml\prepare_transient_event_windows.py
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_transient_event_review.ps1
+..\ml-workspace\.venv\Scripts\python.exe .\ml\analyze_transient_event_review.py
+```
+
+Training is blocked in `train_hazard5v3s_yamnet1024_event_b1.ps1` unless the
+saved listening review passes its predefined validity and truncation gates.
+UrbanSound8K is source-audited during preparation but is not added to B1. The
+separate B2 pool contains only folds 1-8 and excludes every Freesound source
+already present in current training or validation data.
+
+The first review rejected this broad-label dataset before training. Gunshot
+windows passed 15/15, but glass windows passed only 11/15. Source inspection
+showed that the FSD50K selection used the AudioSet parent label `Glass`, which
+also includes clinks, taps, liquid, and handling sounds. This failed gate and
+its user notes remain recorded under `../experiments/transient_event_review`.
+
+The corrected dataset keeps explicit ESC-50 glass-breaking clips and selects
+only FSD50K records containing both `Shatter` and `Glass`. It uses 47 training
+uploaders and 52 validation uploaders with no uploader overlap. Prepare it and
+the revised event-aware windows with:
+
+```powershell
+..\ml-workspace\.venv\Scripts\python.exe .\ml\prepare_refined_shatter_dataset.py
+..\ml-workspace\.venv\Scripts\python.exe .\ml\prepare_transient_event_windows.py `
+  --source-root ..\ml-workspace\datasets\hazard5v4_shatter `
+  --output-root ..\ml-workspace\datasets\hazard5v4_shatter_event `
+  --tracked-output .\ml\data\hazard5v4_shatter_event `
+  --review-output .\experiments\shatter_event_review `
+  --experiment-id HAZARD5V4-SHATTER-EVENT-YAMNET1024-DEV-001 `
+  --source-experiment HAZARD5V4-SHATTER-YAMNET1024-DEV-001 `
+  --variant "Refined Shatter taxonomy plus event-aware training" `
+  --glass-detector shatter_tail --review-classes glass_breaking --seed 421
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_transient_event_review.ps1 `
+  -ReviewDirectory experiments\shatter_event_review
+```
+
+The combined corrected review passed with 29/30 valid events. The refined
+taxonomy model reached 88.49% quantized clip accuracy and raised clean-shatter
+recall from 75.00% to 83.33% relative to the original model evaluated on the
+same corrected manifest.
+
+The simple one-window replacement was rejected at 83.81% accuracy. Exact ST
+preprocessing counts showed why: both transient classes contributed only 192
+training patches, compared with 2,068 thunderstorm patches. Results and figures
+are under `../experiments/results/hazard5v4_shatter_ablation`. The next
+augmentation experiment must balance the number of training patches while
+retaining source groups and the unchanged development split.
+
+`prepare_patch_balanced_augmentation.py` implements that follow-up without
+discarding the original recordings. It adds six deterministic derivatives per
+transient training source and uses conservative event position, gain, real
+training-fold background, frequency-response, speed, and compression changes.
+The exact patch audit reports 1,550 to 2,068 patches per class, a 1.33 ratio.
+All 2,304 generated WAV files pass duration, silence, and peak-ceiling checks.
+
+The first 18-clip review failed its predefined quality gate: glass was valid in
+8/9 examples, but gunshots were valid in only 5/9 and three were truncated.
+No model was trained from that version. The preserved result is in
+`../experiments/patch_balanced_augmentation_review/RESULT.md`.
+
+The separate `transient_safe_v2` profile locates the strongest 20 ms gunshot
+energy frame, keeps at least 620 ms after it, and uses milder gunshot gain,
+background, filtering, speed, and compression ranges. It does not discard
+shots at the beginning of a source recording: unavailable left context is
+zero-padded without dropping source samples. Eighty-five gunshot sources have
+their selected event in the first 200 ms; all are handled by this policy.
+All 1,152 augmented glass files are byte-identical to the first reviewed
+version, so only 12 revised gunshot examples require another review.
+
+Run the required V2 review before training:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_patch_balanced_v2_review.ps1
+```
+
+The revised review passed: all 12 gunshots were canonical and complete. With
+the unchanged V1 glass evidence, the combined gate passed with 20/21 valid
+events (95.24%) and no truncation. The trained int8 Neural-ART candidate keeps
+overall development accuracy at 246/278 clips (88.49%). Gunshot recall rises
+from 90.74% to 96.30%, while glass-breaking recall falls from 83.33% to 78.33%.
+It compiles successfully to 3,279,505 bytes of weights and 245,760 bytes of
+activations, but is deliberately not deployed because the class tradeoff needs
+an explicit decision or a glass-safe follow-up. Figures and tables are under
+`../experiments/results/hazard5v4_patch_balanced_v2_analysis`.
+
+The glass-safe V3 follow-up preserves all 1,152 V2 gunshot derivatives
+byte-for-byte. Glass attenuation is limited to -4 dB, background mixtures use
+18--30 dB signal-to-noise ratios, and speed modification and compression are
+removed. If the selected shatter frame is more than 18 dB below the recording
+maximum, the strongest 20 ms energy frame is used as a fallback. This affects
+61 of 192 glass sources. The unchanged 11,095-patch training distribution
+still has a 1.33 maximum-to-minimum class ratio. Run the 12-clip glass-only
+review before V3 training:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_patch_balanced_v3_review.ps1
+```
+
+The V3 review passed with 12/12 valid and complete glass events: 11 canonical
+and one atypical but valid. Combined with the byte-identical V2 gunshot
+evidence, the gate passed with 24/24 valid events and no truncation. On the
+unchanged 278-clip development manifest, the deployment-form int8 model again
+classified 246 clips correctly (88.49%). Relative to the refined-Shatter
+baseline, glass recall rose from 83.33% to 85.00% and gunshot recall from
+90.74% to 92.59%. Dog-bark recall fell from 78.33% to 75.00%; the remaining
+class recalls were unchanged.
+
+ST Edge AI Core 4.0.1 compiled the selected model for the STM32N6 Neural-ART
+accelerator. The compiled network uses 3,279,505 bytes of weights and 245,760
+bytes of activations; 29 of 34 execution epochs run in hardware. Its direct
+int8 input is channel-first `[batch, 1, 96, 64]`, so the firmware preprocessor
+must store the spectrogram in time-major order. Review evidence, comparison
+tables, and figures are under
+`../experiments/patch_balanced_augmentation_review_v3` and
+`../experiments/results/hazard5v4_patch_balanced_v3_analysis`.

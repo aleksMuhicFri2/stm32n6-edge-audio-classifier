@@ -16,10 +16,15 @@
 #error "Speech class index must reference a configured model output"
 #endif
 
+#if CTRL_X_CUBE_AI_MODEL_THUNDER_CLASS_INDEX >= CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER
+#error "Thunder class index must reference a configured model output"
+#endif
+
 static float s_smoothed_scores[CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER];
 static bool s_scores_initialized;
 static uint32_t s_frame_index;
 static uint32_t s_silent_frames;
+static uint32_t s_thunder_candidate_frames;
 static uint32_t s_stable_index = AUDIO_EVENT_NO_CLASS;
 static AudioEventState_t s_state = AUDIO_EVENT_WAITING;
 
@@ -54,12 +59,40 @@ static void rank_top_scores(uint32_t class_count, AudioEventResult_t *result)
   }
 }
 
+static float enter_threshold(uint32_t class_index)
+{
+  return (class_index == CTRL_X_CUBE_AI_MODEL_THUNDER_CLASS_INDEX) ?
+         AUDIO_EVENT_THUNDER_ENTER_THRESHOLD : AUDIO_EVENT_ENTER_THRESHOLD;
+}
+
+static float release_threshold(uint32_t class_index)
+{
+  return (class_index == CTRL_X_CUBE_AI_MODEL_THUNDER_CLASS_INDEX) ?
+         AUDIO_EVENT_THUNDER_RELEASE_THRESHOLD : AUDIO_EVENT_RELEASE_THRESHOLD;
+}
+
+static bool candidate_is_confirmed(uint32_t class_index, float score)
+{
+  if (score < enter_threshold(class_index))
+  {
+    return false;
+  }
+
+  if (class_index == CTRL_X_CUBE_AI_MODEL_THUNDER_CLASS_INDEX)
+  {
+    return s_thunder_candidate_frames >= AUDIO_EVENT_THUNDER_CONFIRM_FRAMES;
+  }
+
+  return true;
+}
+
 void AudioEventFilter_Init(void)
 {
   memset(s_smoothed_scores, 0, sizeof(s_smoothed_scores));
   s_scores_initialized = false;
   s_frame_index = 0U;
   s_silent_frames = 0U;
+  s_thunder_candidate_frames = 0U;
   s_stable_index = AUDIO_EVENT_NO_CLASS;
   s_state = AUDIO_EVENT_WAITING;
 }
@@ -124,6 +157,23 @@ void AudioEventFilter_Update(const float *scores,
   {
     const uint32_t candidate_index = result->top_indices[0];
     const float candidate_score = result->top_scores[0];
+    /* Preserve thunder evidence when it briefly moves to second or third
+     * place. It may only become the decision when it returns to first place. */
+    if (s_smoothed_scores[CTRL_X_CUBE_AI_MODEL_THUNDER_CLASS_INDEX] >=
+        AUDIO_EVENT_THUNDER_ENTER_THRESHOLD)
+    {
+      if (s_thunder_candidate_frames < AUDIO_EVENT_THUNDER_CONFIRM_FRAMES)
+      {
+        s_thunder_candidate_frames++;
+      }
+    }
+    else
+    {
+      s_thunder_candidate_frames = 0U;
+    }
+
+    const bool candidate_confirmed =
+        candidate_is_confirmed(candidate_index, candidate_score);
     const bool speech_guard_active =
         (CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX < class_count) &&
         (s_smoothed_scores[CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX] >=
@@ -145,7 +195,7 @@ void AudioEventFilter_Update(const float *scores,
 
       if (s_stable_index == AUDIO_EVENT_NO_CLASS)
       {
-        if (candidate_score >= AUDIO_EVENT_ENTER_THRESHOLD)
+        if (candidate_confirmed)
         {
           s_stable_index = candidate_index;
           s_state = AUDIO_EVENT_CLASS;
@@ -161,7 +211,7 @@ void AudioEventFilter_Update(const float *scores,
 
         if (candidate_index == s_stable_index)
         {
-          if (stable_score < AUDIO_EVENT_RELEASE_THRESHOLD)
+          if (stable_score < release_threshold(s_stable_index))
           {
             s_stable_index = AUDIO_EVENT_NO_CLASS;
             s_state = AUDIO_EVENT_UNKNOWN;
@@ -171,15 +221,15 @@ void AudioEventFilter_Update(const float *scores,
             s_state = AUDIO_EVENT_CLASS;
           }
         }
-        else if ((candidate_score >= AUDIO_EVENT_ENTER_THRESHOLD) &&
+        else if (candidate_confirmed &&
                  (candidate_score >= (stable_score + AUDIO_EVENT_SWITCH_MARGIN)))
         {
           s_stable_index = candidate_index;
           s_state = AUDIO_EVENT_CLASS;
         }
-        else if (stable_score < AUDIO_EVENT_RELEASE_THRESHOLD)
+        else if (stable_score < release_threshold(s_stable_index))
         {
-          if (candidate_score >= AUDIO_EVENT_ENTER_THRESHOLD)
+          if (candidate_confirmed)
           {
             s_stable_index = candidate_index;
             s_state = AUDIO_EVENT_CLASS;
@@ -196,6 +246,11 @@ void AudioEventFilter_Update(const float *scores,
         }
       }
     }
+  }
+  else
+  {
+    /* Confirmation must consist of consecutive active audio windows. */
+    s_thunder_candidate_frames = 0U;
   }
 
   result->state = s_state;

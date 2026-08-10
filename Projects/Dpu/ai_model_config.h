@@ -28,12 +28,13 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 #define CTRL_AI_HW_SELECT                        STM32N6570-DK
-#define CTRL_X_CUBE_AI_MODEL_NAME                "YAMNet-256 Hazard-5 + Speech"
+#define CTRL_X_CUBE_AI_MODEL_NAME                "YAMNet-1024 Hazard-5 + Speech V3"
 #define CTRL_X_CUBE_AI_MODEL_NB_OUTPUT            (1U)
 #define CTRL_X_CUBE_AI_MODEL_OUTPUT_1             (CTRL_AI_CLASS_DISTRIBUTION)
 #define CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER         (6U)
 #define CTRL_X_CUBE_AI_MODEL_CLASS_LIST           {"dog_bark","glass_breaking","gunshot_gunfire","siren","speech","thunderstorm"}
 #define CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX    (4U)
+#define CTRL_X_CUBE_AI_MODEL_THUNDER_CLASS_INDEX   (5U)
 #define CTRL_X_CUBE_AI_SENSOR_TYPE               COM_TYPE_MIC
 #define CTRL_X_CUBE_AI_SENSOR_NAME               "imp34dt05"
 #define CTRL_X_CUBE_AI_SENSOR_ODR                (16000.0F)
@@ -42,6 +43,7 @@ extern "C" {
 #define CTRL_X_CUBE_AI_PREPROC                   (CTRL_AI_SPECTROGRAM_LOG_MEL)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_NMEL          (64U)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_COL           (96U)
+#define CTRL_X_CUBE_AI_SPECTROGRAM_TIME_MAJOR    (1U)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_HOP_LENGTH    (160U)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_NFFT          (512U) /* power of 2 closed to CTRL_X_CUBE_AI_WINDOW_LENGTH */
 #define CTRL_X_CUBE_AI_SPECTROGRAM_WINDOW_LENGTH (400U)

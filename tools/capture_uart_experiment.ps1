@@ -122,7 +122,7 @@ $header = @(
     "capture_source_git_commit=$sourceCommit",
     "playback_file=$resolvedPlaybackFile",
     "playback_delay_seconds=$PlaybackDelaySeconds",
-    "decision_filter=activity 4000; EMA alpha 0.65; enter 0.65; release 0.50; switch margin 0.08; speech guard 0.27",
+    "decision_filter=activity 4000; EMA alpha 0.65; general enter 0.65; general release 0.50; thunder evidence 0.32 in 2 consecutive active frames and top1 on confirmation; thunder release 0.25; switch margin 0.08; speech guard 0.27",
     "notes=$Notes",
     "--- UART ---"
 ) -join [Environment]::NewLine

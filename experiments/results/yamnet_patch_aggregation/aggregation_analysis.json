@@ -1,0 +1,14 @@
+{
+  "purpose": "diagnose score dilution for short transient events",
+  "sources": {
+    "YAMNet-256": "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\experiments\\results\\yamnet_patch_aggregation\\yamnet256\\patch_predictions.csv",
+    "YAMNet-1024": "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\experiments\\results\\yamnet_patch_aggregation\\yamnet1024\\patch_predictions.csv"
+  },
+  "aggregation_methods": [
+    "mean_all",
+    "mean_top_3",
+    "mean_top_2",
+    "maximum"
+  ],
+  "selection_status": "diagnostic only; no method selected on reserved test data"
+}

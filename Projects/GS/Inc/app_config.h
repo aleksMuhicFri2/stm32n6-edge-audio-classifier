@@ -77,6 +77,14 @@
 #define AUDIO_EVENT_SWITCH_MARGIN               (0.08F)
 #define AUDIO_EVENT_SILENCE_TO_WAIT_FRAMES      (2U)
 
+/* Board calibration on seven thunder playbacks and eight negative clips found
+ * that thunder needs a class-specific rule. Requiring evidence in two
+ * consecutive active frames permits a lower threshold without reacting to a
+ * one-frame spike. Thunder must still rank first on the confirmation frame. */
+#define AUDIO_EVENT_THUNDER_ENTER_THRESHOLD      (0.32F)
+#define AUDIO_EVENT_THUNDER_RELEASE_THRESHOLD    (0.25F)
+#define AUDIO_EVENT_THUNDER_CONFIRM_FRAMES       (2U)
+
 /* Development calibration uses speech as an asymmetric guard: it can suppress
  * a false hazard decision at a lower score, but it is informational and never
  * latches a danger alert. The model-specific index is in ai_model_config.h. */

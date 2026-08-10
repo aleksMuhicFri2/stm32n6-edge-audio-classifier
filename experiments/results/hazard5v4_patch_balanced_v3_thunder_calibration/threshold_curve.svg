@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="460" viewBox="0 0 900 460">
+<rect width="100%" height="100%" fill="white"/>
+<text x="450.0" y="22" text-anchor="middle" font-family="Arial" font-size="17">Thunder threshold calibration (two consecutive frames)</text>
+<line x1="75" y1="395.0" x2="875" y2="395.0" stroke="#dddddd"/>
+<text x="65" y="400.0" text-anchor="end" font-family="Arial" font-size="12">0.0</text>
+<line x1="75" y1="323.0" x2="875" y2="323.0" stroke="#dddddd"/>
+<text x="65" y="328.0" text-anchor="end" font-family="Arial" font-size="12">0.2</text>
+<line x1="75" y1="251.0" x2="875" y2="251.0" stroke="#dddddd"/>
+<text x="65" y="256.0" text-anchor="end" font-family="Arial" font-size="12">0.4</text>
+<line x1="75" y1="179.0" x2="875" y2="179.0" stroke="#dddddd"/>
+<text x="65" y="184.0" text-anchor="end" font-family="Arial" font-size="12">0.6</text>
+<line x1="75" y1="107.0" x2="875" y2="107.0" stroke="#dddddd"/>
+<text x="65" y="112.0" text-anchor="end" font-family="Arial" font-size="12">0.8</text>
+<line x1="75" y1="35.0" x2="875" y2="35.0" stroke="#dddddd"/>
+<text x="65" y="40.0" text-anchor="end" font-family="Arial" font-size="12">1.0</text>
+<line x1="75.0" y1="35" x2="75.0" y2="395" stroke="#eeeeee"/>
+<text x="75.0" y="417" text-anchor="middle" font-family="Arial" font-size="12">0.20</text>
+<line x1="252.8" y1="35" x2="252.8" y2="395" stroke="#eeeeee"/>
+<text x="252.8" y="417" text-anchor="middle" font-family="Arial" font-size="12">0.30</text>
+<line x1="430.6" y1="35" x2="430.6" y2="395" stroke="#eeeeee"/>
+<text x="430.6" y="417" text-anchor="middle" font-family="Arial" font-size="12">0.40</text>
+<line x1="608.3" y1="35" x2="608.3" y2="395" stroke="#eeeeee"/>
+<text x="608.3" y="417" text-anchor="middle" font-family="Arial" font-size="12">0.50</text>
+<line x1="786.1" y1="35" x2="786.1" y2="395" stroke="#eeeeee"/>
+<text x="786.1" y="417" text-anchor="middle" font-family="Arial" font-size="12">0.60</text>
+<line x1="875.0" y1="35" x2="875.0" y2="395" stroke="#eeeeee"/>
+<text x="875.0" y="417" text-anchor="middle" font-family="Arial" font-size="12">0.65</text>
+<polyline fill="none" stroke="#1565c0" stroke-width="3" points="75.0,35.0 92.8,35.0 110.6,35.0 128.3,35.0 146.1,35.0 163.9,35.0 181.7,35.0 199.4,35.0 217.2,35.0 235.0,35.0 252.8,35.0 270.6,35.0 288.3,35.0 306.1,86.4 323.9,86.4 341.7,86.4 359.4,137.9 377.2,137.9 395.0,189.3 412.8,189.3 430.6,189.3 448.3,189.3 466.1,189.3 483.9,189.3 501.7,189.3 519.4,189.3 537.2,189.3 555.0,189.3 572.8,189.3 590.6,240.7 608.3,240.7 626.1,240.7 643.9,240.7 661.7,240.7 679.4,240.7 697.2,240.7 715.0,240.7 732.8,343.6 750.6,343.6 768.3,343.6 786.1,343.6 803.9,343.6 821.7,343.6 839.4,395.0 857.2,395.0 875.0,395.0"/>
+<polyline fill="none" stroke="#c62828" stroke-width="3" points="75.0,395.0 92.8,395.0 110.6,395.0 128.3,395.0 146.1,395.0 163.9,395.0 181.7,395.0 199.4,395.0 217.2,395.0 235.0,395.0 252.8,395.0 270.6,395.0 288.3,395.0 306.1,395.0 323.9,395.0 341.7,395.0 359.4,395.0 377.2,395.0 395.0,395.0 412.8,395.0 430.6,395.0 448.3,395.0 466.1,395.0 483.9,395.0 501.7,395.0 519.4,395.0 537.2,395.0 555.0,395.0 572.8,395.0 590.6,395.0 608.3,395.0 626.1,395.0 643.9,395.0 661.7,395.0 679.4,395.0 697.2,395.0 715.0,395.0 732.8,395.0 750.6,395.0 768.3,395.0 786.1,395.0 803.9,395.0 821.7,395.0 839.4,395.0 857.2,395.0 875.0,395.0"/>
+<text x="450.0" y="445" text-anchor="middle" font-family="Arial" font-size="13">Threshold</text>
+<text x="18" y="230.0" text-anchor="middle" font-family="Arial" font-size="13" transform="rotate(-90 18 230.0)">Rate</text>
+<line x1="610" y1="50" x2="640" y2="50" stroke="#1565c0" stroke-width="3"/>
+<text x="650" y="55" font-family="Arial" font-size="12">Thunder detection rate</text>
+<line x1="610" y1="72" x2="640" y2="72" stroke="#c62828" stroke-width="3"/>
+<text x="650" y="77" font-family="Arial" font-size="12">Negative false-positive rate</text>
+</svg>

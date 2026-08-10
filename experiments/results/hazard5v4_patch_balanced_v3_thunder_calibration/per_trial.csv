@@ -1,0 +1,16 @@
+calibration_id,run_id,role,true_category,frames,active_frames,top1_thunder_frames,max_top1_thunder_score,max_logged_thunder_score,current_firmware_detected_thunder,mean_inference_ms,stimulus_sha256
+V3TC-001,RUN-20260810-234326,positive_thunder,thunderstorm,46,9,4,0.4182,0.4182,False,4.63,d576496f5f622eda07de1ce66bb011906bbd6873db04d89d3c57a90a7add40af
+V3TC-002,RUN-20260810-234356,positive_thunder,thunderstorm,20,5,4,0.7125,0.7125,True,4.63,d4a823cff54fee030081cc40ce1aaeecba13e8d9216528e7c2f0775844ab1644
+V3TC-003,RUN-20260810-234408,positive_thunder,thunderstorm,13,7,5,0.7666,0.7666,True,4.63,0cad512b810128293ecf15d406ceb979f3262a385d3c3b61ab513b54617a4aed
+V3TC-004,RUN-20260810-234421,positive_thunder,thunderstorm,13,7,3,0.5912,0.5912,False,4.63,7bc6eeeda2730865b171607c3e33fb58b3183233c7aceb8b1b09976630067b75
+V3TC-005,RUN-20260810-234434,positive_thunder,thunderstorm,13,4,4,0.8244,0.8244,True,4.2738,4ffa9157c155835c302baf1bd27bd7cbbff850ecce42307eff8649885cc61126
+V3TC-006,RUN-20260810-234452,negative_known_class,speech,18,4,0,0.0,0.0,False,4.63,7c7d84c219327ed755f02fe2b9c9e2a3b667029aee05e0e2c48f34823090f6c0
+V3TC-007,RUN-20260810-234504,negative_known_class,siren,11,5,0,0.0,0.0,False,4.63,14a5d6214ecefbf5dd78259521cb9c3c109bc95ca1c1ae135a35333c33f7e658
+V3TC-008,RUN-20260810-234515,negative_known_class,dog_bark,13,3,0,0.0,0.0,False,4.63,fca14e884860cb29df83d9194ae6b88f292658a19e352ccee716a5367544788f
+V3TC-009,RUN-20260810-234527,negative_known_class,glass_breaking,16,2,0,0.0,0.0,False,4.63,2b89c368ee9ac1240b6cfcdec0eeb344d9bb3ea4694bcd5b94acc626caf13611
+V3TC-010,RUN-20260810-234557,negative_known_class,gunshot_gunfire,29,6,0,0.0,0.1019,False,4.63,fb6a5cf46fd7d72b16c724321852cc0bc5210adbb29c3fcf69e1f443a1a69381
+V3TC-011,RUN-20260810-234611,negative_ambient,rain,12,0,0,0.0,0.0,False,4.63,dc3a0afed1e735da52920f42ef8fff8fab3490d2998603e970a574c1a0a75245
+V3TC-012,RUN-20260810-234623,negative_ambient,wind,13,0,0,0.0,0.0,False,4.63,30d1673fb747032d82cd68902c3ec686e4c578449ad0fa78248d939c545fdb7b
+V3TC-013,RUN-20260810-234635,negative_transient,door_wood_knock,12,1,0,0.0,0.0,False,4.63,333cb73d9123173a056fe7b2bdc3d49454c4221695898d05faae812d943e4e21
+V3TC-R01,RUN-20260810-233251,positive_thunder_repeat,thunderstorm,12,5,4,0.4391,0.4391,False,4.63,d4a823cff54fee030081cc40ce1aaeecba13e8d9216528e7c2f0775844ab1644
+V3TC-R02,RUN-20260810-235454,positive_thunder_repeat,thunderstorm,12,5,2,0.4048,0.4048,False,4.63,d4a823cff54fee030081cc40ce1aaeecba13e8d9216528e7c2f0775844ab1644

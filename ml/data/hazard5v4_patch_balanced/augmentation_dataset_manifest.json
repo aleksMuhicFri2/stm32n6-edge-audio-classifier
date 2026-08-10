@@ -1,0 +1,71 @@
+{
+  "experiment_id": "HAZARD5V4-PATCH-BALANCED-AUG-YAMNET1024-DEV-001",
+  "source_experiment": "HAZARD5V4-SHATTER-YAMNET1024-DEV-001",
+  "seed": 451,
+  "variants_per_transient_source": 6,
+  "augmented_audio_files": 2304,
+  "training_row_counts": {
+    "dog_bark": 384,
+    "glass_breaking": 1344,
+    "gunshot_gunfire": 1344,
+    "siren": 192,
+    "speech": 576,
+    "thunderstorm": 192
+  },
+  "source_training_rows_retained": 1152,
+  "validation_changed": false,
+  "quantization_manifest_changed": false,
+  "source_audio_files_modified": 0,
+  "background_policy": {
+    "dataset": "ESC-50",
+    "folds": [
+      1,
+      2,
+      3
+    ],
+    "categories": [
+      "breathing",
+      "clock_tick",
+      "keyboard_typing",
+      "sea_waves",
+      "washing_machine"
+    ],
+    "candidate_files": 120,
+    "signal_to_noise_range_db": [
+      10.0,
+      25.0
+    ]
+  },
+  "copy_modes": {
+    "hardlink": 1430
+  },
+  "manifest_hashes": {
+    "hazard6_train.csv": "ef5cfe599fb7050d1b733cc199017c352a5c630e2f24b22592c93bd6294b6c7b",
+    "hazard6_validation.csv": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983",
+    "hazard6_development_test.csv": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983",
+    "hazard6_quantization.csv": "f46c2e8817178bb5b198f27c799100417f0eea0cf9c7537da3164a2cbb6d1a23"
+  },
+  "augmentation_manifest_sha256": "23e382bc3163966333c3fceca0fd1d6ca2e7c3bde0cc89a0cb27b2f11e159362",
+  "listening_review": {
+    "review_clips": 18,
+    "clips_per_class": {
+      "gunshot_gunfire": 9,
+      "glass_breaking": 9
+    },
+    "transform_counts": {
+      "position_filter_background": 2,
+      "position_compression_background": 2,
+      "position_only": 6,
+      "position_gain": 3,
+      "position_gain_background": 3,
+      "position_speed_gain": 2
+    }
+  },
+  "notes": [
+    "Original refined-Shatter training recordings remain in the manifest.",
+    "Augmentations are training-only and inherit their source group.",
+    "ESC-50 background folds 4 and 5 are not used.",
+    "Peak protection attenuates the complete mixture and never hard-clips it.",
+    "Exact ST patch balance must be audited before training."
+  ]
+}

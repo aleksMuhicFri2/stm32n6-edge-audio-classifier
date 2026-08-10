@@ -1,0 +1,42 @@
+{
+  "experiment_id": "HAZARD5V4-PATCH-BALANCED-AUG-V2-ANALYSIS-001",
+  "shared_test_manifest_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983",
+  "same_test_clips": true,
+  "variants": [
+    {
+      "variant": "refined_shatter",
+      "display_label": "Refined Shatter baseline",
+      "correct_clips": 246,
+      "test_clips": 278,
+      "clip_accuracy": 0.8848920863309353,
+      "macro_recall": 0.9012345679012346,
+      "macro_f1": 0.8732502793156999,
+      "glass_recall": "0.8333333333333334",
+      "gunshot_recall": "0.9074074074074074",
+      "model_sha256": "532f288de137483e652fd3fe94096d720970594f922560a4f347b77eedf1ad72",
+      "test_csv_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983"
+    },
+    {
+      "variant": "patch_balanced_v2",
+      "display_label": "Patch-balanced V2",
+      "correct_clips": 246,
+      "test_clips": 278,
+      "clip_accuracy": 0.8848920863309353,
+      "macro_recall": 0.8966049382716049,
+      "macro_f1": 0.8733477698607021,
+      "glass_recall": "0.7833333333333333",
+      "gunshot_recall": "0.9629629629629629",
+      "model_sha256": "a6edaf838608b28583106abf79aa4c1209e181008e6914332a227e4d3441ddbf",
+      "test_csv_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983"
+    }
+  ],
+  "candidate_minus_baseline_percentage_points": {
+    "clip_accuracy": 0.0,
+    "macro_recall": -0.462962962962965,
+    "macro_f1": 0.00974905450021879,
+    "glass_recall": -5.000000000000004,
+    "gunshot_recall": 5.5555555555555465
+  },
+  "selection": "not_deployed_pending_tradeoff_decision",
+  "conclusion": "Patch-balanced V2 improves gunshot recall but reduces glass recall. Overall correct clips are unchanged, so it is not an unconditional replacement for the refined-Shatter baseline."
+}

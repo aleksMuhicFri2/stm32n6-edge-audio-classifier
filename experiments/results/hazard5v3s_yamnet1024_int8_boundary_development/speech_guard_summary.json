@@ -1,0 +1,45 @@
+{
+  "policy": "if score_speech >= threshold: speech; otherwise argmax over the five hazards",
+  "selection_rule": "maximum hazard macro recall, then maximum threshold, among candidates passing every gate",
+  "classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "development_predictions": "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\experiments\\results\\hazard5v3s_yamnet1024_int8_boundary_development\\clip_predictions.csv",
+  "validation_clips": 278,
+  "gates": {
+    "minimum_speech_recall": 0.8,
+    "minimum_hazard_macro_recall": 0.85,
+    "maximum_hazard_macro_recall_loss": 0.04,
+    "baseline_five_class_hazard_macro_recall": 0.8881481481
+  },
+  "passing_threshold_count": 22,
+  "selected": {
+    "threshold": 0.41,
+    "speech_recall": 0.8333333333333334,
+    "hazard_macro_recall": 0.8955555555555555,
+    "hazard_macro_recall_loss": -0.00740740745555557,
+    "hazard_accuracy": 0.8779527559055118,
+    "hazard_false_speech_rate": 0.011811023622047244,
+    "speech_correct": 20,
+    "speech_total": 24,
+    "hazard_correct": 223,
+    "hazard_total": 254,
+    "hazards_suppressed_as_speech": 3,
+    "passes_speech_gate": true,
+    "passes_hazard_gate": true,
+    "passes_loss_gate": true,
+    "passes_all_gates": true,
+    "recall_dog_bark": 0.8,
+    "recall_glass_breaking": 0.7666666666666667,
+    "recall_gunshot_gunfire": 0.9444444444444444,
+    "recall_siren": 1.0,
+    "recall_thunderstorm": 0.9666666666666667,
+    "recall_speech": 0.8333333333333334
+  },
+  "reserved_test_status": "untouched; calibration uses development validation predictions only"
+}

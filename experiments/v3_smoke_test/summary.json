@@ -1,0 +1,50 @@
+{
+  "experiment_id": "HAZARD5V4-PATCH-BALANCED-V3-PHYSICAL-SMOKE-001",
+  "date": "2026-08-10",
+  "purpose": "Post-deployment functional smoke test only; not a final accuracy estimate.",
+  "model": "YAMNet-1024 Hazard-5 + Speech V3",
+  "conditions": {
+    "windows_volume_percent": 70,
+    "speaker_distance_cm": 30,
+    "idle_false_alert_observed": false
+  },
+  "main_display": {
+    "tested_classes": 6,
+    "correct_classes": 5,
+    "functional_pass_rate": 0.8333333333333334,
+    "results": [
+      {"class": "speech", "correct": true, "confidence_percent": 99},
+      {"class": "siren", "correct": true, "confidence_percent": 100},
+      {"class": "dog_bark", "correct": true, "confidence_percent": 77},
+      {"class": "glass_breaking", "correct": true, "confidence_percent": 98, "note": "Raw response included the percentage in the label field; interpreted from the preserved response as a correct detection."},
+      {"class": "gunshot_gunfire", "correct": true, "confidence_percent": 74},
+      {"class": "thunderstorm", "correct": false, "confidence_percent": null}
+    ]
+  },
+  "thunderstorm_uart_diagnostic": {
+    "run_id": "RUN-20260810-233251",
+    "frames_observed": 12,
+    "active_frames": 5,
+    "thunderstorm_top1_frames": 4,
+    "maximum_smoothed_thunderstorm_score": 0.4391,
+    "enter_threshold": 0.65,
+    "maximum_spectrogram_sum": 18240.0,
+    "audio_activity_gate_passed": true,
+    "target_decision_emitted": false,
+    "diagnosis": "The model ranked thunderstorm first on four consecutive active frames, but the class-independent decision threshold suppressed it. The final active frame was classified as speech through the legacy speech guard."
+  },
+  "host_preflight": {
+    "correct_clips": 6,
+    "tested_clips": 6,
+    "thunderstorm_clip_score": 0.9404844641685486
+  },
+  "calibration_follow_up": {
+    "status": "resolved",
+    "rule": "Thunder evidence at or above 0.32 in two consecutive active frames, with thunder top-ranked on the confirmation frame and a 0.25 release threshold.",
+    "post_calibration_smoke_result": "six_of_six_classes_detected",
+    "false_thunder_decisions_on_non_thunder_trials": 0,
+    "evidence": "experiments/results/hazard5v4_patch_balanced_v3_thunder_calibration/post_calibration_functional_smoke.json"
+  },
+  "status": "completed_issue_resolved_by_calibration",
+  "next_action": "Freeze the calibrated firmware and run the reserved final evaluation without tuning on final data."
+}

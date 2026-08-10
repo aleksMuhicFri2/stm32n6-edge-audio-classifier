@@ -1,0 +1,65 @@
+{
+  "experiment_id": "HAZARD5V4-SHATTER-YAMNET1024-DEV-001",
+  "purpose": "Correct the glass-breaking taxonomy by replacing broad FSD50K Glass records with explicit AudioSet Shatter records.",
+  "seed": 431,
+  "classes_in_expected_model_output_order": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "class_counts": {
+    "train": {
+      "dog_bark": 192,
+      "glass_breaking": 192,
+      "gunshot_gunfire": 192,
+      "siren": 192,
+      "speech": 192,
+      "thunderstorm": 192
+    },
+    "validation": {
+      "dog_bark": 60,
+      "glass_breaking": 60,
+      "gunshot_gunfire": 54,
+      "siren": 20,
+      "speech": 24,
+      "thunderstorm": 60
+    }
+  },
+  "glass_sources": {
+    "training_ESC50": 24,
+    "training_FSD50K_Shatter": 168,
+    "validation_ESC50": 8,
+    "validation_FSD50K_Shatter": 52,
+    "available_FSD50K_Shatter_training": 350,
+    "available_FSD50K_Shatter_validation": 64,
+    "training_uploaders_selected": 47,
+    "validation_uploaders_selected": 52,
+    "uploader_overlap_between_splits": 0
+  },
+  "reserved_test_clips_used": 0,
+  "esc50_reserved_fold": 5,
+  "fsd50k_evaluation_used": false,
+  "development_test_is_validation_alias": true,
+  "source_audio_files_modified": 0,
+  "copy_modes": {
+    "hardlink": 1430
+  },
+  "manifest_hashes": {
+    "hazard6_train.csv": "a80797e7439d040a2da67591c7aea99d2a7fce87b7cfd4efa937aa5e523c15b0",
+    "hazard6_validation.csv": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983",
+    "hazard6_development_test.csv": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983",
+    "hazard6_quantization.csv": "f46c2e8817178bb5b198f27c799100417f0eea0cf9c7537da3164a2cbb6d1a23"
+  },
+  "provenance_sha256": "1b3c6e398ae418eb2c2c8b41fdb6ed0525e92a4329d9ac086db4d328965dae45",
+  "catalog_sha256": "f110902d1be4e376ffc3dbda1eae2c88f616158d92a1968f150b132b8c8320a0",
+  "notes": [
+    "Non-glass classes are unchanged from Hazard-5 V3S.",
+    "The explicit ESC-50 glass-breaking recordings are retained.",
+    "FSD50K Shatter training and validation use their official development roles.",
+    "FSD50K uploader identities are disjoint between training and validation.",
+    "Round-robin uploader sampling limits domination by one recording collection."
+  ]
+}

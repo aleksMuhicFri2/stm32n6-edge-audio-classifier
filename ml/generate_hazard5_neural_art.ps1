@@ -1,7 +1,10 @@
 param(
     [string]$STEdgeAI = 'C:\ST\STEdgeAI\4.0\Utilities\windows\stedgeai.exe',
     [string]$Model = 'ml\models\hazard5_yamnet256_int8.tflite',
-    [string]$RunName = 'hazard5'
+    [string]$RunName = 'hazard5',
+    [ValidateSet('', 'float32', 'int8', 'uint8')]
+    [string]$InputDataType = '',
+    [string]$CutInputTensor = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -36,14 +39,23 @@ $generationOutput = Join-Path $runRoot 'gen-output'
 
 Push-Location $runRoot
 try {
-    & $STEdgeAI generate `
-        -m $model `
-        --target stm32n6 `
-        --st-neural-art 'default@user_neural_art.json' `
-        --workspace $generationWorkspace `
-        --output $generationOutput `
-        --with-report `
-        --verbosity 1
+    $arguments = @(
+        'generate',
+        '-m', $model,
+        '--target', 'stm32n6',
+        '--st-neural-art', 'default@user_neural_art.json',
+        '--workspace', $generationWorkspace,
+        '--output', $generationOutput,
+        '--with-report',
+        '--verbosity', '1'
+    )
+    if ($InputDataType) {
+        $arguments += @('--input-data-type', $InputDataType)
+    }
+    if ($CutInputTensor) {
+        $arguments += @('--cut-input-tensors', $CutInputTensor)
+    }
+    & $STEdgeAI @arguments
     if ($LASTEXITCODE -ne 0) {
         throw "STEdgeAI Neural-ART generation failed with exit code $LASTEXITCODE"
     }

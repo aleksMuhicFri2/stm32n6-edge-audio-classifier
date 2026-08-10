@@ -1,0 +1,44 @@
+{
+  "experiment_id": "HAZARD5V3S-YAMNET1024-ON-SHATTER-DEV-001",
+  "model_architecture": "YAMNet-1024 frozen backbone with original six-output trained head",
+  "classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "test_protocol": "Original broad-Glass model evaluated on corrected Shatter development split",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 278,
+  "correct_clips": 243,
+  "incorrect_clips": 35,
+  "clip_accuracy": 0.8741007194244604,
+  "patches": 1855,
+  "correct_patches": 1449,
+  "patch_accuracy": 0.7811320754716982,
+  "macro_precision": 0.868629237154591,
+  "macro_recall": 0.8893518518518518,
+  "macro_f1": 0.8695646826846449,
+  "model_bytes": 3462018,
+  "model_sha256": "01590e4367359dfb8f3420ce246d79682fe211e452327af37683805a7b80c762",
+  "test_csv_sha256": "c386698c12c5a7599d4e99822cd659c878cd495b698f76c2765e4b6e47592983",
+  "model_format": "ONNX QDQ with int8 boundary",
+  "input_shape": [
+    "unk__0",
+    1,
+    96,
+    64
+  ],
+  "input_dtype": "tensor(int8)",
+  "input_scale": 0.03455062583088875,
+  "input_zero_point": 55,
+  "input_layout": "nchw_time_mel",
+  "output_shape": [
+    "unk__302",
+    6
+  ],
+  "output_dtype": "tensor(float)",
+  "tensorflow_version": "2.18.0"
+}

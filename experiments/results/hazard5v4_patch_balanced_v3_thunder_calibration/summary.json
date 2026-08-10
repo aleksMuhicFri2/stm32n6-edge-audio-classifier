@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-08-11T00:04:46.991750+02:00",
+  "status": "preliminary_calibration_complete",
+  "model": "YAMNet-1024 Hazard-5 + Speech V3 int8",
+  "purpose": "board decision calibration only; not final accuracy evaluation",
+  "captured_trials": 15,
+  "unique_stimuli": 13,
+  "positive_thunder_trials": 7,
+  "negative_trials": 8,
+  "selected_enter_threshold": 0.32,
+  "selected_confirmation_frames": 2,
+  "observed_positive_detection_rate": 1.0,
+  "observed_negative_false_positive_rate": 0.0,
+  "selection_rule": "Highest threshold with thunder evidence in two consecutive active frames, thunder ranked first on the confirmation frame, zero observed negative false positives, and 100% positive detection including both repeated playbacks.",
+  "limitations": [
+    "Small, intentionally non-final calibration set.",
+    "Playback through one speaker at 70 percent Windows volume and about 30 centimetres.",
+    "Threshold selection must be followed by a separate smoke test before final evaluation."
+  ]
+}

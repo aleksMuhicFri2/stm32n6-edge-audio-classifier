@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Evaluate a project TFLite audio classifier at patch and clip level.
+"""Evaluate a project TFLite or ONNX audio classifier at patch and clip level.
 
 This script deliberately reproduces ST's audio preprocessing and clip
 aggregation rules, while preserving the individual predictions needed for
@@ -102,42 +102,139 @@ def main() -> None:
         return_arrays=True,
     )
 
-    interpreter = tf.lite.Interpreter(model_path=str(args.model))
-    input_details = interpreter.get_input_details()[0]
-    output_details = interpreter.get_output_details()[0]
-    if input_details["dtype"] != np.int8:
-        raise TypeError(f"Expected int8 input, got {input_details['dtype']}")
-    if list(input_details["shape_signature"][1:]) != [64, 96, 1]:
-        raise ValueError(
-            f"Expected input shape [batch, 64, 96, 1], got "
-            f"{input_details['shape_signature'].tolist()}"
-        )
-    if list(output_details["shape_signature"][1:]) != [len(class_names)]:
-        raise ValueError(
-            f"Expected {len(class_names)} outputs, got {output_details['shape_signature'].tolist()}"
-        )
-
-    input_scale, input_zero_point = input_details["quantization"]
     batch_scores: list[np.ndarray] = []
-    for start in range(0, len(patches), args.batch_size):
-        batch = patches[start : start + args.batch_size]
-        quantized = np.clip(
-            np.round(batch / input_scale + input_zero_point),
-            np.iinfo(np.int8).min,
-            np.iinfo(np.int8).max,
-        ).astype(np.int8)
-        interpreter.resize_tensor_input(
-            input_details["index"], [len(batch), 64, 96, 1]
+    input_scale: float | None = None
+    input_zero_point: int | None = None
+    input_layout = "nhwc_mel_time"
+    if args.model.suffix.lower() == ".tflite":
+        interpreter = tf.lite.Interpreter(model_path=str(args.model))
+        input_details = interpreter.get_input_details()[0]
+        output_details = interpreter.get_output_details()[0]
+        if input_details["dtype"] != np.int8:
+            raise TypeError(f"Expected int8 input, got {input_details['dtype']}")
+        if list(input_details["shape_signature"][1:]) != [64, 96, 1]:
+            raise ValueError(
+                f"Expected input shape [batch, 64, 96, 1], got "
+                f"{input_details['shape_signature'].tolist()}"
+            )
+        if list(output_details["shape_signature"][1:]) != [len(class_names)]:
+            raise ValueError(
+                f"Expected {len(class_names)} outputs, got {output_details['shape_signature'].tolist()}"
+            )
+
+        input_scale, input_zero_point = input_details["quantization"]
+        for start in range(0, len(patches), args.batch_size):
+            batch = patches[start : start + args.batch_size]
+            quantized = np.clip(
+                np.round(batch / input_scale + input_zero_point),
+                np.iinfo(np.int8).min,
+                np.iinfo(np.int8).max,
+            ).astype(np.int8)
+            interpreter.resize_tensor_input(
+                input_details["index"], [len(batch), 64, 96, 1]
+            )
+            interpreter.allocate_tensors()
+            interpreter.set_tensor(input_details["index"], quantized)
+            interpreter.invoke()
+            batch_scores.append(interpreter.get_tensor(output_details["index"]).copy())
+
+        model_format = "TensorFlow Lite"
+        input_shape = input_details["shape_signature"].tolist()
+        input_dtype = str(input_details["dtype"].__name__)
+        output_shape = output_details["shape_signature"].tolist()
+        output_dtype = str(output_details["dtype"].__name__)
+    elif args.model.suffix.lower() == ".onnx":
+        import onnx
+        import onnxruntime as ort
+
+        session = ort.InferenceSession(str(args.model), providers=["CPUExecutionProvider"])
+        input_details = session.get_inputs()[0]
+        output_details = session.get_outputs()[0]
+        onnx_model = onnx.load(args.model, load_external_data=False)
+        metadata = {item.key: item.value for item in onnx_model.metadata_props}
+        input_layout = metadata.get("external_input_layout", "nhwc_mel_time")
+        expected_shape = (
+            [1, 96, 64]
+            if input_layout == "nchw_time_mel"
+            else [64, 96, 1]
         )
-        interpreter.allocate_tensors()
-        interpreter.set_tensor(input_details["index"], quantized)
-        interpreter.invoke()
-        batch_scores.append(interpreter.get_tensor(output_details["index"]).copy())
+        if list(input_details.shape[1:]) != expected_shape:
+            raise ValueError(
+                f"Expected input shape [batch, {', '.join(map(str, expected_shape))}], "
+                f"got {input_details.shape}"
+            )
+        if list(output_details.shape[1:]) != [len(class_names)]:
+            raise ValueError(
+                f"Expected {len(class_names)} outputs, got {output_details.shape}"
+            )
+
+        onnx_input_scale: float | None = None
+        onnx_input_zero_point: int | None = None
+        if input_details.type == "tensor(int8)":
+            try:
+                onnx_input_scale = float(metadata["input_quant_scale"])
+                onnx_input_zero_point = int(metadata["input_quant_zero_point"])
+            except KeyError as error:
+                raise ValueError(
+                    "Int8 ONNX input is missing input quantization metadata"
+                ) from error
+            input_scale = onnx_input_scale
+            input_zero_point = onnx_input_zero_point
+        elif input_details.type != "tensor(float)":
+            raise TypeError(f"Unsupported ONNX input type: {input_details.type}")
+
+        static_batch = input_details.shape[0] if isinstance(input_details.shape[0], int) else None
+        inference_batch_size = static_batch or args.batch_size
+        for start in range(0, len(patches), inference_batch_size):
+            batch = patches[start : start + inference_batch_size].astype(np.float32)
+            if input_layout == "nchw_time_mel":
+                batch = np.transpose(batch, (0, 2, 1, 3)).reshape(
+                    len(batch), 1, 96, 64
+                )
+            if onnx_input_scale is not None and onnx_input_zero_point is not None:
+                batch = np.clip(
+                    np.round(batch / onnx_input_scale + onnx_input_zero_point),
+                    np.iinfo(np.int8).min,
+                    np.iinfo(np.int8).max,
+                ).astype(np.int8)
+            if static_batch and len(batch) != static_batch:
+                pad_count = static_batch - len(batch)
+                batch = np.concatenate(
+                    [batch, np.repeat(batch[-1:], pad_count, axis=0)], axis=0
+                )
+                scores = session.run(
+                    [output_details.name], {input_details.name: batch}
+                )[0][:-pad_count]
+            else:
+                scores = session.run(
+                    [output_details.name], {input_details.name: batch}
+                )[0]
+            batch_scores.append(np.asarray(scores))
+
+        model_format = (
+            "ONNX QDQ with int8 boundary"
+            if input_details.type == "tensor(int8)"
+            else "ONNX QDQ"
+        )
+        input_shape = list(input_details.shape)
+        input_dtype = input_details.type
+        output_shape = list(output_details.shape)
+        output_dtype = output_details.type
+    else:
+        raise ValueError("Model must have a .tflite or .onnx extension")
 
     patch_scores = np.concatenate(batch_scores, axis=0)
     patch_truth = np.argmax(patch_truth_one_hot, axis=1)
     patch_predictions = np.argmax(patch_scores, axis=1)
     patch_accuracy = accuracy_score(patch_truth, patch_predictions)
+    patch_precision, patch_recall, patch_f1, patch_support = (
+        precision_recall_fscore_support(
+            patch_truth,
+            patch_predictions,
+            labels=list(range(len(class_names))),
+            zero_division=0,
+        )
+    )
 
     clip_rows: list[list[object]] = []
     clip_truth: list[int] = []
@@ -186,6 +283,30 @@ def main() -> None:
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     write_csv(
+        args.output_dir / "patch_predictions.csv",
+        [
+            "patch_id",
+            "clip_id",
+            "filename",
+            "actual_class",
+            "predicted_class",
+            "correct",
+            *[f"score_{class_name}" for class_name in class_names],
+        ],
+        [
+            [
+                patch_id,
+                int(clip_id),
+                test_df.iloc[int(clip_id)]["filename"],
+                class_names[int(patch_truth[patch_id])],
+                class_names[int(patch_predictions[patch_id])],
+                int(patch_truth[patch_id] == patch_predictions[patch_id]),
+                *[float(score) for score in patch_scores[patch_id]],
+            ]
+            for patch_id, clip_id in enumerate(clip_ids)
+        ],
+    )
+    write_csv(
         args.output_dir / "clip_predictions.csv",
         [
             "clip_id",
@@ -226,6 +347,25 @@ def main() -> None:
             for index, class_name in enumerate(class_names)
         ],
     )
+    write_csv(
+        args.output_dir / "per_class_patch_metrics.csv",
+        ["class_name", "precision", "recall", "f1_score", "support", "correct"],
+        [
+            [
+                class_name,
+                float(patch_precision[index]),
+                float(patch_recall[index]),
+                float(patch_f1[index]),
+                int(patch_support[index]),
+                int(
+                    np.sum(
+                        (patch_truth == index) & (patch_predictions == index)
+                    )
+                ),
+            ]
+            for index, class_name in enumerate(class_names)
+        ],
+    )
 
     summary = {
         "experiment_id": args.experiment_id,
@@ -246,12 +386,14 @@ def main() -> None:
         "model_bytes": args.model.stat().st_size,
         "model_sha256": sha256(args.model),
         "test_csv_sha256": sha256(args.test_csv),
-        "input_shape": input_details["shape_signature"].tolist(),
-        "input_dtype": str(input_details["dtype"].__name__),
-        "input_scale": float(input_scale),
-        "input_zero_point": int(input_zero_point),
-        "output_shape": output_details["shape_signature"].tolist(),
-        "output_dtype": str(output_details["dtype"].__name__),
+        "model_format": model_format,
+        "input_shape": input_shape,
+        "input_dtype": input_dtype,
+        "input_scale": None if input_scale is None else float(input_scale),
+        "input_zero_point": input_zero_point,
+        "input_layout": input_layout,
+        "output_shape": output_shape,
+        "output_dtype": output_dtype,
         "tensorflow_version": tf.__version__,
     }
     (args.output_dir / "summary.json").write_text(

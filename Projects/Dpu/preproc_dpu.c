@@ -136,9 +136,13 @@ int PreProc_DPU(AudioPreProcCtx_t * pxCtx, uint8_t *pDataIn, int8_t *p_spectro)
   {
 	p_in = (int16_t *)pDataIn + CTRL_X_CUBE_AI_SPECTROGRAM_HOP_LENGTH * i;
 	LogMelSpectrogramColumn(&pxCtx->S_LogMelSpectr, p_in,out,pxCtx->output_Q_offset,pxCtx->output_Q_inv_scale);
-	/* transpose */
+	/* The direct NCHW YAMNet-1024 input is flattened as [time][mel]. */
 	for (uint32_t j=0 ; j < pxCtx->S_MelFilter.NumMels ; j++ ){
+	#if (CTRL_X_CUBE_AI_SPECTROGRAM_TIME_MAJOR == 1U)
+	  p_spectro[i*CTRL_X_CUBE_AI_SPECTROGRAM_NMEL+j]= out[j];
+	#else
 	  p_spectro[i+CTRL_X_CUBE_AI_SPECTROGRAM_COL*j]= out[j];
+	#endif
 	}
   }
   mcu_cache_clean_invalidate_range((uint32_t)p_spectro, (uint32_t)(p_spectro+

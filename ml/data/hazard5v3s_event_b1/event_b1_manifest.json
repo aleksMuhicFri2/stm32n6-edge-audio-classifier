@@ -1,0 +1,68 @@
+{
+  "experiment_id": "HAZARD5V3S-YAMNET1024-EVENT-B1-DEV-001",
+  "variant": "B1 event-aware training",
+  "source_experiment": "HAZARD5V3S-YAMNET1024-DEV-001",
+  "algorithm_version": "energy-spectral-flux-v1",
+  "seed": 421,
+  "window_seconds": 1.0,
+  "derived_training_files": 384,
+  "derived_class_counts": {
+    "glass_breaking": 192,
+    "gunshot_gunfire": 192
+  },
+  "byte_identical_or_copied_files": 1046,
+  "copy_modes": {
+    "hardlink": 1046
+  },
+  "source_audio_files_modified": 0,
+  "validation_audio_derived": 0,
+  "development_split_changed": false,
+  "training_row_counts_changed": false,
+  "amplitude_normalization_applied": false,
+  "manifest_hashes": {
+    "hazard6_train.csv": "41db3a4f16e16a4a26963797f1d57b081be7522490679af71afc78d4e543cd18",
+    "hazard6_validation.csv": "be6c4aad7375d4083bd8553e8b14ce234fa553596d5d038d987ae0f4f793fe27",
+    "hazard6_development_test.csv": "be6c4aad7375d4083bd8553e8b14ce234fa553596d5d038d987ae0f4f793fe27",
+    "hazard6_quantization.csv": "fc0f163b8ba5c736aa73fbc0430ab36eb02020bdec1d82919ec19be8cf56fbf3"
+  },
+  "event_windows_sha256": "6e4545ec5a7171255146ef59f0810e1b39c0f266faba42cec485b27d27dd7535",
+  "provenance_sha256": "47f682ca9d1cbbebcc1423ca800421253d6bc7b5962231e7cda27b284baaf58b",
+  "urbansound8k_audit": {
+    "gunshot_clips": 374,
+    "gunshot_unique_sources": 117,
+    "relationship_clip_counts": {
+      "current_training_source": 69,
+      "current_validation_source": 6,
+      "new_source": 299
+    },
+    "eligible_b2_clips": 255,
+    "eligible_b2_unique_sources": 66,
+    "policy": "B2 may use only folds 1-8 whose Freesound source identifier is absent from the current training and validation sources.",
+    "dataset_license": "Creative Commons Attribution-NonCommercial 3.0"
+  },
+  "listening_review": {
+    "review_clips": 30,
+    "clips_per_class": {
+      "gunshot_gunfire": 15,
+      "glass_breaking": 15
+    },
+    "clips_per_score_stratum": {
+      "low": 10,
+      "middle": 10,
+      "high": 10
+    },
+    "selection_seed": 422,
+    "review_gate": {
+      "minimum_valid_event_rate_overall": 0.9,
+      "minimum_valid_event_rate_per_class": 0.85,
+      "maximum_truncated_event_rate": 0.1
+    }
+  },
+  "notes": [
+    "Only gunshot/gunfire and glass-breaking training waveforms are derived.",
+    "Every current training row is retained exactly once, preserving class balance.",
+    "Validation and development-test manifests remain unchanged.",
+    "UrbanSound8K is audited here but is not added until the separate B2 experiment.",
+    "All derivatives retain the split of their original source recording."
+  ]
+}

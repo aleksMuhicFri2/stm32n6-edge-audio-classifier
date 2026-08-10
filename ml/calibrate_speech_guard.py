@@ -41,6 +41,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--min-speech-recall", type=float, default=0.80)
     parser.add_argument("--min-hazard-macro-recall", type=float, default=0.85)
     parser.add_argument("--max-hazard-recall-loss", type=float, default=0.04)
+    parser.add_argument(
+        "--reserved-test-status",
+        default="untouched; calibration uses development validation predictions only",
+    )
     return parser.parse_args()
 
 
@@ -153,7 +157,7 @@ def main() -> None:
         },
         "passing_threshold_count": len(passing),
         "selected": selected,
-        "reserved_test_status": "untouched; calibration uses development validation predictions only",
+        "reserved_test_status": args.reserved_test_status,
     }
     summary_path = args.output_dir / "speech_guard_summary.json"
     summary_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
