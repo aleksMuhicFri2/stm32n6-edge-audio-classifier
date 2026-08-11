@@ -75,6 +75,10 @@ def dominant_output(frames: pd.DataFrame) -> str:
     return sorted(counts, key=lambda value: (counts[value], peaks[value]), reverse=True)[0]
 
 
+def sl_number(value: float, digits: int = 1) -> str:
+    return f"{value:.{digits}f}".replace(".", ",")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--validate-only", action="store_true")
@@ -123,10 +127,19 @@ def main() -> None:
     frames = pd.read_csv(frames_path)
     frames["audio_active"] = as_bool(frames["audio_active"])
     trial_rows: list[dict[str, object]] = []
+    timing_parts: list[pd.DataFrame] = []
     for row in joined_runs.itertuples(index=False):
         trial_frames = frames.loc[frames["run_id"] == row.run_id].copy()
         if trial_frames.empty:
             raise RuntimeError(f"No frames for {row.trial_id}")
+        for column in ("inference_ms", "preprocess_ms", "postprocess_ms"):
+            trial_frames[column] = pd.to_numeric(trial_frames[column], errors="coerce")
+        timed_frames = trial_frames.dropna(
+            subset=["inference_ms", "preprocess_ms", "postprocess_ms"]
+        )
+        if timed_frames.empty:
+            raise RuntimeError(f"No complete timing records for {row.trial_id}")
+        timing_parts.append(timed_frames)
         active = trial_frames.loc[trial_frames["audio_active"]]
         scoring = active if not active.empty else trial_frames
         expected = str(row.expected_class_x)
@@ -164,9 +177,10 @@ def main() -> None:
                 "false_hazard": false_hazard,
                 "active_frames": int(len(active)),
                 "frames": int(len(trial_frames)),
-                "inference_ms_mean": float(row.inference_ms_mean),
-                "preprocess_ms_mean": float(row.preprocess_ms_mean),
-                "postprocess_ms_mean": float(row.postprocess_ms_mean),
+                "timed_frames": int(len(timed_frames)),
+                "inference_ms_mean": float(timed_frames["inference_ms"].mean()),
+                "preprocess_ms_mean": float(timed_frames["preprocess_ms"].mean()),
+                "postprocess_ms_mean": float(timed_frames["postprocess_ms"].mean()),
             }
         )
 
@@ -193,6 +207,7 @@ def main() -> None:
     nominal = trial_results.loc[trial_results["attenuation_db"] == 0]
     positives = trial_results.loc[trial_results["test_type"] == "positive"]
     negatives = trial_results.loc[trial_results["test_type"] == "ood"]
+    complete_timing = pd.concat(timing_parts, ignore_index=True)
     summary = {
         "evaluation_id": EVALUATION_ID,
         "attempt_id": ATTEMPT_ID,
@@ -209,9 +224,14 @@ def main() -> None:
         "safe_negative_trials": int(len(negatives)),
         "false_hazard_trials": int(negatives["false_hazard"].sum()),
         "false_hazard_trial_rate": float(negatives["false_hazard"].mean()),
-        "mean_inference_ms": float(trial_results["inference_ms_mean"].mean()),
-        "mean_preprocess_ms": float(trial_results["preprocess_ms_mean"].mean()),
-        "mean_postprocess_ms": float(trial_results["postprocess_ms_mean"].mean()),
+        "decision_frames": int(trial_results["frames"].sum()),
+        "complete_timing_frames": int(len(complete_timing)),
+        "timing_completeness_rate": float(
+            len(complete_timing) / trial_results["frames"].sum()
+        ),
+        "mean_inference_ms": float(complete_timing["inference_ms"].mean()),
+        "mean_preprocess_ms": float(complete_timing["preprocess_ms"].mean()),
+        "mean_postprocess_ms": float(complete_timing["postprocess_ms"].mean()),
         "manifest_sha256": info["manifest_sha256"],
         "model_sha256": info["model"]["sha256"],
         "signed_firmware_sha256": info["firmware"]["signed_binary_sha256"],
@@ -276,6 +296,82 @@ def main() -> None:
     figure.tight_layout()
     figure.savefig(result_root / "trial_matrix.png", dpi=180)
     plt.close(figure)
+
+    failed = trial_results.loc[~trial_results["passed"]]
+    failed_lines = []
+    for row in failed.itertuples(index=False):
+        if int(row.active_frames) == 0:
+            explanation = (
+                "noben blok ni presegel vhodnega praga aktivnosti, zato modelskega "
+                "izhoda odločitveni filter ni smel potrditi"
+            )
+        elif row.true_category == "thunderstorm":
+            explanation = (
+                "nevihta je bila med aktivnimi bloki večkrat najvišje ocenjena, "
+                "vendar ni izpolnila zahteve dveh zaporednih dokaznih blokov z "
+                "nevihto na prvem mestu ob potrditvi"
+            )
+        else:
+            explanation = "pričakovani razred ni bil potrjen"
+        failed_lines.append(
+            f"- `{row.trial_id}`: {DISPLAY.get(row.true_category, row.true_category)}, "
+            f"{int(row.attenuation_db)} decibelov; {explanation}."
+        )
+
+    level_lookup = {
+        (int(row.attenuation_db), str(row.test_type)): row
+        for row in by_level.itertuples(index=False)
+    }
+    nominal_positive = level_lookup[(0, "positive")]
+    minus_six = level_lookup[(-6, "positive")]
+    minus_twelve = level_lookup[(-12, "positive")]
+    nominal_safe = level_lookup[(0, "ood")]
+    result_markdown = f"""# Rezultat nadzorovanega sprejemnega preskusa V3
+
+Preskus `{EVALUATION_ID}` je bil izveden kot enkraten poskus `{ATTEMPT_ID}` na
+zamrznjeni programski in modelski različici. Vseh 21 načrtovanih poskusov je
+bilo zajetih brez ponavljanja neuspešnih napovedi.
+
+## Glavni rezultati
+
+- skupaj uspešnih: {int(summary['trials_passed'])}/21 ({sl_number(100 * summary['overall_pass_rate'])} odstotka);
+- nominalna raven: {int(summary['nominal_passed'])}/9 ({sl_number(100 * summary['nominal_pass_rate'])} odstotka);
+- šest ciljnih zvokov pri nominalni ravni: {int(nominal_positive.passed)}/{int(nominal_positive.trials)};
+- ciljni zvoki pri -6 decibelih: {int(minus_six.passed)}/{int(minus_six.trials)};
+- ciljni zvoki pri -12 decibelih: {int(minus_twelve.passed)}/{int(minus_twelve.trials)};
+- varni zvoki brez nevarnostnega alarma: {int(nominal_safe.passed)}/{int(nominal_safe.trials)};
+- povprečni čas predobdelave: {sl_number(summary['mean_preprocess_ms'], 2)} milisekunde;
+- povprečni čas sklepanja: {sl_number(summary['mean_inference_ms'], 2)} milisekunde.
+
+Pasji lajež, strel in sirena so uspeli pri vseh treh ravneh. Razbitje stekla in
+govor sta uspela pri 0 in -6 decibelih, pri -12 decibelih pa je bil vhod že pod
+pragom aktivnosti. Nevihta je uspela pri -6 in -12 decibelih, ne pa pri
+nominalni ravni. Ker je bila vsaka kombinacija posnetka in ravni predvajana le
+enkrat, iz tega ne sklepamo, da utišanje na splošno izboljša zaznavo nevihte.
+Razlika je lahko posledica akustične variabilnosti in drugačne poravnave
+dogodka z 960-milisekundskimi obdelovalnimi bloki.
+
+## Neuspešni poskusi
+
+{chr(10).join(failed_lines)}
+
+## Celovitost časovnih meritev
+
+Od {summary['decision_frames']} odločilnih zapisov jih je
+{summary['complete_timing_frames']} vsebovalo tudi popoln časovni zapis
+({sl_number(100 * summary['timing_completeness_rate'])} odstotka). Povprečja časa so
+izračunana samo iz popolnih zapisov; manjkajoče vrednosti niso obravnavane kot
+ničle.
+
+## Omejitev razlage
+
+Vsi izvorni zvoki so bili predhodno poslušani in odobreni, nekateri pa so bili
+uporabljeni tudi med razvojem, kalibracijo ali funkcijskim preizkusom. Rezultat
+zato dokazuje ponovljivo delovanje končne naprave na jasnih kanoničnih primerih
+in robustnost istega vira na treh ravneh. Ne predstavlja neodvisne ocene
+posploševanja na nove posnetke ali resnično okolje.
+"""
+    (result_root / "RESULT.md").write_text(result_markdown, encoding="utf-8")
 
     print(json.dumps(summary, indent=2, ensure_ascii=False))
     print(f"Results: {result_root}")

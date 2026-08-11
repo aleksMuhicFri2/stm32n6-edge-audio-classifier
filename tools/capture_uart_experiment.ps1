@@ -191,6 +191,12 @@ $detections = @($frames | Where-Object { $_.predicted_class -notin @("no_output"
 $hazardDetections = @($frames | Where-Object { $_.predicted_class -in $hazardClasses })
 $correct = @($frames | Where-Object { $_.is_correct }).Count
 $unknown = @($frames | Where-Object { $_.predicted_class -eq "unknown" }).Count
+$timedFrames = @($frames | Where-Object {
+    $null -ne $_.cpu_load_percent -and
+    $null -ne $_.preprocess_ms -and
+    $null -ne $_.inference_ms -and
+    $null -ne $_.postprocess_ms
+})
 $result = if ($TestType -eq "positive") {
     if (@($frames | Where-Object { $_.predicted_class -eq $ExpectedClass }).Count -gt 0) { "pass_with_detection" } else { "fail_no_target_detection" }
 } elseif ($hazardDetections.Count -eq 0) {
@@ -222,10 +228,10 @@ $run = [pscustomobject][ordered]@{
     detection_events = $detections.Count
     correct_events = $correct
     unknown_events = $unknown
-    cpu_load_percent_mean = [math]::Round(($frames | Measure-Object cpu_load_percent -Average).Average, 4)
-    preprocess_ms_mean = [math]::Round(($frames | Measure-Object preprocess_ms -Average).Average, 4)
-    inference_ms_mean = [math]::Round(($frames | Measure-Object inference_ms -Average).Average, 4)
-    postprocess_ms_mean = [math]::Round(($frames | Measure-Object postprocess_ms -Average).Average, 4)
+    cpu_load_percent_mean = if ($timedFrames.Count) { [math]::Round(($timedFrames | Measure-Object cpu_load_percent -Average).Average, 4) } else { $null }
+    preprocess_ms_mean = if ($timedFrames.Count) { [math]::Round(($timedFrames | Measure-Object preprocess_ms -Average).Average, 4) } else { $null }
+    inference_ms_mean = if ($timedFrames.Count) { [math]::Round(($timedFrames | Measure-Object inference_ms -Average).Average, 4) } else { $null }
+    postprocess_ms_mean = if ($timedFrames.Count) { [math]::Round(($timedFrames | Measure-Object postprocess_ms -Average).Average, 4) } else { $null }
     result = $result
     raw_log_path = $rawRelativePath
     notes = $Notes

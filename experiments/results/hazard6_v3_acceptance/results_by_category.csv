@@ -1,0 +1,10 @@
+true_category,test_type,trials,passed,pass_rate
+dog_bark,positive,3,3,1.0
+door_wood_knock,ood,1,1,1.0
+glass_breaking,positive,3,2,0.6666666666666666
+gunshot_gunfire,positive,3,3,1.0
+rain,ood,1,1,1.0
+siren,positive,3,3,1.0
+speech,positive,3,2,0.6666666666666666
+thunderstorm,positive,3,2,0.6666666666666666
+wind,ood,1,1,1.0
