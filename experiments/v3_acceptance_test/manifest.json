@@ -1,0 +1,46 @@
+{
+  "evaluation_id": "STM32N6-HAZARD6-ACCEPTANCE-001",
+  "attempt_id": "AT-A01",
+  "purpose": "Controlled end-to-end acceptance and input-level robustness test of the frozen V3 device.",
+  "interpretation_limit": "All source recordings were previously reviewed and some participated in development, calibration, or smoke testing. Results demonstrate reproducible operation on canonical approved stimuli and must not be reported as an independent estimate of generalisation.",
+  "semantic_quality_gate": "Every source is operator-approved. The glass source is explicitly a clean complete shatter; broad Glass-only, handling, and clinking recordings are excluded.",
+  "trial_count": 21,
+  "unique_approved_sources": 9,
+  "class_counts": {
+    "gunshot_gunfire": 3,
+    "glass_breaking": 3,
+    "dog_bark": 3,
+    "out_of_distribution": 3,
+    "siren": 3,
+    "thunderstorm": 3,
+    "speech": 3
+  },
+  "attenuation_counts": {
+    "-12": 6,
+    "-6": 6,
+    "0": 9
+  },
+  "positive_attenuation_db": [
+    0,
+    -6,
+    -12
+  ],
+  "safe_negative_attenuation_db": [
+    0
+  ],
+  "order_seed": 811,
+  "playback_volume_percent": 70,
+  "speaker_distance_cm": 30,
+  "playback_delay_seconds": 3,
+  "model": {
+    "name": "YAMNet-1024 Hazard-5 + Speech V3 int8",
+    "sha256": "2f29a3b26971bdadd05ab069c231e2a8aac83ec4b6fe14015a6551cb344a5978",
+    "compiled_weights_sha256": "65b800338e97202922064b2efe09e4b120f6d37a5acbfba2c08fc9ec81eb18ef"
+  },
+  "firmware": {
+    "commit": "9c7c7b7401bb7ad298565a4aad34eb3a670b832c",
+    "signed_binary_sha256": "7c587de39f17d4fdd53a125e38b8145832ff835d9413d0bc6639e8df710e5087"
+  },
+  "manifest_sha256": "e0770276e6841ffadf5516de05e41f7d140e4fc8ee73f6076053552bd603bc6d",
+  "status": "frozen_not_started"
+}
