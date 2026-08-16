@@ -1,0 +1,143 @@
+\chapter{Zasnova sistema}
+\label{ch:zasnova}
+
+\section{Funkcionalne in nefunkcionalne zahteve}
+
+Izhodišče zasnove je samostojna namizna naprava, ki zvočno dogajanje pretvori
+v vidno opozorilo. Primarni uporabni scenarij je pomoč gluhim in naglušnim
+osebam pri zaznavanju izbranih nevarnih zvokov. Naprava zato ne sme zahtevati
+telefona, osebnega računalnika ali dostopa do interneta. Zahteve so zbrane v
+tabeli \ref{tab:zahteve-sistema}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Glavne zahteve sistema.}
+  \label{tab:zahteve-sistema}
+  \small
+  \begin{tabular}{p{0.22\textwidth}p{0.63\textwidth}}
+    \toprule
+    Vrsta & Zahteva \\
+    \midrule
+    Funkcionalna & Neprekinjen zajem zvoka z vgrajenega mikrofona. \\
+    Funkcionalna & Prikaz pasjega laježa, razbitja stekla, strela, sirene,
+                   govora in drugih zvokov. \\
+    Funkcionalna & Ločeni stanji za nezanesljivo napoved in neaktiven vhod. \\
+    Funkcionalna & Prikaz treh najvišjih ocen in zgodovine potrjenih dogodkov. \\
+    Nefunkcionalna & Sprotno izvajanje brez izgube zvočnih vzorcev. \\
+    Nefunkcionalna & Delovanje brez omrežne povezave in računalniškega oblaka. \\
+    Nefunkcionalna & Brez trajnega shranjevanja surovega zvoka v običajnem načinu. \\
+    Nefunkcionalna & Ponovljiv zagon podpisane aplikacije ter sledljiva različica
+                     modela in uteži. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Zadnji dve zahtevi sta povezani z zasebnostjo in zanesljivostjo. Mikrofon mora
+zaradi namena sistema delovati neprekinjeno, vendar zvočni vzorci ostanejo v
+začasnih medpomnilnikih na napravi in se po obdelavi prepišejo. Poseben
+diagnostični način za zajem zvoka je bil uporabljen samo med razvojem in ni
+vključen v običajni zagon končnega izdelka.
+
+\section{Strojna platforma STM32N6570-DK}
+
+Razvojna plošča STM32N6570-DK vsebuje mikrokrmilnik STM32N657 z jedrom Arm
+Cortex-M55 in namenskim nevronskim pospeševalnikom Neural-ART. Na isti plošči
+so vgrajeni digitalni mikrofon IMP34DT05, zunanji bliskovni pomnilnik,
+pomnilnik HyperRAM in zaslon ločljivosti $800 \times 480$ slikovnih točk
+\cite{st2024stm32n6570dk}. Zaradi te kombinacije za osnovno delovanje prototipa
+niso potrebni zunanji mikrofon, grafični krmilnik ali dodaten računalnik.
+
+Procesorsko jedro vodi zajem, pripravo značilk, odločitveni filter in risanje
+uporabniškega vmesnika. Neural-ART izvaja računsko najzahtevnejše dele
+nevronske mreže, zunanji bliskovni pomnilnik hrani podpisano aplikacijo in
+uteži, HyperRAM pa dva zaslonska medpomnilnika. Takšna razdelitev prepreči, da
+bi prikaz porabil notranji pomnilnik, potreben za program in začasne aktivacije
+modela.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.86\textwidth]{20260809_185828.jpg}
+  \caption{Razvojna plošča STM32N6570-DK z vidnim mikrokrmilnikom in
+  priključki, uporabljena za izvedbo sistema.}
+  \label{fig:plosca}
+\end{figure}
+
+\section{Arhitektura podatkovnega toka}
+
+Podatkovni tok je prikazan na sliki \ref{fig:podatkovni-tok}. Vsak blok ima
+jasno nalogo in podatki med običajnim delovanjem ne zapustijo naprave.
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\begin{minipage}{0.90\textwidth}
+    \centering\small
+    \textbf{Vgrajeni mikrofon}
+    $\longrightarrow$
+    \textbf{digitalni filter in neposredni dostop do pomnilnika}
+    $\longrightarrow$
+    \textbf{šestnajstbitni vzorci}
+    \\[0.8em]
+    $\longrightarrow$
+    \textbf{logaritemski melov spektrogram}
+    $\longrightarrow$
+    \textbf{osembitni vhodni tenzor}
+    $\longrightarrow$
+    \textbf{YAMNet-1024 na Neural-ART}
+    \\[0.8em]
+    $\longrightarrow$
+    \textbf{časovno filtriranje in zavračanje}
+    $\longrightarrow$
+    \textbf{zaslon in diagnostični zapis}
+  \end{minipage}}
+  \caption{Poenostavljen tok podatkov od zvoka v prostoru do lokalnega
+  vizualnega opozorila.}
+  \label{fig:podatkovni-tok}
+\end{figure}
+
+Digitalni mikrofon oddaja pulzno-gostotni tok, ki ga strojni filter pretvori v
+zvočne vzorce s frekvenco \SI{16}{\kilo\hertz}. Neposredni dostop do pomnilnika
+jih zapisuje brez posredovanja procesorskega jedra pri vsakem vzorcu.
+Predobdelava iz skoraj ene sekunde zvoka pripravi 64-pasovni logaritemski
+melov spektrogram. Ta se kvantizira in neposredno zapiše v vhodni pomnilnik
+omrežja. Sedem ocen modela se nato pretvori v šest uporabniških razredov,
+časovni filter pa preprečuje, da bi kratka nihanja takoj postala opozorilo.
+
+\section{Programska zgradba in zagonski tok}
+
+Program temelji na referenčni aplikaciji za obdelavo zvoka podjetja
+STMicroelectronics, namenjeni mikrokrmilniku STM32N6 \cite{ststm32n6audio}.
+Referenčna osnova zagotavlja začetno nastavitev ure,
+mikrofona, pomnilnikov in pospeševalnika, nad njo pa so bili dodani ciljni
+model, odločitveni filter, diagnostični zapisi ter lasten prikaz. Končna
+različica deluje brez operacijskega sistema; glavna zanka obdela nov zvočni
+blok, ko ga je v krožnem medpomnilniku dovolj.
+
+Po ponastavitvi začetni nalagalnik preveri podpis aplikacije v zunanjem
+bliskovnem pomnilniku in jo prenese v notranji pomnilnik za izvajanje. Uteži
+modela ostanejo v ločeni particiji zunanjega bliskovnega pomnilnika. Aplikacija
+nato inicializira zunanji pomnilnik, zaslon, zvočni zajem, predobdelavo in
+izvajalno okolje nevronske mreže. Takšna zgradba omogoča ločeno posodobitev
+aplikacije in uteži ter nedvoumno preverjanje obeh datotek s kontrolnima
+vsotama.
+
+\section{Nabor razredov in politika odločanja}
+
+Nevronska mreža ima sedem učnih izhodov: pasji lajež, razbitje stekla, strel,
+drugi zvoki, sirena, govor in nevihta. Končni uporabniški vmesnik prikazuje
+šest razredov. Nevihta po končni odločitvi o namenu izdelka ni obravnavana kot
+samostojen nevarnostni dogodek; njena ocena se pred glajenjem prišteje razredu
+\emph{drugo}. S tem se ohrani že naučeni model, uporabnik pa nevihte ne vidi
+kot posebnega opozorila.
+
+Nevarnostni razredi so pasji lajež, razbitje stekla, strel in sirena. Govor in
+drugo sta informacijska oziroma varovalna razreda. Njuna naloga je poimenovati
+pogoste nenevarne vhode, ki bi sicer lahko tekmovali z nevarnostnimi razredi.
+Razred drugo vključuje raznolike zvoke, med njimi ploskanje, aplavz, zvonce,
+kratke poke, gospodinjske zvoke, veter in glasbo.
+
+Najvišja surova ocena modela še ni končna odločitev. Ocene se gladijo skozi
+čas, vsak razred ima svoj prag in zahtevano število zaporednih potrditev.
+\emph{Neznano} pomeni aktiven zvok brez dovolj zanesljivega izhoda, medtem ko
+\emph{čakanje} pomeni, da vhod ni presegel energijskega praga. Neznano in
+čakanje zato nista dodatna razreda nevronske mreže. Podrobnosti odločitvenega
+filtra so opisane v poglavju \ref{ch:implementacija}.

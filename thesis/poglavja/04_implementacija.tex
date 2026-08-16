@@ -4,15 +4,16 @@
 V tem poglavju je predstavljena izvedba celotne poti od zvoka v prostoru do
 odločitve, prikazane na zaslonu razvojne plošče. Končni program deluje brez
 operacijskega sistema in brez omrežne povezave. Procesorsko jedro zato poleg
-zagona aplikacije upravlja zajem zvočnih vzorcev, predobdelavo, odločanje,
-zaslon in diagnostični izhod, izračun nevronske mreže pa je v največji možni
-meri prenesen na nevronski pospeševalnik Neural-ART.
+zagona aplikacije upravlja zajem in predobdelavo zvočnih vzorcev, odločanje,
+zaslon in diagnostični izhod, računsko najzahtevnejše plasti nevronske mreže
+pa se izvajajo na nevronskem pospeševalniku Neural-ART.
 
 Kot preverjeno strojno izhodišče smo uporabili uradni primer za obdelavo zvoka
 na družini STM32N6 \cite{ststm32n6audio}. Primer je že vseboval gonilnike za
 vgrajeni mikrofon, knjižnico za izračun zvočnih značilk in povezavo z izvajalnim
-okoljem ST. Nad to osnovo smo zamenjali model, prilagodili parametre
-predobdelave, dodali šestrazredno odločanje, časovno filtriranje, lasten
+okoljem ST. Nad to osnovo smo zamenjali odločevalni model, prilagodili parametre
+predobdelave, dodali posebej izbrano sedemizhodno nevronsko mrežo,
+šestrazredno uporabniško odločanje, časovno filtriranje, lasten
 uporabniški vmesnik in strukturirano beleženje meritev. Tak pristop je zmanjšal
 tveganje, da bi napako v osnovni nastavitvi strojne opreme zamenjali za napako
 modela.
@@ -21,7 +22,7 @@ modela.
 
 Uporabljena razvojna plošča ima vgrajen digitalni mikrofon IMP34DT05 in
 petpalčni zaslon, zato za delovanje prototipa ni potrebna dodatna zvočna
-strojna oprema \cite{st2024stm32n6570dk}. Mikrofon oddaja pulzno-gostotni
+strojna oprema \cite{st2024stm32n6570dk}. Mikrofon se nahaja na spodnjem delu plošče in oddaja pulzno-gostotni
 digitalni signal. Tak signal še ni zaporedje običajnih šestnajstbitnih zvočnih
 vzorcev, ki jih pričakuje predobdelava, zato ga je treba najprej filtrirati in
 zmanjšati njegovo vzorčno hitrost.
@@ -29,19 +30,27 @@ zmanjšati njegovo vzorčno hitrost.
 V končni izvedbi smo za ta korak uporabili prvi večnamenski digitalni filter
 mikrokrmilnika. Gonilnik plošče nastavi vir na digitalni mikrofon, vzorčno
 frekvenco na \SI{16000}{\hertz}, ločljivost na 16 bitov in število kanalov na
-ena. Večnamenski digitalni filter opravi strojno filtriranje ter iz
+en kanal. Večnamenski digitalni filter opravi strojno filtriranje ter iz
 pulzno-gostotnega toka pripravi 32-bitne vmesne vrednosti. Gonilnik vsako
 vrednost deli z 256, jo omeji na dovoljeno območje predznačenega
 šestnajstbitnega števila in jo shrani kot enokanalni zvočni vzorec. Na tej
 točki je signal po obliki primerljiv z običajnim enokanalnim zvočnim zapisom.
+Pulzno-gostotni tok predstavlja amplitudo z gostoto enic in ničel, 32-bitni
+vmesni zapis pa ohrani natančnost rezultata filtriranja. Deljenje prilagodi
+merilo šestnajstbitnemu zapisu, omejitev pa prepreči številski preliv.
 
 Prenos iz periferne enote v pomnilnik poteka z neposrednim dostopom do
-pomnilnika. Uporabljena je krožna prenosna vrsta, zato procesorskemu jedru ni
+pomnilnika. Prenosna enota deluje v krožnem načinu, zato procesorskemu jedru ni
 treba prebrati vsakega vzorca posebej. Zajemni medpomnilnik vsebuje 320
 vzorcev, kar pri \SI{16000}{\hertz} pomeni \SI{20}{\milli\second} zvoka.
 Prenosna enota sproži povratni klic po zapolnitvi prve in druge polovice
 medpomnilnika. Posamezen povratni klic tako preda 160 vzorcev oziroma
 \SI{10}{\milli\second} zvoka.
+
+V prvih \SI{10}{\milli\second} se na primer zapolnijo mesta od 0 do 159 in
+sproži se prvi povratni klic. Med njegovim izvajanjem prenosna enota že polni
+mesta od 160 do 319. Po drugem povratnem klicu se vrne na mesto 0, zato zajema
+ni treba ustaviti.
 
 Povratni klici morajo biti kratki, saj se izvajajo med neprekinjenim zajemom.
 Njihova naloga je le kopiranje nove polovice medpomnilnika v večji krožni
@@ -51,18 +60,26 @@ pomnilniškega območja se položaj vrne na začetek. Med spremembo skupnih
 kazalcev so prekinitve za kratek čas onemogočene, s čimer se prepreči, da bi
 povratni klic spremenil stanje med branjem glavne zanke.
 
-Glavna zanka čaka, da se v krožnem medpomnilniku zbere 15.360 novih vzorcev.
-To ustreza \SI{960}{\milli\second} novega zvoka. Pred njih se ohrani še 240
-vzorcev prejšnjega bloka, ker se zadnje časovno okno prejšnje značilke in prvo
-časovno okno nove značilke prekrivata. Predobdelava zato prejme 15.600 vzorcev,
-ki obsegajo \SI{975}{\milli\second} zvočnega signala. Takšna dolžina ni
-naključna: prvo časovno okno vsebuje 400 vzorcev, preostalih 95 oken pa se
-začne v razmiku po 160 vzorcev,
+Glavna zanka v končni izvedbi čaka na 7.680 novih vzorcev, kar ustreza
+\SI{480}{\milli\second} zvoka. Iz prejšnjega bloka ohrani 7.920 vzorcev in
+jim pripne nove. Predobdelava zato ob vsakem zagonu prejme 15.600 vzorcev
+oziroma \SI{975}{\milli\second} signala, dve zaporedni omrežni obdelavi pa si
+delita približno polovico vhodnega zvoka. Tak prekrivajoči se korak zmanjša
+odvisnost kratkega dogodka od meje skoraj enosekundnega bloka.
+
+Dolžina celotnega vhoda izhaja iz 96 časovnih oken. Prvo vsebuje 400 vzorcev,
+preostalih 95 pa se začne v razmiku po 160 vzorcev,
 
 \begin{equation}
   400 + 95 \cdot 160 = 15\,600.
   \label{eq:dolzina-zvocnega-bloka}
 \end{equation}
+
+Ker je razmik med okni manjši od njihove dolžine, si sosednji časovni okni
+delita $400-160=240$ vzorcev. To prekrivanje znotraj spektrograma ni enako
+prekrivanju dveh zaporednih omrežnih vhodov: slednje nastane zato, ker program
+pred vsakim novim izračunom premakne ohranjeni del prejšnjega 15.600-vzorčnega
+bloka in doda samo 7.680 novih vzorcev.
 
 Zajem in obdelava sta s tem razvezana. Periferna enota ves čas sprejema zvok,
 glavna zanka pa obdeluje le dovolj velike bloke. Če bi predobdelava neposredno
@@ -146,7 +163,7 @@ vidi najnovejše podatke in ne stare kopije, ki bi še ostala v predpomnilniku
 procesorskega jedra.
 
 Predobdelava hkrati izračuna vsoto vrednosti spektrograma. Če vsota ne preseže
-praga 4000, se blok obravnava kot neaktiven. Model se sicer izvede tudi za tak
+praga 2800, se blok obravnava kot neaktiven. Model se sicer izvede tudi za tak
 blok, vendar odločitveni filter rezultata ne sme potrditi kot dogodek. Prag s
 tem deluje kot preprost vhodni nadzor aktivnosti in preprečuje, da bi tišina
 neprestano ustvarjala razred z največjo, vendar vseeno nezanesljivo oceno.
@@ -154,26 +171,38 @@ neprestano ustvarjala razred z največjo, vendar vseeno nezanesljivo oceno.
 \section{Priprava in pretvorba modela}
 
 Izvirni YAMNet uporablja arhitekturo MobileNetV1 in vrača ocene za 521
-zvočnih dogodkov iz zbirke AudioSet \cite{tensorflowyamnet,hershey2017cnn}.
-Tak model je uporaben kot splošni razpoznavalnik zvoka, vendar njegov izhod ni
-prilagojen izbranemu naboru nevarnosti. V končni izvedbi smo zato uporabili
-predhodno naučeno različico YAMNet-1024 kot izločevalnik značilk. Število 1024
-označuje dolžino vektorja značilk pred zaključno klasifikacijsko plastjo. Ta
-različica je večja od prvotno preskušene različice YAMNet-256, vendar jo lahko
-namenski nevronski pospeševalnik na mikrokrmilniku STM32N6 še vedno izvaja v
-realnem času.
+zvočnih dogodkov iz zbirke AudioSet
+\cite{tensorflowyamnet,hershey2017cnn,gemmeke2017audioset}.
+MobileNetV1 je konvolucijska nevronska mreža, zasnovana za računsko omejene
+naprave. Z globinsko ločljivimi konvolucijami zmanjšuje število parametrov in
+operacij, spektrogram pa obravnava kot časovno-frekvenčno sliko
+\cite{howard2017mobilenets}. Tak model je
+uporaben kot splošni razpoznavalnik zvoka, vendar njegov izhod ni prilagojen
+izbranemu naboru nevarnosti.
 
-Končni model ima šest izhodov: pasji lajež, razbitje stekla, strel oziroma streljanje,
-sireno, govor in nevihto. Pet razredov predstavlja dogodke, ki jih sistem
-obravnava kot možno nevarnost, govor pa je informacijski oziroma zaščitni razred.
-Dodali smo ga zato, ker se je v zgodnjih preskusih pokazalo, da glasen človeški
-glas lahko po zvočni strukturi tekmuje z nekaterimi nevarnostnimi razredi.
-Ločen izhod za govor omogoča, da sistem tak vhod poimenuje in ga ne spremeni v
-nevarnostni alarm.
+V končni izvedbi smo zato uporabili prednaučeno različico YAMNet-1024 kot
+izločevalnik značilk. Število 1024 označuje dolžino vektorja števil, s katerim
+model povzame vsebino vhodnega zvoka, in ne števila zvočnih razredov. Nova
+zaključna plast ta vektor pretvori v sedem ocen izbranih razredov. Različica je
+večja od prvotno preskušene različice YAMNet-256, vendar jo lahko namenski
+nevronski pospeševalnik na mikrokrmilniku STM32N6 še vedno izvaja v realnem
+času.
+
+Končni model ima sedem izhodov: pasji lajež, razbitje stekla, strel oziroma
+streljanje, druge zvoke, sireno, govor in nevihto. Govor in drugi zvoki sta
+varovalna razreda. Govor je bil dodan, ker se je v zgodnjih preskusih pokazalo,
+da lahko glasen človeški glas tekmuje z nevarnostnimi razredi. Razred drugo pa
+uči model, da ploskanja, aplavza, kratkih pokov, kovinskih zvokov, glasbe,
+vremenskega ozadja in gospodinjskih zvokov ne prisili v eno od nevarnostnih
+oznak. V končni programski opremi se ocena nevihte prišteje razredu drugo,
+zato uporabnik vidi šest sistemskih razredov in štiri vrste nevarnosti.
+
+\subsection{Učni podatki in povečanje učnega nabora}
 
 Učenje je potekalo na osebnem računalniku, ne na mikrokrmilniku. Izhodiščni
 uravnoteženi učni nabor je vseboval po 192 posnetkov za vsak razred, skupaj
-1.152 posnetkov iz zbirk ESC-50 in FSD50K. Pri razbitju stekla smo široko
+1.152 posnetkov iz zbirk ESC-50 in FSD50K
+\cite{piczak2015esc50,fonseca2022fsd50k}. Pri razbitju stekla smo široko
 oznako \emph{Glass} nadomestili z izrecno oznako \emph{Shatter}. S tem smo
 izločili primere rokovanja, cingljanja in udarcev ob steklo, pri katerih do
 razbitja sploh ne pride. Izbira posnetkov je upoštevala tudi izvornega
@@ -187,59 +216,150 @@ poišče čas dogodka, nato izreže enosekundno okno in ga z majhnim naključnim
 zamikom postavi na različna mesta. Pri strelih uporabi najmočnejše
 20-milisekundno energijsko območje ter ohrani najmanj 620 milisekund signala po
 dogodku. Če se strel pojavi na samem začetku posnetka, manjkajoči del okna
-dopolni z ničlami na levi strani in ne zavrže začetka dogodka. Pri steklu se
-uporabi iskalnik značilnega energijskega in spektralnega prehoda, dodatno
-varovalo pa sumljivo tih kandidat zamenja z najmočnejšim kratkotrajnim vrhom.
+dopolni z ničlami na levi strani in ne zavrže začetka dogodka. Pri posnetkih
+razbitja stekla program določi čas dogodka na podlagi hitre spremembe energije
+in frekvenčne vsebine zvoka. Če je tako izbrani dogodek za več kot 18 decibelov
+tišji od najglasnejšega kratkega odseka v posnetku, program uporabi položaj tega
+najglasnejšega odseka. S tem zmanjša možnost, da bi izrez vseboval predvsem tih
+odmev namesto dejanskega razbitja stekla.
 
-Iz vsakega izbranega prehodnega izvora smo pripravili šest različic. Spremembe
+Iz vsakega izbranega posnetka kratkotrajnega dogodka smo pripravili šest
+različic. Spremembe
 vključujejo položaj dogodka, zmerno spremembo ojačenja, blago frekvenčno
 filtriranje, ponavljanje in dodajanje tihega ozadja iz varnih razredov zbirke
 ESC-50. Za razbitje stekla nismo spreminjali hitrosti in nismo uporabili močnega
 stiskanja amplitude, ker sta takšni spremembi pri prejšnjem poskusu kvarili
 naravni zven dogodka. Zaščita vrha po potrebi oslabi celotno mešanico in je ne
-trdo odreže. Deterministično izbranih 24 povečanih primerov strelov in razbitja
-stekla smo pred učenjem poslušali. Vsi so vsebovali celovit dogodek, 23 pa jih
-je bilo ocenjenih kot povsem značilnih. Šele po uspešnem pregledu je skripta
-dovolila začetek učenja.
+trdo odreže. Pred učenjem smo poslušali 24 povečanih primerov strelov in
+razbitja stekla, izbranih po vnaprej določenem postopku. Vsi so vsebovali
+celovit dogodek, 23 pa jih je bilo ocenjenih kot povsem značilnih. Šele po
+uspešnem pregledu je program dovolil začetek učenja.
 
-Končni učni manifest vsebuje 4.032 vrstic: 384 za pasji lajež, po 1.344 za
-razbitje stekla in strel, 192 za sireno, 576 za govor ter 192 za nevihto.
-Razvojni preveritveni nabor je ostal nespremenjen in vsebuje 278 posnetkov:
-po 60 posnetkov pasjega laježa, razbitja stekla in nevihte, 54 posnetkov
-strelov, 20 posnetkov siren ter 24 posnetkov govora. Povečane različice so bile
-uporabljene samo za učenje in so podedovale skupino svojega izvornega posnetka,
-zato različica istega dogodka ni mogla preiti v razvojni preveritveni del.
+Predhodni šestrazredni seznam je vseboval 4.032 učnih vrstic: 384 za pasji
+lajež, po 1.344 za razbitje stekla in strel, 192 za sireno, 576 za govor ter
+192 za nevihto. Za končni sedemrazredni model smo dodali 630 različnih virov
+razreda drugo, zato je učni seznam obsegal 4.662 vrstic. Viri novega razreda so
+bili razdeljeni v devet akustičnih skupin: visoki tonski zvoki, ploskanje in
+aplavz, impulzivni zvoki, kovinski in krhki zvoki, človeški zvoki brez govora,
+druge živali, vreme in ozadje, gospodinjski in mehanski zvoki ter glasba.
+Prednost so imeli zahtevni primeri, ki jih je prejšnji model napačno pripisal
+enemu od ciljnih razredov, preostanek pa je zagotavljal raznolikost.
+
+Končni razvojni nabor vsebuje 413 posnetkov: po 60 posnetkov pasjega laježa,
+razbitja stekla in nevihte, 54 posnetkov strelov, 135 drugih zvokov, 20 siren
+ter 24 govornih posnetkov. Med 630 učnimi in 135 razvojnimi viri razreda drugo
+ni prekrivanja. Prav tako so bili po identiteti vira izločeni vsi posnetki,
+rezervirani za končni fizični preizkus. Povečane različice kratkotrajnih
+dogodkov so bile uporabljene samo za učenje in so podedovale skupino svojega
+izvornega posnetka.
+
+Število vrstic samo po sebi ni enako številu spektrogramskih izsekov, saj daljši
+posnetki pri pripravi učnih podatkov ustvarijo več vhodnih oken kot krajši.
+Zato smo poleg povečanja podatkov za kratkotrajna dogodka vrstice pasjega
+laježa enkrat ponovili, vrstice govora pa dvakrat. S tem nismo ustvarili novih zvočnih
+signalov, temveč smo obstoječim virom povečali pogostost vzorčenja med učenjem.
+Namen je bil približno uravnotežiti število spektrogramskih izsekov, pri čemer
+noben izvorni posnetek ni bil odstranjen in razdelitev med učnim ter razvojnim
+delom ni bila spremenjena. Tako nastanejo navedene velikosti razredov: iz 192
+osnovnih vrstic pasjega laježa 384 vrstic, iz 192 vrstic govora 576 vrstic ter
+iz 192 osnovnih vrstic vsakega razreda kratkotrajnih dogodkov po 1.344 vrstic,
+ker se vsakemu viru doda šest povečanih različic.
+
+\subsection{Učenje, kvantizacija in izbira končne različice}
 
 Med učenjem so bili zvočni posnetki pretvorjeni v enake logaritemske melove
-spektrograme kot na napravi. Predhodno naučeni del YAMNet-1024 je ostal
-nespremenjen, učila pa se je nova polno povezana zaključna plast s šestimi
-izhodi. Celoten model ima 3.223.494 parametrov, od tega je 6.150 učljivih.
-Uporabljen je bil optimizator Adam z začetno hitrostjo učenja 0,001, velikostjo
-učne skupine 16 in največ 60 prehodi čez učne podatke. Ob nespremenjeni
-razvojni pravilnosti se je hitrost učenja zmanjševala, zgodnja ustavitev pa je
-obnovila najboljše uteži.
+spektrograme kot na napravi. Prednaučeni del YAMNet-1024 je ostal
+nespremenjen, učila pa se je nova polno povezana zaključna plast s sedmimi
+izhodi. Parameter je utež ali pristranskost, ki vpliva na rezultat mreže.
+Celoten model ima 3.224.519 parametrov, vendar jih je bilo učljivih le 7.175 v
+novi zaključni plasti: $1.024 \cdot 7$ uteži in sedem pristranskosti. Parametri
+prednaučenega izločevalnika značilk so ostali nespremenjeni.
 
-Po učenju smo izvedli kvantizacijo po učenju. Uteži in vmesni tenzorji
+Uporabljen je bil optimizator Adam \cite{kingma2015adam} z začetno hitrostjo učenja 0,001, velikostjo
+učne skupine 16 in največ 60 prehodi čez učne podatke. Adam prilagaja velikost
+spremembe posameznih parametrov, učna skupina pa pomeni, da eno spremembo
+izračuna iz 16 vhodnih primerov. En prehod pomeni eno obdelavo celotnega
+učnega nabora. Če se razvojna pravilnost pet prehodov ni izboljšala, se je
+hitrost učenja prepolovila; po 12 prehodih brez izboljšanja se je učenje
+ustavilo in obnovilo najboljše uteži. Končno sedemrazredno učenje se je
+zaključilo po 20 prehodih.
+
+Razvoj je potekal v štirih zaporednih korakih. Najprej smo uporabljali
+YAMNet-256, nato pa smo ob nespremenjenih učnih in razvojnih podatkih prešli na
+YAMNet-1024. S tem smo lahko ločeno opazovali vpliv večjega izločevalnika
+značilk. V zadnjem koraku smo ohranili YAMNet-1024 ter izboljšali izbiro in
+povečanje učnih podatkov za kratkotrajne dogodke. Primerjava v tabeli
+\ref{tab:primerjava-modelov} zato predstavlja razvojne različice sistema.
+Razlike med začetnim YAMNet-256 in končnim YAMNet-1024 ne smemo pripisati samo
+velikosti modela, saj se končna različica razlikuje tudi po pripravi učnih
+podatkov. Zadnji korak je dodal učni razred drugo in ponovno naučil zaključno
+plast s sedmimi izhodi.
+
+Prve tri različice so bile ovrednotene na istem nespremenjenem razvojnem naboru
+z 278 posnetki. Sedemrazredna različica je zaradi novega razreda uporabljala
+razširjeni razvojni nabor s 413 posnetki, zato njenega deleža ni mogoče
+neposredno primerjati z deleži v tabeli \ref{tab:primerjava-modelov}.
+Razvojni rezultati so bili uporabljeni za izbiro modela in niso
+predstavljeni kot končna ocena delovanja fizičnega sistema. Večjo različico smo
+izbrali, ker je namenski pospeševalnik omogočal njeno izvajanje znotraj
+časovnega in pomnilniškega proračuna, podrobne meritve pa so predstavljene v
+poglavju \ref{ch:rezultati}.
+
+\begin{table}[!ht]
+  \centering
+  \caption{Primerjava treh zaporednih šestrazrednih razvojnih različic modela.}
+  \label{tab:primerjava-modelov}
+  \renewcommand{\arraystretch}{1.14}
+  \small
+  \begin{tabular}{>{\raggedright\arraybackslash}p{0.28\textwidth}
+                  >{\centering\arraybackslash}p{0.18\textwidth}
+                  >{\centering\arraybackslash}p{0.18\textwidth}
+                  >{\centering\arraybackslash}p{0.18\textwidth}}
+    \toprule
+    Lastnost & \shortstack{Začetni\\YAMNet-256}
+             & \shortstack{Vmesni\\YAMNet-1024}
+             & \shortstack{Izboljšani\\YAMNet-1024} \\
+    \midrule
+    Dolžina vektorja značilk & 256 & 1.024 & 1.024 \\
+    Skupno število parametrov & 136.646 & 3.223.494 & 3.223.494 \\
+    Število učljivih parametrov & 1.542 & 6.150 & 6.150 \\
+    Velikost kvantiziranega modela v bajtih & 184.280 & 3.462.018 & 3.462.018 \\
+    Pravilno razvrščeni razvojni posnetki & 242 od 278 & 244 od 278 & 246 od 278 \\
+    Makro mera $F_1$ & 0,858 & 0,871 & 0,876 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Končni sedemrazredni model ima 3.224.519 parametrov in je na razširjenem
+razvojnem naboru pravilno razvrstil 333 od 413 posnetkov. Njegova makro mera
+$F_1$ je znašala 0,806. Ta rezultat vključuje zahtevnejši razred drugo in zato
+ni neposredno nadaljevanje zadnje vrstice tabele \ref{tab:primerjava-modelov}.
+
+Po učenju smo izvedli kvantizacijo po učenju \cite{jacob2018quantization}. Uteži in vmesni tenzorji
 podprtih operacij so zapisani z osembitnimi celimi števili, zunanji vhod modela
-je predznačen osembitni tenzor, šest izhodnih ocen pa ostane v 32-bitnem zapisu
+je predznačen osembitni tenzor, sedem izhodnih ocen pa ostane v 32-bitnem zapisu
 s plavajočo vejico. Končni model je shranjen v obliki Open Neural Network Exchange z
 izrecnimi operacijami kvantizacije in dekvantizacije. Datoteka je velika
-3.462.018 bajtov in je označena z 256-bitno kriptografsko kontrolno vsoto, kar omogoča
+3.463.059 bajtov in je označena z 256-bitno kriptografsko zgoščevalno
+vrednostjo, kar omogoča
 nedvoumno povezavo med učenjem, pretvorbo in različico na napravi.
+
+\subsection{Pretvorba za nevronski pospeševalnik}
 
 Za namestitev smo uporabili ST Edge AI Core, uradno orodje za analizo,
 pretvorbo in izvajanje modelov na napravah STM32 \cite{st2026edgeai}. Različica
 4.0.1 je iz modela pripravila statične opise omrežja in programsko kodo v
 jeziku C, razporedila operacije med procesorsko jedro in Neural-ART ter
-ustvarila ločeno binarno datoteko uteži velikosti 3.279.505 bajtov. Ločitev
+ustvarila ločeno binarno datoteko uteži velikosti 3.280.545 bajtov. Ločitev
 aplikacije in uteži omogoča njuno zapisovanje v različni področji zunanjega
 bliskovnega pomnilnika.
 
-Poročilo prevajalnika navaja 72.748.547 operacij množenja in seštevanja za en
-prehod modela. Ta podatek opisuje računsko zahtevnost omrežja, ne pa časa
-izvajanja. Dejanski čas je odvisen od razporeditve operacij, dostopov do
-pomnilnika, frekvence in uporabljenega pospeševalnika, zato je izmerjen ločeno
-v poglavju o rezultatih.
+Poročilo prevajalnika navaja 71.146.316 operacij množenja in seštevanja za en
+prehod modela. Ena taka operacija pomnoži vhod z utežjo in rezultat prišteje
+delni vsoti. Podatek opisuje računsko zahtevnost omrežja, ne pa časa izvajanja,
+saj lahko pospeševalnik več operacij izvede vzporedno. Dejanski čas je odvisen
+tudi od razporeditve operacij, dostopov do pomnilnika in frekvence, zato je
+izmerjen ločeno v poglavju o rezultatih.
 
 \section{Izvajanje modela na Neural-ART}
 
@@ -256,11 +376,18 @@ kvantizacijski korak in ničelno točko. Predobdelava zato piše neposredno v
 vhodno območje, ki ga uporablja prevedeno omrežje; dodatno kopiranje celotnega
 spektrograma ni potrebno.
 
+Kontekst omrežja hrani stanje in pomnilniške naslove konkretnega primerka
+modela, tenzor pa je večrazsežno polje števil. Vhodni tenzor vsebuje 96 krat 64
+vrednosti spektrograma, izhodni pa sedem ocen. Kvantizacijski korak in ničelna
+točka določata pretvorbo teh vrednosti v osembitni zapis, kazalca pa omogočita,
+da predobdelava piše neposredno na naslov, s katerega jih prebere model.
+
 Ko je vhod pripravljen, aplikacija pokliče sinhrono izvajanje omrežja. Z vidika
-glavne zanke to pomeni, da funkcija vrne nadzor šele, ko so na voljo vsi šesti
-izhodi. Tak način poenostavi nadaljnje odločanje, ker odločitveni filter ne more
+glavne zanke to pomeni, da funkcija vrne nadzor šele, ko je na voljo vseh sedem
+izhodov. Tak način poenostavi nadaljnje odločanje, ker odločitveni filter ne more
 prebrati delno izračunanega rezultata. Čas izvajanja se meri s števcem ciklov
-procesorskega jedra in se shrani med diagnostične merilne podatke.
+procesorskega jedra in se shrani med diagnostične merilne podatke. Število
+ciklov se pretvori v čas z znano frekvenco procesorskega jedra.
 
 Prevedeni razpored je razdeljen na 34 zaporednih odsekov izvajanja. Devetindvajset
 odsekov se izvede v celoti strojno, pet pa programsko. Iz števila odsekov ni
@@ -287,7 +414,7 @@ razporeditev je povzeta v tabeli \ref{tab:pomnilniska-razporeditev}; podrobna
 izkoriščenost posameznih območij je ovrednotena v poglavju
 \ref{ch:rezultati}.
 
-\begin{table}[htbp]
+\begin{table}[!ht]
   \centering
   \caption{Razporeditev glavnih programskih delov po pomnilniku.}
   \label{tab:pomnilniska-razporeditev}
@@ -322,31 +449,44 @@ nastavitvi poravnave na \texttt{0x400} je podpisana slika vsebovala pravilno
 1.024-bajtno predpono in zagon je postal ponovljiv. Ta primer pokaže, da uspešno
 prevajanje in zapisovanje še ne zagotavljata zagonsko veljavne slike.
 
-Dodaten problem se je pojavil pri vključitvi zaslona. Dva zaslonska
-medpomnilnika sta skupaj prevelika za smiselno namestitev ob aplikaciji in
-aktivacijah modela v notranjem pomnilniku, zato sta bila prestavljena v zunanji
-pomnilnik HyperRAM. Območji sta izbrani na vrhu prvega 16-mebibajtnega dela
-pomnilnika in se ne prekrivata z omrežjem. Vsak medpomnilnik vsebuje
-$800 \cdot 480 \cdot 2 = 768.000$ bajtov; skupaj to pomeni 1.536.000 bajtov.
+Vključitev zaslona je zahtevala dodatno razporeditev pomnilnika. Krmilnik
+zaslona neprekinjeno bere trenutno sliko, procesorsko jedro pa istočasno riše
+naslednjo. Če bi oba uporabljala isto območje, bi se lahko na zaslonu hkrati
+pojavila dela stare in nove slike. Aplikacija zato uporablja dva zaslonska
+medpomnilnika in njuni vlogi zamenja šele med navpičnim premorom zaslona.
 
-Pri nastavitvi prikazovalnika je bilo treba urediti tudi dovoljenja za dostop
-krmilnika zaslona do zunanjega pomnilnika in njegov vir ure. Za uporabljene
-dele krmilnika so bila nastavljena varna privilegirana dovoljenja. Četrta
-fazno sklenjena zanka je bila nastavljena na \SI{50}{\mega\hertz}, vmesni
-delilnik pa je pripravil slikovno uro \SI{25}{\mega\hertz}. Pred popravkom je
-krmilnik izbiral ta vir, čeprav v izhodiščni zvočni aplikaciji ni bil vključen,
-zato zaslon ni deloval pravilno. Diagnostika je tako potekala po posameznih
-plasteh: najprej veljavnost zunanjega pomnilnika, nato pravice dostopa in na
-koncu izvor ure.
+Zaslon ima 800 krat 480 slikovnih točk, vsaka pa je v uporabljenem
+šestnajstbitnem barvnem zapisu velika dva bajta. En medpomnilnik zato zasede
+$800 \cdot 480 \cdot 2 = 768.000$ bajtov, oba skupaj pa 1.536.000 bajtov.
+Takšna poraba bi občutno zmanjšala notranji pomnilnik, ki ga potrebujejo tudi
+aplikacija in začasni rezultati modela. Medpomnilnika sta zato postavljena v
+zunanji pomnilnik HyperRAM, na zaporedni območji z začetkoma
+\texttt{0x90E80000} in \texttt{0x90F3B800}. Območji sta znotraj prvega
+16-mebibajtnega dela pomnilnika in se ne prekrivata z nevronskim modelom.
+
+Krmilnik zaslona bere pomnilnik samostojno, zato dostop procesorskega jedra do
+pomnilnika še ne zagotavlja, da ga lahko bere tudi krmilnik. Zanj in za njegove
+plasti smo zato nastavili varna privilegirana dovoljenja. Brez njih bi
+procesorsko jedro lahko narisalo sliko, krmilnik zaslona pa je ne bi mogel
+prikazati.
+
+Zaslon potrebuje tudi slikovno uro, ki določa hitrost pošiljanja slikovnih točk.
+Četrta fazno sklenjena zanka pripravi uro \SI{50}{\mega\hertz}, delilnik z
+vrednostjo dve pa slikovno uro \SI{25}{\mega\hertz}. Izhodiščna zvočna
+aplikacija te zanke ni potrebovala in jo je pustila izključeno, čeprav jo je
+krmilnik zaslona izbral kot vir. Diagnostika je zato potekala zaporedno:
+preverjanje zunanjega pomnilnika, dovoljenj za dostop in nazadnje vira ure.
+Zaslon je pravilno deloval šele po ureditvi vseh treh plasti.
 
 \section{Časovno filtriranje in zavračanje negotovih vhodov}
 
-Izhod nevronskega modela je šest ocen za trenutni zvočni blok. Največja ocena
-se lahko med zaporednimi bloki spremeni tudi pri istem dogodku, zlasti kadar je
-zvok tih, kratek ali podoben drugemu razredu. Neposreden prikaz največjega
-izhoda bi zato povzročal preskakovanje napisov in veliko kratkih alarmov. Med
-model in uporabniški vmesnik smo dodali odločitveni filter z glajenjem,
-histerezo in posebnim pravilom za govor.
+Izhod nevronskega modela je sedem ocen za trenutni zvočni blok. Pred nadaljnjo
+obdelavo se ocena nevihte prišteje razredu drugo, nevihta pa se odstrani iz
+razvrščanja. Tako zamrznjeni model ostane nespremenjen, uporabniška odločitev
+pa vsebuje šest razredov. Največja ocena se lahko med zaporednimi bloki
+spremeni tudi pri istem dogodku, zlasti kadar je zvok tih, kratek ali podoben
+drugemu razredu. Med model in uporabniški vmesnik smo zato dodali odločitveni
+filter z glajenjem, histerezo in pragovi po razredih.
 
 Za vsak razred najprej izračunamo eksponentno drseče povprečje
 
@@ -360,12 +500,13 @@ aktivnem bloku se glajene ocene inicializirajo neposredno z izhodi modela. Po
 izračunu se razredi uredijo po padajoči glajeni oceni; tri najvišje vrednosti
 se posredujejo zaslonu in diagnostičnemu izhodu.
 
-Tabela \ref{tab:odlocitveni-pragi} prikazuje končne nastavitve filtra. Za
-potrditev novega nevarnostnega razreda mora njegova glajena ocena doseči 0,65.
-Ko je razred že potrjen, ostane aktiven do padca pod 0,50. Različna pragova
-ustvarita histerezo, ki preprečuje preklapljanje tik ob eni mejni vrednosti.
-Če želi drug razred zamenjati že potrjenega, mora poleg vstopnega praga
-presegati njegovo oceno za najmanj 0,08.
+Tabela \ref{tab:odlocitveni-pragi} prikazuje končne nastavitve filtra. Nižji
+izstopni prag od vstopnega ustvari histerezo, ki preprečuje preklapljanje tik
+ob eni mejni vrednosti. Razredi imajo različne pragove in različno število
+zahtevanih zaporednih aktivnih blokov. Kratek pasji lajež in razbitje stekla se
+lahko potrdita v enem bloku, strel in sirena pa potrebujeta dva. Razred drugo
+potrebuje tri zaporedne bloke, da ne bi prehitro prekril pravkar zaznane
+nevarnosti.
 
 \begin{table}[htbp]
   \centering
@@ -377,45 +518,43 @@ presegati njegovo oceno za najmanj 0,08.
     Pravilo & Vrednost \\
     \midrule
     Delež novega bloka v eksponentnem drsečem povprečju & 0,65 \\
-    Prag za potrditev nevarnostnega razreda & 0,65 \\
-    Prag za sprostitev potrjenega razreda & 0,50 \\
     Najmanjša prednost za neposredno zamenjavo razreda & 0,08 \\
-    Prag zaščitnega razreda govor & 0,27 \\
-    Dokazni prag za nevihto & 0,32 \\
-    Število zaporednih aktivnih blokov za dokaz nevihte & 2 \\
-    Prag za sprostitev potrjene nevihte & 0,25 \\
+    Pasji lajež: vstop / izstop / bloki & 0,40 / 0,30 / 1 \\
+    Razbitje stekla: vstop / izstop / bloki & 0,60 / 0,45 / 1 \\
+    Strel: vstop / izstop / bloki & 0,65 / 0,50 / 2 \\
+    Drugo: vstop / izstop / bloki & 0,23 / 0,18 / 3 \\
+    Sirena: vstop / izstop / bloki & 0,65 / 0,50 / 2 \\
+    Govor: vstop / izstop / bloki & 0,40 / 0,30 / 1 \\
+    Faktor ocene razbitja stekla & 1,225 \\
+    Zadržanje prehoda iz nevarnosti v drugo & 4 bloki \\
     Število zaporednih neaktivnih blokov za stanje čakanja & 2 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Govor uporablja asimetrično pravilo. Če njegova glajena ocena doseže 0,27,
-lahko takoj prekliče nevarnostno odločitev, čeprav še ni dosegel običajnega
-praga 0,65. Nižji prag je bil določen na razvojnem naboru z namenom
-zmanjševanja napačnih nevarnostnih alarmov zaradi človeškega glasu. Potrjen
-govor je le informacija: prikaže se kot prepoznan zvok, vendar nikoli ne
-zaklene nevarnostnega opozorila.
+Ocena razbitja stekla se pred razvrščanjem pomnoži z 1,225. Faktor je bil
+določen med razvojem, ker so kratki dogodki razbitja pogosto ostali tik za
+razredom drugo. Pri razredu drugo velja še dodatno varovalo: dokaz se lahko
+zbira kot rezervna odločitev le, kadar najvišji razred ne dosega lastnega
+vstopnega praga. Po potrjeni nevarnosti je prehod v drugo za štiri bloke
+zadržan. S tem statični šum ali konec predvajanega posnetka ne izbriše
+nevarnosti takoj po njeni zaznavi.
 
-Nevihta uporablja ločeno dokazno pravilo, ker je bila po prenosu večjega
-modela na razvojni plošči pogosto pravilno uvrščena na prvo mesto, vendar z
-nižjo oceno od skupnega vstopnega praga. Kandidat za nevihto mora v dveh
-zaporednih aktivnih blokih doseči najmanj 0,32, na potrditvenem bloku pa mora
-biti tudi najvišje uvrščen razred. Potrjena nevihta se sprosti pod vrednostjo
-0,25. Pravilo je bilo določeno na ločenem kalibracijskem naboru s sedmimi
-predvajanji nevihte in osmimi negativnimi predvajanji. Nato je bilo zamrznjeno
-pred sprejemnim preskusom, zato se njegova nastavitev ne spreminja na podlagi
-končnih rezultatov.
+Govor in drugo sta informacijska razreda in ne zakleneta nevarnostnega
+opozorila. Ko zbereta zahtevani dokaz, lahko nadomestita zastarel nevarnostni
+izhod, pri čemer razred drugo zaradi treh potrditvenih blokov reagira počasneje
+od govora. Če želi drug nevarnostni razred neposredno zamenjati že potrjenega,
+mora doseči svoj vstopni pogoj in presegati trenutno oceno za najmanj 0,08.
 
 Filter razlikuje tri vrste končnega stanja. Stanje čakanja pomeni, da vhodni
 nadzor aktivnosti v dveh zaporednih blokih ni zaznal dovolj energije. Stanje
-neznano pomeni, da je zvok aktiven, vendar noben nevarnostni razred ne doseže
-vstopnega praga in govor ne doseže svojega zaščitnega praga. Tretja možnost je
-potrjen razred. Ta razlika je pomembna: neznano ni sedmi razred nevronske
-mreže, temveč zavrnitev nezanesljive napovedi, čakanje pa označuje neaktiven
-vhod.
+neznano pomeni, da je zvok aktiven, vendar noben sistemski razred ne doseže
+svojega vstopnega pogoja. Tretja možnost je potrjen razred. Ta razlika je
+pomembna: neznano ni osmi razred nevronske mreže, temveč zavrnitev
+nezanesljive napovedi, čakanje pa označuje neaktiven vhod.
 
 Uporabniški vmesnik namenoma loči trenutno napoved od zgodovine dogodkov.
-Glavna kartica ob aktivnem zvoku sproti kaže najvišji glajeni izhod, zato se
+Osrednji prikaz ob aktivnem zvoku sproti kaže najvišji glajeni izhod, zato se
 odzove že na spremembo trenutne napovedi. V zgodovino pa se vpiše potrjen
 dogodek; sprememba razreda znotraj iste zvočne seje se sprejme po dveh
 zaporednih prikaznih oknih. Tako je glavni prikaz odziven, seznam nedavnih
@@ -438,8 +577,9 @@ navpičnem premoru zaslona zamenja prikazani naslov. S tem se odpravi trganje in
 večina vidnega utripanja, ki se je pojavljalo pri risanju neposredno v trenutno
 prikazano sliko.
 
-Glavna kartica prikazuje trenutno zaznani zvok, besedilo o stanju ter odstotno
-oceno in vodoravni stolpec. Pod njo so tri najvišje glajene napovedi, na desni
+V osrednjem delu zaslona so prikazani trenutno zaznani zvok, stanje delovanja,
+odstotna ocena zaupanja in vodoravni stolpec, ki to oceno ponazarja. Pod njim so
+tri najvišje glajene napovedi, na desni
 pa tri nedavne potrjene zaznave z oceno in časom. V glavi je večji čas
 delovanja naprave. Spodnja vrstica prikazuje zaklenjeno opozorilo oziroma
 navodilo za upravljanje. Fizični uporabniški gumb začasno ustavi ali nadaljuje
@@ -464,13 +604,13 @@ namiznem preskusnem okolju, v katerem so bili predvajani zvočni posnetki.
   \centering
   \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{20260809_185954.jpg}
+    \includegraphics[angle=-90,origin=c,width=\textwidth]{20260809_185954.jpg}
     \caption{Stanje čakanja.}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{20260809_185928.jpg}
+    \includegraphics[angle=-90,origin=c,width=\textwidth]{20260809_185928.jpg}
     \caption{Potrjena zaznava sirene.}
   \end{subfigure}
   \caption{Končni uporabniški vmesnik med čakanjem in po zaznanem dogodku.}
@@ -479,29 +619,31 @@ namiznem preskusnem okolju, v katerem so bili predvajani zvočni posnetki.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.78\textwidth]{20260809_185913.jpg}
+  \includegraphics[angle=-90,origin=c,width=0.78\textwidth]{20260809_185913.jpg}
   \caption{Delujoči prototip v namiznem preskusnem okolju.}
   \label{fig:prototip-okolje}
 \end{figure}
 
 Poleg zaslona aplikacija uporablja asinhrono serijsko povezavo s hitrostjo
 14.400 bitov na sekundo. Ob spremembi odločitve pošlje kratko strukturirano
-sporočilo v predmetni notaciji jezika JavaScript, za vsak obdelani zvočni blok pa še strukturirano
-vrstico z oznako \texttt{AED\_CSV}. Vrstica vsebuje zaporedno številko bloka,
+sporočilo v besedilnem zapisu s pari imen in vrednosti, za vsak obdelani zvočni
+blok pa še strojno berljivo vrstico z oznako \texttt{AED\_CSV}. Vrstica vsebuje zaporedno številko bloka,
 stanje vhodne aktivnosti, vsoto spektrograma, končno odločitev in njeno oceno,
 tri najvišje razrede z ocenami ter podatek, ali se je odločitev spremenila.
 
 Serijski izhod ni namenjen le razhroščevanju. Orodja na osebnem računalniku so
 ga med fizičnimi preskusi zajemala neposredno v datoteke, iz katerih so bili
 pozneje izračunani rezultati. S tem se nismo zanašali na ročno prepisovanje
-napisov z zaslona. Model, prevedene uteži, podpisana aplikacija, preskusni
-manifesti in posamezni zvočni dražljaji imajo zapisane 256-bitne kriptografske
-kontrolne vsote. Različico na plošči dodatno določa identifikator spremembe v
-repozitoriju. Tako je mogoče meritev povezati z natančno programsko in
-modelsko različico brez sklepanja iz imena datoteke.
+napisov z zaslona. Za model, prevedene uteži, podpisano aplikacijo, preskusne
+sezname in posamezne zvočne dražljaje so izračunane 256-bitne kriptografske
+zgoščevalne vrednosti. Različico na plošči dodatno določa identifikator
+potrditve sprememb v repozitoriju programske kode. Tako je mogoče meritev
+povezati z natančno programsko različico in različico modela brez sklepanja iz
+imena datoteke.
 
 Implementacija tako tvori neprekinjeno verigo: vgrajeni mikrofon zajame zvok,
-strojni filter in neposredni prenos ga pretvorita v šestnajstbitne vzorce,
-predobdelava izračuna kvantizirani logaritemski melov spektrogram, Neural-ART
-izvede prevedeni model, časovni filter pripravi stabilnejšo odločitev, rezultat
-pa se hkrati prikaže uporabniku in zabeleži za ponovljivo vrednotenje.
+strojni filter ga pretvori v šestnajstbitne vzorce, neposredni dostop do
+pomnilnika pa jih prenese v krožni medpomnilnik. Predobdelava izračuna
+kvantizirani logaritemski melov spektrogram, Neural-ART izvede prevedeni model,
+časovni filter pripravi stabilnejšo odločitev, rezultat pa se hkrati prikaže
+uporabniku in zabeleži za ponovljivo vrednotenje.

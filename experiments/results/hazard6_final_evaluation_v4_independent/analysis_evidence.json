@@ -1,0 +1,392 @@
+{
+  "evaluation_id": "STM32N6-HAZARD6-FINAL-003",
+  "attempt_id": "FE4-A01",
+  "generated_at_utc": "2026-08-16T20:18:43.476582+00:00",
+  "input_files": {
+    "experiments/final_evaluation_v4_independent/manifest.csv": "0355fca0f9a3d26be1e41b4fd9896f7fb7c9f567557a7dde23826dbb36c1342b",
+    "experiments/final_evaluation_v4_independent/manifest.json": "2f7dd06386142c4d1ae3694be2858a97181a5ae4fe0a5e95b432ec88f4cdef9b",
+    "experiments/final_evaluation_v4_independent/LOCK.json": "6a2011863e8f995972ade7bd9c808efb4d67f6e9c345929abe4f63a97eba9041",
+    "experiments/final_evaluation_v4_independent/attempts.csv": "e7911f2385951e7df5a90fe3fb1716aeed25eb470f1edc82bf5558d19a4a4ab6",
+    "experiments/runs.csv": "321f0f57d0f8fae52f297ab95c3152c7554bbd3083dfb0da73b94a270f442749",
+    "experiments/frames.csv": "84328628d325ef57e3208d8dc718cbe6d73993087f8adccbf75a83cee1436610",
+    "ml/analyze_final_evaluation_v4_independent.py": "1861c0feb9958368bf4b8ff38de47d2bd754fc93fda22d8d1b8dc753d82fbdec"
+  },
+  "raw_logs": [
+    {
+      "trial_id": "FE4-001",
+      "run_id": "RUN-20260816-215305",
+      "path": "experiments/raw/RUN-20260816-215305.txt",
+      "sha256": "61f39195182cbf8911942b1285babad8b302173524196579130d1053e6724540"
+    },
+    {
+      "trial_id": "FE4-002",
+      "run_id": "RUN-20260816-215321",
+      "path": "experiments/raw/RUN-20260816-215321.txt",
+      "sha256": "bbe4d0547c2a27fcfae9608874a08c7759dfa5c9e5cf3866d70eb8b6d015d3ce"
+    },
+    {
+      "trial_id": "FE4-003",
+      "run_id": "RUN-20260816-215336",
+      "path": "experiments/raw/RUN-20260816-215336.txt",
+      "sha256": "97f579a34d1a4581e9566db7297af7fc6b6061b027c373de1f521f5da795c217"
+    },
+    {
+      "trial_id": "FE4-004",
+      "run_id": "RUN-20260816-215351",
+      "path": "experiments/raw/RUN-20260816-215351.txt",
+      "sha256": "83080d538b15b49675c231679dd1a039a7acd01a5fd3839a47e6d10bf925966c"
+    },
+    {
+      "trial_id": "FE4-005",
+      "run_id": "RUN-20260816-215407",
+      "path": "experiments/raw/RUN-20260816-215407.txt",
+      "sha256": "e7e9bfd39268aedf10a7c276928ccee208da18d685f01e0dfcc8f6c19c58a373"
+    },
+    {
+      "trial_id": "FE4-006",
+      "run_id": "RUN-20260816-215422",
+      "path": "experiments/raw/RUN-20260816-215422.txt",
+      "sha256": "268d8ff38378a7d01d2476273c62b45e2ed80266b19fd7085ed5984b7cb24e4e"
+    },
+    {
+      "trial_id": "FE4-007",
+      "run_id": "RUN-20260816-215438",
+      "path": "experiments/raw/RUN-20260816-215438.txt",
+      "sha256": "d9a29b68bf652d3d410946f0aac56b33c355d29b45a4ac0cfbe6f39ab8c07bb4"
+    },
+    {
+      "trial_id": "FE4-008",
+      "run_id": "RUN-20260816-215453",
+      "path": "experiments/raw/RUN-20260816-215453.txt",
+      "sha256": "796d369ecc08fab5310eb6bdfab688bf505e3081315e80c61faf55bb98ba113b"
+    },
+    {
+      "trial_id": "FE4-009",
+      "run_id": "RUN-20260816-215508",
+      "path": "experiments/raw/RUN-20260816-215508.txt",
+      "sha256": "a89dacb1a5069f7633de25805fbfab7e69c2aa3e9a896e12ecc8e1cc50829a4d"
+    },
+    {
+      "trial_id": "FE4-010",
+      "run_id": "RUN-20260816-215524",
+      "path": "experiments/raw/RUN-20260816-215524.txt",
+      "sha256": "c928038d13e65cd37a490d4aea99cc35483fda002d78a32746dfe09f69f13e4d"
+    },
+    {
+      "trial_id": "FE4-011",
+      "run_id": "RUN-20260816-215539",
+      "path": "experiments/raw/RUN-20260816-215539.txt",
+      "sha256": "6c9333cd6db52e2a0d79cd32233be9990cafee1cf87da793ba2637875c4c6c3e"
+    },
+    {
+      "trial_id": "FE4-012",
+      "run_id": "RUN-20260816-215555",
+      "path": "experiments/raw/RUN-20260816-215555.txt",
+      "sha256": "898b18ae15460a45cc9df1870386fd30ce582198b4b66c0cbf9dcff6c5eec137"
+    },
+    {
+      "trial_id": "FE4-013",
+      "run_id": "RUN-20260816-215610",
+      "path": "experiments/raw/RUN-20260816-215610.txt",
+      "sha256": "81eed30874057dc2671e20844fe45b054b79f774cef6d67bdcf83a09a8a82b49"
+    },
+    {
+      "trial_id": "FE4-014",
+      "run_id": "RUN-20260816-215625",
+      "path": "experiments/raw/RUN-20260816-215625.txt",
+      "sha256": "3dfcba26a22ff75baa4eb9cda6c5df0b9631e3652a5dd5a8f40160f1e0a8a953"
+    },
+    {
+      "trial_id": "FE4-015",
+      "run_id": "RUN-20260816-215641",
+      "path": "experiments/raw/RUN-20260816-215641.txt",
+      "sha256": "95fbf7357dedd948bfe7e57f0b6380ce56bd768049e6d8de84a70c2b64fb4542"
+    },
+    {
+      "trial_id": "FE4-016",
+      "run_id": "RUN-20260816-215656",
+      "path": "experiments/raw/RUN-20260816-215656.txt",
+      "sha256": "c295044138c70a5c32c3a42627578c40f756db6876a60b4324de579f05e82a11"
+    },
+    {
+      "trial_id": "FE4-017",
+      "run_id": "RUN-20260816-215712",
+      "path": "experiments/raw/RUN-20260816-215712.txt",
+      "sha256": "82ed58b0bf00228be3f0ae16e6b004f1a65db53ee8394c8a94608581ebc5d5f1"
+    },
+    {
+      "trial_id": "FE4-018",
+      "run_id": "RUN-20260816-215727",
+      "path": "experiments/raw/RUN-20260816-215727.txt",
+      "sha256": "7c8b8d6dc4383f699badd3ba51959dcc733d35868027e8ea5415e34158a1ab7b"
+    },
+    {
+      "trial_id": "FE4-019",
+      "run_id": "RUN-20260816-215742",
+      "path": "experiments/raw/RUN-20260816-215742.txt",
+      "sha256": "085f7831850d1ed3e29b3de7b128eded4e68a5e0199f0eb541dee92f96453a31"
+    },
+    {
+      "trial_id": "FE4-020",
+      "run_id": "RUN-20260816-215758",
+      "path": "experiments/raw/RUN-20260816-215758.txt",
+      "sha256": "9547515e2b96c8cbbf329d563dc5638f3290bfe87fc4aca86b7eaa6ed0f35b87"
+    },
+    {
+      "trial_id": "FE4-021",
+      "run_id": "RUN-20260816-215813",
+      "path": "experiments/raw/RUN-20260816-215813.txt",
+      "sha256": "808e0cfa6a87a57476c920328199f02f3121e54365d497dc1edb6f3a47786058"
+    },
+    {
+      "trial_id": "FE4-022",
+      "run_id": "RUN-20260816-215829",
+      "path": "experiments/raw/RUN-20260816-215829.txt",
+      "sha256": "418bc5371a914b568568868a3ca356437289d55887c4fa08dcb2b49ce7ee7cf8"
+    },
+    {
+      "trial_id": "FE4-023",
+      "run_id": "RUN-20260816-215844",
+      "path": "experiments/raw/RUN-20260816-215844.txt",
+      "sha256": "f6fe72c89d91889a58f08b8596ae730fdd16eee92f182768e46f9db13ea28794"
+    },
+    {
+      "trial_id": "FE4-024",
+      "run_id": "RUN-20260816-215859",
+      "path": "experiments/raw/RUN-20260816-215859.txt",
+      "sha256": "ff79cd5a72aa9e2fb96f448704b7bc10e3e6406c85a525dcc650f3ad89cd1953"
+    },
+    {
+      "trial_id": "FE4-025",
+      "run_id": "RUN-20260816-215915",
+      "path": "experiments/raw/RUN-20260816-215915.txt",
+      "sha256": "87c5b69a5ae7f1720d38fc1ff6e860c783be3d5db30ed76ce1185663c2d17640"
+    },
+    {
+      "trial_id": "FE4-026",
+      "run_id": "RUN-20260816-215930",
+      "path": "experiments/raw/RUN-20260816-215930.txt",
+      "sha256": "ac2429cec7eecbf7b4651454ec9b347c6194bcf075f8b367f771881417a8efb7"
+    },
+    {
+      "trial_id": "FE4-027",
+      "run_id": "RUN-20260816-215946",
+      "path": "experiments/raw/RUN-20260816-215946.txt",
+      "sha256": "6f62f95ff1c2037258f6cd5db6c3e46f748db779d1dc0ad490c17104ed758097"
+    },
+    {
+      "trial_id": "FE4-028",
+      "run_id": "RUN-20260816-220001",
+      "path": "experiments/raw/RUN-20260816-220001.txt",
+      "sha256": "e05e10713ed6082857497523dd6306787f16d4f3ecf009f2bb1e492e48f12b0f"
+    },
+    {
+      "trial_id": "FE4-029",
+      "run_id": "RUN-20260816-220016",
+      "path": "experiments/raw/RUN-20260816-220016.txt",
+      "sha256": "ecb9375ffb1d7ffa199f0c8c0376ad7d6444ec63226b17271fcd55353d4ccb37"
+    },
+    {
+      "trial_id": "FE4-030",
+      "run_id": "RUN-20260816-220032",
+      "path": "experiments/raw/RUN-20260816-220032.txt",
+      "sha256": "b61b46b93e4993e3a5a25c10b373a7e800a04b2200e8e43cb3f82e0c4620c3a1"
+    },
+    {
+      "trial_id": "FE4-031",
+      "run_id": "RUN-20260816-220047",
+      "path": "experiments/raw/RUN-20260816-220047.txt",
+      "sha256": "5cb37f8410054a09f47028260a45d42de1fc8541a3f2811d70d7bafe8d54fc28"
+    },
+    {
+      "trial_id": "FE4-032",
+      "run_id": "RUN-20260816-220103",
+      "path": "experiments/raw/RUN-20260816-220103.txt",
+      "sha256": "7846031f93963fcf0f75a1e933f435dddbb84a6067287e7ba292683f5428f238"
+    },
+    {
+      "trial_id": "FE4-033",
+      "run_id": "RUN-20260816-220118",
+      "path": "experiments/raw/RUN-20260816-220118.txt",
+      "sha256": "792870334bb642cc56f09653ced8506063c4d0eb36049f657e5ad5a5cea73473"
+    },
+    {
+      "trial_id": "FE4-034",
+      "run_id": "RUN-20260816-220134",
+      "path": "experiments/raw/RUN-20260816-220134.txt",
+      "sha256": "3abe1b8bdd9d3ccbe1923d31e80000abfd69fa344441302680725968b7c32434"
+    },
+    {
+      "trial_id": "FE4-035",
+      "run_id": "RUN-20260816-220149",
+      "path": "experiments/raw/RUN-20260816-220149.txt",
+      "sha256": "fa9a0bfec21fb17748fd41f954e0c752c0d9973f20cae14551ae5560c789d169"
+    },
+    {
+      "trial_id": "FE4-036",
+      "run_id": "RUN-20260816-220204",
+      "path": "experiments/raw/RUN-20260816-220204.txt",
+      "sha256": "197d5c862e27f3190c41159b3afca9daacbdde21a7ceb9cab49a5c09cf1f1f3d"
+    },
+    {
+      "trial_id": "FE4-037",
+      "run_id": "RUN-20260816-220220",
+      "path": "experiments/raw/RUN-20260816-220220.txt",
+      "sha256": "fba30d6af51a4a7d47a5e7194bf2e6b26ff1ba50befadb569f3dce8b825fe507"
+    },
+    {
+      "trial_id": "FE4-038",
+      "run_id": "RUN-20260816-220235",
+      "path": "experiments/raw/RUN-20260816-220235.txt",
+      "sha256": "1474c379b341274a2d6cc4c14a880a973ffff1ea7f2d5ceecb1041d66b4f6923"
+    },
+    {
+      "trial_id": "FE4-039",
+      "run_id": "RUN-20260816-220251",
+      "path": "experiments/raw/RUN-20260816-220251.txt",
+      "sha256": "088f3a156dc0fb093c4c589fce9fcc22f67404a5e4d4721413261990f84f8960"
+    },
+    {
+      "trial_id": "FE4-040",
+      "run_id": "RUN-20260816-220306",
+      "path": "experiments/raw/RUN-20260816-220306.txt",
+      "sha256": "56f2a9c09f5b00081cef84ef932d5d77b805f2eaf67fcf55e1be7f458d4f2805"
+    },
+    {
+      "trial_id": "FE4-041",
+      "run_id": "RUN-20260816-220321",
+      "path": "experiments/raw/RUN-20260816-220321.txt",
+      "sha256": "aacd817c8ff6b2015610b398e5ab8a99fc4d58c4256a3a2862412a0dcacd9631"
+    },
+    {
+      "trial_id": "FE4-042",
+      "run_id": "RUN-20260816-220337",
+      "path": "experiments/raw/RUN-20260816-220337.txt",
+      "sha256": "2944dabbe1e8c9d60a61a4f8f4779ad55c873626e136fda6263c599a40bb65aa"
+    },
+    {
+      "trial_id": "FE4-043",
+      "run_id": "RUN-20260816-220352",
+      "path": "experiments/raw/RUN-20260816-220352.txt",
+      "sha256": "50358869d13f368e24a8d796aa096d329bbd06f4ccbcf40fb9678be7a7d53132"
+    },
+    {
+      "trial_id": "FE4-044",
+      "run_id": "RUN-20260816-220408",
+      "path": "experiments/raw/RUN-20260816-220408.txt",
+      "sha256": "21bf828e8a6c2b19e27ea182faa5ebc7ce447fb617be9d2b5c1d3a095ee58d0d"
+    },
+    {
+      "trial_id": "FE4-045",
+      "run_id": "RUN-20260816-220423",
+      "path": "experiments/raw/RUN-20260816-220423.txt",
+      "sha256": "5587626cabdf833525f1460f234c9479596a207b9cb983e7a96466f4c150f0c6"
+    },
+    {
+      "trial_id": "FE4-046",
+      "run_id": "RUN-20260816-220438",
+      "path": "experiments/raw/RUN-20260816-220438.txt",
+      "sha256": "a056a69bbdaca1b7ce63247b11fbfc4bff29d0a63b91998ad1f3e57b42936f0a"
+    },
+    {
+      "trial_id": "FE4-047",
+      "run_id": "RUN-20260816-220454",
+      "path": "experiments/raw/RUN-20260816-220454.txt",
+      "sha256": "9ed38b444111e3f2eac9227cdc73116483d44dcfb28179fd0e97a822cbbdbf22"
+    },
+    {
+      "trial_id": "FE4-048",
+      "run_id": "RUN-20260816-220509",
+      "path": "experiments/raw/RUN-20260816-220509.txt",
+      "sha256": "d70871bfe564992d17cd9d70b97f2893626709f159ee1e97fac6cb4d017382d6"
+    },
+    {
+      "trial_id": "FE4-049",
+      "run_id": "RUN-20260816-220525",
+      "path": "experiments/raw/RUN-20260816-220525.txt",
+      "sha256": "bfad21f4458affe507e0847eb76bfa09087c9a6f251a9eb4a77379d59f374e9d"
+    },
+    {
+      "trial_id": "FE4-050",
+      "run_id": "RUN-20260816-220540",
+      "path": "experiments/raw/RUN-20260816-220540.txt",
+      "sha256": "a4cb8b128cd7e12270249438de66ed94063037326b4b0d8dcf23a382fd52ea7b"
+    },
+    {
+      "trial_id": "FE4-051",
+      "run_id": "RUN-20260816-220555",
+      "path": "experiments/raw/RUN-20260816-220555.txt",
+      "sha256": "d40e39bf62be2a869d485f326f42b285eeea6c46d083ae37d1ac5bfe789ed8e4"
+    },
+    {
+      "trial_id": "FE4-052",
+      "run_id": "RUN-20260816-220611",
+      "path": "experiments/raw/RUN-20260816-220611.txt",
+      "sha256": "797f04753007faae4d6309c34ed4e17f9236d2d56355cfa3de52a3771117924d"
+    },
+    {
+      "trial_id": "FE4-053",
+      "run_id": "RUN-20260816-220626",
+      "path": "experiments/raw/RUN-20260816-220626.txt",
+      "sha256": "6d2b2672a2f6a46b24da82118e2ca233d98e700dbfeeaf8bd17f282433a20205"
+    },
+    {
+      "trial_id": "FE4-054",
+      "run_id": "RUN-20260816-220642",
+      "path": "experiments/raw/RUN-20260816-220642.txt",
+      "sha256": "afe14b1aba84dbf5bb0cd597c92ad8d384d0262b873795d1f7581d8e0de0c752"
+    },
+    {
+      "trial_id": "FE4-055",
+      "run_id": "RUN-20260816-220657",
+      "path": "experiments/raw/RUN-20260816-220657.txt",
+      "sha256": "25845cff7a31eea6d4d998437dfcaebd477553995c4e4e5f70475c4b6f138795"
+    },
+    {
+      "trial_id": "FE4-056",
+      "run_id": "RUN-20260816-220712",
+      "path": "experiments/raw/RUN-20260816-220712.txt",
+      "sha256": "aca81f579af816506680335ea189c5ed75d56aaa73541e59e88ea4369f2f0e97"
+    },
+    {
+      "trial_id": "FE4-057",
+      "run_id": "RUN-20260816-220728",
+      "path": "experiments/raw/RUN-20260816-220728.txt",
+      "sha256": "3990c3a835e87364e97bb29afb477b2b4d4feb242caae273d1d8b77caf493e4e"
+    },
+    {
+      "trial_id": "FE4-058",
+      "run_id": "RUN-20260816-220743",
+      "path": "experiments/raw/RUN-20260816-220743.txt",
+      "sha256": "ef32655d1e678e6a336724eb50fbcd4de8521be7f1c2c1d05522f1a283ece9b2"
+    },
+    {
+      "trial_id": "FE4-059",
+      "run_id": "RUN-20260816-220759",
+      "path": "experiments/raw/RUN-20260816-220759.txt",
+      "sha256": "3f60a0298948a3a5309d22bca28cb832b9c2e4d0f9b1764830f8e5d7f8956805"
+    },
+    {
+      "trial_id": "FE4-060",
+      "run_id": "RUN-20260816-220814",
+      "path": "experiments/raw/RUN-20260816-220814.txt",
+      "sha256": "838d691dd11db826aefb98ce9fb12b933ceeb1f669aab0be0daa9b86049b61ac"
+    }
+  ],
+  "derived_files": {
+    "RESULTS.md": "1547edd40db6d07a189ce403a338c7a7df5811f402d61bea60571f091b255c93",
+    "attempt_frames.csv": "b0a5c829de201576365d255244a6ad1a5e039b6b70422389aa28a9cffb24e36b",
+    "attempt_runs.csv": "f8f6e56d753ec753ff1c113ecd5204abf1b420f499ec741df1d0bfcd8c2b166f",
+    "class_summary.csv": "5c6b3f4b988ada0a9338c94bac5307061e9b7887509911eaba10a8e0c70d995d",
+    "confirmation_latency.png": "aed584b51e087ff15dc55f0c5723ba80cc0df9e7888b6c448e46c758cb877884",
+    "confirmation_latency_summary.csv": "9865083969bf74ea9282fa2849c63e053727db1ef77ced22eb770a85bd29f7ac",
+    "detection_rates.png": "8ef9923c96c1be02050f0c5a4f577834fe098251456cca17848b0059b8c35814",
+    "dominant_output_confusion_matrix.csv": "bbe258275fda09a6d47d0ef84d8382832d253157c10abec8e38a29945c3a53bd",
+    "dominant_output_confusion_matrix.png": "988cf61ae65010db50e93af1fddf60d7fa72b0d152c618fc1b8e28b052b999d4",
+    "firmware_timing_summary.csv": "7822b7c9ce11574cd5a106c5a3bb4d38638cea56d3f5868787dbb0f81f8591c0",
+    "other_category_results.csv": "94a606771ccda40f60b9ce6be9ee1f695b637bb5b97f1a8f1fbd8d053b4d492b",
+    "other_false_hazard_by_category.png": "d396f8dc06a884e6c5bc01cd4c16a240c6570b31da28d19c489031dc2ba3861b",
+    "summary.json": "15de7d582159719835c828fd5e8401ee441bb9519c44cf9dfce92397cea24def",
+    "trial_results.csv": "895cc40bf0993d43c9d9cffaab0f09d6bf9491ef2d644b910fda67af7d7eec4a"
+  }
+}

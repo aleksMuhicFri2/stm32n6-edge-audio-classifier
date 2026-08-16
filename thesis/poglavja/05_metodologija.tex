@@ -1,0 +1,391 @@
+\chapter{Metodologija vrednotenja}
+\label{ch:metodologija}
+
+Vrednotenje je bilo zasnovano tako, da ločeno obravnava kakovost naučenega
+modela in delovanje celotne fizične naprave. Razvojna pravilnost modela sama po
+sebi namreč ne pove, ali bodo zanesljivo delovali tudi zvočnik, vgrajeni
+mikrofon, predobdelava, nevronski pospeševalnik, odločitveni filter, serijski
+diagnostični izhod in zaslon. Po drugi strani uspešen prikaz nekaj izbranih
+zvokov še ni neodvisen dokaz splošne pravilnosti modela.
+
+Med razvojem je bilo zaporedoma ovrednotenih več pomembnih izvedb. Rezervirani
+preskus je uporabil takrat zamrznjeno različico YAMNet-256. Njegovi
+rezultati so razkrili predvsem težave pri kratkotrajnih dogodkih in so bili nato
+uporabljeni pri načrtovanju izboljšav. Končna naprava uporablja večjo različico
+YAMNet-1024, izboljšan učni nabor, razred drugih zvokov in pragove po razredih.
+Najprej smo jo preverili z nadzorovanim sprejemnim preskusom. Ker so bili
+njegovi posnetki predhodno uporabljeni med razvojem, ga ne predstavljamo kot
+neodvisen preskus posploševanja. Po zadnjih spremembah smo pripravili še nov
+končni fizični preizkus s 60 slušno pregledanimi posnetki, katerih viri niso
+sodelovali pri učenju. Njegov protokol, vrstni red, programska slika in model
+so bili zamrznjeni pred prvim predvajanjem.
+
+\section{Cilji vrednotenja}
+
+Z vrednotenjem smo želeli odgovoriti na štiri praktična vprašanja:
+
+\begin{enumerate}
+  \item Ali celotna naprava v nadzorovanih pogojih potrdi pričakovani razred
+        zvoka?
+  \item Ali govor in raznoliki zvoki razreda drugo povzročijo lažen
+        nevarnostni alarm?
+  \item Kako hitro po začetku predvajanja sistem prvič potrdi pričakovani
+        razred?
+  \item Kolikšna sta čas izvajanja obdelovalnih stopenj in pomnilniški odtis
+        izvedbe?
+\end{enumerate}
+
+Prva tri vprašanja obravnavajo obnašanje sistema od zvočnika do končne
+odločitve. Četrto vprašanje obravnava primernost izvedbe za mikrokrmilnik. Pri
+tem ločimo čas računanja od zakasnitve zaznave. Vsak vhod obsega približno
+\SI{975}{\milli\second} zvoka, nova obdelava pa se zaradi prekrivanja začne
+vsakih \SI{480}{\milli\second}. Odločitveni filter lahko za
+potrditev zahteva več zaporednih blokov. Čas izvajanja modela zato ni enak času
+od začetka zvoka do prikaza opozorila.
+
+\section{Razvojni in ocenjevalni preskusi}
+
+Med izdelavo sistema je bilo izvedenih več vrst preskusov. Njihov namen in
+dokazna vrednost nista enaka. Razvojni podatki so bili uporabljeni za izbiro
+modela, nastavitev pragov in odpravljanje napak. Rezervirani podatki so bili
+odprti šele po zamrznitvi starejše izvedbe. Sprejemni preskus končne naprave pa
+je uporabil že pregledane kanonične primere, da je bilo mogoče preveriti
+delovanje točno tiste različice, ki je ostala na ploščici.
+
+\begin{table}[!ht]
+  \centering
+  \caption{Vloga posameznih stopenj vrednotenja.}
+  \label{tab:stopnje-vrednotenja}
+  \small
+  \begin{tabular}{p{0.23\textwidth}p{0.60\textwidth}}
+    \toprule
+    Stopnja & Namen in dovoljena razlaga \\
+    \midrule
+    Razvojno preverjanje modela & Izbira učnega postopka in primerjava različic
+    YAMNet-1024; končna sedemrazredna različica uporablja 413 razvojnih
+    posnetkov in ni končna ocena. \\
+    Rezervirani fizični preskus & Preverjanje takrat zamrznjene izvedbe
+    YAMNet-256 na 70 prej neuporabljenih virih; rezultat velja samo za to
+    izvedbo. \\
+    Kalibracija in dimni preskusi & Nastavitev vhodnega praga in pragov po
+    razredih ter preverjanje zagona, zaslona in vseh sistemskih izhodov;
+    rezultati niso uporabljeni kot ocena pravilnosti. \\
+    Nadzorovani sprejemni preskus & Preverjanje končne naprave YAMNet-1024 na
+    odobrenih primerih in pri treh ravneh predvajanja; ne meri posploševanja na
+    nove posnetke. \\
+    Neodvisni končni fizični preizkus & Primarna ocena zamrznjene končne
+    naprave na 60 novih virih, ločenih od učenja; vključuje pravilne zaznave,
+    prevladujoči izhod, lažne nevarnostne alarme in odzivni čas. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Razvojno preverjanje končnega modela je obsegalo 413 posnetkov, ki niso
+sodelovali pri učenju zaključne plasti. V njem je bilo tudi 135 primerov
+razreda drugo. Rezultat je bil uporabljen pri izbiri med razvojnimi
+različicami, zato ga obravnavamo kot razvojni rezultat.
+Pred fizičnimi preskusi so bili opravljeni tudi slušni pregledi izrezov in
+povečanih različic. Pri strelu in razbitju stekla smo preverili, ali je dogodek
+res prisoten in ali ni odrezan na začetku ali koncu. Pri nevihti smo zavrnili
+posnetke z izrazitim visokim tonom v ozadju. S tem smo preverjali kakovost
+dražljajev, ne odziva naprave.
+
+Dimni preskus pomeni kratek funkcijski pregled po spremembi programske opreme
+ali modela. Z njim smo preverili, ali se naprava zažene, ali delujeta mikrofon in
+zaslon ter ali je mogoče sprožiti vse pričakovane izhode. Posnetki in rezultati
+takšnih preskusov so lahko vplivali na naslednjo razvojno odločitev, zato niso
+vključeni v končne deleže uspešnosti. Enako velja za nedokončano primerjalno
+predvajanje starega nabora 70 zvokov na novi izvedbi.
+
+\section{Rezervirani preskus predhodne izvedbe}
+\label{sec:metodologija-rezervirani}
+
+Rezervirani preskus z oznako
+\texttt{STM32N6-HAZARD6-FINAL-001} in poskusom \texttt{FE-A01} je bil
+pripravljen za takrat končno različico YAMNet-256. Pred prvim zajemom so bili
+zamrznjeni model, programska oprema, pragovi, predobdelava, seznam dražljajev,
+njihov vrstni red in pravila ocenjevanja. Med 70 poskusi ni bila ponovljena
+nobena neuspešna napoved in nastavitve niso bile spremenjene.
+
+\subsection{Sestava preskusnega nabora}
+
+Preskus je vseboval 60 pozitivnih in 10 zahtevnih negativnih primerov. Za vsak
+izmed šestih izhodov je bilo izbranih deset različnih izvornih posnetkov. Med
+izhodi so bili pasji lajež, razbitje stekla, strel oziroma streljanje, sirena,
+govor in nevihta. Pozitivni posnetki so izvirali iz ocenjevalnega dela zbirke
+Freesound Dataset 50K, ki med razvojem te izvedbe ni bil uporabljen. Negativni
+posnetki so izvirali iz petega dela zbirke Environmental Sound Classification
+50. Vsebovali so ploskanje, trkanje po lesenih vratih, jok dojenčka, tiktakanje
+ure, dež, motorno žago, prasketanje ognja, avtomobilsko hupo, kašljanje in
+ognjemet. To niso bili tihi kontrolni primeri, temveč zvoki, ki bi se lahko
+zamenjali z enim od ciljnih razredov.
+
+Izbira je bila določena s pravili nad metapodatki in ni upoštevala napovedi
+modela ali kasnejšega poslušanja rezultatov. Pri razbitju stekla je bila
+zahtevana oznaka, ki pomeni dejanski lom, pri nevihti pa oznaka za grmenje.
+Metapodatkovno označeni umetni streli so bili izločeni. Govor je obsegal štiri
+moške, štiri ženske in dva otroška posnetka. Izločeni so bili igrani, kričani,
+šepetani, peti, umetno ustvarjeni ali višinsko spremenjeni glasovi. Posnetki
+istega ciljnega razreda so izvirali od različnih nalagalcev, s čimer smo
+zmanjšali odvisnost od ene snemalne seje.
+
+\subsection{Priprava dražljajev}
+
+Vsi viri so bili pretvorjeni v enokanalni zapis s frekvenco vzorčenja
+\SI{44.1}{\kilo\hertz} in šestnajstbitnimi celoštevilskimi vzorci. Po
+normalizaciji je bil samodejno izbran najmočnejši ustrezni izsek. Neprekinjeni
+zvoki so uporabljali petsekundske enote, kratkotrajni dogodki pa dve sekundi
+dolge enote z dogodkom v sredini. Enote so bile z vnaprej določenimi premori
+ponovljene do skupne dolžine najmanj deset sekund.
+
+Osnovni cilj normalizacije je bila največja efektivna vrednost v oknu dolžine
+\SI{100}{\milli\second}, in sicer \SI{-12}{\decibel} glede na polno digitalno območje, ter najvišji vrh
+\SI{-1}{\decibel} glede na polno digitalno območje. Zaradi kratkosti dogodkov
+je bilo razbitje stekla nato ojačeno za \SI{3}{\decibel}, strel pa za
+\SI{10}{\decibel}. Če bi ojačenje povzročilo omejevanje več kot petih odstotkov
+vzorcev, ga je pripravljalni program zmanjšal samo toliko, da je ostal pod to
+mejo. Za negativne primere so bile že pred preskusom določene udobne absolutne
+ravni predvajanja, saj se njihove izvorne glasnosti močno razlikujejo.
+
+Za vsak dražljaj so bile shranjene izvorna in izhodna kriptografska kontrolna
+vsota, uporabljeno ojačenje, položaj izseka, število ponovitev in delež
+omejevanja. Tako je bilo mogoče preveriti, da se med pripravo in predvajanjem
+datoteka ni spremenila.
+
+\subsection{Fizični pogoji in izvedba}
+
+Glasnost sistema Windows je bila nastavljena na \SI{75}{\percent}, razdalja med
+zvočnikom in vgrajenim mikrofonom pa na \SI{30}{\centi\meter}. Ploščica in
+zvočnik sta med poskusom ostala na istem mestu v mirnem prostoru. Pred začetkom
+je bil enkrat pritisnjen gumb za ponastavitev, med preskusom pa ponastavljanje ni
+bilo dovoljeno.
+
+Vsak zajem se je začel tri sekunde pred predvajanjem in je trajal 20 sekund.
+Diagnostični zapisi so bili zajeti prek serijske povezave na vratih COM3 s
+hitrostjo 14.400 bitov na sekundo. Vrstni red je bil sestavljen tako, da dva
+zaporedna poskusa nista imela istega pričakovanega izhoda. Program je izvajalcu
+prikazoval le oznako poskusa in napredek, napovedi pa je shranjeval samodejno.
+Tehnična napaka bi dovolila nadomestni zajem samo ob ohranitvi prvotnega
+neuporabnega zapisa; napačna napoved sama po sebi ni bila razlog za ponovitev.
+
+\section{Sprejemni preskus končne naprave}
+\label{sec:metodologija-sprejemni}
+
+Končna izvedba YAMNet-1024 je bila ovrednotena z nadzorovanim sprejemnim
+preskusom \texttt{STM32N6-HAZARD6-ACCEPTANCE-001}. Izveden je bil enkrat kot
+poskus \texttt{AT-A01}. Pred začetkom so bili zamrznjeni model, podpisana
+programska slika, odločitveni pragovi, manifest in vrstni red predvajanja.
+Identiteta modela, programske slike in vsake zvočne datoteke je bila preverjena
+z 256-bitno kriptografsko kontrolno vsoto.
+
+Preskus je uporabil devet predhodno poslušanih in odobrenih izvornih posnetkov.
+Za vsakega izmed šestih modelskih izhodov je bil izbran en jasen kanoničen
+primer. Vsak je bil predvajan pri nominalni ravni ter po utišanju za
+\SI{6}{\decibel} in \SI{12}{\decibel}. S tem je nastalo 18 pozitivnih poskusov.
+Dodani so bili še trije varni negativni poskusi: dež, veter in trkanje po
+lesenih vratih. Ti so bili predvajani samo pri nominalni ravni, saj bi jih z
+dodatnim utišanjem spremenili v prelahke negativne primere. Skupaj je preskus
+vseboval 21 poskusov, kot prikazuje tabela \ref{tab:sprejemni-nabor}.
+
+\begin{table}[!ht]
+  \centering
+  \caption{Sestava nadzorovanega sprejemnega preskusa končne naprave.}
+  \label{tab:sprejemni-nabor}
+  \begin{tabular}{lrrr}
+    \toprule
+    Skupina & Nominalna raven & \SI{-6}{\decibel} & \SI{-12}{\decibel} \\
+    \midrule
+    Šest modelskih izhodov & 6 & 6 & 6 \\
+    Trije varni zvoki & 3 & 0 & 0 \\
+    \midrule
+    Skupaj & 9 & 6 & 6 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Semantični pregled je bil pri kratkotrajnih dogodkih posebej pomemben.
+Posnetek razbitja stekla je moral vsebovati jasno in celovito razbitje, ne le
+rokovanja s steklom, trka ali cingljanja. Posnetek strela je vseboval jasen
+posamezen strel, ki je bil v dražljaju štirikrat ponovljen. Posnetek nevihte ni
+vseboval prej opaženega motečega visokega tona. Ta nadzor zmanjšuje nevarnost,
+da bi napravo ocenjevali z napačno označenim ali vsebinsko neustreznim zvokom.
+
+Glasnost sistema Windows je bila nastavljena na \SI{70}{\percent}, razdalja med
+zvočnikom in mikrofonom pa na \SI{30}{\centi\meter}. Položaj naprav se ni
+spreminjal, prostor je bil čim bolj tih, ploščica pa je bila pred začetkom
+enkrat ponastavljena. Vrstni red je bil določen s semenom 811. Pred vsakim
+predvajanjem je program tri sekunde zajemal stanje prostora, nato pa je
+samodejno predvajal datoteko in shranil serijske zapise. Neuspešna napoved ni
+bila ponovljena.
+
+Pri pozitivnem poskusu je bil rezultat uspešen, če se je pričakovani razred med
+predvajanjem vsaj enkrat pojavil kot potrjena odločitev. Pri varnem zvoku je bil
+uspeh odsotnost potrjenega nevarnostnega razreda; izhodi \emph{čakanje},
+\emph{neznano} in \emph{govor} so bili dovoljeni. Primarni rezultat je delež
+uspešnih devetih poskusov pri nominalni ravni. Poskusi pri znižanih ravneh so
+sekundarno preverjali občutljivost na glasnost. Ker je bila vsaka kombinacija
+izvornega posnetka in ravni predvajana samo enkrat, rezultate prikazujemo
+opisno in jih ne razlagamo kot oceno pravilnosti na celotni populaciji zvokov.
+
+\section{Neodvisni končni fizični preizkus}
+\label{sec:metodologija-koncni}
+
+Po dokončanju razreda drugo, pragov po razredih in polovičnega prekrivanja
+vhodnih oken smo pripravili novi preizkus z oznako
+\path{STM32N6-HAZARD6-FINAL-003}. Edini izvedeni poskus ima oznako
+\path{FE4-A01}. Pred začetkom so bili zamrznjeni model, uteži, podpisana
+aplikacija, seznam dražljajev, njihov vrstni red in pravila analize. Manifest
+ima 256-bitno kriptografsko kontrolno vsoto
+SHA-256:
+\begin{center}
+  \small\texttt{0355fca0f9a3d26be1e41b4fd9896f7}\newline
+  \texttt{fb7c9f567557a7dde23826dbb36c1342b}.
+\end{center}
+
+\subsection{Izbira in pregled posnetkov}
+
+Pred zamrznitvijo je bil opravljen slepi slušni pregled 118 kandidatov. Med
+poslušanjem napovedi modela in ploščice niso bile prikazane. Kandidat je bil
+primeren samo, če je vseboval običajen in jasno prepoznaven dogodek, če ta ni
+bil odrezan na začetku ali koncu, če je bila slišnost normalna ter če ni bil
+označen zvočni artefakt. Identitete virov so bile preverjene tudi med
+različnimi zbirkami. En kandidat pasjega laježa z istim izvornim posnetkom kot
+v učni množici je bil zato izločen.
+
+Iz primernih kandidatov je bilo z vnaprej določenima semenoma izbranih 60
+različnih virov, po deset za vsak sistemski razred. Razredi so bili pasji
+lajež, razbitje stekla, strel, drugo, sirena in govor. Nevihta ni samostojen
+sistemski razred, saj se njen modelski izhod pred odločanjem prišteje razredu
+drugo. Deset primerov razreda drugo predstavlja deset različnih vrst zvoka:
+alarm, aplavz, zvonec, ploskanje, računalniško tipkovnico, pok, posodo in
+kuhinjske pripomočke, ognjemet, trkanje ter veter. Izbira ni uporabljala
+napovedi končnega modela.
+
+Vrstni red je bil naključno določen pod pogojem, da zaporedna poskusa nimata
+istega pričakovanega razreda. Vsak dražljaj je bil normaliziran na največjo
+efektivno vrednost v \SI{100}{\milli\second} oknu približno
+\SI{-42}{\decibel} glede na polno digitalno območje. Sistem Windows je ostal
+na \SI{100}{\percent} glasnosti, zvočnik pa je bil \SI{30}{\centi\meter} od
+vgrajenega mikrofona. Položaj naprav in prostor se med preizkusom nista
+spreminjala.
+
+\subsection{Izvedba in merila}
+
+Vsak zajem je trajal 15 sekund. Prve tri sekunde so bile namenjene zajemu
+stanja pred predvajanjem, nato je program samodejno predvajal zamrznjeno
+datoteko in shranil serijski dnevnik. Za primarno merilo smo uporabili samo
+časovno območje od začetka predvajanja naprej. Poskus je bil uspešen, če je
+sistem v tem območju vsaj enkrat potrdil pričakovani razred. Napačna napoved ni
+bila razlog za ponovitev.
+
+Poleg primarnega merila smo za vsak poskus določili prevladujoči potrjeni izhod
+in čas od začetka predvajanja do prve pravilne potrditve. Prevladujoči izhod je
+razred z največ potrjenimi okvirji; ob izenačenju odloča večja najvišja ocena.
+Lažni nevarnostni alarm smo merili pri govoru in razredu drugo. Pomeni vsaj en
+potrjeni izhod pasjega laježa, razbitja stekla, strela ali sirene po začetku
+predvajanja. Posebej smo prešteli poskuse z več kot enim takim okvirjem ter
+izhode, ki so nastali v treh sekundah pred predvajanjem. Tako preneseno stanje
+prejšnjega poskusa ni bilo napačno pripisano novemu dražljaju.
+
+Za skupni in razredne deleže smo izračunali Wilsonovo
+petindevetdesetodstotno območje zaupanja. Ker je v vsakem razredu le deset
+poskusov, so območja široka. Rezultat je zato ocena celotnega sistema v
+določeni postavitvi zvočnik--mikrofon, ne splošna pravilnost za vse resnične
+zvoke.
+
+\section{Zajem podatkov in merila uspešnosti}
+
+Vdelana programska oprema je za vsak obdelani blok v serijski diagnostični
+izhod zapisala stanje vhodne aktivnosti, šest izhodnih ocen, tri najvišje
+razrede, potrjeno odločitev in čase posameznih stopenj. Zajemni program je
+vsakemu poskusu dodal oznako modela, programske različice, pričakovani razred,
+nastavljeno glasnost, razdaljo, kontrolno vsoto dražljaja in pot do izvornega
+zapisa. Izvirni zapisi so bili ohranjeni, analizni program pa je iz njih izdelal
+preglednice in grafe.
+
+Pri analizi smo uporabljali naslednja merila:
+
+\begin{itemize}
+  \item \emph{potrjena pravilna zaznava} pomeni, da je odločitveni filter vsaj
+        enkrat potrdil pričakovani razred;
+  \item \emph{pričakovani razred na prvem mestu} pomeni, da je imel ta razred
+        v vsaj enem aktivnem bloku najvišjo glajeno oceno, tudi če ni dosegel
+        pogojev za potrditev;
+  \item \emph{aktivni blok} je blok, pri katerem je energijsko merilo preseglo
+        vhodni prag aktivnosti;
+  \item \emph{lažen nevarnostni alarm} pomeni, da je sistem pri govoru ali
+        razredu drugo potrdil enega od štirih nevarnostnih razredov;
+  \item \emph{delež uspešnosti} je razmerje med številom uspešnih in številom
+        vseh poskusov v obravnavani skupini.
+\end{itemize}
+
+Notranja ocena modela je shranjena tudi kot najvišja dosežena ocena
+pričakovanega razreda. Te vrednosti ne imenujemo verjetnost pravilnosti, saj
+model ni bil posebej umerjen tako, da bi na primer ocena 0,8 v vseh pogojih
+pomenila osemdesetodstotno verjetnost pravilne odločitve.
+
+Pri rezerviranem in neodvisnem končnem preskusu je bilo za deleže izračunano
+petindevetdesetodstotno območje zaupanja po Wilsonu
+\cite{wilson1927interval}. Za opaženi delež
+$\hat{p}=k/n$, število poskusov $n$ in vrednost $z=1{,}96$ sta meji
+
+\begin{equation}
+  \frac{\hat{p}+\frac{z^2}{2n}
+  \mathbin{\pm}z\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z^2}{4n^2}}}
+  {1+\frac{z^2}{n}}.
+\end{equation}
+
+Pri samo desetih poskusih na razred je takšno območje široko. Zato razlike med
+razredi opisujemo kot opažanje v danem preskusu in ne kot natančno oceno
+splošne pravilnosti. Za sprejemni preskus območja zaupanja po razredih niso
+smiselna, saj tri ravni izvirajo iz istega posnetka in zato niso tri neodvisno
+izbrani primeri.
+
+\section{Merjenje časa izvajanja in pomnilnika}
+
+Čas predobdelave, sklepanja in naknadne obdelave meri vdelana programska oprema
+s števcem ciklov procesorskega jedra. Število ciklov se glede na frekvenco jedra
+pretvori v milisekunde in zapiše ob posameznem obdelanem bloku. Analiza izloči
+zapise, pri katerih katera izmed časovnih vrednosti manjka, ter poroča število
+popolnih zapisov in povprečje. Gre za telemetrijo same naprave, ne za neodvisno
+meritev z osciloskopom ali zunanjim signalom. Prav tako ta čas ne vključuje
+čakanja, da se napolni skoraj enosekundno vhodno okno, niti morebitnega čakanja
+na potrditev v več zaporednih blokih.
+
+Pomnilniški odtis je bil določen iz povezovalnega zemljevida programa, poročila
+prevajalnika nevronskega modela in velikosti ustvarjenih binarnih datotek.
+Ločeno obravnavamo notranji pomnilnik aplikacije, notranje območje začasnih
+aktivacij nevronskega pospeševalnika, zunanji pomnilnik HyperRAM za dva
+zaslonska medpomnilnika ter particiji zunanjega bliskovnega pomnilnika za
+aplikacijo in uteži. Te velikosti pripadajo različnim fizičnim območjem, zato
+njihovih odstotkov ne seštevamo. Velikost datoteke z razhroščevalnimi podatki
+prav tako ni enaka velikosti slike, ki se zapiše na napravo.
+
+Električna moč in poraba energije nista bili izmerjeni. V nalogi zato ne
+podajamo številčne trditve o energijski učinkovitosti, čeprav je izvajanje na
+namenskem nevronskem pospeševalniku pomemben del zasnove.
+
+\section{Veljavnost in omejitve}
+
+Rezervirani preskus predhodne izvedbe ima dobro ločitev med razvojnimi in
+ocenjevalnimi viri, vendar njegovi rezultati ne opisujejo pozneje izdelanega
+modela YAMNet-1024. Sprejemni preskus uporablja le devet že poznanih izvornih
+posnetkov. Neodvisni končni fizični preizkus uporablja nove vire, ločene od
+učenja, in zato predstavlja glavni rezultat končne naprave. Tudi ta preskus pa
+zaradi omejenega števila virov ne dokazuje splošne pravilnosti v poljubnem
+okolju.
+
+Fizični preskusi so bili izvedeni z eno razvojno ploščico, njenim
+vgrajenim mikrofonom, enim zvočnikom, eno razdaljo in v enem prostoru.
+Odstotek glasnosti sistema Windows ter digitalna raven v decibelih ne
+predstavljata umerjene ravni zvočnega tlaka pri mikrofonu. Na rezultat lahko
+vplivajo frekvenčni odziv zvočnika, odboji v prostoru, zunanji šum in trenutna
+poravnava kratkega dogodka z obdelovalnim oknom. Še posebej pri strelu in
+razbitju stekla lahko majhen časovni premik spremeni vsebino posameznega
+bloka.
+
+Nabor razreda drugo z desetimi kategorijami je širši od treh varnih primerov
+sprejemnega preskusa, vendar še vedno ne zajema vseh možnih motečih zvokov. Za
+močnejšo oceno v resničnem okolju bi potrebovali več novih virov in ponovitev,
+umerjene ravni zvoka, različne prostore in razdalje ter večurno opazovanje
+lažnih alarmov.

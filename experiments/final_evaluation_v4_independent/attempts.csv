@@ -1,0 +1,2 @@
+attempt_id,status,started_at,completed_at,first_run_id,last_run_id,captured_trials,volume_percent,distance_cm,manifest_sha256,operator_note
+"FE4-A01","completed","2026-08-16T21:53:05.4964336+02:00","2026-08-16T22:10:02.5313328+02:00","RUN-20260816-215305","RUN-20260816-220814","60","100","30","0355fca0f9a3d26be1e41b4fd9896f7fb7c9f567557a7dde23826dbb36c1342b",""

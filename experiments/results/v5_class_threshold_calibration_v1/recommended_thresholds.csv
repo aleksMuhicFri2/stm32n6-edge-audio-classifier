@@ -1,0 +1,8 @@
+class_name,enter_threshold,release_threshold,confirmation_active_frames,a02_correct_top1_minimum,a02_incorrect_top1_maximum,rationale
+dog_bark,0.4,0.3,1,0.4161,,Lowest correct A02 top-1 was 0.416; one-frame response preserves barks.
+glass_breaking,0.6,0.45,1,0.617,,Lowest correct A02 top-1 was 0.617; one frame is required for transients.
+gunshot_gunfire,0.4,0.3,2,0.3375,0.6485,Two frames at 0.40 reject isolated impulses; one frame at 0.75 remains an immediate high-confidence path.
+other,0.32,0.24,1,0.3294,0.9027,Informational rejection class; a low threshold safely absorbs domestic sounds.
+siren,0.65,0.5,2,0.7133,0.5064,Correct A02 top-1 started at 0.713 while observed false siren top-1 stayed at or below 0.506.
+speech,0.4,0.3,1,0.4313,0.615,Correct A02 top-1 started at 0.431; speech is informational and suppresses false hazards.
+thunderstorm,0.32,0.25,2,0.4391,0.4781,Preserves the earlier seven-playback board calibration with two-frame evidence.

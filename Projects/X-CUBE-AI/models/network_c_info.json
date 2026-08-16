@@ -15,10 +15,10 @@
       "intq": {
         "axis": -1,
         "offsets": [
-          51
+          53
         ],
         "scales": [
-          0.0343001597
+          0.0346764177
         ]
       },
       "is_param": false,
@@ -64,10 +64,10 @@
       },
       "shape": [
         1,
-        6
+        7
       ],
       "shape_map": [],
-      "size_bytes": 24
+      "size_bytes": 28
     },
     {
       "alignment": 1,
@@ -149,7 +149,7 @@
           -128
         ],
         "scales": [
-          0.0351280123
+          0.0358696915
         ]
       },
       "is_param": false,
@@ -189,7 +189,7 @@
           0
         ],
         "scales": [
-          0.0351280123
+          0.0358696915
         ]
       },
       "is_param": false,
@@ -229,7 +229,7 @@
           0
         ],
         "scales": [
-          0.0393871814
+          0.0400079638
         ]
       },
       "is_param": false,
@@ -269,7 +269,7 @@
           0
         ],
         "scales": [
-          0.0369737074
+          0.0374742411
         ]
       },
       "is_param": false,
@@ -309,7 +309,7 @@
           0
         ],
         "scales": [
-          0.0328866132
+          0.0335374735
         ]
       },
       "is_param": false,
@@ -349,7 +349,7 @@
           0
         ],
         "scales": [
-          0.027819423
+          0.0283775479
         ]
       },
       "is_param": false,
@@ -389,7 +389,7 @@
           0
         ],
         "scales": [
-          0.0322253108
+          0.0328197181
         ]
       },
       "is_param": false,
@@ -429,7 +429,7 @@
           0
         ],
         "scales": [
-          0.0258428212
+          0.0261728391
         ]
       },
       "is_param": false,
@@ -469,7 +469,7 @@
           0
         ],
         "scales": [
-          0.028523488
+          0.0287652593
         ]
       },
       "is_param": false,
@@ -509,7 +509,7 @@
           0
         ],
         "scales": [
-          0.0229960009
+          0.023180576
         ]
       },
       "is_param": false,
@@ -549,7 +549,7 @@
           0
         ],
         "scales": [
-          0.0283129942
+          0.0285791121
         ]
       },
       "is_param": false,
@@ -589,7 +589,7 @@
           0
         ],
         "scales": [
-          0.0214497335
+          0.0216450989
         ]
       },
       "is_param": false,
@@ -629,7 +629,7 @@
           0
         ],
         "scales": [
-          0.0249666814
+          0.0252163392
         ]
       },
       "is_param": false,
@@ -669,7 +669,7 @@
           0
         ],
         "scales": [
-          0.0202157367
+          0.0202409048
         ]
       },
       "is_param": false,
@@ -709,7 +709,7 @@
           0
         ],
         "scales": [
-          0.0277073812
+          0.0278010815
         ]
       },
       "is_param": false,
@@ -780,7 +780,7 @@
           0
         ],
         "scales": [
-          0.0184644572
+          0.0184314698
         ]
       },
       "is_param": false,
@@ -820,7 +820,7 @@
           0
         ],
         "scales": [
-          0.0269252323
+          0.0269490201
         ]
       },
       "is_param": false,
@@ -891,7 +891,7 @@
           0
         ],
         "scales": [
-          0.0173771549
+          0.0173277892
         ]
       },
       "is_param": false,
@@ -931,7 +931,7 @@
           0
         ],
         "scales": [
-          0.0254097059
+          0.0253303535
         ]
       },
       "is_param": false,
@@ -1002,7 +1002,7 @@
           0
         ],
         "scales": [
-          0.0174824614
+          0.0172683634
         ]
       },
       "is_param": false,
@@ -1042,7 +1042,7 @@
           0
         ],
         "scales": [
-          0.0226865355
+          0.0225102268
         ]
       },
       "is_param": false,
@@ -1113,7 +1113,7 @@
           0
         ],
         "scales": [
-          0.0102669979
+          0.00991344452
         ]
       },
       "is_param": false,
@@ -1153,7 +1153,7 @@
           0
         ],
         "scales": [
-          0.0105792908
+          0.0102244727
         ]
       },
       "is_param": false,
@@ -1224,7 +1224,7 @@
           0
         ],
         "scales": [
-          0.00732428906
+          0.00699203508
         ]
       },
       "is_param": false,
@@ -1264,7 +1264,7 @@
           0
         ],
         "scales": [
-          0.00319047738
+          0.00308851781
         ]
       },
       "is_param": false,
@@ -1335,7 +1335,7 @@
           0
         ],
         "scales": [
-          0.00836046133
+          0.00824673753
         ]
       },
       "is_param": false,
@@ -1375,7 +1375,7 @@
           0
         ],
         "scales": [
-          0.00795166288
+          0.00793512352
         ]
       },
       "is_param": false,
@@ -1446,7 +1446,7 @@
           -128
         ],
         "scales": [
-          0.0169957504
+          0.0170964506
         ]
       },
       "is_param": false,
@@ -1486,7 +1486,7 @@
           0
         ],
         "scales": [
-          0.0138510419
+          0.0139159365
         ]
       },
       "is_param": false,
@@ -1510,7 +1510,7 @@
     },
     {
       "alignment": 1,
-      "batch": 6,
+      "batch": 7,
       "channel_first": false,
       "channel_last": true,
       "epochs": {
@@ -1523,10 +1523,10 @@
       "intq": {
         "axis": -1,
         "offsets": [
-          53
+          71
         ],
         "scales": [
-          0.0364396088
+          0.0462075733
         ]
       },
       "is_param": false,
@@ -1541,12 +1541,12 @@
       },
       "shape": [
         1,
-        6,
+        7,
         1,
         1
       ],
       "shape_map": [],
-      "size_bytes": 6
+      "size_bytes": 7
     },
     {
       "alignment": 1,
@@ -1563,10 +1563,10 @@
       "intq": {
         "axis": -1,
         "offsets": [
-          53
+          71
         ],
         "scales": [
-          0.0364396088
+          0.0462075733
         ]
       },
       "is_param": false,
@@ -1581,10 +1581,10 @@
       },
       "shape": [
         1,
-        6
+        7
       ],
       "shape_map": [],
-      "size_bytes": 6
+      "size_bytes": 7
     },
     {
       "alignment": 1,
@@ -1610,10 +1610,10 @@
       },
       "shape": [
         1,
-        6
+        7
       ],
       "shape_map": [],
-      "size_bytes": 24
+      "size_bytes": 28
     },
     {
       "alignment": 1,
@@ -1662,7 +1662,7 @@
       "mpool_id": 6,
       "name": "Dequantize_1_x_scale",
       "nbits": 32,
-      "offset_start": 3278976,
+      "offset_start": 3280016,
       "qmn": {
         "m": 0,
         "n": 0,
@@ -1690,7 +1690,7 @@
       "mpool_id": 6,
       "name": "Dequantize_1_x_zero_point",
       "nbits": 8,
-      "offset_start": 3279472,
+      "offset_start": 3280512,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -1718,7 +1718,7 @@
       "mpool_id": 6,
       "name": "Conv2D_2_weights",
       "nbits": 32,
-      "offset_start": 3254032,
+      "offset_start": 3255072,
       "qmn": {
         "m": 0,
         "n": 0,
@@ -1749,7 +1749,7 @@
       "mpool_id": 6,
       "name": "Conv2D_2_bias",
       "nbits": 32,
-      "offset_start": 3278736,
+      "offset_start": 3279776,
       "qmn": {
         "m": 0,
         "n": 0,
@@ -1912,7 +1912,7 @@
       "mpool_id": 6,
       "name": "Conv2D_9_weights",
       "nbits": 8,
-      "offset_start": 3227392,
+      "offset_start": 3228432,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -3600,7 +3600,7 @@
       "mpool_id": 6,
       "name": "Conv2D_34_weights",
       "nbits": 8,
-      "offset_start": 3225088,
+      "offset_start": 3226128,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -6274,7 +6274,7 @@
       "mpool_id": 6,
       "name": "Conv2D_48_weights",
       "nbits": 8,
-      "offset_start": 3172864,
+      "offset_start": 3173904,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -8398,7 +8398,7 @@
       "mpool_id": 6,
       "name": "Conv2D_55_weights",
       "nbits": 8,
-      "offset_start": 3177472,
+      "offset_start": 3178512,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -10522,7 +10522,7 @@
       "mpool_id": 6,
       "name": "Conv2D_62_weights",
       "nbits": 8,
-      "offset_start": 3182080,
+      "offset_start": 3183120,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -12646,7 +12646,7 @@
       "mpool_id": 6,
       "name": "Conv2D_69_weights",
       "nbits": 8,
-      "offset_start": 3186688,
+      "offset_start": 3187728,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -14770,7 +14770,7 @@
       "mpool_id": 6,
       "name": "Conv2D_76_weights",
       "nbits": 8,
-      "offset_start": 3191296,
+      "offset_start": 3192336,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22125,15 +22125,17 @@
           0,
           0,
           0,
+          0,
           0
         ],
         "scales": [
-          0.00298149278,
-          0.00259631453,
-          0.00259599229,
-          0.0024085904,
-          0.00214121141,
-          0.00252851704
+          0.00671384064,
+          0.00592349749,
+          0.00490512,
+          0.00473354477,
+          0.00605584634,
+          0.00517080072,
+          0.00454442203
         ]
       },
       "is_param": true,
@@ -22147,13 +22149,13 @@
         "sign": 1
       },
       "shape": [
-        6,
+        7,
         1024,
         1,
         1
       ],
       "shape_map": [],
-      "size_bytes": 6144
+      "size_bytes": 7176
     },
     {
       "alignment": 1,
@@ -22173,14 +22175,14 @@
           0
         ],
         "scales": [
-          0.0351280123
+          0.0358696915
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_6_zero_off_8",
       "nbits": 8,
-      "offset_start": 3279024,
+      "offset_start": 3280064,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22208,7 +22210,7 @@
       "mpool_id": 6,
       "name": "Conv2D_6_off_bias_14",
       "nbits": 32,
-      "offset_start": 3278352,
+      "offset_start": 3279392,
       "qmn": {
         "m": 12,
         "n": 19,
@@ -22240,14 +22242,14 @@
           0
         ],
         "scales": [
-          0.0393871814
+          0.0400079638
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_9_zero_off_17",
       "nbits": 8,
-      "offset_start": 3279040,
+      "offset_start": 3280080,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22275,7 +22277,7 @@
       "mpool_id": 6,
       "name": "Conv2D_9_off_bias_23",
       "nbits": 32,
-      "offset_start": 3276816,
+      "offset_start": 3277856,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -22307,14 +22309,14 @@
           0
         ],
         "scales": [
-          0.0369737074
+          0.0374742411
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_13_zero_off_26",
       "nbits": 8,
-      "offset_start": 3279056,
+      "offset_start": 3280096,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22342,7 +22344,7 @@
       "mpool_id": 6,
       "name": "Conv2D_13_off_bias_32",
       "nbits": 32,
-      "offset_start": 3277072,
+      "offset_start": 3278112,
       "qmn": {
         "m": 14,
         "n": 17,
@@ -22374,14 +22376,14 @@
           0
         ],
         "scales": [
-          0.0328866132
+          0.0335374735
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_16_zero_off_35",
       "nbits": 8,
-      "offset_start": 3279072,
+      "offset_start": 3280112,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22409,7 +22411,7 @@
       "mpool_id": 6,
       "name": "Conv2D_16_off_bias_41",
       "nbits": 32,
-      "offset_start": 3272720,
+      "offset_start": 3273760,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -22441,14 +22443,14 @@
           0
         ],
         "scales": [
-          0.027819423
+          0.0283775479
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_20_zero_off_44",
       "nbits": 8,
-      "offset_start": 3279088,
+      "offset_start": 3280128,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22476,7 +22478,7 @@
       "mpool_id": 6,
       "name": "Conv2D_20_off_bias_50",
       "nbits": 32,
-      "offset_start": 3273232,
+      "offset_start": 3274272,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -22508,14 +22510,14 @@
           0
         ],
         "scales": [
-          0.0322253108
+          0.0328197181
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_23_zero_off_53",
       "nbits": 8,
-      "offset_start": 3279104,
+      "offset_start": 3280144,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22543,7 +22545,7 @@
       "mpool_id": 6,
       "name": "Conv2D_23_off_bias_59",
       "nbits": 32,
-      "offset_start": 3273744,
+      "offset_start": 3274784,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -22575,14 +22577,14 @@
           0
         ],
         "scales": [
-          0.0258428212
+          0.0261728391
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_27_zero_off_62",
       "nbits": 8,
-      "offset_start": 3279120,
+      "offset_start": 3280160,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22610,7 +22612,7 @@
       "mpool_id": 6,
       "name": "Conv2D_27_off_bias_68",
       "nbits": 32,
-      "offset_start": 3274256,
+      "offset_start": 3275296,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -22642,14 +22644,14 @@
           0
         ],
         "scales": [
-          0.028523488
+          0.0287652593
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_30_zero_off_71",
       "nbits": 8,
-      "offset_start": 3279136,
+      "offset_start": 3280176,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22677,7 +22679,7 @@
       "mpool_id": 6,
       "name": "Conv2D_30_off_bias_77",
       "nbits": 32,
-      "offset_start": 3256336,
+      "offset_start": 3257376,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -22709,14 +22711,14 @@
           0
         ],
         "scales": [
-          0.0229960009
+          0.023180576
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_34_zero_off_80",
       "nbits": 8,
-      "offset_start": 3279152,
+      "offset_start": 3280192,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22744,7 +22746,7 @@
       "mpool_id": 6,
       "name": "Conv2D_34_off_bias_86",
       "nbits": 32,
-      "offset_start": 3257360,
+      "offset_start": 3258400,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -22776,14 +22778,14 @@
           0
         ],
         "scales": [
-          0.0283129942
+          0.0285791121
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_37_zero_off_89",
       "nbits": 8,
-      "offset_start": 3279168,
+      "offset_start": 3280208,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22811,7 +22813,7 @@
       "mpool_id": 6,
       "name": "Conv2D_37_off_bias_95",
       "nbits": 32,
-      "offset_start": 3258384,
+      "offset_start": 3259424,
       "qmn": {
         "m": 14,
         "n": 17,
@@ -22843,14 +22845,14 @@
           0
         ],
         "scales": [
-          0.0214497335
+          0.0216450989
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_41_zero_off_98",
       "nbits": 8,
-      "offset_start": 3279184,
+      "offset_start": 3280224,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22878,7 +22880,7 @@
       "mpool_id": 6,
       "name": "Conv2D_41_off_bias_104",
       "nbits": 32,
-      "offset_start": 3259408,
+      "offset_start": 3260448,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -22910,14 +22912,14 @@
           0
         ],
         "scales": [
-          0.0249666814
+          0.0252163392
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_44_zero_off_107",
       "nbits": 8,
-      "offset_start": 3279200,
+      "offset_start": 3280240,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -22945,7 +22947,7 @@
       "mpool_id": 6,
       "name": "Conv2D_44_off_bias_113",
       "nbits": 32,
-      "offset_start": 3229456,
+      "offset_start": 3230496,
       "qmn": {
         "m": 14,
         "n": 17,
@@ -22977,14 +22979,14 @@
           0
         ],
         "scales": [
-          0.0202157367
+          0.0202409048
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_48_zero_off_116",
       "nbits": 8,
-      "offset_start": 3279216,
+      "offset_start": 3280256,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23012,7 +23014,7 @@
       "mpool_id": 6,
       "name": "Conv2D_48_off_bias_122",
       "nbits": 32,
-      "offset_start": 3231504,
+      "offset_start": 3232544,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -23044,14 +23046,14 @@
           0
         ],
         "scales": [
-          0.0277073812
+          0.0278010815
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_51_zero_off_125",
       "nbits": 8,
-      "offset_start": 3279232,
+      "offset_start": 3280272,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23079,7 +23081,7 @@
       "mpool_id": 6,
       "name": "Conv2D_51_off_bias_131",
       "nbits": 32,
-      "offset_start": 3233552,
+      "offset_start": 3234592,
       "qmn": {
         "m": 14,
         "n": 17,
@@ -23111,14 +23113,14 @@
           0
         ],
         "scales": [
-          0.0184644572
+          0.0184314698
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_55_zero_off_134",
       "nbits": 8,
-      "offset_start": 3279248,
+      "offset_start": 3280288,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23146,7 +23148,7 @@
       "mpool_id": 6,
       "name": "Conv2D_55_off_bias_140",
       "nbits": 32,
-      "offset_start": 3235600,
+      "offset_start": 3236640,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -23178,14 +23180,14 @@
           0
         ],
         "scales": [
-          0.0269252323
+          0.0269490201
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_58_zero_off_143",
       "nbits": 8,
-      "offset_start": 3279264,
+      "offset_start": 3280304,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23213,7 +23215,7 @@
       "mpool_id": 6,
       "name": "Conv2D_58_off_bias_149",
       "nbits": 32,
-      "offset_start": 3237648,
+      "offset_start": 3238688,
       "qmn": {
         "m": 15,
         "n": 16,
@@ -23245,14 +23247,14 @@
           0
         ],
         "scales": [
-          0.0173771549
+          0.0173277892
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_62_zero_off_152",
       "nbits": 8,
-      "offset_start": 3279280,
+      "offset_start": 3280320,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23280,7 +23282,7 @@
       "mpool_id": 6,
       "name": "Conv2D_62_off_bias_158",
       "nbits": 32,
-      "offset_start": 3239696,
+      "offset_start": 3240736,
       "qmn": {
         "m": 16,
         "n": 15,
@@ -23312,14 +23314,14 @@
           0
         ],
         "scales": [
-          0.0254097059
+          0.0253303535
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_65_zero_off_161",
       "nbits": 8,
-      "offset_start": 3279296,
+      "offset_start": 3280336,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23347,7 +23349,7 @@
       "mpool_id": 6,
       "name": "Conv2D_65_off_bias_167",
       "nbits": 32,
-      "offset_start": 3241744,
+      "offset_start": 3242784,
       "qmn": {
         "m": 15,
         "n": 16,
@@ -23379,14 +23381,14 @@
           0
         ],
         "scales": [
-          0.0174824614
+          0.0172683634
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_69_zero_off_170",
       "nbits": 8,
-      "offset_start": 3279312,
+      "offset_start": 3280352,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23414,7 +23416,7 @@
       "mpool_id": 6,
       "name": "Conv2D_69_off_bias_176",
       "nbits": 32,
-      "offset_start": 3243792,
+      "offset_start": 3244832,
       "qmn": {
         "m": 13,
         "n": 18,
@@ -23446,14 +23448,14 @@
           0
         ],
         "scales": [
-          0.0226865355
+          0.0225102268
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_72_zero_off_179",
       "nbits": 8,
-      "offset_start": 3279328,
+      "offset_start": 3280368,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23481,7 +23483,7 @@
       "mpool_id": 6,
       "name": "Conv2D_72_off_bias_185",
       "nbits": 32,
-      "offset_start": 3245840,
+      "offset_start": 3246880,
       "qmn": {
         "m": 14,
         "n": 17,
@@ -23513,14 +23515,14 @@
           0
         ],
         "scales": [
-          0.0102669979
+          0.00991344452
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_76_zero_off_188",
       "nbits": 8,
-      "offset_start": 3279344,
+      "offset_start": 3280384,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23548,7 +23550,7 @@
       "mpool_id": 6,
       "name": "Conv2D_76_off_bias_194",
       "nbits": 32,
-      "offset_start": 3247888,
+      "offset_start": 3248928,
       "qmn": {
         "m": 14,
         "n": 17,
@@ -23580,14 +23582,14 @@
           0
         ],
         "scales": [
-          0.0105792908
+          0.0102244727
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_79_zero_off_197",
       "nbits": 8,
-      "offset_start": 3279360,
+      "offset_start": 3280400,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23615,7 +23617,7 @@
       "mpool_id": 6,
       "name": "Conv2D_79_off_bias_203",
       "nbits": 32,
-      "offset_start": 3249936,
+      "offset_start": 3250976,
       "qmn": {
         "m": 15,
         "n": 16,
@@ -23647,14 +23649,14 @@
           0
         ],
         "scales": [
-          0.00732428906
+          0.00699203508
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_83_zero_off_206",
       "nbits": 8,
-      "offset_start": 3279376,
+      "offset_start": 3280416,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23682,7 +23684,7 @@
       "mpool_id": 6,
       "name": "Conv2D_83_off_bias_212",
       "nbits": 32,
-      "offset_start": 3251984,
+      "offset_start": 3253024,
       "qmn": {
         "m": 17,
         "n": 14,
@@ -23714,14 +23716,14 @@
           0
         ],
         "scales": [
-          0.00319047738
+          0.00308851781
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_86_zero_off_215",
       "nbits": 8,
-      "offset_start": 3279392,
+      "offset_start": 3280432,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23749,7 +23751,7 @@
       "mpool_id": 6,
       "name": "Conv2D_86_mul_scale_216",
       "nbits": 16,
-      "offset_start": 3195904,
+      "offset_start": 3196944,
       "qmn": {
         "m": -12,
         "n": 27,
@@ -23779,7 +23781,7 @@
       "mpool_id": 6,
       "name": "Conv2D_86_off_bias_221",
       "nbits": 16,
-      "offset_start": 3200000,
+      "offset_start": 3201040,
       "qmn": {
         "m": 3,
         "n": 12,
@@ -23811,14 +23813,14 @@
           0
         ],
         "scales": [
-          0.00836046133
+          0.00824673753
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_90_zero_off_224",
       "nbits": 8,
-      "offset_start": 3279408,
+      "offset_start": 3280448,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23846,7 +23848,7 @@
       "mpool_id": 6,
       "name": "Conv2D_90_mul_scale_225",
       "nbits": 16,
-      "offset_start": 3204096,
+      "offset_start": 3205136,
       "qmn": {
         "m": -11,
         "n": 26,
@@ -23876,7 +23878,7 @@
       "mpool_id": 6,
       "name": "Conv2D_90_off_bias_230",
       "nbits": 16,
-      "offset_start": 3208192,
+      "offset_start": 3209232,
       "qmn": {
         "m": 3,
         "n": 12,
@@ -23908,14 +23910,14 @@
           0
         ],
         "scales": [
-          0.00795166288
+          0.00793512352
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Conv2D_93_zero_off_233",
       "nbits": 8,
-      "offset_start": 3279424,
+      "offset_start": 3280464,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -23943,7 +23945,7 @@
       "mpool_id": 6,
       "name": "Conv2D_93_mul_scale_234",
       "nbits": 16,
-      "offset_start": 3212288,
+      "offset_start": 3213328,
       "qmn": {
         "m": -10,
         "n": 25,
@@ -23973,7 +23975,7 @@
       "mpool_id": 6,
       "name": "Conv2D_93_off_bias_239",
       "nbits": 16,
-      "offset_start": 3216384,
+      "offset_start": 3217424,
       "qmn": {
         "m": 4,
         "n": 11,
@@ -24005,14 +24007,14 @@
           0
         ],
         "scales": [
-          0.0138510419
+          0.0139159365
         ]
       },
       "is_param": true,
       "mpool_id": 6,
       "name": "Gemm_98_conv_4_zero_off_242",
       "nbits": 8,
-      "offset_start": 3279440,
+      "offset_start": 3280480,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -24026,7 +24028,7 @@
     },
     {
       "alignment": 1,
-      "batch": 6,
+      "batch": 7,
       "channel_first": false,
       "channel_last": true,
       "epochs": {
@@ -24040,19 +24042,19 @@
       "mpool_id": 6,
       "name": "Gemm_98_conv_4_off_bias_248",
       "nbits": 32,
-      "offset_start": 3278928,
+      "offset_start": 3279968,
       "qmn": {
-        "m": 14,
-        "n": 17,
+        "m": 15,
+        "n": 16,
         "sign": 1
       },
       "shape": [
-        6,
+        7,
         1,
         1
       ],
       "shape_map": [],
-      "size_bytes": 24
+      "size_bytes": 28
     },
     {
       "alignment": 1,
@@ -24141,7 +24143,7 @@
       "mpool_id": 6,
       "name": "Conv2D_6_weights_inflated_251",
       "nbits": 8,
-      "offset_start": 3255184,
+      "offset_start": 3256224,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -24307,7 +24309,7 @@
       "mpool_id": 6,
       "name": "Conv2D_13_weights_inflated_253",
       "nbits": 8,
-      "offset_start": 3220480,
+      "offset_start": 3221520,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -24601,7 +24603,7 @@
       "mpool_id": 6,
       "name": "Conv2D_20_weights_inflated_255",
       "nbits": 8,
-      "offset_start": 3163648,
+      "offset_start": 3164688,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -24895,7 +24897,7 @@
       "mpool_id": 6,
       "name": "Conv2D_27_weights_inflated_257",
       "nbits": 8,
-      "offset_start": 3222784,
+      "offset_start": 3223824,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -25445,7 +25447,7 @@
       "mpool_id": 6,
       "name": "Conv2D_41_weights_inflated_260",
       "nbits": 8,
-      "offset_start": 3168256,
+      "offset_start": 3169296,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -26538,7 +26540,7 @@
       "mpool_id": 6,
       "name": "RequantizeLinear_inserted_id488_490_requantize_zero",
       "nbits": 8,
-      "offset_start": 3279456,
+      "offset_start": 3280496,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -26569,7 +26571,7 @@
       "mpool_id": 6,
       "name": "QuantizeLinear_inserted_id466_494_atonn_internal_scale",
       "nbits": 32,
-      "offset_start": 3278992,
+      "offset_start": 3280032,
       "qmn": {
         "m": 0,
         "n": 0,
@@ -26597,7 +26599,7 @@
       "mpool_id": 6,
       "name": "QuantizeLinear_inserted_id466_494_atonn_internal_offset",
       "nbits": 8,
-      "offset_start": 3279488,
+      "offset_start": 3280528,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -26625,7 +26627,7 @@
       "mpool_id": 6,
       "name": "Conv2D_6_off_bias_12_A_16_498",
       "nbits": 16,
-      "offset_start": 3278864,
+      "offset_start": 3279904,
       "qmn": {
         "m": -4,
         "n": 19,
@@ -26655,7 +26657,7 @@
       "mpool_id": 6,
       "name": "Conv2D_9_off_bias_21_A_16_500",
       "nbits": 16,
-      "offset_start": 3278480,
+      "offset_start": 3279520,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -26685,7 +26687,7 @@
       "mpool_id": 6,
       "name": "Conv2D_13_off_bias_30_A_16_502",
       "nbits": 16,
-      "offset_start": 3278608,
+      "offset_start": 3279648,
       "qmn": {
         "m": -2,
         "n": 17,
@@ -26715,7 +26717,7 @@
       "mpool_id": 6,
       "name": "Conv2D_16_off_bias_39_A_16_504",
       "nbits": 16,
-      "offset_start": 3277328,
+      "offset_start": 3278368,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -26745,7 +26747,7 @@
       "mpool_id": 6,
       "name": "Conv2D_20_off_bias_48_A_16_506",
       "nbits": 16,
-      "offset_start": 3277584,
+      "offset_start": 3278624,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -26775,7 +26777,7 @@
       "mpool_id": 6,
       "name": "Conv2D_23_off_bias_57_A_16_508",
       "nbits": 16,
-      "offset_start": 3277840,
+      "offset_start": 3278880,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -26805,7 +26807,7 @@
       "mpool_id": 6,
       "name": "Conv2D_27_off_bias_66_A_16_510",
       "nbits": 16,
-      "offset_start": 3278096,
+      "offset_start": 3279136,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -26835,7 +26837,7 @@
       "mpool_id": 6,
       "name": "Conv2D_30_off_bias_75_A_16_512",
       "nbits": 16,
-      "offset_start": 3274768,
+      "offset_start": 3275808,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -26865,7 +26867,7 @@
       "mpool_id": 6,
       "name": "Conv2D_34_off_bias_84_A_16_514",
       "nbits": 16,
-      "offset_start": 3275280,
+      "offset_start": 3276320,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -26895,7 +26897,7 @@
       "mpool_id": 6,
       "name": "Conv2D_37_off_bias_93_A_16_516",
       "nbits": 16,
-      "offset_start": 3275792,
+      "offset_start": 3276832,
       "qmn": {
         "m": -2,
         "n": 17,
@@ -26925,7 +26927,7 @@
       "mpool_id": 6,
       "name": "Conv2D_41_off_bias_102_A_16_518",
       "nbits": 16,
-      "offset_start": 3276304,
+      "offset_start": 3277344,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -26955,7 +26957,7 @@
       "mpool_id": 6,
       "name": "Conv2D_44_off_bias_111_A_16_520",
       "nbits": 16,
-      "offset_start": 3260432,
+      "offset_start": 3261472,
       "qmn": {
         "m": -2,
         "n": 17,
@@ -26985,7 +26987,7 @@
       "mpool_id": 6,
       "name": "Conv2D_48_off_bias_120_A_16_522",
       "nbits": 16,
-      "offset_start": 3261456,
+      "offset_start": 3262496,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -27015,7 +27017,7 @@
       "mpool_id": 6,
       "name": "Conv2D_51_off_bias_129_A_16_524",
       "nbits": 16,
-      "offset_start": 3262480,
+      "offset_start": 3263520,
       "qmn": {
         "m": -2,
         "n": 17,
@@ -27045,7 +27047,7 @@
       "mpool_id": 6,
       "name": "Conv2D_55_off_bias_138_A_16_526",
       "nbits": 16,
-      "offset_start": 3263504,
+      "offset_start": 3264544,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -27075,7 +27077,7 @@
       "mpool_id": 6,
       "name": "Conv2D_58_off_bias_147_A_16_528",
       "nbits": 16,
-      "offset_start": 3264528,
+      "offset_start": 3265568,
       "qmn": {
         "m": -1,
         "n": 16,
@@ -27105,7 +27107,7 @@
       "mpool_id": 6,
       "name": "Conv2D_62_off_bias_156_A_16_530",
       "nbits": 16,
-      "offset_start": 3265552,
+      "offset_start": 3266592,
       "qmn": {
         "m": 0,
         "n": 15,
@@ -27135,7 +27137,7 @@
       "mpool_id": 6,
       "name": "Conv2D_65_off_bias_165_A_16_532",
       "nbits": 16,
-      "offset_start": 3266576,
+      "offset_start": 3267616,
       "qmn": {
         "m": -1,
         "n": 16,
@@ -27165,7 +27167,7 @@
       "mpool_id": 6,
       "name": "Conv2D_69_off_bias_174_A_16_534",
       "nbits": 16,
-      "offset_start": 3267600,
+      "offset_start": 3268640,
       "qmn": {
         "m": -3,
         "n": 18,
@@ -27195,7 +27197,7 @@
       "mpool_id": 6,
       "name": "Conv2D_72_off_bias_183_A_16_536",
       "nbits": 16,
-      "offset_start": 3268624,
+      "offset_start": 3269664,
       "qmn": {
         "m": -2,
         "n": 17,
@@ -27225,7 +27227,7 @@
       "mpool_id": 6,
       "name": "Conv2D_76_off_bias_192_A_16_538",
       "nbits": 16,
-      "offset_start": 3269648,
+      "offset_start": 3270688,
       "qmn": {
         "m": -2,
         "n": 17,
@@ -27255,7 +27257,7 @@
       "mpool_id": 6,
       "name": "Conv2D_79_off_bias_201_A_16_540",
       "nbits": 16,
-      "offset_start": 3270672,
+      "offset_start": 3271712,
       "qmn": {
         "m": -1,
         "n": 16,
@@ -27285,7 +27287,7 @@
       "mpool_id": 6,
       "name": "Conv2D_83_off_bias_210_A_16_542",
       "nbits": 16,
-      "offset_start": 3271696,
+      "offset_start": 3272736,
       "qmn": {
         "m": 1,
         "n": 14,
@@ -27301,7 +27303,7 @@
     },
     {
       "alignment": 1,
-      "batch": 6,
+      "batch": 7,
       "channel_first": false,
       "channel_last": true,
       "epochs": {
@@ -27315,19 +27317,19 @@
       "mpool_id": 6,
       "name": "Gemm_98_conv_4_off_bias_246_A_16_544",
       "nbits": 16,
-      "offset_start": 3278960,
+      "offset_start": 3280000,
       "qmn": {
-        "m": -2,
-        "n": 17,
+        "m": -1,
+        "n": 16,
         "sign": 1
       },
       "shape": [
-        6,
+        7,
         1,
         1
       ],
       "shape_map": [],
-      "size_bytes": 12
+      "size_bytes": 14
     },
     {
       "alignment": 1,
@@ -27345,7 +27347,7 @@
       "mpool_id": 6,
       "name": "Gemm_98_squeeze_y_5_546_atonn_internal_scale",
       "nbits": 32,
-      "offset_start": 3279008,
+      "offset_start": 3280048,
       "qmn": {
         "m": 0,
         "n": 0,
@@ -27373,7 +27375,7 @@
       "mpool_id": 6,
       "name": "Gemm_98_squeeze_y_5_546_atonn_internal_offset",
       "nbits": 8,
-      "offset_start": 3279504,
+      "offset_start": 3280544,
       "qmn": {
         "m": 7,
         "n": 0,
@@ -27389,7 +27391,7 @@
   "ec_blobs_info": [],
   "environment": {
     "generated_model": {
-      "generated_time": "2026-08-10T20:48:01.333086800+0100",
+      "generated_time": "2026-08-15T14:30:20.964419600+0100",
       "model_files": [
         {
           "name": "network.c",
@@ -27425,38 +27427,38 @@
       "size": 0,
       "type": ""
     },
-    "network_signature": "0x13b8ae19128c08f4",
+    "network_signature": "0x8b917789af0dc857",
     "target": "",
     "test_name": "",
     "tools": [
       {
-        "arguments": "generate -m C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\ml\\models\\hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq.onnx --target stm32n6 --st-neural-art default@user_neural_art.json --workspace C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v4_patch_balanced_v3_yamnet1024\\2f29a3b26971\\gen-workspace --output C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v4_patch_balanced_v3_yamnet1024\\2f29a3b26971\\gen-output --with-report --verbosity 1",
+        "arguments": "generate -m C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\.\\ml\\models\\hazard5v5_other_yamnet1024_int8_nchw_qdq.onnx --target stm32n6 --st-neural-art default@user_neural_art.json --workspace C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v5_other\\6805110184e8\\gen-workspace --output C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v5_other\\6805110184e8\\gen-output --with-report --verbosity 1",
         "environment": [],
         "input_model": {
           "generated_time": "",
           "model_files": [
             {
-              "name": "hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq.onnx",
-              "signature": "0x8c46bc4d6d4ce080ac5d3483b61e55e1"
+              "name": "hazard5v5_other_yamnet1024_int8_nchw_qdq.onnx",
+              "signature": "0x79531bd60df5b501aea4bf1d265c2e4d"
             }
           ],
-          "n_params": 3201606,
-          "name": "hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq",
-          "size": 12806424,
+          "n_params": 3202631,
+          "name": "hazard5v5_other_yamnet1024_int8_nchw_qdq",
+          "size": 12810524,
           "type": "onnx"
         },
         "name": "ST.EdgeAI.Core",
         "version": "4.0.1-20581 7ed50de05"
       },
       {
-        "arguments": " -i C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v4_patch_balanced_v3_yamnet1024\\2f29a3b26971\\gen-output\\hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq_OE_3_3_1.onnx --json-quant-file C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v4_patch_balanced_v3_yamnet1024\\2f29a3b26971\\gen-output\\hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq_OE_3_3_1_Q.json -g network.c --load-mdesc C:\\ST\\STEdgeAI\\4.0\\Utilities\\configs\\stm32n6.mdesc --load-mpool C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v4_patch_balanced_v3_yamnet1024\\2f29a3b26971\\stm32n6.mpool --load-cdesc C:\\ST\\STEdgeAI\\4.0\\Utilities\\configs\\cortex-m55.cdesc --save-mpool-file C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v4_patch_balanced_v3_yamnet1024\\2f29a3b26971\\gen-workspace\\neural_art__network\\stm32n6.mpool --out-dir-prefix C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v4_patch_balanced_v3_yamnet1024\\2f29a3b26971\\gen-workspace\\neural_art__network/ --network-name network --Ocache-opt -O3 --Os --native-float --Omax-ca-pipe 4 --cache-maintenance --csv-file network --all-buffers-info --output-info-file c_info.json --generate-stai",
+        "arguments": " -i C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v5_other\\6805110184e8\\gen-output\\hazard5v5_other_yamnet1024_int8_nchw_qdq_OE_3_3_1.onnx --json-quant-file C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v5_other\\6805110184e8\\gen-output\\hazard5v5_other_yamnet1024_int8_nchw_qdq_OE_3_3_1_Q.json -g network.c --load-mdesc C:\\ST\\STEdgeAI\\4.0\\Utilities\\configs\\stm32n6.mdesc --load-mpool C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v5_other\\6805110184e8\\stm32n6.mpool --load-cdesc C:\\ST\\STEdgeAI\\4.0\\Utilities\\configs\\cortex-m55.cdesc --save-mpool-file C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v5_other\\6805110184e8\\gen-workspace\\neural_art__network\\stm32n6.mpool --out-dir-prefix C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\stedgeai\\hazard5v5_other\\6805110184e8\\gen-workspace\\neural_art__network/ --network-name network --Ocache-opt -O3 --Os --native-float --Omax-ca-pipe 4 --cache-maintenance --csv-file network --all-buffers-info --output-info-file c_info.json --generate-stai",
         "environment": [],
         "input_model": {
-          "generated_time": "2026-08-10T22:48:01+0200",
+          "generated_time": "2026-08-15T16:30:20+0200",
           "model_files": [
             {
-              "name": "hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq_OE_3_3_1.onnx",
-              "signature": "0x84dc350e12f20a3cf12fd1697ad1c3e4"
+              "name": "hazard5v5_other_yamnet1024_int8_nchw_qdq_OE_3_3_1.onnx",
+              "signature": "0x92c79cbd1fab168e4aab33fba4ed29bd"
             }
           ],
           "n_params": 0,
@@ -30211,7 +30213,7 @@
             "port": 0
           },
           "id": 183,
-          "name": "Gemm_98_weights_transposed_3_FLOAT__6_1024_1_1__",
+          "name": "Gemm_98_weights_transposed_3_FLOAT__7_1024_1_1__",
           "start": {
             "node_id": 4,
             "port": 0
@@ -30226,7 +30228,7 @@
             "port": 0
           },
           "id": 184,
-          "name": "Gemm_98_conv_4_off_bias_248_FLOAT__6_1_1__",
+          "name": "Gemm_98_conv_4_off_bias_248_FLOAT__7_1_1__",
           "start": {
             "node_id": 59,
             "port": 0
@@ -30241,7 +30243,7 @@
             "port": 0
           },
           "id": 185,
-          "name": "Gemm_98_conv_4_off_bias_out_247_FLOAT__1_6_1_1__",
+          "name": "Gemm_98_conv_4_off_bias_out_247_FLOAT__1_7_1_1__",
           "start": {
             "node_id": 250,
             "port": 0
@@ -30256,7 +30258,7 @@
             "port": 0
           },
           "id": 186,
-          "name": "Softmax_101_out_0_FLOAT__1_6__",
+          "name": "Softmax_101_out_0_FLOAT__1_7__",
           "start": {
             "node_id": 255,
             "port": 0
@@ -30916,7 +30918,7 @@
             "port": 0
           },
           "id": 230,
-          "name": "Gemm_98_out_0_FLOAT__1_6__",
+          "name": "Gemm_98_out_0_FLOAT__1_7__",
           "start": {
             "node_id": 251,
             "port": 0
@@ -30931,7 +30933,7 @@
             "port": 0
           },
           "id": 231,
-          "name": "Gemm_98_out_0_FLOAT__1_6__",
+          "name": "Gemm_98_out_0_FLOAT__1_7__",
           "start": {
             "node_id": 253,
             "port": 0
@@ -31666,7 +31668,7 @@
             "port": 0
           },
           "id": 280,
-          "name": "Gemm_98_conv_4_mul_scale_out_245_FLOAT__1_6_1_1__",
+          "name": "Gemm_98_conv_4_mul_scale_out_245_FLOAT__1_7_1_1__",
           "start": {
             "node_id": 249,
             "port": 0
@@ -36025,7 +36027,7 @@
             126,
             159
           ],
-          "macc": 6147,
+          "macc": 7171,
           "mapping": "NODE_HW",
           "name": "epoch_32",
           "original_nodes": [],
@@ -36219,12 +36221,12 @@
           "data_format": {
             "quantizer": "UNIFORM",
             "scale": [
-              0.0343001597
+              0.0346764177
             ],
             "size": 8,
             "type": "SIGNED",
             "zero": [
-              51
+              53
             ]
           },
           "name": "input_layer",
@@ -36258,7 +36260,7 @@
           "name": "new_head",
           "shape": [
             1,
-            6
+            7
           ],
           "shape_map": [
             "BATCH",
@@ -37812,8 +37814,8 @@
     {
       "mpool_id": 6,
       "node_id": 248,
-      "read_cycles": 12288,
-      "reads": 6144,
+      "read_cycles": 14334,
+      "reads": 7168,
       "write_cycles": 0,
       "writes": 0
     },
@@ -37830,8 +37832,8 @@
       "node_id": 248,
       "read_cycles": 29,
       "reads": 1024,
-      "write_cycles": 0,
-      "writes": 6
+      "write_cycles": 1,
+      "writes": 7
     },
     {
       "mpool_id": 2,
@@ -37876,10 +37878,10 @@
     {
       "mpool_id": 1,
       "node_id": 252,
-      "read_cycles": 0,
-      "reads": 6,
-      "write_cycles": 0,
-      "writes": 24
+      "read_cycles": 1,
+      "reads": 7,
+      "write_cycles": 1,
+      "writes": 28
     },
     {
       "mpool_id": 2,
@@ -37924,10 +37926,10 @@
     {
       "mpool_id": 1,
       "node_id": 254,
-      "read_cycles": 40,
-      "reads": 1052,
-      "write_cycles": 80,
-      "writes": 2080
+      "read_cycles": 41,
+      "reads": 1056,
+      "write_cycles": 81,
+      "writes": 2084
     },
     {
       "mpool_id": 2,
@@ -38014,7 +38016,7 @@
     "toolchain": null,
     "toolchain_flash": 0,
     "toolchain_ram": 0,
-    "weights": 3279505
+    "weights": 3280545
   },
   "memory_pools": [
     {
@@ -38351,7 +38353,7 @@
       "rights": "ACC_READ",
       "size_bytes": 66060288,
       "subpools": [],
-      "used_size_bytes": 3279505,
+      "used_size_bytes": 3280545,
       "user_allocated": false
     }
   ],
@@ -38614,16 +38616,16 @@
     },
     {
       "average_acc_power_mw": 72,
-      "average_memory_power_mw": 662,
-      "compute_cycles": 2048,
-      "max_cycles": 36864,
+      "average_memory_power_mw": 661,
+      "compute_cycles": 2390,
+      "max_cycles": 43008,
       "node_id": 248,
-      "ops": 12294
+      "ops": 14343
     },
     {
       "average_acc_power_mw": 0,
       "average_memory_power_mw": 0,
-      "compute_cycles": 14,
+      "compute_cycles": 16,
       "max_cycles": 30,
       "node_id": 252,
       "ops": 0
@@ -38631,8 +38633,8 @@
     {
       "average_acc_power_mw": 0,
       "average_memory_power_mw": 0,
-      "compute_cycles": 526,
-      "max_cycles": 526,
+      "compute_cycles": 528,
+      "max_cycles": 528,
       "node_id": 254,
       "ops": 0
     },

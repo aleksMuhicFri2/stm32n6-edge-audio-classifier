@@ -1,0 +1,75 @@
+{
+  "calibration_id": "V5-CLASS-THRESHOLD-CALIBRATION-V1",
+  "model": "YAMNet-1024 Hazard-5 + Speech + Other V5 int8",
+  "activity_gate": 2800,
+  "ema_alpha": 0.65,
+  "glass_score_factor": 1.225,
+  "gunshot_immediate_threshold": 0.75,
+  "method": "Class-specific thresholds combine reproducible development-set scores with observed top-1 ranges from the non-final A02 playback calibration.",
+  "limitation": "A threshold cannot repair a wrong top-1 ranking. A02 was interrupted and used mixed playback conditions, so it is calibration evidence only and must not be reported as final accuracy.",
+  "thresholds": [
+    {
+      "class_name": "dog_bark",
+      "enter_threshold": 0.4,
+      "release_threshold": 0.3,
+      "confirmation_active_frames": 1,
+      "a02_correct_top1_minimum": 0.4161,
+      "a02_incorrect_top1_maximum": null,
+      "rationale": "Lowest correct A02 top-1 was 0.416; one-frame response preserves barks."
+    },
+    {
+      "class_name": "glass_breaking",
+      "enter_threshold": 0.6,
+      "release_threshold": 0.45,
+      "confirmation_active_frames": 1,
+      "a02_correct_top1_minimum": 0.617,
+      "a02_incorrect_top1_maximum": null,
+      "rationale": "Lowest correct A02 top-1 was 0.617; one frame is required for transients."
+    },
+    {
+      "class_name": "gunshot_gunfire",
+      "enter_threshold": 0.4,
+      "release_threshold": 0.3,
+      "confirmation_active_frames": 2,
+      "a02_correct_top1_minimum": 0.3375,
+      "a02_incorrect_top1_maximum": 0.6485,
+      "rationale": "Two frames at 0.40 reject isolated impulses; one frame at 0.75 remains an immediate high-confidence path."
+    },
+    {
+      "class_name": "other",
+      "enter_threshold": 0.32,
+      "release_threshold": 0.24,
+      "confirmation_active_frames": 1,
+      "a02_correct_top1_minimum": 0.3294,
+      "a02_incorrect_top1_maximum": 0.9027,
+      "rationale": "Informational rejection class; a low threshold safely absorbs domestic sounds."
+    },
+    {
+      "class_name": "siren",
+      "enter_threshold": 0.65,
+      "release_threshold": 0.5,
+      "confirmation_active_frames": 2,
+      "a02_correct_top1_minimum": 0.7133,
+      "a02_incorrect_top1_maximum": 0.5064,
+      "rationale": "Correct A02 top-1 started at 0.713 while observed false siren top-1 stayed at or below 0.506."
+    },
+    {
+      "class_name": "speech",
+      "enter_threshold": 0.4,
+      "release_threshold": 0.3,
+      "confirmation_active_frames": 1,
+      "a02_correct_top1_minimum": 0.4313,
+      "a02_incorrect_top1_maximum": 0.615,
+      "rationale": "Correct A02 top-1 started at 0.431; speech is informational and suppresses false hazards."
+    },
+    {
+      "class_name": "thunderstorm",
+      "enter_threshold": 0.32,
+      "release_threshold": 0.25,
+      "confirmation_active_frames": 2,
+      "a02_correct_top1_minimum": 0.4391,
+      "a02_incorrect_top1_maximum": 0.4781,
+      "rationale": "Preserves the earlier seven-playback board calibration with two-frame evidence."
+    }
+  ]
+}

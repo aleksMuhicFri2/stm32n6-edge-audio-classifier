@@ -1,65 +1,66 @@
-# Audio Getting Started Package
+# STM32N6 Edge Audio Hazard Detector
 
-This project provides an STM32 Microcontroler embedded real time environement
-to execute [X-CUBE-AI](https://www.st.com/en/embedded-software/x-cube-ai.html)
-generated model targetting audio applications. The purpose of this package is to
-stream physical data acquired by sensors into a processing chain including a
-preprocessing step that typically would perform a first level of feature
-extraction, the machine learning inference itself, and a post processing step
-before exposing the results to the user in real time. The project implements
-both RTOS and bare metal versions. A low power version is also provided.
+This repository contains a diploma-project prototype for real-time hazardous
+sound detection on the STM32N6570-DK. It is derived from STMicroelectronics'
+STM32N6 Getting Started Audio package and extends its bare-metal audio event
+detection example with a targeted model, temporal decision logic, an on-board
+display, and a reproducible physical-evaluation pipeline.
 
 ## Diploma-project current state
 
-The `hazard-selection` branch extends ST's bare-metal AED example with a
-six-output YAMNet-256 transfer-learning model, a lightweight STM32N6570-DK
-interface, and a reproducible experiment pipeline. The five hazard classes are
-dog bark, glass breaking, gunshot/gunfire, emergency siren, and thunderstorm;
-human speech is a sixth informational output used to suppress false alerts.
+The system is designed as a research prototype that converts selected warning
+sounds into visible information for deaf and hard-of-hearing users. All normal
+operation is local to the board: no cloud service, account, or Internet
+connection is required. Raw microphone samples exist only in temporary audio
+buffers and are overwritten after processing. The normal firmware neither
+stores nor uploads raw audio. Evaluation mode sends numerical predictions and
+timings over UART, not recordings of conversations.
 
-The current flashed application uses the speech-aware model and the
-tear-free RGB565 display pipeline. The latest source revision simplifies the
-visible interface to a large current result, its confidence bar, the three
-strongest current class probabilities, three recent confirmed detections, and
-uptime. The recent list records one result per audio session rather than every
-960 ms frame. The interface removes counters, severity badges, decorative
-elements, and the monitoring badge while retaining:
+The current `hazard-selection` branch uses a quantized YAMNet-1024 feature
+extractor with a trained seven-output head. The model outputs dog bark, breaking
+glass, gunshot or gunfire, other sounds, emergency siren, human speech, and
+thunderstorm. Firmware merges the thunderstorm score into `OTHER`, so the user
+interface exposes six system classes and four warning classes: dog bark,
+breaking glass, gunshot, and emergency siren. Speech and `OTHER` are guard or
+informational classes; `WAITING` and `UNKNOWN` are decision states rather than
+neural-network outputs.
 
-- 64x96 log-mel preprocessing from the onboard microphone at 16 kHz;
-- Neural-ART inference using the quantized YAMNet-256 model;
-- a 65% exponential moving average with enter, release, and class-switch
-  hysteresis;
-- a `4000` spectral-activity gate with `0.65` class-entry and `0.50`
-  class-release thresholds for the current close-range calibration;
-- a calibrated asymmetric speech guard at `0.27`; speech is displayed as an
-  informational result and never latches an alert;
-- separate `WAITING` (silence), `UNKNOWN` (audible but uncertain), and detected
-  states;
-- double buffering with vertical-blank swaps to prevent screen tearing; and
-- one machine-readable `AED_CSV` UART row for every 960 ms model window.
+The deployed bare-metal application includes:
 
-The blue `USER1` button pauses or resumes monitoring. The `TAMP` button clears
-the internally latched alert. The speech-aware weights and signed application
-were flashed and read-back verified on 2026-08-06; live speech playback and
-final physical accuracy testing remain pending.
+- continuous 16 kHz mono capture from the on-board digital microphone;
+- overlapping 975 ms inputs, with a new 64 by 96 log-mel spectrogram every
+  480 ms;
+- int8 YAMNet-1024 inference accelerated by Neural-ART;
+- a spectral-activity threshold of `2800`, a 65% exponential moving average,
+  per-class entry and release thresholds, and per-class confirmation counts;
+- an `OTHER` fallback and a four-frame hold that prevents end-of-playback noise
+  from immediately erasing a confirmed warning;
+- a tear-free RGB565 interface with the current result, confidence, top-three
+  predictions, recent detections, and uptime; and
+- machine-readable UART evidence with model decisions and stage timings.
 
-Use `tools/capture_uart_experiment.ps1` to preserve the raw UART stream and
-append normalized run and frame evidence under `experiments/`. The CSV record
-contains audio activity, the stable decision, confidence, top-three results,
-timings, and a decision-change flag.
+The frozen independent physical evaluation is identified as
+`STM32N6-HAZARD6-FINAL-003`, attempt `FE4-A01`. It used 60 previously unused,
+blindly reviewed sources, ten for each visible class, at a fixed 30 cm
+speaker-to-microphone distance. The expected class was confirmed at least once
+in 57 of 60 trials (95.0%, Wilson 95% interval 86.3% to 98.3%). The four warning
+classes were confirmed in 39 of 40 trials. The stricter dominant-output score
+was 54 of 60. The remaining weakness is rejection of short, sharp everyday
+sounds: six of ten `OTHER` trials contained at least one warning output, with
+four lasting more than one frame. These figures describe the controlled setup;
+the prototype is not a certified safety or medical device.
 
-The first custom classifier candidate is now also recorded under `ml/`. It is a
-YAMNet-256 transfer-learning model for chainsaw, clapping, coughing, crackling
-fire, crying baby, dog, wooden-door knock, footsteps, glass breaking, and siren.
-On the source-separated ESC-50 fold-5 test set it classified 70 of 80 clips
-correctly (87.5%). Post-training int8 quantization preserved the same clip-level
-accuracy and produced a 185,416-byte TFLite model. The generated Neural-ART
-weights and matching firmware are deployed and hardware-validated on the
-STM32N6570-DK.
+Complete evidence, plots, conditions, and file hashes are under
+`experiments/results/hazard6_final_evaluation_v4_independent/`. The thesis
+source is under `thesis/`, and `tools/capture_uart_experiment.ps1` preserves raw
+UART evidence for repeatable experiments. The exact signed application used in
+the final evaluation is preserved as
+`Binary/STM32N6570-DK/STM32N6570-DK_Hazard_Audio_v5_signed.bin`; its SHA-256
+hash is recorded in the locked evaluation manifest.
 
 ## Table of Contents
 
-- [Audio Getting Started Package](#audio-getting-started-package)
+- [STM32N6 Edge Audio Hazard Detector](#stm32n6-edge-audio-hazard-detector)
   - [Table of Contents](#table-of-contents)
   - [Hardware and Software environment](#hardware-and-software-environment)
     - [Hardware support](#hardware-support)

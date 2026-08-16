@@ -1,0 +1,5 @@
+metric,label,unit,observations,mean,median,p95,minimum,maximum
+preprocess_ms,Predobdelava,ms,1837,1.43,1.43,1.43,1.43,1.43
+inference_ms,Sklepanje na nevronskem pospeševalniku,ms,1837,9.379999999999999,9.38,9.38,9.38,9.38
+postprocess_ms,Poobdelava,ms,1837,0.0,0.0,0.0,0.0,0.0
+cpu_load_percent,Obremenitev procesorja,%,1837,10.81,10.81,10.81,10.81,10.81

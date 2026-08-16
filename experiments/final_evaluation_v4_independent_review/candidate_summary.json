@@ -1,0 +1,46 @@
+{
+  "evaluation_id": "STM32N6-HAZARD7-FINAL-002",
+  "candidate_set_id": "FE2-CANDIDATES-001",
+  "status": "prepared_blind_semantic_review_not_started",
+  "candidate_count": 104,
+  "candidate_class_counts": {
+    "dog_bark": 14,
+    "glass_breaking": 14,
+    "gunshot_gunfire": 14,
+    "other": 20,
+    "siren": 14,
+    "speech": 14,
+    "thunderstorm": 14
+  },
+  "other_category_counts": {
+    "Alarm": 2,
+    "Applause": 2,
+    "Bell": 2,
+    "Clapping": 2,
+    "Computer_keyboard": 2,
+    "Crack": 2,
+    "Dishes_and_pots_and_pans": 2,
+    "Fireworks": 2,
+    "Knock": 2,
+    "Wind": 2
+  },
+  "excluded_prior_fsd50k_eval_sources": 178,
+  "selection_policy": "Labels and public metadata only; uploader-distinct within each target class; all FSD50K eval sources already present in project evidence excluded.",
+  "review_policy": "Review semantic correctness, complete event boundaries and audibility only; no model or board prediction is available.",
+  "normalization_policy": "One equal -42 dBFS maximum 100 ms RMS target, 100 percent Windows volume and 30 cm distance; no class-specific gain or thunder filtering.",
+  "selection_seed": 2601,
+  "order_seed": 2602,
+  "manifest_sha256": "1cbf4071c1bef050c61817463580d8580aa8721516ebeefa8f0fe9d6cc7d9420",
+  "model_onnx_sha256": "6805110184e8295d73af52fc4093443a5a9867794e36b03e702e12c5a3d7548e",
+  "weights_sha256": "0979d852a24f3f2180e10f32f920eddeee166fabc5148841af5678731c33352e",
+  "application_binary_sha256": "14b9c26d78e0440c68f02fe691a47d6a976049c8a6cdad2d2afa6afc3a4efcb8",
+  "source_metadata_sha256": {
+    "fsd50k_eval_csv": "ef861a4619691783bfceb7f43e1a395dcf969150ba4ad34dcb36b93abd26b3d6",
+    "fsd50k_eval_metadata": "ced921d00c4f7ace86b92c259689a1a40a8452808e93235021165ad2d8b77e6c"
+  },
+  "exclusion_files": [
+    "experiments\\final_evaluation\\manifest.csv",
+    "experiments\\final_evaluation_v5\\manifest.csv",
+    "experiments\\final_v4_candidate_review\\manifest.csv"
+  ]
+}

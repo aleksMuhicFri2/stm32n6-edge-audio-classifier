@@ -1,0 +1,22 @@
+{
+  "experiment_id": "HAZARD5V5-OTHER-REPLACEMENT-REVIEW-009",
+  "review_clips": 1,
+  "responses": 1,
+  "gate_passed": true,
+  "invalid_count": 0,
+  "uncertain_count": 0,
+  "validity_counts": {
+    "clear_other": 1
+  },
+  "target_or_speech_counts": {
+    "no": 1
+  },
+  "audibility_counts": {
+    "normal": 1
+  },
+  "invalid_review_ids": [],
+  "uncertain_review_ids": [],
+  "manifest_sha256": "f8ba1d7a2de2ee1a89c869b1cd531945cbdf6f090e82521a9a8a7f99e1c98935",
+  "responses_sha256": "edff8435c506ff5d9dc52aae8c5b23abc765cdd5ff044c1438beab5bb4368481",
+  "policy": "Training is allowed when every reviewed hard negative contains no target hazard or intelligible speech and is not distorted. Ambiguous but non-target sounds are valid members of the heterogeneous other class."
+}

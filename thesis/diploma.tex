@@ -1,0 +1,151 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Delovni osnutek diplomske naloge - bachelor-thesis-book
+% Pred oddajo nastavite \thesisdraftfalse in odstranite vsa navodila TODO.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% !BIB program = biber
+\DocumentMetadata{
+  pdfstandard = A-4,
+  pdfversion  = 2.0,
+  lang        = sl-SI,
+  colorprofiles = {sRGB_v4_ICC_preference.icc}
+}
+
+\documentclass[a4paper,12pt,openright]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PODATKI O DIPLOMI
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\tauthor}{Aleks Muhič}
+\newcommand{\temail}{am8139@student.uni-lj.si}
+\newcommand{\tmentor}{viš.~pred.~dr.~Robert Rozman}
+
+\newcommand{\tstopnja}%
+{VISOKOŠOLSKI STROKOVNI ŠTUDIJSKI PROGRAM\\ PRVE STOPNJE}
+
+\newcommand{\tinst}%
+{Fakulteta za računalništvo in informatiko}
+
+\newcommand{\tvrsta}{Diplomska naloga na visokošolskem programu prve stopnje}
+
+% Pred oddajo dobesedno prepišite opis, ki ga mentor vnese v StudIS.
+\newcommand{\tdescription}
+{Cilj diplomskega dela je razviti in ovrednotiti vgrajeni sistem za sprotno
+zaznavanje nevarnih zvočnih dogodkov na razvojni plošči STM32N6570-DK.
+Sistem je zasnovan kot prototip vidnega opozarjanja za gluhe in naglušne osebe,
+pri čemer se zvok obdeluje lokalno brez dostopa do računalniškega oblaka in
+brez trajnega shranjevanja surovih zvočnih posnetkov.
+Kandidat bo prilagodil kvantizirani model na osnovi arhitekture YAMNet za
+izvajanje na mikrokrmilniku STM32N6 z nevronskim pospeševalnikom Neural-ART ter
+povezal zajem zvoka, predobdelavo, sklepanje in prikaz rezultatov. Sistem bo
+ovrednotil z nadzorovanim preskusom na fizični napravi ter analiziral pravilnost
+zaznavanja, lažne alarme, čas izvajanja in porabo pomnilnika.}
+
+\newcommand{\tdescriptionEn}
+{The aim of the thesis is to develop and evaluate an embedded system for
+real-time hazardous sound event detection on the STM32N6570-DK development
+board. The system is designed as a visual-alert prototype for deaf and hard of
+hearing users, with local audio processing, no cloud access, and no persistent
+storage of raw audio recordings. The candidate will adapt a quantized model based on the YAMNet
+architecture for execution on an STM32N6 microcontroller with the Neural-ART
+accelerator and integrate audio acquisition, preprocessing, inference, and
+result presentation. The system will be evaluated through a controlled test on
+the physical device, including detection performance, false alerts, execution
+time, and memory usage.}
+
+\newcommand{\ttitle}
+{Razvoj in vrednotenje sistema za zaznavanje nevarnih zvočnih dogodkov na
+mikrokrmilniku STM32N6 z uporabo nevronskega pospeševalnika}
+
+\newcommand{\ttitleEn}
+{Development and Evaluation of a Hazardous Sound Event Detection System on an
+STM32N6 Microcontroller with a Neural Accelerator}
+
+\newcommand{\tkeywords}
+{vgrajeni sistemi, zaznavanje zvočnih dogodkov, STM32N6, nevronski
+pospeševalnik, robna umetna inteligenca, zasebnost}
+
+\newcommand{\tkeywordsEn}
+{embedded systems, sound event detection, STM32N6, neural accelerator, edge AI,
+privacy}
+
+% Delovni mesti; pred oddajo besedilo dopolnite ali izpustite.
+\newcommand{\tzahvala}
+{[Dopolnite zahvalo ali jo pred oddajo odstranite.]}
+
+\newcommand{\tposvetilo}{}
+
+\input{podporno/preambula.tex}
+
+% Vidna navodila so namenjena pisanju in niso del končnega besedila.
+\newif\ifthesisdraft
+\thesisdrafttrue
+\newcommand{\draftnote}[1]{%
+  \ifthesisdraft
+    \par\medskip
+    \noindent\fbox{\parbox{0.92\textwidth}{\small
+      \textbf{Navodilo za pisanje:} #1}}
+    \par\medskip
+  \fi
+}
+
+\begin{document}
+
+\newcommand{\tpovzetek}
+{V diplomskem delu je predstavljen samostojen vgrajeni sistem, ki izbrane
+nevarne zvočne dogodke pretvori v vidno opozorilo. Namenjen je kot raziskovalni
+prototip pomoči gluhim in naglušnim osebam. Celotna obdelava poteka lokalno na
+razvojni plošči STM32N6570-DK, zato sistem ne potrebuje dostopa do
+računalniškega oblaka, običajna različica programa pa ne shranjuje surovih
+zvočnih posnetkov. Zvok zajema vgrajeni mikrofon, predobdelava izračuna
+logaritemski melov spektrogram, kvantizirani model YAMNet-1024 pa se izvaja z
+nevronskim pospeševalnikom Neural-ART. Ciljni model razpoznava pasji lajež,
+razbitje stekla, strel, sireno, govor in druge zvoke. Stabilnost prikaza
+zagotavljajo pragovi po razredih in časovno filtriranje. V neodvisnem fizičnem
+preizkusu je sistem pričakovani razred vsaj enkrat potrdil v 57 od 60 poskusov,
+pri štirih nevarnostnih razredih pa v 39 od 40 poskusov. Obdelava enega bloka
+je trajala 10,81 milisekunde. Rezultati potrjujejo izvedljivost lokalnega
+razpoznavanja v realnem času, hkrati pa pokažejo potrebo po boljšem zavračanju
+nekaterih kratkih običajnih zvokov.}
+
+\newcommand{\tabstract}
+{This thesis presents a self-contained embedded system that converts selected
+hazardous sound events into visual alerts. It is intended as a research
+prototype to assist deaf and hard of hearing users. All processing runs locally
+on an STM32N6570-DK development board, so the system requires no cloud access,
+and the normal firmware does not retain raw audio recordings. Audio is captured
+by the onboard microphone, preprocessing produces a log-mel spectrogram, and a
+quantized YAMNet-1024 model runs on the Neural-ART accelerator. The targeted
+model recognizes dog barks, breaking glass, gunshots, sirens, speech, and other
+sounds. Per-class thresholds and temporal filtering stabilize the displayed
+decision. In an independent physical evaluation, the system confirmed the
+expected class at least once in 57 of 60 trials and in 39 of 40 trials covering
+the four hazardous classes. Processing one input block took 10.81 milliseconds.
+The results demonstrate the feasibility of local real-time recognition while
+also showing that rejection of some short everyday sounds requires further
+improvement.}
+
+\input{podporno/naslovnestrani.tex}
+
+\mainmatter
+\setcounter{page}{1}
+\pagestyle{fancy}
+
+\input{poglavja/01_uvod.tex}
+\input{poglavja/02_teoreticne_osnove.tex}
+\input{poglavja/03_zasnova.tex}
+\input{poglavja/04_implementacija.tex}
+\input{poglavja/05_metodologija.tex}
+\input{poglavja/06_rezultati.tex}
+\input{poglavja/07_razprava_in_sklep.tex}
+
+\begingroup
+\sloppy
+\printbibliography[heading=bibintoc]
+\endgroup
+
+\appendix
+\input{poglavja/08_priloga.tex}
+
+\end{document}

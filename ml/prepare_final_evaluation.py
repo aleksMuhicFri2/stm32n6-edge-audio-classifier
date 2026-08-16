@@ -368,12 +368,18 @@ def select_fsd_rows(
     eval_rows: list[dict[str, str]],
     clip_info: dict[str, dict[str, object]],
     fsd_audio: Path,
+    excluded_source_ids: set[str] | None = None,
+    selection_seed: int = SELECTION_SEED,
+    trials_per_class: int = TRIALS_PER_MODEL_CLASS,
 ) -> list[dict[str, object]]:
+    excluded_source_ids = excluded_source_ids or set()
     selected: list[dict[str, object]] = []
     for class_index, class_name in enumerate(MODEL_CLASSES):
         expected_label = FSD_LABELS[class_name]
         candidates: list[dict[str, object]] = []
         for row in eval_rows:
+            if row["fname"] in excluded_source_ids:
+                continue
             labels = {value.strip() for value in row["labels"].split(",")}
             if expected_label not in labels or not no_competing_output(labels, expected_label):
                 continue
@@ -413,7 +419,7 @@ def select_fsd_rows(
                     "label_count": len(labels),
                 }
             )
-        rng = random.Random(SELECTION_SEED + class_index)
+        rng = random.Random(selection_seed + class_index)
         candidates.sort(key=lambda row: str(row["source_id"]))
         rng.shuffle(candidates)
         if class_name == "speech":
@@ -457,9 +463,9 @@ def select_fsd_rows(
                     continue
                 used_uploaders.add(uploader)
                 choices.append(row)
-                if len(choices) == TRIALS_PER_MODEL_CLASS:
+                if len(choices) == trials_per_class:
                     break
-        if len(choices) != TRIALS_PER_MODEL_CLASS:
+        if len(choices) != trials_per_class:
             raise RuntimeError(
                 f"Only {len(choices)} eligible reserved {class_name} clips"
             )
@@ -467,14 +473,23 @@ def select_fsd_rows(
     return selected
 
 
-def select_ood_rows(esc_rows: list[dict[str, str]]) -> list[dict[str, object]]:
-    rng = random.Random(OOD_SELECTION_SEED)
+def select_ood_rows(
+    esc_rows: list[dict[str, str]],
+    excluded_source_ids: set[str] | None = None,
+    selection_seed: int = OOD_SELECTION_SEED,
+    categories: list[str] | None = None,
+) -> list[dict[str, object]]:
+    excluded_source_ids = excluded_source_ids or set()
+    categories = categories or OOD_CATEGORIES
+    rng = random.Random(selection_seed)
     selected: list[dict[str, object]] = []
-    for category in OOD_CATEGORIES:
+    for category in categories:
         choices = [
             row
             for row in esc_rows
-            if row["fold"] == "5" and row["category"] == category
+            if row["fold"] == "5"
+            and row["category"] == category
+            and row["src_file"] not in excluded_source_ids
         ]
         choices.sort(key=lambda row: row["filename"])
         rng.shuffle(choices)
@@ -501,8 +516,10 @@ def select_ood_rows(esc_rows: list[dict[str, str]]) -> list[dict[str, object]]:
     return selected
 
 
-def randomized_order(rows: list[dict[str, object]]) -> list[dict[str, object]]:
-    rng = random.Random(ORDER_SEED)
+def randomized_order(
+    rows: list[dict[str, object]], order_seed: int = ORDER_SEED
+) -> list[dict[str, object]]:
+    rng = random.Random(order_seed)
     for _ in range(100_000):
         candidate = list(rows)
         rng.shuffle(candidate)

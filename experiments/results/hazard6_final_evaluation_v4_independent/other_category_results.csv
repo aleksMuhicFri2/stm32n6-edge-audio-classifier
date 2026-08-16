@@ -1,0 +1,11 @@
+trial_id,true_category,category_label,passed,hazard_false_alert,multiple_frame_hazard_false_alert,confirmed_hazard_frames,hazard_output_counts,hazard_output_labels,dominant_confirmed_output,peak_expected_probability
+FE4-032,Crack,Pok,False,True,True,17,glass_breaking:17,Razbitje stekla: 17,glass_breaking,0.3602
+FE4-030,Applause,Aplavz,True,True,True,4,gunshot_gunfire:4,Strel: 4,other,0.5581
+FE4-050,Alarm,Alarm,True,True,True,2,glass_breaking:2,Razbitje stekla: 2,other,0.6775
+FE4-037,Knock,Trkanje,True,True,True,2,glass_breaking:2,Razbitje stekla: 2,other,0.563
+FE4-016,Clapping,Ploskanje,True,True,False,1,glass_breaking:1,Razbitje stekla: 1,other,0.3798
+FE4-057,Computer_keyboard,Računalniška tipkovnica,True,True,False,1,glass_breaking:1,Razbitje stekla: 1,other,0.8848
+FE4-012,Bell,Zvonec,True,False,False,0,,,other,0.9926
+FE4-024,Dishes_and_pots_and_pans,Posoda in kuhinjski pripomočki,True,False,False,0,,,other,0.9039
+FE4-004,Fireworks,Ognjemet,True,False,False,0,,,other,0.8304
+FE4-045,Wind,Veter,True,False,False,0,,,other,0.8081

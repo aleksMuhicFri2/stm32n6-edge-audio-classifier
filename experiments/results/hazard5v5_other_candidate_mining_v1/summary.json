@@ -1,0 +1,36 @@
+{
+  "experiment_id": "HAZARD5V5-OTHER-HARD-NEGATIVE-MINING-001",
+  "status": "candidate_scores_ready",
+  "model_sha256": "2f29a3b26971bdadd05ab069c231e2a8aac83ec4b6fe14015a6551cb344a5978",
+  "source_dataset_sha256": "1b3c6e398ae418eb2c2c8b41fdb6ed0525e92a4329d9ac086db4d328965dae45",
+  "final_candidate_manifest_sha256": "410403c182dc8bad15bdad7c740c4dab89ada74fdfd0f10dd54d7c6c8b058947",
+  "final_sources_loaded": false,
+  "candidate_count": 1920,
+  "role_counts": {
+    "train": 960,
+    "validation": 960
+  },
+  "group_counts": {
+    "tonal_alarm": 240,
+    "impulsive": 240,
+    "metallic_fragile": 240,
+    "human_non_speech": 240,
+    "animal_non_target": 240,
+    "weather_ambient": 240,
+    "domestic_mechanical": 240,
+    "music": 240
+  },
+  "predicted_class_counts": {
+    "siren": 354,
+    "glass_breaking": 561,
+    "thunderstorm": 340,
+    "gunshot_gunfire": 199,
+    "speech": 402,
+    "dog_bark": 64
+  },
+  "copy_modes": {
+    "hardlink": 1920
+  },
+  "candidate_scores_sha256": "afaa6dff52b3dd71fced90467011ed4962e9ea7840bfaea165069022553f53a0",
+  "selection_policy": "Metadata exclusion of all target and speech labels, source exclusion against current training/validation, then current-model scoring on development sources only."
+}

@@ -122,9 +122,9 @@ static const SoundProfile_t s_sound_profiles[] =
   {"dog_bark",         "DOG BARK",         HAZARD_WARNING},
   {"glass_breaking",   "GLASS BREAKING",   HAZARD_DANGER},
   {"gunshot_gunfire",  "GUNSHOT",          HAZARD_DANGER},
+  {"other",            "OTHER",            HAZARD_INFO},
   {"siren",            "EMERGENCY SIREN",   HAZARD_DANGER},
-  {"speech",           "HUMAN SPEECH",      HAZARD_INFO},
-  {"thunderstorm",     "THUNDERSTORM",      HAZARD_DANGER}
+  {"speech",           "HUMAN SPEECH",      HAZARD_INFO}
 };
 
 static volatile uint16_t *s_framebuffer =
@@ -639,7 +639,7 @@ static void draw_footer(void)
   else
   {
     draw_text_centered_in(0U, DISPLAY_WIDTH, 456U,
-                          "USER1 PAUSE / RESUME     6 SOUND CLASSES",
+                          "USER1 PAUSE / RESUME     7 SOUND CLASSES",
                           1U, COLOR_MUTED);
   }
 }

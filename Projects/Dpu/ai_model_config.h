@@ -28,13 +28,18 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 #define CTRL_AI_HW_SELECT                        STM32N6570-DK
-#define CTRL_X_CUBE_AI_MODEL_NAME                "YAMNet-1024 Hazard-5 + Speech V3"
+#define CTRL_X_CUBE_AI_MODEL_NAME                "YAMNet-1024 Hazard-5 + Speech + Other V5"
 #define CTRL_X_CUBE_AI_MODEL_NB_OUTPUT            (1U)
 #define CTRL_X_CUBE_AI_MODEL_OUTPUT_1             (CTRL_AI_CLASS_DISTRIBUTION)
-#define CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER         (6U)
-#define CTRL_X_CUBE_AI_MODEL_CLASS_LIST           {"dog_bark","glass_breaking","gunshot_gunfire","siren","speech","thunderstorm"}
-#define CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX    (4U)
-#define CTRL_X_CUBE_AI_MODEL_THUNDER_CLASS_INDEX   (5U)
+#define CTRL_X_CUBE_AI_MODEL_CLASS_NUMBER         (7U)
+#define CTRL_X_CUBE_AI_MODEL_CLASS_LIST           {"dog_bark","glass_breaking","gunshot_gunfire","other","siren","speech","thunderstorm"}
+#define CTRL_X_CUBE_AI_MODEL_DOG_CLASS_INDEX       (0U)
+#define CTRL_X_CUBE_AI_MODEL_GLASS_CLASS_INDEX     (1U)
+#define CTRL_X_CUBE_AI_MODEL_GUNSHOT_CLASS_INDEX   (2U)
+#define CTRL_X_CUBE_AI_MODEL_OTHER_CLASS_INDEX     (3U)
+#define CTRL_X_CUBE_AI_MODEL_SIREN_CLASS_INDEX     (4U)
+#define CTRL_X_CUBE_AI_MODEL_SPEECH_CLASS_INDEX    (5U)
+#define CTRL_X_CUBE_AI_MODEL_THUNDER_CLASS_INDEX   (6U)
 #define CTRL_X_CUBE_AI_SENSOR_TYPE               COM_TYPE_MIC
 #define CTRL_X_CUBE_AI_SENSOR_NAME               "imp34dt05"
 #define CTRL_X_CUBE_AI_SENSOR_ODR                (16000.0F)
@@ -42,7 +47,12 @@ extern "C" {
 #define CTRL_X_CUBE_AI_NB_SAMPLES                (0U)
 #define CTRL_X_CUBE_AI_PREPROC                   (CTRL_AI_SPECTROGRAM_LOG_MEL)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_NMEL          (64U)
-#define CTRL_X_CUBE_AI_SPECTROGRAM_COL           (96U)
+/* Keep the 96-column (975 ms) YAMNet input, but acquire only 48 new columns
+ * per inference. The remaining 48 columns come from the previous patch, so a
+ * new inference starts every 480 ms and short events are less dependent on
+ * their alignment with a patch boundary. */
+#define CTRL_X_CUBE_AI_SPECTROGRAM_COL_NO_OVL    (48U)
+#define CTRL_X_CUBE_AI_SPECTROGRAM_COL_OVL       (24U)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_TIME_MAJOR    (1U)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_HOP_LENGTH    (160U)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_NFFT          (512U) /* power of 2 closed to CTRL_X_CUBE_AI_WINDOW_LENGTH */
@@ -53,7 +63,7 @@ extern "C" {
 #define CTRL_X_CUBE_AI_SPECTROGRAM_FMAX          (7500U)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_TYPE          (SPECTRUM_TYPE_MAGNITUDE) /*!< magnitude spectrum */
 #define CTRL_X_CUBE_AI_SPECTROGRAM_LOG_FORMULA   (LOGMELSPECTROGRAM_SCALE_LOG) /* LOGMELSPECTROGRAM_SCALE_DB */
-#define CTRL_X_CUBE_AI_SPECTROGRAM_SILENCE_THR   (4000.0F) /* 0 means disabled */
+#define CTRL_X_CUBE_AI_SPECTROGRAM_SILENCE_THR   (2800.0F) /* 0 means disabled */
 #define CTRL_X_CUBE_AI_OOD_THR                   (0.5F)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_WIN           (user_win)
 #define CTRL_X_CUBE_AI_SPECTROGRAM_MEL_LUT       (user_melFiltersLut)

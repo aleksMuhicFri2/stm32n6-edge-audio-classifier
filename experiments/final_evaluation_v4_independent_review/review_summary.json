@@ -1,0 +1,72 @@
+{
+  "evaluation_id": "STM32N6-HAZARD7-FINAL-002",
+  "reviewed": 118,
+  "base_candidates": 90,
+  "base_responses": 90,
+  "preserved_out_of_taxonomy_responses": 8,
+  "supplement_candidates": 28,
+  "supplement_responses": 28,
+  "supplement_rounds": {
+    "round_1": {
+      "candidates": 20,
+      "responses": 20
+    },
+    "round_2": {
+      "candidates": 8,
+      "responses": 8
+    }
+  },
+  "missing_responses": [],
+  "training_source_overlap_exclusions": [
+    {
+      "candidate_id": "FE2C-081",
+      "expected_class": "dog_bark",
+      "source_dataset": "FSD50K",
+      "source_id": "110389"
+    }
+  ],
+  "validity_counts": {
+    "canonical": 75,
+    "wrong_or_absent": 27,
+    "atypical_valid": 16
+  },
+  "completeness_counts": {
+    "complete": 114,
+    "unsure": 4
+  },
+  "audibility_counts": {
+    "normal": 116,
+    "loud_distorted": 1,
+    "quiet": 1
+  },
+  "artifact_counts": {
+    "none": 106,
+    "high_pitched_tone": 5,
+    "static_or_noise": 6,
+    "other": 1
+  },
+  "eligible_counts_by_class": {
+    "dog_bark": 11,
+    "glass_breaking": 12,
+    "gunshot_gunfire": 12,
+    "other": 15,
+    "siren": 12,
+    "speech": 10
+  },
+  "eligible_other_categories": {
+    "Alarm": 2,
+    "Applause": 1,
+    "Bell": 1,
+    "Clapping": 2,
+    "Computer_keyboard": 1,
+    "Crack": 1,
+    "Dishes_and_pots_and_pans": 2,
+    "Fireworks": 1,
+    "Knock": 2,
+    "Wind": 2
+  },
+  "target_class_shortages": {},
+  "missing_other_categories": [],
+  "gate_passed": true,
+  "interpretation": "The semantic gate passed. Freeze 10 accepted candidates per class without reading model predictions."
+}

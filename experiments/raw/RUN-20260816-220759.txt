@@ -1,0 +1,91 @@
+run_id=RUN-20260816-220759
+recorded_at=2026-08-16T22:07:59.2325127+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=15
+stimulus=FE4-059 | frozen reviewed six-class stimulus | FE4-059.wav
+stimulus_hash=f8fb3099ef08579ab14cb27c006d48aff37eec7b92cea1393bdeed1278205e3b
+expected_class=dog_bark
+test_type=positive
+source=FSD50K eval independent playback
+distance_cm=30
+volume_percent=100
+firmware_git_commit=bin-e7e5e0d
+capture_source_git_commit=4829f2a
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard6_final_evaluation_v4_independent\audio\FE4-059.wav
+playback_delay_seconds=3
+decision_filter=975 ms window; 480 ms inference step; activity 2800; EMA alpha 0.65; six visible classes with model thunder probability merged into other before smoothing; per-class enter/release/confirm: dog 0.40/0.30/1, glass 0.60/0.45/1, gunshot 0.65/0.50/2 without single-frame trigger, other 0.23/0.18/3 with below-threshold fallback evidence, siren 0.65/0.50/2, speech 0.40/0.30/1; hazard-to-other hold 4 frames; glass score factor 1.225; switch margin 0.08
+notes=Independent six-class final evaluation STM32N6-HAZARD6-FINAL-003 attempt FE4-A01; order 59; candidate FE2C-092; true category dog_bark; source FSD50K eval 38121; target max100ms -42.0 dBFS; manifest 0355fca0f9a3d26be1e41b4fd9896f7fb7c9f567557a7dde23826dbb36c1342b; application e7e5e0d134cae4fe57bc2ab33848830b6efdff025e2e70af6bce3c3f9365d6bb; weights 0979d852a24f3f2180e10f32f920eddeee166fabc5148841af5678731c33352e.
+--- UART ---
+
+AED_CSV,1984,1,15160.00,other,0.3937,siren,0.4451,other,0.3937,gunshot_gunfire,0.0881,0
+                    | 1984    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1985,1,5724.00,other,0.5820,other,0.5820,siren,0.3210,gunshot_gunfire,0.0438,0
+                    | 1985    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1986,0,701.50,other,0.5820,other,0.5820,siren,0.3210,gunshot_gunfire,0.0438,0
+                    | 1986    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"waiting"}
+AED_CSV,1987,0,683.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 1987    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1988,0,712.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1988    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1989,0,742.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1989    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1990,0,682.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1990    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"unknown"}
+AED_CSV,1991,1,6324.00,unknown,0.5164,other,0.5164,speech,0.2532,siren,0.0875,1
+                    | 1991    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1992,1,13872.00,unknown,0.5404,other,0.5404,siren,0.1990,speech,0.1524,0
+                    | 1992    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"other"}
+AED_CSV,1993,1,10112.00,other,0.4202,other,0.4202,speech,0.2308,dog_bark,0.1348,1
+                    | 1993    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1994,1,4292.00,other,0.3967,other,0.3967,glass_breaking,0.2656,speech,0.1726,0
+                    | 1994    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1995,1,7656.00,other,0.3419,speech,0.3586,other,0.3419,glass_breaking,0.1292,0
+                    | 1995    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1996,1,11624.00,other,0.3243,other,0.3243,dog_bark,0.3117,speech,0.2587,0
+                    | 1996    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1997,1,10312.00,other,0.3083,dog_bark,0.3314,other,0.3083,speech,0.3028,0
+                    | 1997    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"dog_bark"}
+AED_CSV,1998,1,7204.00,dog_bark,0.5845,dog_bark,0.5845,other,0.2129,speech,0.1525,1
+                    | 1998    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1999,1,13016.00,dog_bark,0.7401,dog_bark,0.7401,other,0.1395,speech,0.0693,0
+                    | 1999    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2000,1,12120.00,dog_bark,0.5744,dog_bark,0.5744,speech,0.1894,other,0.1609,0
+                    | 2000    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"unknown"}
+AED_CSV,2001,1,4064.00,unknown,0.3785,other,0.3785,dog_bark,0.2296,speech,0.2170,1
+                    | 2001    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2002,1,7848.00,unknown,0.3319,dog_bark,0.3319,speech,0.3053,other,0.2689,0
+                    | 2002    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"dog_bark"}
+AED_CSV,2003,1,10792.00,dog_bark,0.4664,dog_bark,0.4664,speech,0.2278,other,0.2222,1
+                    | 2003    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2004,1,10648.00,dog_bark,0.6555,dog_bark,0.6555,speech,0.1538,other,0.1515,0
+                    | 2004    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2005,1,5880.00,dog_bark,0.3735,dog_bark,0.3735,other,0.3375,speech,0.2271,0
+                    | 2005    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2006,1,13056.00,dog_bark,0.6417,dog_bark,0.6417,other,0.1917,speech,0.1129,0
+                    | 2006    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2007,1,14168.00,dog_bark,0.4591,dog_bark,0.4591,other,0.2602,speech,0.2256,0
+                    | 2007    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"unknown"}
+AED_CSV,2008,1,4164.00,unknown,0.3768,other,0.3768,speech,0.2273,glass_breaking,0.2142,1
+                    | 2008    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"dog_bark"}
+AED_CSV,2009,1,8448.00,dog_bark,0.6837,dog_bark,0.6837,other,0.1440,speech,0.0988,1
+                    | 2009    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2010,1,10536.00,dog_bark,0.8771,dog_bark,0.8771,other,0.0577,speech,0.0385,0
+                    | 2010    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2011,1,10616.00,dog_bark,0.5066,dog_bark,0.5066,speech,0.3303,other,0.1391,0
+                    | 2011    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"unknown"}
+AED_CSV,2012,1,6496.00,unknown,0.3394,speech,0.3394,other,0.3143,dog_bark,0.2359,1
+                    | 2012    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2013,1,10912.00,unknown,0.3028,other,0.3028,dog_bark,0.2974,speech,0.2742,0
+                    | 2013    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,2014,1,14136.00,unknown,0.3368,dog_bark,0.3368,other,0.2701,speech,0.2568,0
+                    

@@ -1,0 +1,31 @@
+{
+  "experiment_id": "HAZARD5V5-OTHER-GLASS-CALIBRATION-001",
+  "selection_partition": "development only; reserved final test untouched",
+  "selected_glass_score_factor": 1.225,
+  "selection_rule": "maximize correct clips, then macro F1, then prefer the smaller factor",
+  "selected_metrics": {
+    "glass_score_factor": 1.225,
+    "correct_clips": 338,
+    "clip_accuracy": 0.8184019370460048,
+    "macro_f1": 0.8184602565081739,
+    "hazard_macro_recall": 0.8800925925925926,
+    "hazard_macro_recall_loss": 0.0214506172839507,
+    "minimum_hazard_recall": 0.7833333333333333,
+    "glass_recall": 0.7833333333333333,
+    "other_recall": 0.7185185185185186
+  },
+  "gate_passed": true,
+  "gates": {
+    "minimum_other_recall": 0.7,
+    "minimum_per_hazard_recall": 0.7,
+    "maximum_hazard_macro_recall_loss": 0.04,
+    "baseline_hazard_macro_recall": 0.9015432098765433
+  },
+  "factor_range": {
+    "minimum": 1.0,
+    "maximum": 1.25,
+    "step": 0.025
+  },
+  "predictions_sha256": "2a6a2ea7ca0a45b5e3eb35c7dbad5a5765857cdf7d83ecaab04c8f9007dd6c93",
+  "baseline_summary_sha256": "4ee507eecb089a7acdf302d03552f8c70544635fed5308618dde82c34515f7e4"
+}

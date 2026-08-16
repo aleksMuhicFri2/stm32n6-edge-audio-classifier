@@ -1,0 +1,57 @@
+{
+  "experiment_id": "HAZARD5V5-OTHER-PREFLIGHT-011",
+  "training_clips": 4662,
+  "training_patches": 12679,
+  "per_class": [
+    {
+      "class_name": "dog_bark",
+      "clips": 384,
+      "patches": 1550,
+      "patches_per_clip": 4.036458333333333,
+      "patch_share": 0.12224938875305623
+    },
+    {
+      "class_name": "glass_breaking",
+      "clips": 1344,
+      "patches": 1808,
+      "patches_per_clip": 1.3452380952380953,
+      "patch_share": 0.14259799668743592
+    },
+    {
+      "class_name": "gunshot_gunfire",
+      "clips": 1344,
+      "patches": 1962,
+      "patches_per_clip": 1.4598214285714286,
+      "patch_share": 0.15474406498935248
+    },
+    {
+      "class_name": "other",
+      "clips": 630,
+      "patches": 1584,
+      "patches_per_clip": 2.5142857142857142,
+      "patch_share": 0.12493098824828457
+    },
+    {
+      "class_name": "siren",
+      "clips": 192,
+      "patches": 1772,
+      "patches_per_clip": 9.229166666666666,
+      "patch_share": 0.13975865604542945
+    },
+    {
+      "class_name": "speech",
+      "clips": 576,
+      "patches": 1935,
+      "patches_per_clip": 3.359375,
+      "patch_share": 0.15261455950784764
+    },
+    {
+      "class_name": "thunderstorm",
+      "clips": 192,
+      "patches": 2068,
+      "patches_per_clip": 10.770833333333334,
+      "patch_share": 0.16310434576859373
+    }
+  ],
+  "maximum_to_minimum_patch_count_ratio": 1.3341935483870968
+}

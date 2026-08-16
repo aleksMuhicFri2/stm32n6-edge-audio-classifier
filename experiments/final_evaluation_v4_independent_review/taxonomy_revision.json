@@ -1,0 +1,48 @@
+{
+  "evaluation_id": "STM32N6-HAZARD7-FINAL-002",
+  "revision": "pre_freeze_six_class_taxonomy",
+  "recorded_at_utc": "2026-08-16T14:44:12.051832+00:00",
+  "reason": "Thunderstorm was removed before model evaluation because it is not a required danger notification for the intended product. Its frozen neural output will be merged into Other in firmware.",
+  "model_retrained": false,
+  "model_prediction_used_for_revision": false,
+  "original_candidate_manifest_sha256": "1cbf4071c1bef050c61817463580d8580aa8721516ebeefa8f0fe9d6cc7d9420",
+  "revised_candidate_manifest_sha256": "8c3ae90e83b1a4c7f56c65c65c0bc41e800e37dfa8b3c3b1d963046031ca7563",
+  "original_candidate_count": 104,
+  "revised_candidate_count": 90,
+  "revised_class_counts": {
+    "dog_bark": 14,
+    "glass_breaking": 14,
+    "gunshot_gunfire": 14,
+    "other": 20,
+    "siren": 14,
+    "speech": 14
+  },
+  "removed_candidate_ids": [
+    "FE2C-010",
+    "FE2C-020",
+    "FE2C-025",
+    "FE2C-031",
+    "FE2C-041",
+    "FE2C-046",
+    "FE2C-054",
+    "FE2C-062",
+    "FE2C-068",
+    "FE2C-071",
+    "FE2C-079",
+    "FE2C-086",
+    "FE2C-094",
+    "FE2C-104"
+  ],
+  "responses_already_recorded": 63,
+  "removed_thunder_responses_preserved": [
+    "FE2C-010",
+    "FE2C-020",
+    "FE2C-025",
+    "FE2C-031",
+    "FE2C-041",
+    "FE2C-046",
+    "FE2C-054",
+    "FE2C-062"
+  ],
+  "final_evaluation_plan": "10 accepted clips for each of six system classes; 60 physical trials."
+}

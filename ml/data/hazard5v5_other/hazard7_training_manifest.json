@@ -1,0 +1,155 @@
+{
+  "experiment_id": "HAZARD5V5-OTHER-YAMNET1024-DEV-002",
+  "status": "dataset_ready_pending_listening_review_and_patch_audit",
+  "classes_in_expected_model_output_order": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "other",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "source_model_classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "source_dataset": "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\ml-workspace\\datasets\\hazard5v4_patch_balanced_v3",
+  "class_counts": {
+    "hazard7_train.csv": {
+      "dog_bark": 384,
+      "glass_breaking": 1344,
+      "gunshot_gunfire": 1344,
+      "siren": 192,
+      "speech": 576,
+      "thunderstorm": 192,
+      "other": 630
+    },
+    "hazard7_validation.csv": {
+      "dog_bark": 60,
+      "glass_breaking": 60,
+      "gunshot_gunfire": 54,
+      "siren": 20,
+      "speech": 24,
+      "thunderstorm": 60,
+      "other": 135
+    },
+    "hazard7_development_test.csv": {
+      "dog_bark": 60,
+      "glass_breaking": 60,
+      "gunshot_gunfire": 54,
+      "siren": 20,
+      "speech": 24,
+      "thunderstorm": 60,
+      "other": 135
+    },
+    "hazard7_quantization.csv": {
+      "dog_bark": 50,
+      "glass_breaking": 50,
+      "gunshot_gunfire": 50,
+      "siren": 50,
+      "speech": 50,
+      "thunderstorm": 50,
+      "other": 50
+    }
+  },
+  "other_selection": {
+    "train": {
+      "total": 630,
+      "by_group": {
+        "high_tonal_non_siren": 70,
+        "clapping_applause": 70,
+        "impulsive": 70,
+        "metallic_fragile": 70,
+        "human_non_speech": 70,
+        "animal_non_target": 70,
+        "weather_ambient": 70,
+        "domestic_mechanical": 70,
+        "music": 70
+      },
+      "by_tier": {
+        "hard_negative": 404,
+        "diversity": 226
+      },
+      "by_baseline_prediction": {
+        "glass_breaking": 163,
+        "gunshot_gunfire": 106,
+        "siren": 101,
+        "speech": 132,
+        "thunderstorm": 101,
+        "dog_bark": 27
+      }
+    },
+    "validation": {
+      "total": 135,
+      "by_group": {
+        "high_tonal_non_siren": 15,
+        "clapping_applause": 15,
+        "impulsive": 15,
+        "metallic_fragile": 15,
+        "human_non_speech": 15,
+        "animal_non_target": 15,
+        "weather_ambient": 15,
+        "domestic_mechanical": 15,
+        "music": 15
+      },
+      "by_tier": {
+        "hard_negative": 63,
+        "diversity": 72
+      },
+      "by_baseline_prediction": {
+        "dog_bark": 12,
+        "glass_breaking": 38,
+        "gunshot_gunfire": 22,
+        "siren": 14,
+        "speech": 27,
+        "thunderstorm": 22
+      }
+    }
+  },
+  "other_training_sources": 630,
+  "other_validation_sources": 135,
+  "training_validation_source_overlap": 0,
+  "reserved_final_source_overlap": 0,
+  "reserved_final_manifest_sha256": "410403c182dc8bad15bdad7c740c4dab89ada74fdfd0f10dd54d7c6c8b058947",
+  "copy_modes": {
+    "hardlink": 3869,
+    "generated_hard_excerpt": 630
+  },
+  "review_clips": 1,
+  "excluded_sources": 287,
+  "manual_semantic_exclusions": 31,
+  "semantic_exclusion_files": [
+    "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\experiments\\hazard5v5_other_review\\excluded_sources.csv",
+    "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\experiments\\hazard5v5_other_review_v4\\excluded_sources.csv",
+    "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\experiments\\hazard5v5_other_review_v5\\excluded_sources.csv",
+    "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\experiments\\hazard5v5_other_review_v6\\excluded_sources.csv",
+    "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\experiments\\hazard5v5_other_review_v7\\excluded_sources.csv",
+    "C:\\Users\\alexm\\Downloads\\bachelor-thesis-book-master\\bachelor-thesis-book\\stm32n6-edge-audio-classifier\\experiments\\hazard5v5_other_review_v8\\excluded_sources.csv"
+  ],
+  "objective_signal_quality_exclusions": 258,
+  "metadata_alarm_candidates_rejected": 212,
+  "unreviewed_domestic_speech_risk_candidates_rejected": 9,
+  "replacement_training_sources": 1,
+  "focused_unreviewed_domestic_speech_risk_sources": 0,
+  "manifest_hashes": {
+    "hazard7_train.csv": "921e60303e5d95da465803d248a32c4ec5c4d6ad4bba5ffe3ec0ca2f776d35f3",
+    "hazard7_validation.csv": "0036aa575ef944a5d6cd89810967a46a95e505c4f11f71e57af4ac40e2dfd489",
+    "hazard7_development_test.csv": "0036aa575ef944a5d6cd89810967a46a95e505c4f11f71e57af4ac40e2dfd489",
+    "hazard7_quantization.csv": "18eb3be80a60ffbebd7846dbdaf0f8ded52bd448672a90099ea32be268dfa51c"
+  },
+  "provenance_sha256": "1144605e75809e8bd3ce8a20c95b261d15bbd06c260573f5c37ee079699b7601",
+  "selected_sources_sha256": "c69ef53a3a5778c32cfc68d8329b91417e03104226be68c2d50be6b512aa976e",
+  "method": "Per acoustic group: class-round-robin hard-negative selection from the deployed baseline, followed by deterministic diversity sampling.",
+  "notes": [
+    "All six existing class recordings are byte-identical to Patch Balanced V3.",
+    "Other is a real seventh model output, not a post-processing threshold.",
+    "Each other training source contributes one three-second excerpt around the baseline's hardest patch.",
+    "The final evaluation set is excluded by source identity and partition.",
+    "No candidate is used in both training and validation."
+  ]
+}

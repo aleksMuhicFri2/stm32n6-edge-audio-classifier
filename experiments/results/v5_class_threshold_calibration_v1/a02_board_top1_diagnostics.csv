@@ -1,0 +1,8 @@
+class_name,correct_top1_frames,incorrect_top1_frames,correct_minimum,correct_median,incorrect_median,incorrect_maximum
+dog_bark,25,0,0.4161,0.7592,,
+glass_breaking,17,0,0.617,0.8947,,
+gunshot_gunfire,18,4,0.3375,0.5791999999999999,0.33904999999999996,0.6485
+other,23,44,0.3294,0.4488,0.57535,0.9027
+siren,40,6,0.7133,0.98075,0.42995,0.5064
+speech,36,16,0.4313,0.97075,0.3774,0.615
+thunderstorm,19,2,0.4391,0.7928,0.47435000000000005,0.4781

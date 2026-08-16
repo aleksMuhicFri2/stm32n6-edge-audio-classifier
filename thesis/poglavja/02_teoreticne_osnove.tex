@@ -1,0 +1,50 @@
+\chapter{Teoretične osnove in sorodna dela}
+\label{ch:teorija}
+
+\section{Digitalni zvok in zajem signala}
+
+\draftnote{Razložite vzorčenje, frekvenco vzorčenja, amplitudo, eno-kanalni
+signal ter posebnost digitalnega MEMS mikrofona. Za sistem navedite
+\SI{16}{\kilo\hertz}, vendar tehnični podatek podprite z dokumentacijo ali
+lastno konfiguracijo.}
+
+\section{Časovno-frekvenčna predstavitev}
+
+\subsection{Kratkočasovna Fourierjeva transformacija}
+
+\draftnote{Predstavite namen STFT, dolžino okna, korak in prekrivanje. Za
+izvedeni sistem so pomembni okno 400 vzorcev, korak 160 vzorcev in FFT velikosti
+512. Ena enačba in ena razlagalna slika zadoščata.}
+
+\subsection{Melova lestvica in logaritemski spektrogram}
+
+\draftnote{Pojasnite prehod iz spektra v 64 melovih pasov in zakaj je rezultat
+primeren vhod v zvočni klasifikator. Vhod modela je oblike
+\(1 \times 64 \times 96 \times 1\) in predstavlja približno 960 ms zvoka.}
+
+\section{Razvrščanje zvočnih dogodkov}
+
+\draftnote{Ločite razvrščanje posameznega okna od stabilne odločitve sistema.
+Predstavite razrede, oceno modela, prag potrditve, odprto množico in problem
+zvokov, ki niso med učnimi razredi.}
+
+\section{YAMNet, prenos učenja in kvantizacija}
+
+\draftnote{Na kratko predstavite AudioSet, arhitekturo MobileNetV1 in YAMNet.
+Nato natančno zapišite, da je uporabljena manjša različica YAMNet-256 s
+prednaučenim ogrodjem in novo šest-razredno glavo. Razložite namen int8
+kvantizacije. Kot začetni znanstveni vir lahko uporabite
+\cite{hershey2017cnn}; dodajte še uradni vir za YAMNet in vir za kvantizacijo.}
+
+\section{Robna umetna inteligenca in nevronski pospeševalniki}
+
+\draftnote{Primerjajte splošni procesor in namenski nevronski pospeševalnik na
+ravni naloge, prenosa podatkov in omejitev. Ne navajajte prihranka energije,
+ker moč sistema ni bila izmerjena.}
+
+\section{Sorodna dela}
+
+\draftnote{Primerjajte 3--5 sistemov za vgrajeno zaznavanje zvoka. Za vsakega
+zabeležite platformo, model, vhod, število razredov, način vrednotenja in
+ključni rezultat. Poglavje zaključite z vrzeljo, ki jo naslavlja ta naloga:
+celovita fizična izvedba in merjenje na STM32N6.}

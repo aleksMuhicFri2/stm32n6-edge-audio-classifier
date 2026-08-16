@@ -26,6 +26,7 @@
 #include "stm32n6xx_it.h"
 #include "stm32n6570_discovery.h"
 #include "stm32n6570_discovery_audio.h"
+#include "misc_toolbox.h"
 
 /******************************************************************************/
 /*            Cortex-M55 Processor Exceptions Handlers                        */
@@ -804,7 +805,7 @@ void SPI6_IRQHandler(void)
 }
 void USART1_IRQHandler(void)
 {
-  while (1) {};
+  HAL_UART_IRQHandler(&UartHandle);
 }
 void USART2_IRQHandler(void)
 {

@@ -1,0 +1,57 @@
+{
+  "experiment_id": "HAZARD5V5-OTHER-OPEN-SET-DEVELOPMENT-001",
+  "partition": "development_validation_only",
+  "reserved_final_test_used": false,
+  "clips": 135,
+  "old_model": {
+    "output_classes": 6,
+    "has_explicit_other_output": false,
+    "forced_top_class_distribution": {
+      "dog_bark": 8,
+      "glass_breaking": 39,
+      "gunshot_gunfire": 21,
+      "siren": 14,
+      "speech": 30,
+      "thunderstorm": 23
+    },
+    "clip_mean_top_score_at_or_above_threshold": {
+      "0.40": 108,
+      "0.50": 82,
+      "0.65": 61
+    },
+    "clip_mean_top_score_rate_at_or_above_threshold": {
+      "0.40": 0.8,
+      "0.50": 0.6074074074074074,
+      "0.65": 0.45185185185185184
+    }
+  },
+  "new_model": {
+    "output_classes": 7,
+    "glass_score_factor": 1.225,
+    "other_enter_threshold": 0.4,
+    "calibrated_top_class_distribution": {
+      "dog_bark": 5,
+      "glass_breaking": 6,
+      "gunshot_gunfire": 5,
+      "other": 97,
+      "siren": 5,
+      "speech": 9,
+      "thunderstorm": 8
+    },
+    "other_top_class_count": 97,
+    "other_top_class_recall": 0.7185185185185186,
+    "other_accepted_count": 90,
+    "other_accepted_rate": 0.6666666666666666,
+    "false_hazard_top_class_count": 29,
+    "false_hazard_top_class_rate": 0.21481481481481482
+  },
+  "limitations": [
+    "All clips were used during development selection or calibration; this is not the reserved final evaluation.",
+    "The old scores are clip means from candidate mining and do not reproduce exponential smoothing, persistence or class-specific thresholds on the board.",
+    "The new scores are also clip means; end-to-end behavior must be measured on the STM32N6570-DK."
+  ],
+  "inputs": {
+    "selected_sources_sha256": "c69ef53a3a5778c32cfc68d8329b91417e03104226be68c2d50be6b512aa976e",
+    "new_predictions_sha256": "2a6a2ea7ca0a45b5e3eb35c7dbad5a5765857cdf7d83ecaab04c8f9007dd6c93"
+  }
+}

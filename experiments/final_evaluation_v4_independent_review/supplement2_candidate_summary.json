@@ -1,0 +1,52 @@
+{
+  "evaluation_id": "STM32N6-HAZARD7-FINAL-002",
+  "candidate_set_id": "FE2-SIREN-SUPPLEMENT-002",
+  "status": "prepared_foreground_siren_review_not_started",
+  "shortage_before_supplement": 4,
+  "candidate_count": 8,
+  "candidate_counts_by_class": {
+    "siren": 8
+  },
+  "selection_policy": "UrbanSound8K foreground-salience clips only; one candidate per original Freesound recording; current-model and prior experimental source identities excluded; the eight recordings with the most annotated siren slices selected; no model or board predictions read.",
+  "normalization_policy": "Same exact -42 dBFS maximum 100 ms RMS target, 100 percent Windows volume and 30 cm distance as the prior candidate sets.",
+  "review_summary_before_sha256": "e5bad9f4ea181faaed5ca13198d49dbf92f36fca3ca2f27525b3dcf45671f9e2",
+  "manifest_sha256": "d13e73d3045a176d1354110ee95aaf66253b6933e9c2a1c8fa9f80aac30db512",
+  "model_onnx_sha256": "6805110184e8295d73af52fc4093443a5a9867794e36b03e702e12c5a3d7548e",
+  "weights_sha256": "0979d852a24f3f2180e10f32f920eddeee166fabc5148841af5678731c33352e",
+  "application_binary_sha256": "e7e5e0d134cae4fe57bc2ab33848830b6efdff025e2e70af6bce3c3f9365d6bb",
+  "exclusion_files": [
+    "ml\\data\\hazard5v7_target_domain_balanced\\hazard7_training_provenance.csv",
+    "experiments\\final_evaluation\\manifest.csv",
+    "experiments\\final_evaluation_v4_independent_review\\eligible_candidates.csv",
+    "experiments\\final_evaluation_v4_independent_review\\manifest.csv",
+    "experiments\\final_evaluation_v4_independent_review\\supplement_manifest.csv",
+    "experiments\\final_evaluation_v5\\manifest.csv",
+    "experiments\\final_v4_candidate_review\\manifest.csv",
+    "experiments\\hazard5v5_other_review\\excluded_sources.csv",
+    "experiments\\hazard5v5_other_review\\manifest.csv",
+    "experiments\\hazard5v5_other_review\\selected_sources_snapshot.csv",
+    "experiments\\hazard5v5_other_review_v2\\manifest.csv",
+    "experiments\\hazard5v5_other_review_v2\\selected_sources_snapshot.csv",
+    "experiments\\hazard5v5_other_review_v3\\manifest.csv",
+    "experiments\\hazard5v5_other_review_v4\\excluded_sources.csv",
+    "experiments\\hazard5v5_other_review_v4\\manifest.csv",
+    "experiments\\hazard5v5_other_review_v5\\excluded_sources.csv",
+    "experiments\\hazard5v5_other_review_v6\\excluded_sources.csv",
+    "experiments\\hazard5v5_other_review_v7\\excluded_sources.csv",
+    "experiments\\hazard5v5_other_review_v8\\excluded_sources.csv",
+    "experiments\\pilot2_evaluation\\pilot2_ambient_candidates.csv",
+    "experiments\\pilot2_evaluation\\pilot2_manifest.csv",
+    "experiments\\pilot2_evaluation\\pilot2_review_candidates.csv",
+    "experiments\\pilot2_evaluation\\pilot2_supplement_candidates.csv",
+    "experiments\\pilot_evaluation\\pilot_manifest.csv",
+    "experiments\\results\\hazard5v5_other_candidate_mining\\candidate_scores.csv",
+    "experiments\\results\\hazard5v5_other_candidate_mining_v1\\candidate_scores.csv",
+    "experiments\\results\\hazard6_pilot2_targeted\\gunshot_pairs.csv",
+    "experiments\\transient_event_review\\transient_event_review_manifest.csv",
+    "experiments\\v3_thunder_calibration\\manifest.csv"
+  ],
+  "source_metadata_sha256": {
+    "urbansound8k_metadata": "b207f7a53f9e5eb02a5dd71d58fb8b66c88c24c0637b926dc72d9d400a6a2354",
+    "urbansound8k_credits": "aaee9fbc47f256da4d17b6a371b98687272c0bd42c81fa7d36ed4035cb12bd77"
+  }
+}

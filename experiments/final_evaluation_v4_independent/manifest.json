@@ -1,0 +1,78 @@
+{
+  "evaluation_id": "STM32N6-HAZARD6-FINAL-003",
+  "attempt_id": "FE4-A01",
+  "status": "frozen_not_started",
+  "trial_count": 60,
+  "class_counts": {
+    "dog_bark": 10,
+    "glass_breaking": 10,
+    "gunshot_gunfire": 10,
+    "other": 10,
+    "siren": 10,
+    "speech": 10
+  },
+  "other_categories": [
+    "Alarm",
+    "Applause",
+    "Bell",
+    "Clapping",
+    "Computer_keyboard",
+    "Crack",
+    "Dishes_and_pots_and_pans",
+    "Fireworks",
+    "Knock",
+    "Wind"
+  ],
+  "selection_seed": 2701,
+  "order_seed": 2702,
+  "selection_policy": "Ten strict eligible candidates per system class; one candidate per eligible other category; seeded selection and seeded non-adjacent order; no model predictions used.",
+  "review_gate_counts": {
+    "dog_bark": 11,
+    "glass_breaking": 12,
+    "gunshot_gunfire": 12,
+    "other": 15,
+    "siren": 12,
+    "speech": 10
+  },
+  "reviewed_candidates": 118,
+  "training_source_overlap_exclusions": [
+    {
+      "candidate_id": "FE2C-081",
+      "expected_class": "dog_bark",
+      "source_dataset": "FSD50K",
+      "source_id": "110389"
+    }
+  ],
+  "physical_settings": {
+    "volume_percent": 100,
+    "distance_cm": 30,
+    "target_output_max_100ms_rms_dbfs": -42.0,
+    "playback_delay_s": 3,
+    "capture_duration_s": 15
+  },
+  "model_name": "YAMNet-1024 V5 int8; six system classes (thunder merged into other)",
+  "model_output_classes": 7,
+  "system_classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "other",
+    "siren",
+    "speech"
+  ],
+  "model_onnx_sha256": "6805110184e8295d73af52fc4093443a5a9867794e36b03e702e12c5a3d7548e",
+  "weights_sha256": "0979d852a24f3f2180e10f32f920eddeee166fabc5148841af5678731c33352e",
+  "application_binary_sha256": "e7e5e0d134cae4fe57bc2ab33848830b6efdff025e2e70af6bce3c3f9365d6bb",
+  "manifest_sha256": "0355fca0f9a3d26be1e41b4fd9896f7fb7c9f567557a7dde23826dbb36c1342b",
+  "selection_audit_sha256": "2be4628c3ede2613bfe9bc0e7568dc04e3546ae6e4709ff08537b5a4284b3fdb",
+  "eligible_candidates_sha256": "5e5da8f6ccc40c533bcd2c475b9eb7e992b3784f6ed0ac22b2b4de599e2ae3a4",
+  "review_summary_sha256": "ae112acb89168a0ea712934ee8ece06ef60bd2b81c2511d3f03e0712d22796a9",
+  "review_evidence_sha256": {
+    "manifest_six_class.csv": "8c3ae90e83b1a4c7f56c65c65c0bc41e800e37dfa8b3c3b1d963046031ca7563",
+    "responses.csv": "586c42b6c1720946196178ca33b3807f587ace8e942b6c9852a7c9504a8c6273",
+    "supplement_manifest.csv": "c4476c9f20b469b2877c80584059531d988b8d639a32e9fd9a4fc3cd43a354bd",
+    "supplement_responses.csv": "f7d8cd777b6ffc4a3a3c97fe6540272e4acf5230ad9799dd4d6b973619c29f6e",
+    "supplement2_manifest.csv": "d13e73d3045a176d1354110ee95aaf66253b6933e9c2a1c8fa9f80aac30db512",
+    "supplement2_responses.csv": "1e3a7e53fde2c4e26364025a7b68f7f221ec227c725f606af05c5846dcc3dc41"
+  }
+}

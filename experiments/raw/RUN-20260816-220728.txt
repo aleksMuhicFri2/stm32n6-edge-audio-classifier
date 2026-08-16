@@ -1,0 +1,86 @@
+run_id=RUN-20260816-220728
+recorded_at=2026-08-16T22:07:28.4319456+02:00
+port=COM3
+baud_rate=14400
+duration_seconds=15
+stimulus=FE4-057 | frozen reviewed six-class stimulus | FE4-057.wav
+stimulus_hash=cb1497137996cdaa4bd41ba56b91ea653a7e0c69442579fd643bc0471f6d2949
+expected_class=other
+test_type=positive
+source=FSD50K eval independent playback
+distance_cm=30
+volume_percent=100
+firmware_git_commit=bin-e7e5e0d
+capture_source_git_commit=4829f2a
+playback_file=C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\datasets\hazard6_final_evaluation_v4_independent\audio\FE4-057.wav
+playback_delay_seconds=3
+decision_filter=975 ms window; 480 ms inference step; activity 2800; EMA alpha 0.65; six visible classes with model thunder probability merged into other before smoothing; per-class enter/release/confirm: dog 0.40/0.30/1, glass 0.60/0.45/1, gunshot 0.65/0.50/2 without single-frame trigger, other 0.23/0.18/3 with below-threshold fallback evidence, siren 0.65/0.50/2, speech 0.40/0.30/1; hazard-to-other hold 4 frames; glass score factor 1.225; switch margin 0.08
+notes=Independent six-class final evaluation STM32N6-HAZARD6-FINAL-003 attempt FE4-A01; order 57; candidate FE2C-080; true category Computer_keyboard; source FSD50K eval 181264; target max100ms -42.0 dBFS; manifest 0355fca0f9a3d26be1e41b4fd9896f7fb7c9f567557a7dde23826dbb36c1342b; application e7e5e0d134cae4fe57bc2ab33848830b6efdff025e2e70af6bce3c3f9365d6bb; weights 0979d852a24f3f2180e10f32f920eddeee166fabc5148841af5678731c33352e.
+--- UART ---
+
+{"class":"waiting"}
+AED_CSV,1920,0,704.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,1
+                    | 1920    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1921,0,677.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1921    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1922,0,695.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1922    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1923,0,717.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1923    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1924,0,696.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1924    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1925,0,704.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1925    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1926,0,766.00,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1926    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1927,0,775.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1927    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1928,0,996.50,waiting,0.0000,dog_bark,0.0000,glass_breaking,0.0000,gunshot_gunfire,0.0000,0
+                    | 1928    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"glass_breaking"}
+AED_CSV,1929,1,14776.00,glass_breaking,0.6318,glass_breaking,0.6318,gunshot_gunfire,0.3249,other,0.1500,1
+                    | 1929    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"unknown"}
+AED_CSV,1930,1,18128.00,unknown,0.4889,other,0.4889,glass_breaking,0.2869,gunshot_gunfire,0.2430,1
+                    | 1930    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1931,1,6096.00,unknown,0.4174,other,0.4174,glass_breaking,0.3128,gunshot_gunfire,0.2666,0
+                    | 1931    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1932,1,10392.00,unknown,0.4336,other,0.4336,gunshot_gunfire,0.3924,glass_breaking,0.1822,0
+                    | 1932    | 10.81%|  1.43|  9.38|  0.00|
+{"class":"other"}
+AED_CSV,1933,1,17424.00,other,0.4683,other,0.4683,gunshot_gunfire,0.3857,glass_breaking,0.1553,1
+                    | 1933    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1934,1,14752.00,other,0.4945,other,0.4945,gunshot_gunfire,0.4322,glass_breaking,0.0742,0
+                    | 1934    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1935,1,12344.00,other,0.5122,other,0.5122,glass_breaking,0.2738,gunshot_gunfire,0.2394,0
+                    | 1935    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1936,1,8352.00,other,0.7116,other,0.7116,gunshot_gunfire,0.1908,glass_breaking,0.1057,0
+                    | 1936    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1937,1,7144.00,other,0.8553,other,0.8553,gunshot_gunfire,0.1065,glass_breaking,0.0412,0
+                    | 1937    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1938,1,8104.00,other,0.8444,other,0.8444,gunshot_gunfire,0.1152,glass_breaking,0.0343,0
+                    | 1938    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1939,1,3288.00,other,0.8576,other,0.8576,gunshot_gunfire,0.0652,glass_breaking,0.0521,0
+                    | 1939    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1940,1,9520.00,other,0.4352,other,0.4352,gunshot_gunfire,0.3577,glass_breaking,0.2331,0
+                    | 1940    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1941,1,18096.00,other,0.3272,gunshot_gunfire,0.3636,glass_breaking,0.3479,other,0.3272,0
+                    | 1941    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1942,1,12432.00,other,0.6059,other,0.6059,gunshot_gunfire,0.2135,glass_breaking,0.1637,0
+                    | 1942    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1943,1,6748.00,other,0.4346,other,0.4346,gunshot_gunfire,0.4089,glass_breaking,0.1645,0
+                    | 1943    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1944,1,17392.00,other,0.6010,other,0.6010,gunshot_gunfire,0.2543,glass_breaking,0.1561,0
+                    | 1944    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1945,1,15672.00,other,0.5787,other,0.5787,gunshot_gunfire,0.2758,glass_breaking,0.1174,0
+                    | 1945    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1946,1,12344.00,other,0.4098,other,0.4098,glass_breaking,0.3676,gunshot_gunfire,0.2361,0
+                    | 1946    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1947,1,10864.00,other,0.6900,other,0.6900,gunshot_gunfire,0.1790,glass_breaking,0.1331,0
+                    | 1947    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1948,1,5556.00,other,0.8848,other,0.8848,gunshot_gunfire,0.0687,glass_breaking,0.0470,0
+                    | 1948    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1949,1,8248.00,other,0.8006,other,0.8006,glass_breaking,0.1727,gunshot_gunfire,0.0451,0
+                    | 1949    | 10.81%|  1.43|  9.38|  0.00|
+AED_CSV,1950,1,4968.00,other,0.6227,other,0.6227,glass_breaking,0.2313,gunshot_gunfire,0.1618,0
+                    | 1950    | 10.81%|  1.43|  9.38|  0.00|

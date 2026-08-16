@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('Refined', 'Event', 'PatchBalanced', 'PatchBalancedV2', 'PatchBalancedV3')]
+    [ValidateSet('Refined', 'Event', 'PatchBalanced', 'PatchBalancedV2', 'PatchBalancedV3', 'PatchBalancedV4')]
     [string]$Variant,
     [switch]$SmokeTest
 )
@@ -18,6 +18,7 @@ $datasetName = switch ($Variant) {
     'PatchBalanced' { 'hazard5v4_patch_balanced' }
     'PatchBalancedV2' { 'hazard5v4_patch_balanced_v2' }
     'PatchBalancedV3' { 'hazard5v4_patch_balanced_v3' }
+    'PatchBalancedV4' { 'hazard5v4_patch_balanced_v4' }
     default { 'hazard5v4_shatter' }
 }
 $runName = switch ($Variant) {
@@ -25,6 +26,7 @@ $runName = switch ($Variant) {
     'PatchBalanced' { 'hazard5v4_patch_balanced_yamnet1024' }
     'PatchBalancedV2' { 'hazard5v4_patch_balanced_v2_yamnet1024' }
     'PatchBalancedV3' { 'hazard5v4_patch_balanced_v3_yamnet1024' }
+    'PatchBalancedV4' { 'hazard5v4_patch_balanced_v4_yamnet1024' }
     default { 'hazard5v4_shatter_yamnet1024' }
 }
 $reviewSummary = if ($Variant -eq 'PatchBalanced') {
@@ -36,6 +38,9 @@ elseif ($Variant -eq 'PatchBalancedV2') {
 elseif ($Variant -eq 'PatchBalancedV3') {
     Join-Path $longRepoRoot 'experiments\patch_balanced_augmentation_review_v3\combined_transient_review_summary.json'
 }
+elseif ($Variant -eq 'PatchBalancedV4') {
+    Join-Path $longRepoRoot 'experiments\patch_balanced_augmentation_review_v3\combined_transient_review_summary.json'
+}
 else {
     Join-Path $longRepoRoot 'experiments\shatter_event_review\combined_transient_review_summary.json'
 }
@@ -45,6 +50,16 @@ if (-not (Test-Path -LiteralPath $reviewSummary -PathType Leaf)) {
 $review = Get-Content -LiteralPath $reviewSummary -Raw | ConvertFrom-Json
 if (-not $review.gate_passed) {
     throw "The predefined combined listening-review gate did not pass. Training is blocked."
+}
+if ($Variant -eq 'PatchBalancedV4') {
+    $thunderReviewSummary = Join-Path $longRepoRoot 'experiments\thunder_tone_cleanup_review\summary.json'
+    if (-not (Test-Path -LiteralPath $thunderReviewSummary -PathType Leaf)) {
+        throw "Thunder tone-cleanup review summary is missing. Training is blocked."
+    }
+    $thunderReview = Get-Content -LiteralPath $thunderReviewSummary -Raw | ConvertFrom-Json
+    if (-not $thunderReview.gate_passed) {
+        throw "Thunder tone-cleanup review did not pass. Training is blocked."
+    }
 }
 
 subst $shortDrive $projectRoot
@@ -93,7 +108,7 @@ try {
         "mlflow.uri=$mlflowUri",
         "hydra.run.dir=$hydraRunDir"
     )
-    if ($Variant -in @('Event', 'PatchBalanced', 'PatchBalancedV2', 'PatchBalancedV3')) {
+    if ($Variant -in @('Event', 'PatchBalanced', 'PatchBalancedV2', 'PatchBalancedV3', 'PatchBalancedV4')) {
         $arguments += "dataset.training_audio_path=../../datasets/$datasetName/audio"
         $arguments += "dataset.training_csv_path=../../datasets/$datasetName/meta/hazard6_train.csv"
         $arguments += "dataset.validation_audio_path=../../datasets/$datasetName/audio"

@@ -1,0 +1,16 @@
+# LaTeX intermediate files
+output/pdf/*
+!output/pdf/diplomska_naloga_osnutek.pdf
+tmp/
+_minted*/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc

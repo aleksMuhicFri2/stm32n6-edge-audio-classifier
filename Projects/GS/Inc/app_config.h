@@ -69,26 +69,42 @@
 
 #define SEPARATION_LINE "------------------------------------------------------------\n\r"
 
-/* Audio-event decision filter. Each model window covers 960 ms, so an EMA
- * provides stability without adding a fixed multi-window confirmation delay. */
-#define AUDIO_EVENT_EMA_ALPHA                   (0.65F)
-#define AUDIO_EVENT_ENTER_THRESHOLD             (0.65F)
-#define AUDIO_EVENT_RELEASE_THRESHOLD           (0.50F)
-#define AUDIO_EVENT_SWITCH_MARGIN               (0.08F)
-#define AUDIO_EVENT_SILENCE_TO_WAIT_FRAMES      (2U)
+/* Audio-event decision filter. Each model window covers 975 ms and a new
+ * window starts every 480 ms. Thresholds
+ * were initialized from the V5 development predictions and the non-final A02
+ * board calibration. A separate lower release threshold prevents flicker. */
+#define AUDIO_EVENT_EMA_ALPHA                      (0.65F)
+#define AUDIO_EVENT_SWITCH_MARGIN                  (0.08F)
+#define AUDIO_EVENT_SILENCE_TO_WAIT_FRAMES         (2U)
+#define AUDIO_EVENT_HAZARD_TO_OTHER_HOLD_FRAMES    (4U)
 
-/* Board calibration on seven thunder playbacks and eight negative clips found
- * that thunder needs a class-specific rule. Requiring evidence in two
- * consecutive active frames permits a lower threshold without reacting to a
- * one-frame spike. Thunder must still rank first on the confirmation frame. */
-#define AUDIO_EVENT_THUNDER_ENTER_THRESHOLD      (0.32F)
-#define AUDIO_EVENT_THUNDER_RELEASE_THRESHOLD    (0.25F)
-#define AUDIO_EVENT_THUNDER_CONFIRM_FRAMES       (2U)
+#define AUDIO_EVENT_DOG_ENTER_THRESHOLD            (0.40F)
+#define AUDIO_EVENT_DOG_RELEASE_THRESHOLD          (0.30F)
+#define AUDIO_EVENT_DOG_CONFIRM_FRAMES             (1U)
 
-/* Development calibration uses speech as an asymmetric guard: it can suppress
- * a false hazard decision at a lower score, but it is informational and never
- * latches a danger alert. The model-specific index is in ai_model_config.h. */
-#define AUDIO_EVENT_SPEECH_GUARD_THRESHOLD       (0.27F)
+#define AUDIO_EVENT_GLASS_ENTER_THRESHOLD          (0.60F)
+#define AUDIO_EVENT_GLASS_RELEASE_THRESHOLD        (0.45F)
+#define AUDIO_EVENT_GLASS_CONFIRM_FRAMES           (1U)
+
+#define AUDIO_EVENT_GUNSHOT_ENTER_THRESHOLD        (0.65F)
+#define AUDIO_EVENT_GUNSHOT_RELEASE_THRESHOLD      (0.50F)
+#define AUDIO_EVENT_GUNSHOT_CONFIRM_FRAMES         (2U)
+
+#define AUDIO_EVENT_OTHER_ENTER_THRESHOLD          (0.23F)
+#define AUDIO_EVENT_OTHER_RELEASE_THRESHOLD        (0.18F)
+#define AUDIO_EVENT_OTHER_CONFIRM_FRAMES           (3U)
+
+#define AUDIO_EVENT_SIREN_ENTER_THRESHOLD          (0.65F)
+#define AUDIO_EVENT_SIREN_RELEASE_THRESHOLD        (0.50F)
+#define AUDIO_EVENT_SIREN_CONFIRM_FRAMES           (2U)
+
+#define AUDIO_EVENT_SPEECH_ENTER_THRESHOLD         (0.40F)
+#define AUDIO_EVENT_SPEECH_RELEASE_THRESHOLD       (0.30F)
+#define AUDIO_EVENT_SPEECH_CONFIRM_FRAMES          (1U)
+
+/* The score multiplier changes the ranking as well as the threshold decision.
+ * It preserves short glass events that otherwise tend to rank behind other. */
+#define AUDIO_EVENT_GLASS_SCORE_FACTOR             (1.225F)
 
 #ifndef USE_NPU_CACHE
   #define USE_NPU_CACHE 1

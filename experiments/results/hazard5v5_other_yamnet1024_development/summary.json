@@ -1,0 +1,45 @@
+{
+  "experiment_id": "HAZARD5V5-OTHER-YAMNET1024-DEVELOPMENT-001",
+  "model_architecture": "YAMNet-1024 frozen backbone with seven-class dense head; int8 QDQ",
+  "classes": [
+    "dog_bark",
+    "glass_breaking",
+    "gunshot_gunfire",
+    "other",
+    "siren",
+    "speech",
+    "thunderstorm"
+  ],
+  "test_protocol": "413-clip development set; reserved final test untouched",
+  "clip_aggregation": "mean of patch output scores; equivalent argmax to ST score sum",
+  "test_clips": 413,
+  "correct_clips": 333,
+  "incorrect_clips": 80,
+  "clip_accuracy": 0.8062953995157385,
+  "patches": 2961,
+  "correct_patches": 2084,
+  "patch_accuracy": 0.7038162782843634,
+  "macro_precision": 0.7882819066839334,
+  "macro_recall": 0.8437830687830689,
+  "macro_f1": 0.8056333039098735,
+  "model_bytes": 3463638,
+  "model_sha256": "ba9c7eb57fc67660568770e9051a8608ac54942ff04fac4e56f623e4120b78a4",
+  "test_csv_sha256": "0036aa575ef944a5d6cd89810967a46a95e505c4f11f71e57af4ac40e2dfd489",
+  "model_format": "ONNX QDQ",
+  "input_shape": [
+    "unk__300",
+    64,
+    96,
+    1
+  ],
+  "input_dtype": "tensor(float)",
+  "input_scale": null,
+  "input_zero_point": null,
+  "input_layout": "nhwc_mel_time",
+  "output_shape": [
+    "unk__301",
+    7
+  ],
+  "output_dtype": "tensor(float)",
+  "tensorflow_version": "2.18.0"
+}

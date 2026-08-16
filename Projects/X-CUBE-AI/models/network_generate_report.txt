@@ -1,16 +1,16 @@
 ST Edge AI Core v4.0.1-20581 7ed50de05
-Created date          : 2026-08-10 22:48:02
-Parameters            : generate -m C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\stm32n6-edge-audio-classifier\ml\models\hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq.onnx --target stm32n6 --st-neural-art default@user_neural_art.json --workspace C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v4_patch_balanced_v3_yamnet1024\2f29a3b26971\gen-workspace --output C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v4_patch_balanced_v3_yamnet1024\2f29a3b26971\gen-output --with-report --verbosity 1
+Created date          : 2026-08-15 16:30:21
+Parameters            : generate -m C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\stm32n6-edge-audio-classifier\.\ml\models\hazard5v5_other_yamnet1024_int8_nchw_qdq.onnx --target stm32n6 --st-neural-art default@user_neural_art.json --workspace C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v5_other\6805110184e8\gen-workspace --output C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v5_other\6805110184e8\gen-output --with-report --verbosity 1
 
-Model name - hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq
+Model name - hazard5v5_other_yamnet1024_int8_nchw_qdq
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
 m_id   layer (original)                                     oshape                  param/size                   macc                     connected to 
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
 0      input_layer ()                                       [b:1,h:96,w:64,c:1]                                                                        
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
-27     functional_83_1_ne..eOp0_const (DequantizeLinear)    [b:6]                   6/24                                                               
+27     functional_83_1_ne..eOp0_const (DequantizeLinear)    [b:7]                   7/28                                                               
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
-28     functional_83_1_ne..tput_const (DequantizeLinear)    [b:1024,c:6]            6,144/24,576                                                       
+28     functional_83_1_ne..tput_const (DequantizeLinear)    [b:1024,c:7]            7,168/28,672                                                       
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
 57     functional_83_1_se..ear_Output (DequantizeLinear)    [b:1,h:96,w:64,c:1]                                12,288                      input_layer 
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
@@ -188,17 +188,17 @@ m_id   layer (original)                                     oshape              
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
 144    functional_83_1_se..ear_Output (DequantizeLinear)    [b:1,c:1024]                                        2,048   functional_83_1_se..ear_Output 
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
-145    functional_83_1_ne..1_BiasAdd0 (Gemm)                [b:1,c:6]                                           6,150   functional_83_1_se..ear_Output 
+145    functional_83_1_ne..1_BiasAdd0 (Gemm)                [b:1,c:7]                                           7,175   functional_83_1_se..ear_Output 
                                                                                                                         functional_83_1_ne..tput_const 
                                                                                                                         functional_83_1_ne..eOp0_const 
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
-146    functional_83_1_ne..ear_Output (QuantizeLinear)      [b:1,c:6]                                              12   functional_83_1_ne..1_BiasAdd0 
+146    functional_83_1_ne..ear_Output (QuantizeLinear)      [b:1,c:7]                                              14   functional_83_1_ne..1_BiasAdd0 
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
-147    functional_83_1_ne..ear_Output (DequantizeLinear)    [b:1,c:6]                                              12   functional_83_1_ne..ear_Output 
+147    functional_83_1_ne..ear_Output (DequantizeLinear)    [b:1,c:7]                                              14   functional_83_1_ne..ear_Output 
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
-148    new_head (Softmax)                                   [b:1,c:6]                                              90   functional_83_1_ne..ear_Output 
+148    new_head (Softmax)                                   [b:1,c:7]                                             105   functional_83_1_ne..ear_Output 
 ------ ---------------------------------------------------- ----------------------- --------------------- ----------- -------------------------------- 
-model: macc=71,145,272 weights=12,806,424 activations=-- io=--
+model: macc=71,146,316 weights=12,810,524 activations=-- io=--
 
 
 
@@ -207,7 +207,7 @@ model: macc=71,145,272 weights=12,806,424 activations=-- io=--
 Compilation details
 ------------------------------------------------------------------------------------
 Compiler version: 1.1.3-275
-Compiler arguments:  -i C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v4_patch_balanced_v3_yamnet1024\2f29a3b26971\gen-output\hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq_OE_3_3_1.onnx --json-quant-file C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v4_patch_balanced_v3_yamnet1024\2f29a3b26971\gen-output\hazard5v4_patch_balanced_v3_yamnet1024_int8_nchw_qdq_OE_3_3_1_Q.json -g network.c --load-mdesc C:\ST\STEdgeAI\4.0\Utilities\configs\stm32n6.mdesc --load-mpool C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v4_patch_balanced_v3_yamnet1024\2f29a3b26971\stm32n6.mpool --load-cdesc C:\ST\STEdgeAI\4.0\Utilities\configs\cortex-m55.cdesc --save-mpool-file C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v4_patch_balanced_v3_yamnet1024\2f29a3b26971\gen-workspace\neural_art__network\stm32n6.mpool --out-dir-prefix C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v4_patch_balanced_v3_yamnet1024\2f29a3b26971\gen-workspace\neural_art__network/ --network-name network --Ocache-opt -O3 --Os --native-float --Omax-ca-pipe 4 --cache-maintenance --csv-file network --all-buffers-info --output-info-file c_info.json --generate-stai
+Compiler arguments:  -i C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v5_other\6805110184e8\gen-output\hazard5v5_other_yamnet1024_int8_nchw_qdq_OE_3_3_1.onnx --json-quant-file C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v5_other\6805110184e8\gen-output\hazard5v5_other_yamnet1024_int8_nchw_qdq_OE_3_3_1_Q.json -g network.c --load-mdesc C:\ST\STEdgeAI\4.0\Utilities\configs\stm32n6.mdesc --load-mpool C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v5_other\6805110184e8\stm32n6.mpool --load-cdesc C:\ST\STEdgeAI\4.0\Utilities\configs\cortex-m55.cdesc --save-mpool-file C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v5_other\6805110184e8\gen-workspace\neural_art__network\stm32n6.mpool --out-dir-prefix C:\Users\alexm\Downloads\bachelor-thesis-book-master\bachelor-thesis-book\ml-workspace\stedgeai\hazard5v5_other\6805110184e8\gen-workspace\neural_art__network/ --network-name network --Ocache-opt -O3 --Os --native-float --Omax-ca-pipe 4 --cache-maintenance --csv-file network --all-buffers-info --output-info-file c_info.json --generate-stai
 ====================================================================================
 
 Memory usage information  (input/output buffers are included in activations)
@@ -216,17 +216,17 @@ Memory usage information  (input/output buffers are included in activations)
 	cpuRAM1    [0x34000000 - 0x34000000]:          0  B /          0  B  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
 	cpuRAM2    [0x34100000 - 0x34200000]:          0  B /      1.000 MB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
 	npuRAM6    [0x34350000 - 0x343C0000]:    240.000 kB /    448.000 kB  ( 53.57 % used) -- weights:          0  B (  0.00 % used)  activations:    240.000 kB ( 53.57 % used)
-	octoFlash  [0x70180000 - 0x74080000]:      3.128 MB /     63.000 MB  (  4.96 % used) -- weights:      3.128 MB (  4.96 % used)  activations:          0  B (  0.00 % used)
+	octoFlash  [0x70180000 - 0x74080000]:      3.129 MB /     63.000 MB  (  4.97 % used) -- weights:      3.129 MB (  4.97 % used)  activations:          0  B (  0.00 % used)
 	hyperRAM   [0x90000000 - 0x91000000]:          0  B /     16.000 MB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
 ---
-Total:                                             3.362 MB                                  -- weights:      3.128 MB                  activations:    240.000 kB                   
+Total:                                             3.363 MB                                  -- weights:      3.129 MB                  activations:    240.000 kB                   
 ====================================================================================
 
 
 Used memory ranges
 ------------------------------------------------------------------------------------
 	npuRAM6    [0x34350000 - 0x343C0000]: 0x34350000-0x3438C000
-	octoFlash  [0x70180000 - 0x74080000]: 0x70180000-0x704A0AA0
+	octoFlash  [0x70180000 - 0x74080000]: 0x70180000-0x704A0EB0
 ====================================================================================
 
 Epochs details

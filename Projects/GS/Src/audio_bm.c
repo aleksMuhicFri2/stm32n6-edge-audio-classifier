@@ -40,6 +40,9 @@
 #include "audio_display.h"
 #include "audio_event_filter.h"
 
+#include <stdio.h>
+#include <string.h>
+
 /* Private define ------------------------------------------------------------*/
 #define AUDIO_ACQ_LEN     (CTRL_X_CUBE_AI_ACQ_LENGTH)
 #if (CTRL_X_CUBE_AI_SPECTROGRAM_COL_OVL > 0)
@@ -49,6 +52,21 @@
 #endif
 #define AUDIO_OUT_FIRST   (CTRL_X_CUBE_AI_SPECTROGRAM_COL_OVL*CTRL_X_CUBE_AI_SPECTROGRAM_HOP_LENGTH)
 
+/* Target-domain audio capture service. The first 2 MiB of HyperRAM are kept
+ * below both display framebuffers (0x90E80000 and 0x90F3B800). The normal
+ * product remains at 14400 baud; only an explicit PCM_CAPTURE_MODE command
+ * enters this service and switches the serial link to 921600 baud. */
+#define TARGET_CAPTURE_BUFFER_ADDRESS       (0x90000000UL)
+#define TARGET_CAPTURE_SAMPLE_RATE          (16000UL)
+#define TARGET_CAPTURE_MAX_SAMPLES          (960000UL)
+#define TARGET_CAPTURE_HIGH_BAUDRATE         (921600UL)
+#define TARGET_CAPTURE_COMMAND              "PCM_CAPTURE_MODE"
+#define TARGET_CAPTURE_LINE_CAPACITY         (64U)
+#define TARGET_CAPTURE_TX_CHUNK_BYTES        (4096U)
+/* Instrumentation build used only while collecting target-domain audio. The
+ * normal production image is restored after collection. */
+#define TARGET_CAPTURE_AUTOSTART              (0U)
+
 /* Private function prototypes -----------------------------------------------*/
 static void IAC_Config(void);
 static void MPU_Config(void);
@@ -57,6 +75,9 @@ static void Int_Mem_Config(void);
 static void SleepClks_init(void);
 static void Record_Init(void);
 static void NPU_SettingsLog(void);
+static bool TargetCapture_CommandReceived(void);
+static void TargetCapture_Feed(const int16_t *samples, uint32_t sample_count);
+static void TargetCapture_Service(void);
 
 #ifdef CPU_STATS
 static void printCpuStats(void);
@@ -72,6 +93,17 @@ static float vumeter(int16_t * pAudioSmp,int nb_sample);
 /* Private variables ---------------------------------------------------------*/
 static bool AudioProcIsOn;
 static volatile bool AudioFilterResetRequested;
+static volatile bool TargetCaptureActive;
+static volatile bool TargetCaptureComplete;
+static volatile bool TargetCaptureServiceMode;
+static volatile uint32_t TargetCaptureRequestedSamples;
+static volatile uint32_t TargetCaptureWrittenSamples;
+static volatile bool TargetCaptureCommandReady;
+static char TargetCaptureCommandBuffer[TARGET_CAPTURE_LINE_CAPACITY];
+static uint32_t TargetCaptureCommandLength;
+static uint8_t TargetCaptureRxByte;
+static int16_t *const TargetCaptureBuffer =
+    (int16_t *)TARGET_CAPTURE_BUFFER_ADDRESS;
 
 #ifdef APP_BARE_METAL
 static AudioBM_acq_t  audio_acq_ctx;
@@ -124,6 +156,12 @@ void init_bm(void)
 
   /* BSP inits */
   UART_Config();
+  HAL_NVIC_SetPriority(USART1_IRQn, 5U, 0U);
+  HAL_NVIC_EnableIRQ(USART1_IRQn);
+  if (HAL_UART_Receive_IT(&UartHandle, &TargetCaptureRxByte, 1U) != HAL_OK)
+  {
+    Error_Handler();
+  }
   BSP_PB_Init(BUTTON_USER1, BUTTON_MODE_EXTI);
   BSP_PB_Init(BUTTON_TAMP, BUTTON_MODE_EXTI);
   BSP_LED_Init(LED_GREEN);
@@ -140,6 +178,13 @@ void init_bm(void)
   /* by default processing is active */
   AudioProcIsOn = true;
   AudioFilterResetRequested = false;
+  TargetCaptureActive = false;
+  TargetCaptureComplete = false;
+  TargetCaptureServiceMode = false;
+  TargetCaptureRequestedSamples = 0U;
+  TargetCaptureWrittenSamples = 0U;
+  TargetCaptureCommandLength = 0U;
+  TargetCaptureCommandReady = false;
 }
 
 #ifdef APP_BARE_METAL
@@ -156,11 +201,18 @@ void exec_bm(void)
   initAudioProc(&audio_proc_ctx);
   initAudioCapture(&audio_acq_ctx);
   startAudioCapture(&audio_acq_ctx);
+#if TARGET_CAPTURE_AUTOSTART
+  TargetCapture_Service();
+#endif
   printHeader();
 
   while(cont)
   {
     __NOP(); /* to be resilient to gcc optim ... to investigate */
+    if (TargetCapture_CommandReceived())
+    {
+      TargetCapture_Service();
+    }
 #ifdef  APP_LP
     HAL_SuspendTick();
     HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);
@@ -240,8 +292,10 @@ bool audio_process(AudioBM_acq_t * acq_ctx_ptr,AudioBM_proc_t * proc_ctx_ptr)
   pm_set_opp_min(OPP_MAX);
 #endif /* APP_DVFS */
 
-  /* prepare overlapping samples from previous patch */
-  memcpy(proc_buf,proc_buf_ovl,AUDIO_ACQ_OFFSET*sizeof(int16_t));
+  /* Prepare overlapping samples from the previous patch. With the 480 ms
+   * inference step the source and destination overlap, so memmove is required
+   * here; memcpy would have undefined behaviour. */
+  memmove(proc_buf,proc_buf_ovl,AUDIO_ACQ_OFFSET*sizeof(int16_t));
 
   /* Audio samples acquisition */
   AudioCapture_ring_buff_consume(acq_buf,&acq_ctx_ptr->ring_buff,AUDIO_ACQ_LEN);
@@ -598,7 +652,11 @@ void toggle_audio_proc(void)
 void AudioCapture_half_buf_cb(AudioCapture_ring_buff_t *pHdle, int16_t *pData, uint8_t half_buf)
 {
   int16_t *in_p = pData + half_buf * (CAPTURE_BUFFER_SIZE/ 2);
-  AudioCapture_ring_buff_feed(pHdle, (uint8_t *)in_p, CAPTURE_BUFFER_SIZE/ 2);
+  TargetCapture_Feed(in_p, CAPTURE_BUFFER_SIZE / 2U);
+  if (!TargetCaptureServiceMode)
+  {
+    AudioCapture_ring_buff_feed(pHdle, (uint8_t *)in_p, CAPTURE_BUFFER_SIZE/ 2);
+  }
 }
 
 #ifdef APP_BARE_METAL
@@ -671,6 +729,325 @@ void BSP_PB_Callback(Button_TypeDef Button)
   }
 }
 #endif
+
+/*==============================================================================
+                  target-domain PCM capture service
+ =============================================================================*/
+
+static void TargetCapture_ProcessCommandByte(uint8_t value)
+{
+  if ((value == '\r') || (value == '\n'))
+  {
+    if (TargetCaptureCommandLength == 0U)
+    {
+      return;
+    }
+
+    TargetCaptureCommandBuffer[TargetCaptureCommandLength] = '\0';
+    TargetCaptureCommandReady =
+        (strcmp(TargetCaptureCommandBuffer, TARGET_CAPTURE_COMMAND) == 0);
+    TargetCaptureCommandLength = 0U;
+    return;
+  }
+
+  if ((value >= 0x20U) && (value <= 0x7EU))
+  {
+    if (TargetCaptureCommandLength < (TARGET_CAPTURE_LINE_CAPACITY - 1U))
+    {
+      TargetCaptureCommandBuffer[TargetCaptureCommandLength++] = (char)value;
+    }
+    else
+    {
+      TargetCaptureCommandLength = 0U;
+    }
+  }
+}
+
+static void TargetCapture_UartTransmit(const void *data, uint32_t byte_count)
+{
+  const uint8_t *cursor = (const uint8_t *)data;
+
+  while (byte_count > 0U)
+  {
+    const uint16_t chunk = (byte_count > TARGET_CAPTURE_TX_CHUNK_BYTES) ?
+                           TARGET_CAPTURE_TX_CHUNK_BYTES :
+                           (uint16_t)byte_count;
+    if (HAL_UART_Transmit(&UartHandle, cursor, chunk, HAL_MAX_DELAY) != HAL_OK)
+    {
+      Error_Handler();
+    }
+    cursor += chunk;
+    byte_count -= chunk;
+  }
+}
+
+static void TargetCapture_UartTransmitText(const char *text)
+{
+  TargetCapture_UartTransmit(text, (uint32_t)strlen(text));
+}
+
+static bool TargetCapture_CommandReceived(void)
+{
+  bool received;
+
+  __disable_irq();
+  received = TargetCaptureCommandReady;
+  if (received)
+  {
+    TargetCaptureCommandReady = false;
+  }
+  __enable_irq();
+
+  return received;
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  if (huart->Instance != USART1)
+  {
+    return;
+  }
+
+  TargetCapture_ProcessCommandByte(TargetCaptureRxByte);
+  if (!TargetCaptureCommandReady)
+  {
+    (void)HAL_UART_Receive_IT(&UartHandle, &TargetCaptureRxByte, 1U);
+  }
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+  if (huart->Instance != USART1)
+  {
+    return;
+  }
+
+  TargetCaptureCommandLength = 0U;
+  __HAL_UART_CLEAR_OREFLAG(&UartHandle);
+  (void)HAL_UART_Receive_IT(&UartHandle, &TargetCaptureRxByte, 1U);
+}
+
+/* The project does not otherwise link the extended UART source module, while
+ * HAL_UART_IRQHandler still references its legacy optional callbacks. */
+void HAL_UARTEx_WakeupCallback(UART_HandleTypeDef *huart)
+{
+  UNUSED(huart);
+}
+
+void HAL_UARTEx_RxFifoFullCallback(UART_HandleTypeDef *huart)
+{
+  UNUSED(huart);
+}
+
+void HAL_UARTEx_TxFifoEmptyCallback(UART_HandleTypeDef *huart)
+{
+  UNUSED(huart);
+}
+
+static void TargetCapture_Feed(const int16_t *samples, uint32_t sample_count)
+{
+  if (!TargetCaptureActive)
+  {
+    return;
+  }
+
+  const uint32_t written = TargetCaptureWrittenSamples;
+  const uint32_t requested = TargetCaptureRequestedSamples;
+  const uint32_t remaining = requested - written;
+  const uint32_t to_copy = (sample_count < remaining) ? sample_count : remaining;
+
+  memcpy(&TargetCaptureBuffer[written], samples, to_copy * sizeof(int16_t));
+  __DMB();
+  TargetCaptureWrittenSamples = written + to_copy;
+
+  if (TargetCaptureWrittenSamples >= requested)
+  {
+    TargetCaptureActive = false;
+    __DMB();
+    TargetCaptureComplete = true;
+  }
+}
+
+static bool TargetCapture_ReadLine(char *line, uint32_t capacity)
+{
+  uint32_t length = 0U;
+  uint8_t value;
+
+  if (capacity < 2U)
+  {
+    return false;
+  }
+
+  for (;;)
+  {
+    if (HAL_UART_Receive(&UartHandle, &value, 1U, HAL_MAX_DELAY) != HAL_OK)
+    {
+      return false;
+    }
+
+    if ((value == '\r') || (value == '\n'))
+    {
+      if (length == 0U)
+      {
+        continue;
+      }
+      line[length] = '\0';
+      return true;
+    }
+
+    if ((value >= 0x20U) && (value <= 0x7EU))
+    {
+      if (length < (capacity - 1U))
+      {
+        line[length++] = (char)value;
+      }
+      else
+      {
+        length = 0U;
+      }
+    }
+  }
+}
+
+static bool TargetCapture_ParseSampleCount(const char *line, uint32_t *sample_count)
+{
+  static const char prefix[] = "CAPTURE,";
+  uint32_t value = 0U;
+  const char *cursor;
+
+  if (strncmp(line, prefix, sizeof(prefix) - 1U) != 0)
+  {
+    return false;
+  }
+
+  cursor = line + sizeof(prefix) - 1U;
+  if (*cursor == '\0')
+  {
+    return false;
+  }
+
+  while (*cursor != '\0')
+  {
+    if ((*cursor < '0') || (*cursor > '9'))
+    {
+      return false;
+    }
+    if (value > ((TARGET_CAPTURE_MAX_SAMPLES - 9U) / 10U))
+    {
+      return false;
+    }
+    value = value * 10U + (uint32_t)(*cursor - '0');
+    cursor++;
+  }
+
+  if ((value < TARGET_CAPTURE_SAMPLE_RATE) ||
+      (value > TARGET_CAPTURE_MAX_SAMPLES))
+  {
+    return false;
+  }
+
+  *sample_count = value;
+  return true;
+}
+
+static uint32_t TargetCapture_Crc32(const uint8_t *data, uint32_t byte_count)
+{
+  uint32_t crc = 0xFFFFFFFFUL;
+
+  for (uint32_t index = 0U; index < byte_count; index++)
+  {
+    crc ^= data[index];
+    for (uint32_t bit = 0U; bit < 8U; bit++)
+    {
+      const uint32_t mask = 0UL - (crc & 1UL);
+      crc = (crc >> 1U) ^ (0xEDB88320UL & mask);
+    }
+  }
+
+  return ~crc;
+}
+
+static void TargetCapture_Service(void)
+{
+  char line[TARGET_CAPTURE_LINE_CAPACITY];
+  char response[128];
+
+  TargetCaptureServiceMode = true;
+  __DMB();
+  HAL_NVIC_DisableIRQ(USART1_IRQn);
+  (void)HAL_UART_AbortReceive(&UartHandle);
+  TargetCapture_UartTransmitText("PCM_SWITCH,921600\r\n");
+  HAL_Delay(250U);
+  UartHandle.Init.BaudRate = TARGET_CAPTURE_HIGH_BAUDRATE;
+  if (HAL_UART_Init(&UartHandle) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  HAL_Delay(250U);
+
+  (void)snprintf(response, sizeof(response),
+                 "PCM_READY,%lu,16,1,%lu\r\n",
+                 (unsigned long)TARGET_CAPTURE_SAMPLE_RATE,
+                 (unsigned long)TARGET_CAPTURE_MAX_SAMPLES);
+  TargetCapture_UartTransmitText(response);
+
+  for (;;)
+  {
+    uint32_t requested_samples;
+
+    if (!TargetCapture_ReadLine(line, sizeof(line)))
+    {
+      Error_Handler();
+    }
+
+    if (strcmp(line, "PING") == 0)
+    {
+      TargetCapture_UartTransmitText("PCM_PONG\r\n");
+      continue;
+    }
+    if (strcmp(line, "RESET") == 0)
+    {
+      TargetCapture_UartTransmitText("PCM_RESETTING\r\n");
+      HAL_Delay(50U);
+      NVIC_SystemReset();
+    }
+    if (!TargetCapture_ParseSampleCount(line, &requested_samples))
+    {
+      TargetCapture_UartTransmitText("PCM_ERROR,EXPECTED_CAPTURE_SAMPLE_COUNT\r\n");
+      continue;
+    }
+
+    (void)snprintf(response, sizeof(response), "PCM_ARMED,%lu\r\n",
+                   (unsigned long)requested_samples);
+    TargetCapture_UartTransmitText(response);
+
+    __disable_irq();
+    TargetCaptureWrittenSamples = 0U;
+    TargetCaptureRequestedSamples = requested_samples;
+    TargetCaptureComplete = false;
+    TargetCaptureActive = true;
+    __enable_irq();
+
+    while (!TargetCaptureComplete)
+    {
+      __WFI();
+    }
+
+    const uint32_t byte_count = requested_samples * sizeof(int16_t);
+    const uint32_t crc = TargetCapture_Crc32((const uint8_t *)TargetCaptureBuffer,
+                                             byte_count);
+    (void)snprintf(response, sizeof(response),
+                   "PCM_BEGIN,%lu,%lu,%08lX\r\n",
+                   (unsigned long)requested_samples,
+                   (unsigned long)byte_count,
+                   (unsigned long)crc);
+    TargetCapture_UartTransmitText(response);
+    TargetCapture_UartTransmit(TargetCaptureBuffer, byte_count);
+    (void)snprintf(response, sizeof(response), "\r\nPCM_END,%08lX\r\n",
+                   (unsigned long)crc);
+    TargetCapture_UartTransmitText(response);
+  }
+}
 
 /*==============================================================================
                     private  functions definition

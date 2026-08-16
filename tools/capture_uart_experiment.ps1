@@ -20,9 +20,9 @@ param(
     [ValidateRange(0, 60)]
     [int]$PlaybackDelaySeconds = 3,
     [string]$FirmwareCommit = "",
-    [string]$ModelName = "YAMNet-256 Hazard-5 + Speech int8",
+    [string]$ModelName = "YAMNet-1024 V5 int8; six system classes (thunder merged into other)",
     [ValidateRange(1, 1000)]
-    [int]$ModelClasses = 6
+    [int]$ModelClasses = 7
 )
 
 $ErrorActionPreference = "Stop"
@@ -80,6 +80,12 @@ Write-Host "Stimulus: $Stimulus | Expected: $ExpectedClass | Type: $TestType"
 
 try {
     $serial.Open()
+    # The board keeps transmitting while the port is closed. Discard records
+    # buffered by the Windows serial driver so one trial cannot contaminate the
+    # next trial's frame count or decision sequence.
+    $serial.DiscardInBuffer()
+    Start-Sleep -Milliseconds 250
+    $serial.DiscardInBuffer()
     $timer = [System.Diagnostics.Stopwatch]::StartNew()
     while ($timer.Elapsed.TotalSeconds -lt $DurationSeconds) {
         if ($player -and -not $playbackStarted -and
@@ -122,7 +128,7 @@ $header = @(
     "capture_source_git_commit=$sourceCommit",
     "playback_file=$resolvedPlaybackFile",
     "playback_delay_seconds=$PlaybackDelaySeconds",
-    "decision_filter=activity 4000; EMA alpha 0.65; general enter 0.65; general release 0.50; thunder evidence 0.32 in 2 consecutive active frames and top1 on confirmation; thunder release 0.25; switch margin 0.08; speech guard 0.27",
+    "decision_filter=975 ms window; 480 ms inference step; activity 2800; EMA alpha 0.65; six visible classes with model thunder probability merged into other before smoothing; per-class enter/release/confirm: dog 0.40/0.30/1, glass 0.60/0.45/1, gunshot 0.65/0.50/2 without single-frame trigger, other 0.23/0.18/3 with below-threshold fallback evidence, siren 0.65/0.50/2, speech 0.40/0.30/1; hazard-to-other hold 4 frames; glass score factor 1.225; switch margin 0.08",
     "notes=$Notes",
     "--- UART ---"
 ) -join [Environment]::NewLine
@@ -146,8 +152,8 @@ if ($aedMatches.Count -eq 0) {
     throw "No AED_CSV records were parsed. Flash the temporal-filter firmware first. Raw UART was saved to $rawPath."
 }
 
-$safeOutputClasses = @("unknown", "waiting", "no_output", "speech")
-$hazardClasses = @("dog_bark", "glass_breaking", "gunshot_gunfire", "siren", "thunderstorm")
+$safeOutputClasses = @("unknown", "waiting", "no_output", "speech", "other")
+$hazardClasses = @("dog_bark", "glass_breaking", "gunshot_gunfire", "siren")
 $frames = [System.Collections.Generic.List[object]]::new()
 for ($index = 0; $index -lt $aedMatches.Count; $index++) {
     $match = $aedMatches[$index]
@@ -213,7 +219,7 @@ $run = [pscustomobject][ordered]@{
     board = "STM32N6570-DK"
     board_revision = "Rev B"
     firmware_commit = $gitCommit
-    configuration = "BM EMA-0.65 hysteresis"
+    configuration = "BM EMA-0.65 per-class thresholds; activity-2800; glass-factor-1.225; gunshot dual confirmation"
     model_name = $ModelName
     model_classes = $ModelClasses
     stimulus = $Stimulus
