@@ -8,6 +8,10 @@ The photographs document the physical implementation and user interface. They ar
 
 | Priority | File | Recommended use | Suggested Slovenian caption |
 | --- | --- | --- | --- |
+| 1 | `originals/20260817_plosca_elektronika.jpg` | Hardware chapter | Pogled na stran z elektronskimi sestavnimi deli razvojne plošče STM32N6570-DK. |
+| 1 | `originals/20260817_vmesnik_cakanje.jpg` | User-interface subsection, idle state | Uporabniški vmesnik v stanju čakanja. |
+| 1 | `originals/20260817_vmesnik_sirena.jpg` | User-interface subsection, active detection | Uporabniški vmesnik po potrjeni zaznavi sirene. |
+| 1 | `originals/20260817_preskusna_postavitev.jpg` | Evaluation methodology | Preskusna postavitev z zvočnikom, merilnim trakom in razvojno ploščo STM32N6570-DK. |
 | 1 | `originals/20260809_185828.jpg` | Hardware chapter | Razvojna plošča STM32N6570-DK z vidnim mikrokrmilnikom STM32N6570 in priključki, uporabljena za izvedbo sistema. |
 | 1 | `originals/20260809_185913.jpg` | Design and implementation chapter | Prototip sistema med delovanjem v namiznem preskusnem okolju. |
 | 1 | `originals/20260809_185954.jpg` | User-interface subsection, idle state | Uporabniški vmesnik v stanju čakanja, ko prag za potrditev dogodka ni dosežen. |
