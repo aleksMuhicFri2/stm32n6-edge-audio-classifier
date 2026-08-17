@@ -1,50 +1,411 @@
 \chapter{Teoretične osnove in sorodna dela}
 \label{ch:teorija}
 
+V poglavju so predstavljene osnove, potrebne za razumevanje celotne poti od
+zvoka v prostoru do prikazane odločitve. Najprej je opisan prehod iz zvočnega
+valovanja v zaporedje števil, nato pretvorba tega zaporedja v časovno-frekvenčno
+predstavitev. Sledijo razvrščanje zvočnih dogodkov, zasnova modela YAMNet,
+prenos učenja, celoštevilska kvantizacija in izvajanje na robni napravi.
+Poglavje se zaključi s primerjavo sorodnih pristopov.
+
 \section{Digitalni zvok in zajem signala}
 
-\draftnote{Razložite vzorčenje, frekvenco vzorčenja, amplitudo, eno-kanalni
-signal ter posebnost digitalnega MEMS mikrofona. Za sistem navedite
-\SI{16}{\kilo\hertz}, vendar tehnični podatek podprite z dokumentacijo ali
-lastno konfiguracijo.}
+Zvok je sprememba zračnega tlaka, ki se širi po prostoru. Mikrofon te spremembe
+pretvori v električni oziroma digitalni signal. Ker mikrokrmilnik ne more
+obdelovati neprekinjenega fizikalnega pojava, mikrofon signal predstavlja z
+zaporedjem diskretnih vrednosti. Posamezna vrednost je \emph{vzorec}, število
+vzorcev v eni sekundi pa je \emph{frekvenca vzorčenja}.
+
+V izvedenem sistemu je frekvenca vzorčenja \SI{16}{\kilo\hertz}, zato v eni
+sekundi nastane 16.000 vzorcev. Po Nyquistovem pravilu je mogoče brez zrcaljenja
+predstaviti frekvence do polovice frekvence vzorčenja, v tem primeru do
+\SI{8}{\kilo\hertz}. To zadošča uporabljeni predobdelavi, ki upošteva območje
+od \SI{125}{\hertz} do \SI{7.5}{\kilo\hertz}. Višja frekvenca vzorčenja bi
+ohranila več visokofrekvenčne vsebine, vendar bi povečala količino podatkov in
+računsko zahtevnost.
+
+Amplituda vzorca opisuje odmik signala od njegove srednje vrednosti. Sistem
+uporablja predznačene šestnajstbitne vzorce, katerih dovoljeno celoštevilsko
+območje je od $-32.768$ do $32.767$. Večja absolutna vrednost praviloma pomeni
+močnejši trenutni signal, vendar sama amplituda še ne pove, za kateri zvok gre.
+Pasji lajež in plosk sta na primer lahko podobno glasna, razlikujeta pa se po
+trajanju in porazdelitvi energije po frekvencah. Zajema se en kanal, zato vsak
+časovni trenutek predstavlja ena sama vrednost in ne par levega ter desnega
+kanala.
+
+Na razvojni plošči je digitalni mikroelektromehanski mikrofon. Njegov neposredni
+izhod ni šestnajstbitna amplituda, temveč hiter enobitni pulzno-gostotni tok.
+Gostejše zaporedje enic oziroma ničel predstavlja odmik zvočnega signala v eno
+ali drugo smer. Digitalni filter zato tok najprej nizkoprepustno filtrira in
+zmanjša njegovo časovno ločljivost. Rezultat so običajni večbitni zvočni vzorci,
+ki jih lahko uporablja nadaljnja predobdelava. Natančna nastavitev mikrofona,
+filtra in prenosa v pomnilnik je opisana v poglavju~\ref{ch:implementacija}.
 
 \section{Časovno-frekvenčna predstavitev}
 
+Surova zvočna oblika pokaže spreminjanje amplitude skozi čas, ne pokaže pa
+neposredno, katere frekvence so v posameznem trenutku prisotne. Za razpoznavanje
+okoljskih zvokov je to pomembno. Sirena ima navadno trajnejše ozke frekvenčne
+komponente, razbitje stekla kratek širokopasoven prehod, govor pa zapleteno
+časovno zaporedje. Zato se zvočni signal pred nevronskim modelom pretvori v
+predstavitev, ki hkrati ohrani čas in frekvenco.
+
 \subsection{Kratkočasovna Fourierjeva transformacija}
 
-\draftnote{Predstavite namen STFT, dolžino okna, korak in prekrivanje. Za
-izvedeni sistem so pomembni okno 400 vzorcev, korak 160 vzorcev in FFT velikosti
-512. Ena enačba in ena razlagalna slika zadoščata.}
+Fourierjeva transformacija razstavi signal na sinusne sestavine različnih
+frekvenc. Če bi jo izračunali za celoten posnetek, bi dobili informacijo o
+prisotnih frekvencah, izgubili pa bi podatek, kdaj so se pojavile. Pri
+kratkočasovni Fourierjevi transformaciji se zato signal razdeli na kratka,
+delno prekrivajoča se okna. Transformacija se izračuna za vsako okno posebej.
+
+Za časovno okno z zaporedno številko $m$ in frekvenčno mesto $k$ je izračun
+zapisljiv kot
+
+\begin{equation}
+  X(m,k) = \sum_{n=0}^{N-1} x[n+mH]\,w[n]\,
+  \mathrm{e}^{-\mathrm{j}2\pi kn/N_F},
+  \label{eq:stft}
+\end{equation}
+
+kjer je $x$ vhodni signal, $w$ utežna okenska funkcija, $N$ število dejanskih
+vzorcev v oknu, $H$ korak med začetkoma dveh oken in $N_F$ velikost
+Fourierjeve transformacije. Kompleksni rezultat $X(m,k)$ vsebuje velikost in
+fazo posamezne frekvenčne sestavine. Za uporabljeni spektrogram je pomembna
+predvsem velikost.
+
+V sistemu ima okno 400 vzorcev oziroma \SI{25}{\milli\second}, korak pa 160
+vzorcev oziroma \SI{10}{\milli\second}. Sosednji okni se zato prekrivata v 240
+vzorcih oziroma \SI{15}{\milli\second}. Prekrivanje zmanjša možnost, da bi
+kratek dogodek padel ravno na neugodno mejo med oknoma. Pred transformacijo se
+uporabi Hannova okenska funkcija, ki ublaži umetni frekvenčni preskok na
+robovih okna. Izračun je velikosti 512; manjkajočih 112 mest se dopolni z
+ničlami. Takšna dopolnitev ne ustvari novih informacij, omogoči pa učinkovito
+izvajanje hitre Fourierjeve transformacije in določi gostejšo mrežo
+frekvenčnih mest.
+
+En vhod modela vsebuje 96 zaporednih časovnih oken. Prvo okno potrebuje 400
+vzorcev, vsako naslednje pa se začne 160 vzorcev pozneje. Celoten potreben
+odsek zato vsebuje
+
+\begin{equation}
+  400 + (96-1)\cdot160 = 15.600
+\end{equation}
+
+vzorcev oziroma \SI{975}{\milli\second} zvoka. Dokumentacija modela časovno
+dolžino navadno podaja kot $96\cdot\SI{10}{\milli\second}=
+\SI{960}{\milli\second}$, torej kot število oken, pomnoženo z njihovim korakom.
+Dejanska izvedba mora upoštevati še trajanje prvega okna, zato za izračun vseh
+96 oken potrebuje 15.600 vzorcev. Nova odločitev se v končni aplikaciji izračuna vsakih
+\SI{480}{\milli\second}, saj si zaporedna vhoda delita približno polovico
+zvočnega gradiva.
 
 \subsection{Melova lestvica in logaritemski spektrogram}
 
-\draftnote{Pojasnite prehod iz spektra v 64 melovih pasov in zakaj je rezultat
-primeren vhod v zvočni klasifikator. Vhod modela je oblike
-\(1 \times 64 \times 96 \times 1\) in predstavlja približno 960 ms zvoka.}
+Frekvenčna mesta Fourierjeve transformacije so enakomerno razporejena v
+hercih. Človeško zaznavanje višine pa ni linearno: pri nizkih frekvencah so
+majhne razlike zaznavnejše kot pri visokih. Melova lestvica frekvenco približno
+preslika v zaznavno primernejšo razdaljo. Ena izmed običajnih preslikav je
+
+\begin{equation}
+  M(f) = 2595\log_{10}\left(1+\frac{f}{700}\right),
+  \label{eq:mel}
+\end{equation}
+
+kjer je $f$ frekvenca v hercih, $M(f)$ pa položaj na melovi lestvici.
+
+Na spekter vsakega časovnega okna se uporabi 64 delno prekrivajočih se
+trikotnih filtrov. Vsak filter sešteje energijo bližnjih frekvenčnih mest v en
+melov pas. S tem se več sto frekvenčnih vrednosti skrči v 64 vrednosti, pri
+čemer se ohrani za razpoznavanje pomembna oblika spektra. Na koncu se uporabi
+logaritem. Ta zmanjša razpon med zelo tihimi in zelo močnimi komponentami ter
+omogoči, da model poleg najmočnejših vidi tudi šibkejše, vendar značilne dele
+zvoka.
+
+Rezultat predobdelave je logaritemski melov spektrogram velikosti
+$64\times96$. V njem ena os predstavlja 64 frekvenčnih pasov, druga pa 96
+časovnih oken. Dodatna razsežnost velikosti ena označuje en vhodni kanal, prva
+razsežnost v zapisu $1\times64\times96\times1$ pa en primer v učni oziroma
+izvajalni skupini. Posamezna vrednost spektrograma torej ni zvočni vzorec,
+temveč mera energije v določenem frekvenčnem pasu in časovnem oknu. Enake
+parametre uporablja uradna različica YAMNet-1024 za STM32N6
+\cite{ststm32aimodelzooyamnet}.
 
 \section{Razvrščanje zvočnih dogodkov}
 
-\draftnote{Ločite razvrščanje posameznega okna od stabilne odločitve sistema.
-Predstavite razrede, oceno modela, prag potrditve, odprto množico in problem
-zvokov, ki niso med učnimi razredi.}
+Razvrščanje zvočnega dogodka pomeni, da model vhodnemu spektrogramu priredi
+oceno za vsak naučeni razred. Med učenjem je za vsak primer znana pravilna
+oznaka, postopek učenja pa uteži modela prilagaja tako, da je ocena pravilnega
+razreda čim večja. Ob izvajanju model prejme nov spektrogram in vrne vektor
+ocen. Razred z največjo oceno je trenutna najverjetnejša razlaga vhodnega
+odseka, ni pa nujno dovolj zanesljiv za prikaz opozorila.
+
+Tudi kadar so izhodi normalizirani in je njihova vsota ena, vrednosti niso
+samodejno umerjene verjetnosti pravilnosti. Ocena 0,90 pomeni, da model močno
+daje prednost določenemu razredu glede na druge naučene razrede. Ne pomeni pa,
+da bo napoved pravilna v natanko 90 odstotkih enakih primerov. Zato so v nalogi
+vrednosti poimenovane \emph{ocene modela}; pravilnost sistema se meri ločeno na
+preskusnih posnetkih.
+
+Resnični zvočni svet je odprta množica. Model se lahko uči na omejenem številu
+razredov, med uporabo pa prejme glasbo, trkanje, premikanje predmetov ali drug
+zvok, ki ga v ciljnem naboru ni. Če ima model samo nevarnostne izhode, mora tudi
+takemu vhodu dodeliti enega izmed njih. Razreda govor in drugo zato delujeta kot
+varovalna razreda. Govor pokriva zelo pogost nenevaren zvok, razred drugo pa
+raznolike preostale primere. Razred drugo kljub temu ne more predstavljati
+vseh mogočih neznanih zvokov; njegova učinkovitost je odvisna od raznolikosti
+učnih podatkov.
+
+Posamezna napoved modela prav tako še ni končna odločitev naprave. Ocene se
+med zaporednimi, prekrivajočimi se odseki lahko spreminjajo. Odločitvena plast
+zato uporablja glajenje, razredne pragove in zahtevano število zaporednih
+potrditev. Če noben razred ne doseže svojega pogoja, sistem zvok zavrne kot
+neznan. Višji prag zmanjša število lažnih alarmov, vendar lahko poveča število
+spregledanih dogodkov. Nižji prag ima obraten učinek. Končni sistem je zato
+treba vrednotiti kot celoto: zajem, predobdelavo, model in časovno odločanje,
+ne samo kot nevronsko mrežo na datotekah.
 
 \section{YAMNet, prenos učenja in kvantizacija}
 
-\draftnote{Na kratko predstavite AudioSet, arhitekturo MobileNetV1 in YAMNet.
-Nato natančno zapišite, da je uporabljena manjša različica YAMNet-256 s
-prednaučenim ogrodjem in novo šest-razredno glavo. Razložite namen int8
-kvantizacije. Kot začetni znanstveni vir lahko uporabite
-\cite{hershey2017cnn}; dodajte še uradni vir za YAMNet in vir za kvantizacijo.}
+\subsection{Prednaučeno ogrodje YAMNet}
+
+AudioSet je obsežna hierarhično označena zbirka zvočnih dogodkov, zbranih iz
+spletnih videoposnetkov \cite{gemmeke2017audioset}. Na njej je bil naučen model
+YAMNet, ki splošni vhodni zvok razvršča med 521 oznak
+\cite{hershey2017cnn,tensorflowyamnetrepo}. Takšen model že pozna splošne
+vzorce govora, živali, glasbe, strojev in drugih okoljskih zvokov, vendar njegov
+izhod ni neposredno prilagojen izbranemu naboru nevarnosti.
+
+YAMNet temelji na arhitekturi MobileNetV1 \cite{howard2017mobilenets}. Njena
+ključna lastnost so globinsko ločljive konvolucije. Običajna konvolucija v enem
+koraku išče prostorske vzorce in hkrati povezuje vse vhodne kanale. Globinsko
+ločljiva konvolucija nalogo razdeli na dva dela: najprej uporabi svoj filter za
+vsak kanal posebej, nato pa z enotočkovno konvolucijo velikosti $1\times1$
+poveže rezultate med kanali. Tak razcep praviloma potrebuje manj parametrov in
+operacij, zato je primeren za mobilne in vgrajene naprave.
+
+V nalogi je uporabljena različica YAMNet-1024 iz zbirke modelov podjetja
+STMicroelectronics. Od izvirnega modela ohrani prednaučeno konvolucijsko
+ogrodje, predobdelava zvočnega signala pa je izvedena v programu
+mikrokrmilnika. Izhod ogrodja je vektor 1024 značilk. Vsaka vrednost v njem sama
+po sebi nima oznake, kot je »sirena« ali »strel«; celoten vektor je zgoščen
+opis vzorcev, ki jih je ogrodje prepoznalo v spektrogramu. Število 1024 zato
+označuje dolžino opisa in ne števila zvočnih razredov
+\cite{ststm32aimodelzooyamnet}.
+
+\subsection{Prenos učenja}
+
+Učenje celotnega velikega omrežja od začetka bi zahtevalo veliko več označenih
+posnetkov, časa in računske zmogljivosti. Pri prenosu učenja se uporabi znanje
+prednaučenega modela, ciljni nalogi pa se prilagodi le njegov zaključek. V tej
+nalogi so uteži ogrodja YAMNet-1024 ostale zamrznjene, zato se med učenjem niso
+spreminjale. Dodana je bila nova polno povezana plast, ki 1024 značilk pretvori
+v sedem ocen: pasji lajež, razbitje stekla, strel oziroma streljanje, nevihto,
+sireno, govor in drugo.
+
+Zaključna plast ima za vsak izhod 1024 uteži in eno pristranskost, skupaj
+$1024\cdot7+7=7175$ učljivih parametrov. Prednaučeni del prispeva večino od
+skupno 3.224.519 parametrov, vendar se njegove uteži med učenjem ciljne naloge
+ne spreminjajo. Tako lahko omejen namenski nabor podatkov nauči novo povezavo
+med splošnimi zvočnimi značilkami in izbranimi razredi, ne da bi moral ponovno
+odkriti osnovne spektralne vzorce. Podrobnosti podatkov, povečav in poteka
+učenja so podane v poglavju~\ref{ch:implementacija}.
+
+Končna programska oprema sedem modelskih ocen pretvori v šest uporabniških
+razredov. Ker nevihta po končni opredelitvi namena ni samostojno opozorilo, se
+njena ocena prišteje razredu drugo. To omogoča ohranitev že naučenega modela,
+uporabniku pa se ne prikazuje dogodek, ki ni del izbranega nabora nevarnosti.
+
+\subsection{Osembitna celoštevilska kvantizacija}
+
+Model se med učenjem praviloma računa z 32-bitnimi števili s plavajočo vejico.
+Na mikrokrmilniku tak zapis poveča velikost uteži in ni najprimernejši za
+namenski nevronski pospeševalnik. Pri kvantizaciji se realna vrednost $r$
+približno preslika v osembitno celo število $q$ z zvezo
+
+\begin{equation}
+  q = \operatorname{clip}\!\left(\operatorname{round}\!\left(\frac{r}{s}\right)
+      + z\right),
+  \label{eq:kvantizacija}
+\end{equation}
+
+kjer je $s$ pozitivni kvantizacijski korak, $z$ pa ničelna točka. Funkcija
+$\operatorname{clip}$ rezultat omeji na dovoljeno osembitno območje. Korak
+določa, kolikšen razpon realnih vrednosti predstavlja ena celoštevilska
+stopnja, ničelna točka pa poskrbi, da je mogoče natančno predstaviti realno
+ničlo. Pri povratni pretvorbi velja približek $r\approx s(q-z)$.
+
+Ker ima osembitna utež štirikrat manjši zapis od 32-bitne uteži, se bistveno
+zmanjša pomnilniški odtis uteži. Celoštevilske operacije so tudi oblika, za
+katero je načrtovan uporabljeni pospeševalnik. Kvantizacija pa zaokroža
+vrednosti in lahko zmanjša kakovost modela. Reprezentativni kalibracijski
+primeri zato določijo primerne razpone vmesnih vrednosti. Razmerje med
+natančnostjo, hitrostjo in velikostjo je treba preveriti z meritvami, ne zgolj
+predpostaviti \cite{jacob2018quantization}.
 
 \section{Robna umetna inteligenca in nevronski pospeševalniki}
 
-\draftnote{Primerjajte splošni procesor in namenski nevronski pospeševalnik na
-ravni naloge, prenosa podatkov in omejitev. Ne navajajte prihranka energije,
-ker moč sistema ni bila izmerjena.}
+Pri obdelavi na robni napravi se podatki obdelajo blizu njihovega izvora. V
+obravnavanem sistemu mikrofon, predobdelava, nevronsko sklepanje in zaslon
+delujejo na isti razvojni plošči. Za običajno delovanje zato ni potrebna
+omrežna povezava ali oddaljena storitev. Surovi zvok se ne pošilja v
+računalniški oblak in se v končni programski opremi ne shranjuje trajno. To
+zmanjša izpostavljenost vsebine pogovorov pri prenosu in hrambi ter omogoča
+delovanje brez omrežja. Ne pomeni pa popolne zasebnosti samo po sebi: pomembni
+ostajajo fizična zaščita naprave, razvojni diagnostični vmesniki in ravnanje z
+učnimi oziroma preskusnimi posnetki.
 
+Splošno procesorsko jedro je prilagodljivo in primerno za krmiljenje
+periferije, izračun spektrograma, odločanje ter uporabniški vmesnik. Izvajanje
+več milijonov ponavljajočih se konvolucijskih operacij samo na njem pa ni nujno
+najučinkovitejša uporaba strojne opreme. Nevronski pospeševalnik Neural-ART v
+mikrokrmilniku STM32N6 je namenjen vzporednemu izvajanju takšnih operacij. Orodje
+ST Edge AI model predhodno prevede, razporedi podprte operacije in pripravi
+statična pomnilniška območja za uteži ter vmesne aktivacije
+\cite{st2026edgeai,st2026stm32n6ai}.
+
+Pospeševalnik ni samostojen program. Procesorsko jedro še vedno zajame zvok,
+pripravi vhodni tenzor, sproži izvajanje omrežja in obdela izhod. Prav tako mora
+prevajalnik upoštevati, katere operacije podpira strojna enota in kje so
+shranjeni podatki. Če del modela ni podprt ali če prenos med pomnilniškimi
+območji predstavlja ozko grlo, se pričakovana pohitritev zmanjša. Zato število
+operacij modela samo po sebi ne določa časa izvajanja.
+
+Za sprotno delovanje mora biti celotna obdelava končana pred prihodom naslednjega
+odseka, ki zahteva novo odločitev. V končni izvedbi je ta razmik
+\SI{480}{\milli\second}. Čas predobdelave in sklepanja je zato izmerjen na
+fizični napravi v poglavju~\ref{ch:rezultati}. Poraba električne energije ni
+bila merjena, zato iz uporabe pospeševalnika ne izpeljujemo številčne trditve o
+energijskem prihranku.
+
+\clearpage
 \section{Sorodna dela}
 
-\draftnote{Primerjajte 3--5 sistemov za vgrajeno zaznavanje zvoka. Za vsakega
-zabeležite platformo, model, vhod, število razredov, način vrednotenja in
-ključni rezultat. Poglavje zaključite z vrzeljo, ki jo naslavlja ta naloga:
-celovita fizična izvedba in merjenje na STM32N6.}
+Po predstavitvi teoretičnih osnov je smiselno razviti sistem umestiti med
+obstoječe pristope. V nadaljevanju je zato obravnavanih šest primerjalnih točk.
+Prve štiri pokrivajo splošni prednaučeni model, uradno izvedbeno izhodišče ter
+dva majhna modela za naprave z omejenimi viri. Zadnji dve sta pomožna sistema za
+gluhe in naglušne osebe ter pokažeta, kako na uporabnost vplivajo način
+opozarjanja, napačne razvrstitve, zasebnost in mesto obdelave. Izbrana dela ne
+predstavljajo izčrpnega pregleda vseh razpoznavalnikov zvoka, temveč pokrivajo
+vidike, ki so za nalogo najpomembnejši: prenos učenja, izvedbo na
+mikrokrmilniku, omejitve pomnilnika, sprotno sklepanje in prikaz rezultata
+uporabniku.
+
+\subsection{Prednaučeni model in izvedbeno izhodišče}
+
+Splošni YAMNet predstavlja izhodišče za prenos učenja v tej nalogi. Google ga
+je zasnoval kot splošni razpoznavalnik 521 zvočnih dogodkov iz zbirke AudioSet.
+Vhodni signal razdeli na kratke odseke in jih pretvori v logaritemske melove
+spektrograme, ogrodje MobileNetV1 pa ustvari 1024 značilk
+\cite{tensorflowyamnetrepo}. Tak pristop zagotovi široko prednaučeno znanje,
+ne rešuje pa sam po sebi izbire ciljnih nevarnosti, zavračanja drugih zvokov,
+izvajanja na konkretni plošči in prikaza uporabniku.
+
+Najbližje tehnično izhodišče je uradni paket podjetja STMicroelectronics za
+razpoznavanje zvočnih dogodkov na STM32N6570-DK. Vsebuje golo-kovinsko izvedbo
+in različice z operacijskim sistemom za delo v stvarnem času, 64 melovih pasov,
+96 časovnih oken ter kvantizirani YAMNet-1024 z desetimi razredi iz zbirke
+ESC-10 \cite{ststm32n6audio}. Paket pokaže celotno osnovno pot od mikrofona do
+izpisa rezultata in je zato predstavljal začetno izvedbeno osnovo. Ne obravnava
+pa namenskega nabora nevarnosti, lastnega podatkovnega postopka, grafičnega
+vmesnika in neodvisnega fizičnega vrednotenja, ki so predmet te naloge.
+
+\subsection{Drugi modeli za naprave z omejenimi viri}
+
+Mohaimenuzzaman in sodelavci so razvili model Micro-ACDNet in postopek, s
+katerim so večje konvolucijsko omrežje za razpoznavanje surovega zvoka stisnili
+in kvantizirali \cite{mohaimenuzzaman2023edge}. Njihova različica za 50 razredov ima približno
+131.000 parametrov in je bila izvedena na mikrokrmilniški plošči Sony Spresense.
+Študija poudari omejitve delovnega pomnilnika in pokaže, da lahko kvantizacija
+opazno spremeni pravilnost. V primerjavi s to nalogo je model manjši in vhod
+obdeluje neposredno kot zvočno obliko, cilj pa je splošen postopek stiskanja,
+ne namenski sistem vidnega opozarjanja.
+
+Elliott in sodelavci so raziskali majhne transformatorske modele za
+razpoznavanje okoljskih zvokov \cite{elliott2021tiny}. Najmanjši model za šest
+pisarniških razredov ima 6.642 parametrov in je pri preverjanju na telefonu
+Samsung Galaxy S9 sklepanje opravil v približno \SI{7}{\milli\second}. Avtorji
+so velikost izbrali z mislijo na pomnilnik mikrokrmilniške plošče Arduino Nano
+33 BLE Sense, vendar fizične izvedbe na tej plošči niso predstavili. Delo
+pokaže, da velikost modela ni edina možna pot: na izbranem ozkem problemu lahko
+zelo majhen model tekmuje z večjim konvolucijskim modelom. Hkrati rezultati niso
+neposredno primerljivi s to nalogo, saj se razlikujejo razredi, dolžina vhoda,
+strojna platforma in preskusni podatki.
+
+\subsection{Pomožni sistemi za gluhe in naglušne osebe}
+
+Jain in sodelavci so razvili domači sistem HomeSound, sestavljen iz več
+zaslonov z mikrofoni in pozneje tudi pametne ure. Prva različica je prikazovala
+glasnost, višino, trajanje in prostor izvora zvoka, druga pa je dodala samodejno
+razvrščanje 19 gospodinjskih zvokov. Obe različici so po tri tedne preizkušali
+v domovih gluhih in naglušnih oseb; skupaj je sodelovalo šest različnih
+gospodinjstev \cite{jain2020homesound}. Sistem je povečal zavedanje o dogajanju
+v domu, vendar so uporabnike motile napačne razvrstitve in prepogoste vibracije
+pametne ure. Pojavila so se tudi vprašanja zasebnosti obiskovalcev. Delo je za
+to nalogo pomembno, ker pokaže, da visoka laboratorijska pravilnost sama ne
+zagotavlja uporabnega opozorilnega sistema. Naša rešitev zato uporablja
+časovno potrjevanje in razredne pragove, vendar uporabniška študija z gluhimi
+in naglušnimi osebami ni bila izvedena.
+
+Lin in sodelavci so predstavili dvostopenjski notranji sistem za prikaz zvokov
+gluhim in naglušnim osebam \cite{lin2026indoor}. Manjši model Dynamic
+MobileNet na računalniku Raspberry Pi najprej razvrsti zvok in oceni negotovost.
+Če je ocena premalo zanesljiva, se posnetek pošlje strežniku, kjer ga obdela
+večji model YAMNet. Rezultat se prikaže na pametnem telefonu ali uri. Sistem je
+na preskusnem naboru, sestavljenem iz zbirk ESC-50 in ReaLISED, dosegel
+90-odstotno pravilnost za 14 pomembnih razredov; za 86 širših skupin iz zbirke
+AudioSet je dosegel 74 odstotkov. Rezultatov zaradi drugačnih razredov in
+preskusnih podatkov ni mogoče neposredno primerjati z rezultati te naloge.
+Arhitekturna razlika pa je jasna: dvostopenjski pristop s strežnikom omogoča
+uporabo večjega modela ob negotovih primerih, medtem ko naša naprava celotno
+obdelavo izvede lokalno in zvoka ne pošilja v omrežje.
+
+\subsection{Primerjava in umestitev naloge}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Primerjava izbranih pristopov za razpoznavanje in prikaz okoljskih
+  zvokov.}
+  \label{tab:sorodna-dela}
+  \scriptsize
+  \setlength{\tabcolsep}{7pt}
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.22\textwidth}
+                       >{\raggedright\arraybackslash}p{0.29\textwidth}
+                       >{\raggedright\arraybackslash}p{0.30\textwidth}@{}}
+    \toprule
+    Pristop in platforma & Vhod in model & Poudarek in odnos do naloge \\
+    \midrule
+    Google YAMNet; splošne računalniške platforme
+      & logaritemski melov spektrogram, MobileNetV1, 521 oznak
+      & splošno prednaučeno razpoznavanje zbirke AudioSet \\
+    ST začetni zvočni paket; STM32N6570-DK in Neural-ART
+      & $64\times96$, YAMNet-1024, deset razredov ESC-10
+      & referenčna sprotna izvedba in primeri namestitve \\
+    Micro-ACDNet; Sony Spresense
+      & \SI{1.5}{\second} surovega zvoka, 50 razredov
+      & stiskanje, kvantizacija, pomnilnik in pravilnost \\
+    Majhen transformator; Samsung Galaxy S9
+      & melov spektrogram, šest pisarniških razredov
+      & zelo majhen model; fizična izvedba na mikrokrmilniku ni bila prikazana \\
+    HomeSound; domači zasloni in pametna ura
+      & značilnosti zvoka in pozneje 19 gospodinjskih razredov
+      & terenski preizkus; uporabnost, zasebnost in prepogosta opozorila \\
+    Dvostopenjski sistem; Raspberry Pi in strežnik
+      & Dynamic MobileNet lokalno, YAMNet ob negotovih primerih
+      & širok nabor zvokov, vendar prenos zvoka do strežnika \\
+    Ta naloga; STM32N6570-DK in Neural-ART
+      & $64\times96$, YAMNet-1024, šest uporabniških razredov
+      & lokalni fizični sistem, nevarnosti, lažni alarmi, čas in pomnilnik \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Vrzel, ki jo naslavlja naloga, zato ni nov splošni model za razpoznavanje zvoka.
+Prispevek je celovita prilagoditev prednaučenega modela in razvoj fizičnega
+sistema za izbrane nevarne dogodke: neposredni zajem z vgrajenim mikrofonom,
+enaka predobdelava pri učenju in na napravi, namenski učni razredi, lokalno
+sklepanje, časovno stabilizirana odločitev, vidno opozorilo ter meritev na
+končni strojni opremi. Sistem je zasnovan kot prototip pomoči gluhim in
+naglušnim osebam, pri čemer običajno delovanje ne potrebuje računalniškega
+oblaka in ne hrani surovega zvoka.
