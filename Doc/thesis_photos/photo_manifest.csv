@@ -1,10 +1,4 @@
 filename,captured_at,format,width_px,height_px,bytes,sha256,selection,documented_content
-20260623_213628.heic,2026-06-23T21:36:28,HEIC,3060,4080,535001,894f04cccfe1ee3657681a1eab863191e1e83a9a18364888df3c4f638820ae21,predecessor_reference,Earlier breadboard-based user interface used during the Raspberry Pi experiment
-20260809_185828.jpg,2026-08-09T18:58:28,JPEG,4080,3060,5294971,3f68b37495a40f108dbe8692a48569618090e99d9868033ef8c4675e9414b68f,selected,STM32N6570-DK hardware with the STM32N6570 package and board connectors visible
-20260809_185913.jpg,2026-08-09T18:59:13,JPEG,4080,3060,5076680,4607b8d3b158dfbce9df96163bb5c820c8ff266d7e96d0010ae4021ea819c1ea,selected,Operating prototype in the desktop test environment
-20260809_185928.jpg,2026-08-09T18:59:28,JPEG,4080,3060,4711231,7c074ec9c1f31a97bfc3ccbad57cd2e13d6026ab0fc9cc288e4998801f7e1d3d,selected,Emergency-siren detection screen with a 97 percent model output
-20260809_185933.jpg,2026-08-09T18:59:33,JPEG,4080,3060,4573404,7bd7e6cae89d184940d5e21a36ccad99f5942fc4d5df6a814da48a55c36af76c,optional,Dog-bark detection screen
-20260809_185954.jpg,2026-08-09T18:59:54,JPEG,4080,3060,4723057,6295cc25ae12d4ef55924495455ef53389548223773f82765d4bda869075a7f3d,selected,Waiting state of the final user interface
 20260817_plosca_elektronika.jpg,2026-08-17,JPEG,3060,4080,3528527,71e2df1b5833fdac36c69840f85be207dc7b27851d1b5b01708a6ac1db425734,selected,Clear electronics-side view of the STM32N6570-DK board
 20260817_vmesnik_cakanje.jpg,2026-08-17,JPEG,3060,4080,2821419,3dd34cea17472d5ff41321fd2eb6bf7b89ffed7f414f92d0941b2642726bdd89,selected,Final user interface in the waiting state
 20260817_vmesnik_sirena.jpg,2026-08-17,JPEG,3060,4080,2983992,f45e73197b406389f279885a70c8c13629eff79e06e116f0ee0438d4d8a435b2,selected,Final user interface showing a confirmed emergency siren

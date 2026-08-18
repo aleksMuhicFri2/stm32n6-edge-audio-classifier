@@ -54,9 +54,9 @@ The desktop script's 15,600-sample comment is valid for the TensorFlow waveform-
 
 ## Included model and first test
 
-The first hardware test uses the included prebuilt bare-metal binary:
-
-`Binary/STM32N6570-DK/STM32N6_GettingStarted_Audio_aed_bm.hex`
+The first hardware test used ST's upstream prebuilt bare-metal AED image. The
+image is not retained in this repository because the final project uses its
+own signed firmware image.
 
 Its model source is:
 

@@ -1,6 +1,6 @@
-# LaTeX intermediate files
-output/pdf/*
-!output/pdf/diplomska_naloga_osnutek.pdf
+# LaTeX intermediate files and locally compiled thesis
+output/
+/diploma.pdf
 tmp/
 _minted*/
 *.aux

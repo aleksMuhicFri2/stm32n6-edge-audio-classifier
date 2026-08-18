@@ -25,7 +25,7 @@ sounds.
 - `ml/` — data preparation, training, and model conversion;
 - `experiments/` — evaluation data and generated results;
 - `tools/` — experiment and analysis scripts; and
-- `thesis/` — LaTeX source and the current thesis PDF.
+- `thesis/` — LaTeX source of the thesis.
 
 ## Build and run
 
@@ -40,9 +40,9 @@ required high-speed input/output one-time-programmable settings are permanent.
 
 ## Thesis
 
-The thesis source and current compiled draft are available in [`thesis/`](thesis/).
-Detailed architecture, model development, methodology, measurements, and
-limitations are documented there instead of being duplicated in this file.
+The thesis source is available in [`thesis/`](thesis/). Detailed architecture,
+model development, methodology, measurements, and limitations are documented
+there instead of being duplicated in this file.
 
 This project is derived from the STMicroelectronics STM32N6 Getting Started
 Audio package. See [LICENSE.md](LICENSE.md) for licensing information.
