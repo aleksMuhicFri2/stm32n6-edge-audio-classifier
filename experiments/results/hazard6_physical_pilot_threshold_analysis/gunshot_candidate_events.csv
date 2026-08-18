@@ -1,7 +1,0 @@
-trial_id,expected_class,true_category,test_type,frame_id,spectrogram_sum,gunshot_score,speech_score
-PILOT-003,out_of_distribution,clapping,ood,248,26272.0,0.4207,0.0701
-PILOT-005,gunshot_gunfire,gunshot_gunfire,positive,285,22080.0,0.3596,0.0
-PILOT-012,out_of_distribution,door_wood_knock,ood,430,25264.0,0.4246,0.0
-PILOT-014,gunshot_gunfire,gunshot_gunfire,positive,472,13968.0,0.3451,0.0
-PILOT-021,gunshot_gunfire,gunshot_gunfire,positive,617,9712.0,0.523,0.0
-PILOT-032,gunshot_gunfire,gunshot_gunfire,positive,845,4380.0,0.4064,0.0

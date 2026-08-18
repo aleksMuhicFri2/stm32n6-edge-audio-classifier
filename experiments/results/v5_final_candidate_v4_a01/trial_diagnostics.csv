@@ -1,8 +1,0 @@
-run_id,trial_id,expected_class,frames,active_frames,target_decision_frames,false_hazard_decision_frames,other_decision_frames,speech_decision_frames,compressed_decision_sequence,reported_result
-RUN-20260816-155512,V5C-001,dog_bark,24,7,2,0,0,6,waiting > speech > dog_bark > waiting,pass_with_detection
-RUN-20260816-155526,V5C-002,glass_breaking,31,9,9,0,0,3,waiting > unknown > glass_breaking > waiting > glass_breaking > waiting > glass_breaking > waiting > speech > waiting,pass_with_detection
-RUN-20260816-155542,V5C-003,gunshot_gunfire,25,12,2,0,2,0,waiting > unknown > other > waiting > unknown > gunshot_gunfire > unknown > gunshot_gunfire > unknown > waiting,pass_with_detection
-RUN-20260816-155555,V5C-004,other,24,8,3,0,3,0,unknown > waiting > unknown > other > unknown > waiting,pass_with_detection
-RUN-20260816-155609,V5C-005,siren,25,12,10,0,0,0,waiting > unknown > siren > unknown > waiting,pass_with_detection
-RUN-20260816-155622,V5C-006,speech,24,3,2,0,0,2,waiting > unknown > speech > waiting,pass_with_detection
-RUN-20260816-155636,V5C-007,thunderstorm,31,13,11,0,0,0,waiting > unknown > thunderstorm > waiting > unknown > thunderstorm > waiting,pass_with_detection

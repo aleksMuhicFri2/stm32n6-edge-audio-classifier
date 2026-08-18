@@ -1,4 +1,0 @@
-label,experiment_id,hazard_detection_recall,minimum_hazard_class_recall,speech_rejection_rate,status
-Confidence + margin,HAZARD5V3-OPENSET-DEV-004,0.9566929133858267,0.9333333333333333,0.08333333333333333,development_gate_failed
-Binary gate,HAZARD-GATE-V3-YAMNET256-DEV-001,0.9645669291338582,0.9,0.5,development_gate_failed
-Speech-heavy gate,HAZARD-GATE-V3-SPEECHHEAVY-YAMNET256-DEV-002,0.9566929133858267,0.85,0.5833333333333334,development_gate_failed

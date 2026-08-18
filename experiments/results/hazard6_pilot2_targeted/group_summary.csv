@@ -1,7 +1,0 @@
-group,label,planned_trials,evaluable_trials,passed_trials,failed_trials,inactive_trials,pass_rate_planned,pass_rate_evaluable,gate_required_passes,gate_status,rank1_seen_trials,mean_peak_expected_probability
-dog_bark,Dog bark,5,5,4,1,0,0.8,0.8,4.0,pass,5.0,0.8078799999999999
-glass_breaking,Glass breaking,5,5,3,2,1,0.6,0.6,4.0,review,4.0,0.5783400000000001
-thunderstorm,Thunderstorm,5,5,1,4,0,0.2,0.2,4.0,review,5.0,0.62344
-gunshot_boosted_5db,Gunshot +5 dB,4,4,0,4,1,0.0,0.0,3.0,review,1.0,0.24050000000000002
-gunshot_boosted_5db_reduced_6db,Gunshot net -1 dB,4,4,0,4,1,0.0,0.0,,descriptive,1.0,0.259875
-ood_rejection,OOD rejection,5,1,1,0,4,0.2,1.0,4.0,not_evaluable_insufficient_active_trials,,
