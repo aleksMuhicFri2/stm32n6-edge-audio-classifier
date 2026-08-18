@@ -52,13 +52,7 @@ If a clip fails either condition, retain the capture and prepare a new
 calibration attempt with a new identifier. Never silently replace, repeat, or
 delete a failed calibration trial.
 
-## Commands
-
-Prepare deterministically:
-
-```powershell
-& '..\ml-workspace\.venv\Scripts\python.exe' '.\ml\prepare_transient_delivery_calibration.py'
-```
+## Preserved evidence
 
 Validation, playback, and serial capture were automated during this calibration.
 The temporary execution helper remains available in the repository history;

@@ -5,8 +5,8 @@ This directory contains the reproducible parts of the audio-classifier workflow:
 - `configs/` contains the retained ST model-zoo configurations;
 - `data/` contains versioned split manifests and source provenance, not audio files;
 - `models/` contains the model artifacts used for the thesis comparisons and final deployment;
-- the root scripts retain the essential data-preparation, training, quantization,
-  deployment, and evaluation steps described in the thesis.
+- the few retained root scripts cover the final data-preparation, training,
+  Neural-ART generation, and evaluation path described in the thesis.
 
 The final deployed model is
 `models/hazard5v5_other_yamnet1024_int8_nchw_qdq.onnx`. It uses a frozen

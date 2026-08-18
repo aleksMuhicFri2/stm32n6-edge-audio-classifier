@@ -1,7 +1,7 @@
 param(
     [string]$STEdgeAI = 'C:\ST\STEdgeAI\4.0\Utilities\windows\stedgeai.exe',
-    [string]$Model = 'ml\models\hazard5_yamnet256_int8.tflite',
-    [string]$RunName = 'hazard5',
+    [string]$Model = 'ml\models\hazard5v5_other_yamnet1024_int8_nchw_qdq.onnx',
+    [string]$RunName = 'hazard5v5_other',
     [ValidateSet('', 'float32', 'int8', 'uint8')]
     [string]$InputDataType = '',
     [string]$CutInputTensor = ''

@@ -11,12 +11,6 @@ too loud. Short siren, glass, and gunshot sources are repeated with silent gaps
 without changing their amplitude. Every output includes one second of leading
 and trailing silence.
 
-Prepare the deterministic audio files with:
-
-```powershell
-..\ml-workspace\.venv\Scripts\python.exe .\ml\prepare_v3_smoke_test.py
-```
-
 The screen-observation test was automated during development. Its temporary
 runner remains available in the repository history, while the prepared files
 and recorded result remain in this directory.

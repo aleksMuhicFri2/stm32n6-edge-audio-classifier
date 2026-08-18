@@ -58,4 +58,5 @@ rezultate prikazujemo opisno in brez trditve o populacijski pravilnosti.
 3. Zaženemo avtomatizirano predvajanje in zajem po zamrznjenem seznamu.
 4. Med preskusom ne spreminjamo nastavitev in ne ponavljamo neuspešne napovedi.
 5. Če pride do zunanje motnje, jo zapišemo; zajetih podatkov ne brišemo.
-6. Po zadnjem poskusu zaženemo `ml/analyze_v3_acceptance_test.py`.
+6. Po zadnjem poskusu pregledamo shranjeni datoteki `summary.json` in
+   `trial_results.csv`.

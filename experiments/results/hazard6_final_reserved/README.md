@@ -42,8 +42,5 @@ the deployed processing implementation but are not independent oscilloscope or
 GPIO measurements. Estimated UART-frame offsets are preserved in the trial
 table and must not be presented as precision end-to-end latency.
 
-## Reproduction
-
-```powershell
-& '..\ml-workspace\.venv\Scripts\python.exe' '.\ml\analyze_final_evaluation.py'
-```
+The generated tables, figures, and summary are retained in this directory.
+The historical analysis helper remains available through the repository history.

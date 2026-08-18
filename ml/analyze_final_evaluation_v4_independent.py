@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import os
@@ -21,8 +22,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-from prepare_final_evaluation import sha256
 
 
 EVALUATION_ID = "STM32N6-HAZARD6-FINAL-003"
@@ -47,6 +46,17 @@ LABELS = {
     "speech": "Govor",
     "unknown": "Brez potrjenega izhoda",
 }
+
+
+def sha256(path: Path) -> str:
+    """Izračuna zgoščevalno vrednost datoteke brez nalaganja celote v pomnilnik."""
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
 OTHER_CATEGORY_LABELS = {
     "Alarm": "Alarm",
     "Applause": "Aplavz",

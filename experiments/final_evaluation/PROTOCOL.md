@@ -144,10 +144,6 @@ than an independent GPIO or oscilloscope measurement.
 
 ## Priprava in izvedba
 
-```powershell
-& '..\ml-workspace\.venv\Scripts\python.exe' '.\ml\prepare_final_evaluation.py'
-```
-
 Predvajanje in zajem sta bila izvedena samodejno po zamrznjenem seznamu.
 Uporabljena razvojna skripta ostaja dostopna v zgodovini repozitorija, končni
 seznam poskusov, surovi zapisi in rezultati pa so ohranjeni v tej mapi.
