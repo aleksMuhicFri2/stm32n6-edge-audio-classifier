@@ -55,7 +55,7 @@ rezultate prikazujemo opisno in brez trditve o populacijski pravilnosti.
 
 1. Ploščo pustimo v načinu zagona uporabniške aplikacije in pritisnemo gumb NRST.
 2. Nastavimo glasnost na 70 odstotkov in razdaljo na 30 centimetrov.
-3. Zaženemo `tools/run_v3_acceptance_test.ps1`.
+3. Zaženemo avtomatizirano predvajanje in zajem po zamrznjenem seznamu.
 4. Med preskusom ne spreminjamo nastavitev in ne ponavljamo neuspešne napovedi.
 5. Če pride do zunanje motnje, jo zapišemo; zajetih podatkov ne brišemo.
 6. Po zadnjem poskusu zaženemo `ml/analyze_v3_acceptance_test.py`.

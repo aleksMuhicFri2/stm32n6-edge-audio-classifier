@@ -103,13 +103,9 @@ training windows, one for every current gunshot and glass-breaking training
 row. The development set and class counts are unchanged. A blinded,
 score-stratified review samples 30 of those windows before training is allowed.
 
-The first review was run from the repository root with:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_transient_event_review.ps1
-```
-
-Responses were saved after every clip. No board connection was needed.
+The first review was automated from the repository root. Responses were saved
+after every clip, and no board connection was needed. The review script remains
+available in the repository history.
 
 ## First extraction review result and taxonomy correction
 
@@ -126,14 +122,11 @@ ESC-50 validation clips. The FSD50K training and validation uploaders are
 disjoint. A second listening review contains only 15 glass clips because the
 unchanged gunshot extraction already passed 15/15.
 
-## Current required user action
+## Corrected listening review
 
-Run the corrected review from the repository root:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_transient_event_review.ps1 `
-  -ReviewDirectory experiments\shatter_event_review
-```
+The corrected review was run from the repository root and its responses remain
+stored under `experiments/shatter_event_review`. The historical helper script
+is not part of the compact final tool set.
 
 ## Corrected review and first model ablation result
 
@@ -184,11 +177,9 @@ any source sample. The exact patch total and 1.33 imbalance ratio are unchanged.
 All augmented glass hashes match V1, allowing the accepted glass review to be
 reused without replaying identical evidence.
 
-Before V2 training, review 12 prediction-blind revised gunshot examples:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_patch_balanced_v2_review.ps1
-```
+Before V2 training, 12 prediction-blind revised gunshot examples were reviewed.
+The saved responses, rather than the temporary playback helper, are retained as
+the experiment evidence.
 
 The V2 gunshot review passed with 12/12 canonical complete events. Combined
 with the byte-identical glass evidence, 20/21 events were valid and none were

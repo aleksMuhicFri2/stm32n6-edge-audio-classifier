@@ -1,3 +1,5 @@
+# Izvede zamrznjeni končni fizični preizkus s 60 poskusi in shrani serijske zapise.
+# Preskusnih seznamov, kontrolnih vsot in že zajetih poskusov ne spreminjamo.
 param(
     [string]$Port = "COM3",
     [ValidateRange(1, 60)]

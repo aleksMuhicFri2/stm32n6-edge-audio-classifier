@@ -1,3 +1,5 @@
+# Prenese uradni arhiv UrbanSound8K in pred razširitvijo preveri kontrolno vsoto.
+# Zbirka ostane zunaj repozitorija; v Gitu so shranjeni samo njeni manifesti.
 param(
     [string]$DatasetRoot = '',
     [string]$ArchivePath = ''

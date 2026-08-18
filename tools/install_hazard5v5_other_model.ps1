@@ -1,3 +1,5 @@
+# V projekt vključi datoteke končnega modela, ki jih ustvari ST Edge AI.
+# Pred kopiranjem preveri izvor modela in kontrolno vsoto uteži; ploščice ne programira.
 param(
     [Parameter(Mandatory = $true)]
     [string]$GeneratedOutput,

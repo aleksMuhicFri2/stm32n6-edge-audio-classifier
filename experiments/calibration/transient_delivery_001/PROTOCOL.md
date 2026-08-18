@@ -60,14 +60,6 @@ Prepare deterministically:
 & '..\ml-workspace\.venv\Scripts\python.exe' '.\ml\prepare_transient_delivery_calibration.py'
 ```
 
-Validate without playback:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_transient_delivery_calibration.ps1 -ValidateOnly
-```
-
-Run once:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_transient_delivery_calibration.ps1
-```
+Validation, playback, and serial capture were automated during this calibration.
+The temporary execution helper remains available in the repository history;
+the prepared manifest and captured evidence remain in the experiment folders.

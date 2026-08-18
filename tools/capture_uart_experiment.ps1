@@ -1,3 +1,5 @@
+# Zajame diagnostični izhod razvojne plošče in ga doda v evidenco poskusov.
+# Skripta shranjuje napovedi in čase izvajanja, ne pa zajetega zvoka.
 param(
     [string]$Port = "COM3",
     [int]$BaudRate = 14400,
@@ -80,9 +82,9 @@ Write-Host "Stimulus: $Stimulus | Expected: $ExpectedClass | Type: $TestType"
 
 try {
     $serial.Open()
-    # The board keeps transmitting while the port is closed. Discard records
-    # buffered by the Windows serial driver so one trial cannot contaminate the
-    # next trial's frame count or decision sequence.
+    # Ploščica oddaja podatke tudi, ko so serijska vrata zaprta. Zato zavržemo
+    # zapise, ki jih je medpomnil gonilnik, da prejšnji poskus ne vpliva na
+    # število blokov ali zaporedje odločitev naslednjega poskusa.
     $serial.DiscardInBuffer()
     Start-Sleep -Milliseconds 250
     $serial.DiscardInBuffer()

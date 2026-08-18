@@ -17,11 +17,9 @@ Prepare the deterministic audio files with:
 ..\ml-workspace\.venv\Scripts\python.exe .\ml\prepare_v3_smoke_test.py
 ```
 
-Run the screen-observation test with:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_v3_smoke_test.ps1
-```
+The screen-observation test was automated during development. Its temporary
+runner remains available in the repository history, while the prepared files
+and recorded result remain in this directory.
 
 Before board playback, the deployment-form int8 model was run on the exact six
 prepared files. It classified all six clips correctly. This is a deterministic

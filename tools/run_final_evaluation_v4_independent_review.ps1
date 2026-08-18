@@ -1,3 +1,5 @@
+# Izvede slepi slušni pregled kandidatov brez prikaza napovedi modela ali ploščice.
+# Odgovor se shrani po vsakem posnetku, zato je pregled mogoče varno nadaljevati.
 param([switch]$ValidateOnly)
 
 $ErrorActionPreference = "Stop"
