@@ -38,7 +38,7 @@ enako težo, ne glede na različno število posnetkov po razredih.
     Pasji lajež       & 47 od 60  & 0,904 & 0,783 & 0,839 \\
     Razbitje stekla   & 41 od 60  & 0,854 & 0,683 & 0,759 \\
     Strel             & 48 od 54  & 0,828 & 0,889 & 0,857 \\
-    Drugo             & 98 od 135 & 0,810 & 0,726 & 0,766 \\
+    Ostalo            & 98 od 135 & 0,810 & 0,726 & 0,766 \\
     Sirena            & 18 od 20  & 0,667 & 0,900 & 0,766 \\
     Govor             & 23 od 24  & 0,639 & 0,958 & 0,767 \\
     Nevihta           & 58 od 60  & 0,817 & 0,967 & 0,885 \\
@@ -49,7 +49,7 @@ enako težo, ne glede na različno število posnetkov po razredih.
 \end{table}
 
 Najvišjo mero $F_1$ je dosegla nevihta, sledila sta strel in pasji lajež.
-Razred drugo je pravilno zajel 98 od 135 razvojnih posnetkov. Njegov priklic
+Razred ostalo je pravilno zajel 98 od 135 razvojnih posnetkov. Njegov priklic
 0,726 kaže, da je del raznolikih običajnih zvokov še vedno prešel v druge
 razrede. Pri govoru je bil priklic visok, natančnost pa nižja, ker je model kot
 govor označil tudi nekaj drugih človeških ali okoliških zvokov. Rezultati so
@@ -180,7 +180,7 @@ Pri pozitivnih poskusih je bil delež uspeha pri nominalni ravni
 \SI{-12}{\decibel} \SI{66.7}{\percent}. Iz tega ne smemo sklepati, da
 utišanje izboljša zaznavanje. Vsaka kombinacija posnetka in ravni je bila
 predvajana samo enkrat, rezultat kratkega dogodka pa je odvisen tudi od njegove
-poravnave z obdelovalnim oknom ter trenutnega šuma v prostoru. Preskus zato
+poravnave z mejo obdelovalnega bloka ter trenutnega šuma v prostoru. Preskus zato
 predvsem potrjuje, da celotna končna izvedba deluje na izbranih in predhodno
 pregledanih primerih. Ne predstavlja neodvisne ocene posploševanja modela na
 nove zvočne vire.
@@ -206,7 +206,7 @@ so bili potrjeni v 39 od 40 poskusov oziroma \SI{97.5}{\percent}.
     Pasji lajež       & 10 od 10 & \SI{100}{\percent} & 72,2--100 \\
     Razbitje stekla   & 10 od 10 & \SI{100}{\percent} & 72,2--100 \\
     Strel             & 10 od 10 & \SI{100}{\percent} & 72,2--100 \\
-    Drugo             & 9 od 10  & \SI{90}{\percent}  & 59,6--98,2 \\
+    Ostalo            & 9 od 10  & \SI{90}{\percent}  & 59,6--98,2 \\
     Sirena            & 9 od 10  & \SI{90}{\percent}  & 59,6--98,2 \\
     Govor             & 9 od 10  & \SI{90}{\percent}  & 59,6--98,2 \\
     \midrule
@@ -228,8 +228,8 @@ Primarno merilo poskus šteje kot uspešen že ob eni pravilni potrditvi. Strož
 merilo prevladujočega potrjenega izhoda se je s pričakovanim razredom ujemalo v
 54 od 60 poskusov oziroma \SI{90.0}{\percent}. Razlika nastane, kadar sistem
 pričakovani razred sicer potrdi, vendar je drug izhod med istim predvajanjem
-potrjen v več okvirjih. En poskus strela je imel tako prevladujoči izhod
-razbitja stekla, dva uspešna govorna poskusa pa prevladujoči izhod drugo.
+potrjen v več blokih. En poskus strela je imel tako prevladujoči izhod
+razbitja stekla, dva uspešna govorna poskusa pa prevladujoči izhod ostalo.
 
 \begin{figure}[htbp]
   \centering
@@ -242,9 +242,9 @@ razbitja stekla, dva uspešna govorna poskusa pa prevladujoči izhod drugo.
 
 Trije neuspešni poskusi so zbrani v tabeli \ref{tab:koncni-neuspehi}. Pri
 govoru je najvišja ocena pričakovanega razreda znašala 0,357 in ni dosegla
-vstopnega praga 0,40. Kratek pok razreda drugo je bil v 17 okvirjih potrjen
+vstopnega praga 0,40. Kratek pok razreda ostalo je bil v 17 blokih potrjen
 kot razbitje stekla. Pri neuspešni sireni je modelska ocena sirene dosegla
-0,595, kar je ostalo pod pragom 0,65; prevladujoči potrjeni izhod je bil drugo.
+0,595, kar je ostalo pod pragom 0,65; prevladujoči potrjeni izhod je bil ostalo.
 
 \begin{table}[htbp]
   \centering
@@ -255,9 +255,9 @@ kot razbitje stekla. Pri neuspešni sireni je modelska ocena sirene dosegla
     \toprule
     Poskus & Pričakovano & Vrsta vira & Prevladujoči izhod & Najvišja ocena \\
     \midrule
-    FE4-010 & Govor  & govor  & Drugo             & 0,357 \\
-    FE4-032 & Drugo  & pok    & Razbitje stekla   & 0,360 \\
-    FE4-058 & Sirena & sirena & Drugo             & 0,595 \\
+    FE4-010 & Govor  & govor  & Ostalo            & 0,357 \\
+    FE4-032 & Ostalo & pok    & Razbitje stekla   & 0,360 \\
+    FE4-058 & Sirena & sirena & Ostalo            & 0,595 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -265,33 +265,35 @@ kot razbitje stekla. Pri neuspešni sireni je modelska ocena sirene dosegla
 \subsection{Lažni nevarnostni alarmi}
 
 Pri desetih govornih poskusih po začetku predvajanja ni bilo nobenega
-potrjenega nevarnostnega izhoda. Pri razredu drugo se je nevarnostni izhod vsaj
+potrjenega nevarnostnega izhoda. Pri razredu ostalo se je nevarnostni izhod vsaj
 enkrat pojavil v šestih od desetih poskusov. V štirih od skupno 20 varovalnih
-poskusov je trajal več kot en okvir. En dodaten nevarnostni izhod je bil v
+poskusov je ostal potrjen v več kot enem bloku. En dodaten nevarnostni izhod je bil v
 celotnem zajemu govora zabeležen pred začetkom predvajanja; analiza ga je
 pravilno ločila kot preneseno stanje prejšnjega poskusa.
 
-Rezultat 9 od 10 pravilnih zaznav razreda drugo in šest poskusov z lažnim
+Rezultat 9 od 10 pravilnih zaznav razreda ostalo in šest poskusov z lažnim
 alarmom se ne izključujeta. V petih poskusih je sistem v delu predvajanja
-pravilno potrdil drugo, v drugem delu istega posnetka pa tudi nevarnostni
-razred. Slika \ref{fig:koncni-lazni-drugo} pokaže, da je bil najtežji pok, ki
-je prevladal kot razbitje stekla. Aplavz je sprožil štiri okvirje strela,
-ploskanje, tipkovnica, alarm in trkanje pa krajše potrditve razbitja stekla.
+pravilno potrdil ostalo, v drugem delu istega posnetka pa tudi nevarnostni
+razred. Slika \ref{fig:koncni-lazni-ostalo} pokaže, da je bil najtežji pok, ki
+je prevladal kot razbitje stekla. Pri aplavzu je bil strel potrjen v štirih
+blokih, ploskanje, tipkovnica, alarm in trkanje pa so povzročili krajše
+potrditve razbitja stekla.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.96\textwidth]{../experiments/results/hazard6_final_evaluation_v4_independent/other_false_hazard_by_category.png}
-  \caption{Potrjeni nevarnostni okvirji pri desetih vrstah razreda drugo.}
-  \label{fig:koncni-lazni-drugo}
+  \caption{Število blokov s potrjenim nevarnostnim izhodom pri desetih vrstah
+  razreda ostalo.}
+  \label{fig:koncni-lazni-ostalo}
 \end{figure}
 
 \subsection{Čas do prve pravilne potrditve}
 
 Mediana časa od začetka predvajanja do prve pravilne potrditve je bila med
-\SI{1.00}{\second} za razbitje stekla in \SI{2.50}{\second} za razred drugo.
+\SI{1.00}{\second} za razbitje stekla in \SI{2.50}{\second} za razred ostalo.
 Pri tem ne merimo samo računanja modela. Vrednost vključuje morebitno tišino
 na začetku posnetka, položaj dogodka, zbiranje skoraj enosekundnega vhodnega
-okna in zahtevano število potrditvenih blokov.
+bloka in zahtevano število potrditvenih blokov.
 
 \begin{figure}[htbp]
   \centering
@@ -333,15 +335,20 @@ v tabeli \ref{tab:primerjava-casov}.
   \label{fig:primerjava-casov}
 \end{figure}
 
-Končna različica je zaradi večjega izločevalnika značilk in dodatnega izhoda
+Končna različica je zaradi večjega modela YAMNet in dodatnega izhoda
 računsko zahtevnejša od začetne. Kljub temu je skupnih
 \SI{10.81}{\milli\second} približno 44-krat manj od
 \SI{480}{\milli\second} med začetkoma dveh zaporednih obdelav. Računska pot
 zasede približno \SI{2.25}{\percent} tega intervala, zato ostane dovolj rezerve
 za zajem zvoka in osveževanje zaslona.
 
+Izvedba istega modela samo na procesorskem jedru ni bila izmerjena, zato iz teh
+rezultatov ne izpeljujemo številčnega faktorja pohitritve Neural-ART. Meritev
+\SI{9.38}{\milli\second} opisuje prevedeno izvedbo, v kateri je 29 od 34
+izvedbenih odsekov dodeljenih pospeševalniku.
+
 Izmerjenih \SI{10.81}{\milli\second} ni celotna zakasnitev zaznave. Naprava mora
-najprej zbrati vhodno zvočno okno, odločitveni filter pa lahko zahteva še
+najprej zbrati vhodni zvočni blok, odločitveni filter pa lahko zahteva še
 potrditev v naslednjem bloku. Meritev zato dokazuje veliko časovno rezervo
 računske poti, ne pa odziva v nekaj milisekundah od nastanka zvoka.
 
@@ -409,7 +416,7 @@ Rezultati kažejo potek od odkritih pomanjkljivosti do izboljšane končne
 izvedbe. Rezervirani fizični preskus YAMNet-256 je dosegel 37 potrjenih pravilnih
 zaznav v 60 pozitivnih poskusih in je pokazal predvsem šibkost pri strelu,
 razbitju stekla in nevihti. Na podlagi teh ugotovitev so bili izboljšani izbor
-dogodkov, povečanje učnih podatkov, izločevalnik značilk in odločitveno pravilo
+dogodkov, povečanje učnih podatkov, prehod na YAMNet-1024 in odločitveno pravilo
 za nevihto.
 
 Končni razvojni model YAMNet-1024 je pravilno razvrstil 333 od 413 razvojnih
@@ -418,9 +425,10 @@ potrditev v 57 od 60 poskusov, strožje merilo prevladujočega izhoda pa v 54 od
 60 poskusov. Pri štirih nevarnostnih razredih je bilo pravilnih 39 od 40
 poskusov. Glavna preostala pomanjkljivost je zavračanje nekaterih drugih
 kratkih in izrazitih zvokov: nevarnostni izhod se je pojavil pri šestih od
-desetih poskusov razreda drugo, pri štirih pa je trajal več kot en okvir.
+desetih poskusov razreda ostalo, pri štirih pa je ostal potrjen v več kot enem
+bloku.
 
-Prehod na večji model in razširjeni razred drugo sta povečala čas izvajanja in
+Prehod na večji model in razširjeni razred ostalo sta povečala čas izvajanja in
 pomnilniški odtis, vendar je končna izvedba ostala znotraj vseh pomnilniških
 območij. Skupna obdelava enega bloka traja \SI{10.81}{\milli\second}, zato ima
 sistem pri novem bloku vsakih \SI{480}{\milli\second} veliko časovno rezervo.

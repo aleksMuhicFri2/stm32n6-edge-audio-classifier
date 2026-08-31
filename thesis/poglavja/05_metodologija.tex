@@ -27,7 +27,7 @@ Z vrednotenjem smo želeli odgovoriti na štiri praktična vprašanja:
 \begin{enumerate}
   \item Ali celotna naprava v nadzorovanih pogojih potrdi pričakovani razred
         zvoka?
-  \item Ali govor in raznoliki zvoki razreda drugo povzročijo lažen
+  \item Ali govor in raznoliki zvoki razreda ostalo povzročijo lažen
         nevarnostni alarm?
   \item Kako hitro po začetku predvajanja sistem prvič potrdi pričakovani
         razred?
@@ -82,7 +82,7 @@ delovanje točno tiste različice, ki je ostala na ploščici.
 
 Razvojno preverjanje končnega modela je obsegalo 413 posnetkov, ki niso
 sodelovali pri učenju zaključne plasti. V njem je bilo tudi 135 primerov
-razreda drugo. Rezultat je bil uporabljen pri izbiri med razvojnimi
+razreda ostalo. Rezultat je bil uporabljen pri izbiri med razvojnimi
 različicami, zato ga obravnavamo kot razvojni rezultat.
 Pred fizičnimi preskusi so bili opravljeni tudi slušni pregledi izrezov in
 povečanih različic. Pri strelu in razbitju stekla smo preverili, ali je dogodek
@@ -111,7 +111,7 @@ nobena neuspešna napoved in nastavitve niso bile spremenjene.
 
 Preskus je vseboval 60 pozitivnih in 10 zahtevnih negativnih primerov. Za vsak
 izmed šestih izhodov je bilo izbranih deset različnih izvornih posnetkov. Med
-izhodi so bili pasji lajež, razbitje stekla, strel oziroma streljanje, sirena,
+izhodi so bili pasji lajež, razbitje stekla, strel, sirena,
 govor in nevihta. Pozitivni posnetki so izvirali iz ocenjevalnega dela zbirke
 Freesound Dataset 50K, ki med razvojem te izvedbe ni bil uporabljen. Negativni
 posnetki so izvirali iz petega dela zbirke Environmental Sound Classification
@@ -243,7 +243,7 @@ opisno in jih ne razlagamo kot oceno pravilnosti na celotni populaciji zvokov.
 \section{Neodvisni končni fizični preizkus}
 \label{sec:metodologija-koncni}
 
-Po dokončanju razreda drugo, pragov po razredih in polovičnega prekrivanja
+Po dokončanju razreda ostalo, pragov po razredih in polovičnega prekrivanja
 vhodnih oken smo pripravili novi preizkus z oznako
 \path{STM32N6-HAZARD6-FINAL-003}. Edini izvedeni poskus ima oznako
 \path{FE4-A01}. Pred začetkom so bili zamrznjeni model, uteži, podpisana
@@ -267,9 +267,9 @@ v učni množici je bil zato izločen.
 
 Iz primernih kandidatov je bilo z vnaprej določenima semenoma izbranih 60
 različnih virov, po deset za vsak sistemski razred. Razredi so bili pasji
-lajež, razbitje stekla, strel, drugo, sirena in govor. Nevihta ni samostojen
+lajež, razbitje stekla, strel, ostalo, sirena in govor. Nevihta ni samostojen
 sistemski razred, saj se njen modelski izhod pred odločanjem prišteje razredu
-drugo. Deset primerov razreda drugo predstavlja deset različnih vrst zvoka:
+ostalo. Deset primerov razreda ostalo predstavlja deset različnih vrst zvoka:
 alarm, aplavz, zvonec, ploskanje, računalniško tipkovnico, pok, posodo in
 kuhinjske pripomočke, ognjemet, trkanje ter veter. Izbira ni uporabljala
 napovedi končnega modela.
@@ -293,12 +293,14 @@ bila razlog za ponovitev.
 
 Poleg primarnega merila smo za vsak poskus določili prevladujoči potrjeni izhod
 in čas od začetka predvajanja do prve pravilne potrditve. Prevladujoči izhod je
-razred z največ potrjenimi okvirji; ob izenačenju odloča večja najvišja ocena.
-Lažni nevarnostni alarm smo merili pri govoru in razredu drugo. Pomeni vsaj en
+razred, ki je bil potrjen v največ blokih; ob izenačenju odloča večja najvišja
+ocena.
+Lažni nevarnostni alarm smo merili pri govoru in razredu ostalo. Pomeni vsaj en
 potrjeni izhod pasjega laježa, razbitja stekla, strela ali sirene po začetku
-predvajanja. Posebej smo prešteli poskuse z več kot enim takim okvirjem ter
-izhode, ki so nastali v treh sekundah pred predvajanjem. Tako preneseno stanje
-prejšnjega poskusa ni bilo napačno pripisano novemu dražljaju.
+predvajanja. Posebej smo prešteli poskuse, v katerih se je tak izhod pojavil v
+več kot enem bloku, ter izhode, ki so nastali v treh sekundah pred
+predvajanjem. Tako preneseno stanje prejšnjega poskusa ni bilo napačno
+pripisano novemu dražljaju.
 
 Za skupni in razredne deleže smo izračunali Wilsonovo
 petindevetdesetodstotno območje zaupanja. Ker je v vsakem razredu le deset
@@ -327,7 +329,7 @@ Pri analizi smo uporabljali naslednja merila:
   \item \emph{aktivni blok} je blok, pri katerem je energijsko merilo preseglo
         vhodni prag aktivnosti;
   \item \emph{lažen nevarnostni alarm} pomeni, da je sistem pri govoru ali
-        razredu drugo potrdil enega od štirih nevarnostnih razredov;
+        razredu ostalo potrdil enega od štirih nevarnostnih razredov;
   \item \emph{delež uspešnosti} je razmerje med številom uspešnih in številom
         vseh poskusov v obravnavani skupini.
 \end{itemize}
@@ -362,7 +364,7 @@ pretvori v milisekunde in zapiše ob posameznem obdelanem bloku. Analiza izloči
 zapise, pri katerih katera izmed časovnih vrednosti manjka, ter poroča število
 popolnih zapisov in povprečje. Gre za telemetrijo same naprave, ne za neodvisno
 meritev z osciloskopom ali zunanjim signalom. Prav tako ta čas ne vključuje
-čakanja, da se napolni skoraj enosekundno vhodno okno, niti morebitnega čakanja
+čakanja, da se napolni skoraj enosekundni vhodni blok, niti morebitnega čakanja
 na potrditev v več zaporednih blokih.
 
 Pomnilniški odtis je bil določen iz povezovalnega zemljevida programa, poročila
@@ -393,11 +395,11 @@ vgrajenim mikrofonom, enim zvočnikom, eno razdaljo in v enem prostoru.
 Odstotek glasnosti sistema Windows ter digitalna raven v decibelih ne
 predstavljata umerjene ravni zvočnega tlaka pri mikrofonu. Na rezultat lahko
 vplivajo frekvenčni odziv zvočnika, odboji v prostoru, zunanji šum in trenutna
-poravnava kratkega dogodka z obdelovalnim oknom. Še posebej pri strelu in
+poravnava kratkega dogodka z mejo obdelovalnega bloka. Še posebej pri strelu in
 razbitju stekla lahko majhen časovni premik spremeni vsebino posameznega
 bloka.
 
-Nabor razreda drugo z desetimi kategorijami je širši od treh varnih primerov
+Nabor razreda ostalo z desetimi kategorijami je širši od treh varnih primerov
 sprejemnega preskusa, vendar še vedno ne zajema vseh možnih motečih zvokov. Za
 močnejšo oceno v resničnem okolju bi potrebovali več novih virov in ponovitev,
 umerjene ravni zvoka, različne prostore in razdalje ter večurno opazovanje

@@ -1,46 +1,60 @@
 \chapter{Uvod}
 \label{ch:uvod}
 
+Poglavje predstavi motivacijo za lokalno zaznavanje nevarnih
+zvočnih dogodkov. Nato opredeli cilje in raziskovalna vprašanja, glavne
+prispevke ter zgradbo preostalega dela.
+
 \section{Motivacija in opredelitev problema}
 
-Zvočni dogodki, kot so sirena, razbitje stekla, strel ali opozorilno lajanje
-psa, lahko človeka opozorijo na nevarnost še preden jo opazi z vidom. Gluhe in
-naglušne osebe takšnega opozorila ne morejo vedno zaznati. Namen obravnavanega
-sistema je zato zvok iz okolice sproti pretvoriti v jasno vidno informacijo na
-zaslonu. Prototip ni medicinski ali varnostno certificiran pripomoček, temveč
-preverjanje, ali je mogoče celotno pot od mikrofona do uporabniškega opozorila
-izvesti na eni energijsko in pomnilniško omejeni napravi.
+Zvočni dogodki, kot so sirena, razbitje stekla, strel ali pasji
+lajež, lahko človeka opozorijo na nevarnost, še preden jo opazi. Gluhe in
+naglušne osebe zvočnega opozorila ne morejo vedno zaznati. Namen rešitve je zato
+zvok iz okolice sproti pretvoriti v vidno informacijo na zaslonu. Cilj dela ni
+razviti medicinskega ali varnostno certificiranega pripomočka, temveč preveriti,
+ali je mogoče celotno pot od mikrofona do uporabniškega opozorila izvesti na
+računsko in pomnilniško omejeni napravi.
 
 Običajen pristop bi lahko zvočne posnetke pošiljal v oddaljeno računalniško
 okolje, kjer bi jih obdelal večji model. Takšna rešitev je odvisna od omrežne
 povezave, hkrati pa neprekinjen prenos zvoka iz domačega okolja odpira vprašanja
-zasebnosti. V tej nalogi se vsi koraki izvajajo lokalno na razvojni plošči.
-Surovi zvočni vzorci so v pomnilniku le toliko časa, kolikor jih potrebuje
-sprotna obdelava; običajna različica programa jih ne shranjuje in jih ne
-pošilja v računalniški oblak. Diagnostični izhod med vrednotenjem vsebuje
-številčne napovedi in čase izvajanja, ne posnetega pogovora. Takšna zasnova
-zmanjšuje izpostavljenost zasebnih zvočnih podatkov in omogoča delovanje brez
-dostopa do interneta.
+zasebnosti. V tej nalogi se vsi koraki izvajajo lokalno na razvojni plošči, brez
+shranjevanja zvočnih podatkov. Takšna zasnova zmanjšuje izpostavljenost zasebnih
+podatkov in omogoča delovanje brez dostopa do interneta.
 
 Lokalna izvedba prinese strožje tehnične omejitve. Mikrokrmilnik mora
-neprekinjeno zajemati zvok, izračunati logaritemski melov spektrogram, izvesti
+neprekinjeno zajemati zvok, izračunati strnjeni spektrogram, izvesti
 nevronsko mrežo, filtrirati nestabilne napovedi in osveževati zaslon. Vse to
 mora opraviti z omejenim pomnilnikom in dovolj hitro, da med računanjem ne
 izgubi novih vzorcev. Poleg hitrosti je pomembno tudi zavračanje običajnih
-zvokov: sistem, ki pogosto prikaže lažno nevarnost, bi uporabnik hitro prenehal
-upoštevati. Naloga zato obravnava tako namestitev modela na nevronski
-pospeševalnik kot tudi merjenje pravilnih zaznav in lažnih alarmov na fizični
-napravi.
+zvokov. Naloga zato obravnava tako izvajanje modela z nevronskim
+pospeševalnikom kot tudi merjenje pravilnih zaznav in lažnih alarmov na napravi.
 
 \section{Cilji in raziskovalna vprašanja}
 
 Glavni cilj je razviti delujoč vgrajeni sistem na razvojni plošči
 STM32N6570-DK, ki z vgrajenim mikrofonom zaznava izbrane nevarne zvočne
-dogodke in rezultat brez omrežne povezave prikaže na zaslonu. Sistem mora
-razlikovati med nevarnostnimi dogodki, govorom, drugimi zvoki, negotovo
-napovedjo in stanjem čakanja. Dodatni cilj je pripraviti ponovljiv postopek
-vrednotenja, s katerim je mogoče povezati točno različico modela in programa z
-izmerjenimi rezultati.
+dogodke in rezultat brez omrežne povezave prikaže na zaslonu. Sistem razlikuje
+med naslednjimi zvočnimi razredi:
+
+\begin{itemize}
+\item pasji lajež,
+\item razbitje stekla,
+\item strel,
+\item sirena,
+\item govor in
+\item ostalo.
+\end{itemize}
+
+Poleg zvočnih razredov lahko sistem prikaže še dve stanji:
+
+\begin{itemize}
+\item negotovo napoved in
+\item čakanje na dogodek.
+\end{itemize}
+
+Dodatni cilj je pripraviti ponovljiv postopek vrednotenja, s katerim je mogoče
+točno različico modela in programa povezati z izmerjenimi rezultati.
 
 V nalogi odgovarjamo na naslednja raziskovalna vprašanja:
 
@@ -51,13 +65,17 @@ V nalogi odgovarjamo na naslednja raziskovalna vprašanja:
   \item Kakšen delež potrjenih pravilnih zaznav in lažnih nevarnostnih alarmov
         doseže končni sistem pri nadzorovanem predvajanju zvokov na fizični
         napravi?
-  \item Kako se posamezni zvočni razredi razlikujejo po zanesljivosti in kateri
+  \item Kako se posamezni zvočni razredi razlikujejo po uspešnosti klasifikacije in kateri
         dejavniki omejujejo delovanje sistema?
 \end{enumerate}
 
-Prvo vprašanje obravnava čas in pomnilnik, drugo celotno fizično pot od
-zvočnika do prikazane odločitve, tretje pa razlike med razredi, vpliv kakovosti
-posnetkov in zmožnost zavračanja zvokov, ki niso nevarni.
+Prvo vprašanje obravnava čas izvajanja in porabo pomnilnika, drugo uspešnost
+zaznavanja in lažne alarme pri preizkusu na fizični napravi, tretje pa razlike
+v uspešnosti klasifikacije med razredi in omejitve sistema.
+
+Model in odločitvena pravila so bili izbrani z učnimi in razvojnimi podatki.
+Končni preizkus je uporabil 60 novih zvočnih virov, ki pri učenju ali izbiri
+pragov niso bili uporabljeni.
 
 \section{Prispevki diplomskega dela}
 
@@ -68,29 +86,29 @@ Glavni prispevki dela so:
         predobdelave, modela YAMNet-1024 in nevronskega pospeševalnika v
         samostojno delujočo aplikacijo;
   \item priprava ciljnega učnega postopka z izrezovanjem kratkotrajnih dogodkov,
-        povečanjem podatkov ter dodatnima razredoma za govor in druge zvoke;
+        povečanjem podatkov ter dodatnima razredoma govor in ostalo;
   \item izvedba časovnega filtra s pragovi po razredih ter uporabniškega
         vmesnika, ki prikazuje trenutno in nedavne napovedi;
   \item lokalna zasnova brez pošiljanja zvoka v računalniški oblak in brez
         trajnega shranjevanja surovih zvočnih vzorcev v običajnem delovanju;
-  \item sledljiv fizični preizkus s 60 novimi, slušno pregledanimi zvočnimi
+  \item sledljiv realni preizkus s 60 novimi, slušno pregledanimi zvočnimi
         dražljaji, shranjenimi dnevniki, kontrolnimi vsotami in ponovljivo
         analizo rezultatov.
 \end{itemize}
 
-Prednaučeni izločevalnik značilk YAMNet ni bil razvit v okviru naloge. Lastno
-delo obsega njegovo prilagoditev ciljnim razredom, pripravo podatkov,
-integracijo na mikrokrmilnik, odločitvena pravila, prikaz in eksperimentalno
-vrednotenje celotnega sistema.
+Prednaučeni model YAMNet-1024 ni bil razvit v okviru te naloge. V nalogi smo
+naučili novo izhodno plast, ki izhod modela razvrsti v izbrane zvočne razrede.
+Pripravili smo tudi podatke, model prilagodili za izvajanje na mikrokrmilniku,
+razvili pravila za prikaz rezultatov in ovrednotili delovanje celotnega sistema.
 
-\section{Struktura dela}
+\section{Opis vsebine dela}
 
 V poglavju \ref{ch:teorija} so predstavljene osnove digitalnega
-zvoka, melovskega spektrograma, nevronskih mrež in kvantizacije. Poglavje
+zvoka, strnjenega spektrograma, nevronskih mrež in kvantizacije. Poglavje
 \ref{ch:zasnova} opredeli zahteve, strojno platformo ter tok podatkov, poglavje
 \ref{ch:implementacija} pa podrobno opiše zajem zvoka, predobdelavo, pripravo
 modela, izvajanje na pospeševalniku in uporabniški vmesnik. Metodologija
 razvojnih in končnih preskusov je podana v poglavju \ref{ch:metodologija},
 izmerjeni rezultati v poglavju \ref{ch:rezultati}, odgovori na raziskovalna
-vprašanja, omejitve in sklepne ugotovitve pa v poglavju
+vprašanja, omejitve projekta in sklepne ugotovitve pa v poglavju
 \ref{ch:razprava-sklep}.

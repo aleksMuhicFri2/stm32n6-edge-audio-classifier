@@ -18,6 +18,14 @@ Glavni rezultati in grafi so shranjeni v naslednjih imenikih:
 Fotografije fizične izvedbe skupaj s kontrolnimi vsotami izvirnikov so
 shranjene v imeniku \path{Doc/thesis_photos}.
 
+Postopek priprave kratkotrajnih dogodkov je v programu
+\path{ml/prepare_transient_event_windows.py}, povečanje učnega nabora pa v
+\path{ml/prepare_patch_balanced_augmentation.py}. Končna učna nastavitev je v
+datoteki \path{ml/configs/hazard5v5_other_yamnet1024_tqe.yaml}, zagon učenja pa
+je dokumentiran v programu \path{ml/train_hazard5v5_other_yamnet1024.ps1}.
+Datoteke z rezultati hranijo tudi razrešeno učno nastavitev, metrike po prehodih
+in kontrolne vsote modelov.
+
 Izvorna koda, analizni programi in zapisi o razvoju so v javnem repozitoriju
 \url{https://github.com/aleksMuhicFri2/stm32n6-edge-audio-classifier}. Zaradi
 licenčnih in velikostnih omejitev javne zbirke zvoka niso vključene v

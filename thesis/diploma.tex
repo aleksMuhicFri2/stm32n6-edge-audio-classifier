@@ -55,7 +55,7 @@ the physical device, including detection performance, false alerts, execution
 time, and memory usage.}
 
 \newcommand{\ttitle}
-{Razvoj in vrednotenje sistema za zaznavanje nevarnih zvočnih dogodkov na
+{Sistem za zaznavanje nevarnih zvočnih dogodkov na
 mikrokrmilniku STM32N6 z uporabo nevronskega pospeševalnika}
 
 \newcommand{\ttitleEn}
@@ -70,9 +70,14 @@ pospeševalnik, robna umetna inteligenca, zasebnost}
 {embedded systems, sound event detection, STM32N6, neural accelerator, edge AI,
 privacy}
 
-% Delovni mesti; pred oddajo besedilo dopolnite ali izpustite.
 \newcommand{\tzahvala}
-{[Dopolnite zahvalo ali jo pred oddajo odstranite.]}
+{Izdelava te diplomske naloge ne bi bila mogoča brez pomoči in podpore ljudi,
+ki so mi stali ob strani med študijem in razvojem projekta. Posebej se
+zahvaljujem mentorju viš. pred. dr. Robertu Rozmanu za strokovno usmerjanje
+in pomoč pri izdelavi naloge. Iskrena hvala tudi moji družini in najbližjim
+prijateljem za podporo, potrpežljivost in spodbudo. Zahvaljujem se tudi vsem
+profesorjem, ki so mi omogočili prijetno študijsko izkušnjo ter mi predali
+veliko znanja.}
 
 \newcommand{\tposvetilo}{}
 
@@ -93,38 +98,33 @@ privacy}
 \begin{document}
 
 \newcommand{\tpovzetek}
-{V diplomskem delu je predstavljen samostojen vgrajeni sistem, ki izbrane
-nevarne zvočne dogodke pretvori v vidno opozorilo. Namenjen je kot raziskovalni
+{V diplomskem delu sta predstavljena razvoj in vrednotenje samostojnega
+vgrajenega sistema, ki izbrane nevarne zvočne dogodke pretvori v vidno
+opozorilo. Namenjen je kot raziskovalni
 prototip pomoči gluhim in naglušnim osebam. Celotna obdelava poteka lokalno na
 razvojni plošči STM32N6570-DK, zato sistem ne potrebuje dostopa do
-računalniškega oblaka, običajna različica programa pa ne shranjuje surovih
-zvočnih posnetkov. Zvok zajema vgrajeni mikrofon, predobdelava izračuna
-logaritemski melov spektrogram, kvantizirani model YAMNet-1024 pa se izvaja z
+računalniškega oblaka. Zvok zajema vgrajeni mikrofon, predobdelava izračuna
+strnjeni spektrogram, kvantizirani model YAMNet-1024 pa se izvaja z
 nevronskim pospeševalnikom Neural-ART. Ciljni model razpoznava pasji lajež,
-razbitje stekla, strel, sireno, govor in druge zvoke. Stabilnost prikaza
-zagotavljajo pragovi po razredih in časovno filtriranje. V neodvisnem fizičnem
-preizkusu je sistem pričakovani razred vsaj enkrat potrdil v 57 od 60 poskusov,
-pri štirih nevarnostnih razredih pa v 39 od 40 poskusov. Obdelava enega bloka
-je trajala 10,81 milisekunde. Rezultati potrjujejo izvedljivost lokalnega
-razpoznavanja v realnem času, hkrati pa pokažejo potrebo po boljšem zavračanju
-nekaterih kratkih običajnih zvokov.}
+razbitje stekla, strel, sireno, govor in \emph{ostalo}. Stabilnost prikaza
+zagotavljajo pragovi po razredih in časovno filtriranje. Sistem je pričakovani
+razred vsaj enkrat potrdil v 57 od 60 poskusov. Obdelava enega bloka
+je trajala 10,81 milisekunde, kar potrjuje izvedljivost lokalnega
+razpoznavanja v realnem času.}
 
 \newcommand{\tabstract}
-{This thesis presents a self-contained embedded system that converts selected
-hazardous sound events into visual alerts. It is intended as a research
-prototype to assist deaf and hard of hearing users. All processing runs locally
-on an STM32N6570-DK development board, so the system requires no cloud access,
-and the normal firmware does not retain raw audio recordings. Audio is captured
-by the onboard microphone, preprocessing produces a log-mel spectrogram, and a
-quantized YAMNet-1024 model runs on the Neural-ART accelerator. The targeted
-model recognizes dog barks, breaking glass, gunshots, sirens, speech, and other
-sounds. Per-class thresholds and temporal filtering stabilize the displayed
-decision. In an independent physical evaluation, the system confirmed the
-expected class at least once in 57 of 60 trials and in 39 of 40 trials covering
-the four hazardous classes. Processing one input block took 10.81 milliseconds.
-The results demonstrate the feasibility of local real-time recognition while
-also showing that rejection of some short everyday sounds requires further
-improvement.}
+{This thesis presents the development and evaluation of a self-contained
+embedded system that converts selected hazardous sound events into visual
+alerts. It is intended as a research prototype to assist deaf and hard-of-hearing
+people. All processing is performed locally on an STM32N6570-DK development
+board, so the system does not require cloud access. Audio is captured by the
+onboard microphone, preprocessing computes a log-mel spectrogram, and the
+quantized YAMNet-1024 model runs on the Neural-ART accelerator. The target
+model recognizes dog barking, glass breaking, gunshots, sirens, speech, and an
+\enquote{other} class. Per-class thresholds and temporal filtering stabilize
+the displayed output. The system confirmed the expected class at least once in
+57 of 60 trials. Processing one input block took 10.81 milliseconds,
+demonstrating the feasibility of local real-time recognition.}
 
 \input{podporno/naslovnestrani.tex}
 

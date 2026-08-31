@@ -12,24 +12,24 @@ pripravi vsakih \SI{480}{\milli\second}, zato računanje porabi približno
 zaslonska medpomnilnika ostanejo znotraj svojih pomnilniških območij. To
 potrjuje tehnično izvedljivost celotne lokalne poti, ne pomeni pa, da je čas od
 nastanka zvoka do opozorila samo \SI{10.81}{\milli\second}, saj mora sistem
-najprej zbrati vhodno okno in po potrebi potrditi več zaporednih odločitev.
+najprej zbrati vhodni blok in po potrebi potrditi več zaporednih odločitev.
 
 Na drugo vprašanje odgovarja neodvisni končni fizični preizkus. Sistem je
 pričakovani razred vsaj enkrat potrdil v 57 od 60 poskusov oziroma v
 \SI{95.0}{\percent} poskusov. Pri štirih nevarnostnih razredih je bil uspešen
 v 39 od 40 poskusov. Strožje merilo prevladujočega izhoda je bilo pravilno v
 54 od 60 poskusov. Govor ni sprožil nobenega nevarnostnega alarma, pri razredu
-drugo pa se je nevarnostni izhod pojavil v šestih od desetih poskusov. Sistem
+ostalo pa se je nevarnostni izhod pojavil v šestih od desetih poskusov. Sistem
 je torej v preskusni postavitvi dobro zaznaval ciljne dogodke, zavračanje
 nekaterih kratkih vsakdanjih zvokov pa ostaja njegova glavna slabost.
 
 Tretje vprašanje nima enega samega odgovora za vse razrede. Pasji lajež,
 razbitje stekla in strel so bili v končnem preizkusu potrjeni v vseh desetih
-poskusih. Sirena, govor in drugo so dosegli devet pravilnih potrditev od
+poskusih. Sirena, govor in ostalo so dosegli devet pravilnih potrditev od
 desetih. Rezultati neuspešnih poskusov kažejo različne vzroke: ocena govora in
 sirene je ostala pod razrednim pragom, kratek pok pa je bil podoben razbitju
 stekla. Na delovanje zato vplivajo kakovost in glasnost vira, položaj dogodka v
-skoraj enosekundnem oknu, podobnost med razredi ter izbrani pragovi in časovna
+skoraj enosekundnem vhodnem bloku, podobnost med razredi ter izbrani pragovi in časovna
 pravila.
 
 \section{Razprava o uporabnosti rezultatov}
@@ -50,7 +50,7 @@ Preizkus je obsegal nadzorovano predvajanje v enem prostoru, zato iz rezultata
 ne moremo sklepati, da bo naprava enako zanesljiva pri vseh resničnih zvokih,
 razdaljah in okoljih.
 
-\section{Omejitve}
+\section{Omejitve projekta}
 
 V vsakem sistemskem razredu je bilo deset preskusnih posnetkov, zato so
 razredna območja zaupanja široka. Zvoki so bili predvajani prek enega zvočnika
@@ -61,7 +61,7 @@ glede na učenje in izbiro pragov, vendar še vedno izvirajo iz javnih zbirk in
 ne iz daljšega terenskega snemanja ciljnega okolja.
 
 Sistem pozna omejen nabor nevarnosti. Posebej zahtevni so kratki dogodki, ki
-so si spektralno podobni. Razred drugo je raznolik in ga 630 učnih virov ne
+so si spektralno podobni. Razred ostalo je raznolik in ga 630 učnih virov ne
 more izčrpno opisati; zato so pok, aplavz in nekateri gospodinjski zvoki še
 vedno povzročili lažne nevarnostne izhode. Izmerjeni čas temelji na notranji
 telemetriji, ne na zunanjem električnem signalu, poraba energije pa ni bila
@@ -71,7 +71,7 @@ klinične ali vsakdanje uporabnosti.
 
 \section{Možnosti nadaljnjega dela}
 
-Najpomembnejši naslednji korak je razširitev razreda drugo z lokalnimi
+Najpomembnejši naslednji korak je razširitev razreda ostalo z lokalnimi
 gospodinjskimi zvoki ter s težkimi negativnimi primeri, pri katerih trenutni
 sistem napove nevarnost. Temu naj sledi novo učenje in popolnoma ločen končni
 preskus. Smiselni so preskusi na več razdaljah, v več prostorih, ob hrupu in ob
@@ -85,23 +85,23 @@ velikost besedila, barve ter morebitno dodajanje vibracijskega ali svetlobnega
 izhoda. Morebitno razširjanje nabora nevarnosti naj temelji na dovolj kakovostnih
 učnih podatkih in ločenem vrednotenju, ne le na dodajanju novih oznak.
 
-\section{Sklep}
+\section{Sklepne ugotovitve}
 
 V diplomskem delu je bil razvit samostojen sistem za zaznavanje nevarnih
 zvočnih dogodkov na razvojni plošči STM32N6570-DK. Vgrajeni mikrofon
-neprekinjeno zajema zvok, lastna predobdelava pripravi logaritemski melov
-spektrogram, kvantizirani model YAMNet-1024 se izvaja z nevronskim
+neprekinjeno zajema zvok, lastna predobdelava pripravi strnjeni spektrogram,
+kvantizirani model YAMNet-1024 se izvaja z nevronskim
 pospeševalnikom Neural-ART, odločitveni filter pa rezultat pretvori v stabilno
 vidno opozorilo. Celotna obdelava poteka lokalno, brez dostopa do računalniškega
 oblaka in brez trajnega shranjevanja surovega zvoka v običajnem delovanju.
 
 Razvoj je pokazal, da pri vgrajenem razpoznavanju ni dovolj samo namestiti
 prednaučenega modela. Za kratke dogodke so bili potrebni namensko izrezovanje,
-povečanje podatkov, razred drugo, razredni pragovi in časovno filtriranje.
+povečanje podatkov, razred ostalo, razredni pragovi in časovno filtriranje.
 Končna različica je v neodvisnem fizičnem preizkusu pravilno potrdila 57 od 60
 poskusov, pri nevarnostnih razredih pa 39 od 40. Obdelava enega bloka je
 trajala \SI{10.81}{\milli\second} in je ostala znotraj razpoložljivega
-pomnilnika. Preostali lažni alarmi pri razredu drugo jasno določajo naslednjo
+pomnilnika. Preostali lažni alarmi pri razredu ostalo jasno določajo naslednjo
 razvojno nalogo. Glavni rezultat dela je zato delujoč in merljivo dovolj hiter
 lokalni prototip ter sledljiv postopek, ki njegove prednosti loči od njegovih
 še odprtih omejitev.

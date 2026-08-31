@@ -174,30 +174,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % vključevanje programske kode
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[hypcap=false]{caption}
-\usepackage{minted}
-\definecolor{svetlo-siva}{gray}{0.96}
-\usemintedstyle{friendly} % lahko uporabite kakšno drugo temo
-\setminted{
-    fontsize=\footnotesize,
-    baselinestretch=1.1,
-    linenos,            % številčenje vrstic
-    frame=lines,        % črte pred in za
-    framesep=2mm,
-    bgcolor=svetlo-siva, 
-    breaklines=true     % lomljenje dolgih vrstic
-}
-
-% izsek za slovenščino
-\addto\captionsslovene{%
-  \renewcommand{\listingscaption}{Izsek kode}%
-}
-
-% izsek za angleščino
-\addto\captionsenglish{%
-  \renewcommand{\listingscaption}{Code Snippet}%
-}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % znaki za copyright stran
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
